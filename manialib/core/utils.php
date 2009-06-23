@@ -10,6 +10,7 @@
  */
 function __autoload($className)
 {
+	// TODO Recursive browsing for autoloading ?
 	if (file_exists($path = APP_CORE_PATH . "/api/$className.class.php"))
 	{
 		require_once ($path);
