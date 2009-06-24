@@ -48,11 +48,10 @@ class PostsEngine
 	private function __construct()
 	{
 		$session = SessionEngine::getInstance();
-		
-		// TODO Mettre les noms des tables ailleurs
-		$this->postsTable = DATABASE_PREFIX . "posts";
-		$this->metaTagsTable = DATABASE_PREFIX . "posts_meta_tags";
-		$this->contentTable = DATABASE_PREFIX . "posts_content";
+
+		$this->postsTable = PostsStructure::getPostsTable();
+		$this->metaTagsTable = PostsStructure::getMetaTagsTable();
+		$this->contentTable = PostsStructure::getContentTable();
 		
 		if(!$session->get(self::$engineLoadedId))
 		{

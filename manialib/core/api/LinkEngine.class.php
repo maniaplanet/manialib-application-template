@@ -103,6 +103,8 @@ class LinkEngine
 	 */
 	private function createLinkString($file=null, $relativePath=true, $params)
 	{		
+		// TODO Gérer les sous dossiers dans les liens
+		
 		// Baseurl
 		$link = "";
 		if($file==null)

@@ -21,22 +21,6 @@ $ui->setTextSize(1);
 $ui->setText('Powered by $<$ccc$o$h[manialib]ManiaLib$h$>');
 $ui->draw();
 
-$ui = new Navigation;
-$ui->title->setText("ManiaLib");
-$ui->subTitle->setText("Simple manialink framework");
-$ui->logo->setSubStyle("Forever");
-
-$linkstr = $link->createLinkArgList("index.php");
-
-$ui->addItem();
-$ui->lastItem()->text->setText("Home");
-$ui->lastItem()->icon->setSubStyle("United");
-$ui->lastItem()->setManialink($linkstr);
-
-
-$ui->quitButton->setManialink($link->createLinkArgList("index.php"));
-$ui->draw();
-
 $ui = new Icon64;
 $ui->setAlign("right", "bottom");
 $ui->setSubStyle("Refresh");
@@ -47,7 +31,7 @@ $ui->draw();
 
 $link->setParam("XDEBUG_SESSION_START", "testID");
 $linkstr = $link->createLink();
-$link->deleteParam("DBGSESSID");
+$link->deleteParam("XDEBUG_SESSION_START");
 
 $ui = new Icon64;
 $ui->setAlign("right", "bottom");
@@ -56,7 +40,7 @@ $ui->setSubStyle("ToolRoot");
 $ui->setManialink($linkstr);
 $ui->draw();
 
-Manialink::beginFrame(-34, 48, 1);
+
 
 
 ?>

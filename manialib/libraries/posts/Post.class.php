@@ -120,9 +120,9 @@ class Post
 	{
 		$db = DatabaseEngine::getInstance();
 		
-		$postsTable = DATABASE_PREFIX . "posts";
-		$metaTagsTable = DATABASE_PREFIX . "posts_meta_tags";
-		$contentTable = DATABASE_PREFIX . "posts_content";
+		$postsTable = PostsStructure::getPostsTable();
+		$metaTagsTable = PostsStructure::getMetaTagsTable();
+		$contentTable = PostsStructure::getContentTable();
 		
 		$postId = $this->id ? $this->id : "NULL" ;
 		$postType = $this->postType;
@@ -199,6 +199,8 @@ class Post
 		{
 			return false;
 		}
+		
+		$postsTable = PostsStructure::getPostsTable();
 		
 		$db = DatabaseEngine::getInstance();
 		$db->query = "DELETE FROM $postsTable WHERE post_id=$this->id";
