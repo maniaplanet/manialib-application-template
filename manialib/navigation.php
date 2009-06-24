@@ -8,7 +8,7 @@ $link = LinkEngine::getInstance();
 
 $ui = new Navigation;
 $ui->title->setText("ManiaLib");
-$ui->subTitle->setText("Lightweight manialink framework");
+$ui->subTitle->setText("Lightweight framework");
 $ui->logo->setSubStyle("Forever");
 
 $linkstr = $link->createLinkArgList("index.php");

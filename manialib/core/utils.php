@@ -36,6 +36,7 @@ function autoload_recursive($className, $path)
 		require_once($rpath);
 		return true;
 	}
+	$return = false;
 	if ($handle = opendir($path))
 	{
 		while (false !== ($file = readdir($handle)))
@@ -44,7 +45,10 @@ function autoload_recursive($className, $path)
 			{
 				if(is_dir($path . $file))
 				{
-					return autoload_recursive($className, $path . $file);
+					if(autoload_recursive($className, $path . $file))
+					{
+						return true;
+					}
 				}
 			}
 		}
@@ -225,6 +229,8 @@ function safe_div($numerator, $denominator)
 	}
 	return $numerator / $denominator;
 }
+
+// TODO Error handler de debug
 
 /**
  * Custom error handler

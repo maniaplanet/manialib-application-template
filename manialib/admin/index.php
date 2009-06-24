@@ -4,8 +4,6 @@
  * @author Maxime Raoust
  */
  
-// TODO Admin auth 
- 
 require_once( dirname(__FILE__) . "/../core.inc.php" );
 $link = LinkEngine::getInstance();
 
