@@ -4,6 +4,9 @@
  * @author Maxime Raoust
  * @package posts
  */
+
+define ("POST_TYPE_NULL", 0);
+define ("POST_TYPE_NEWS", 1);
  
 class PostsEngine 
 {
@@ -11,10 +14,10 @@ class PostsEngine
 	private static $engineLoadedId = "posts_engine_loaded";
 	
 	private $posts = array();
-	private $postsTable;
-	private $contentTable;
-	private $tagsTable;
-	private $imagesTable;
+	
+	public $postsTable;
+	public $contentTable;
+	public $metaTagsTable;
 	
 	public static function getInstance()
 	{
@@ -46,16 +49,16 @@ class PostsEngine
 	{
 		$session = SessionEngine::getInstance();
 		
+		// TODO Mettre les noms des tables ailleurs
 		$this->postsTable = DATABASE_PREFIX . "posts";
-		$this->tagsTable = DATABASE_PREFIX . "posts_tags";
-		$this->imagesTable = DATABASE_PREFIX . "posts_images";
+		$this->metaTagsTable = DATABASE_PREFIX . "posts_meta_tags";
 		$this->contentTable = DATABASE_PREFIX . "posts_content";
 		
 		if(!$session->get(self::$engineLoadedId))
 		{
 			if($this->dbInstall() === true)
 			{
-				// DEBUG $session->set(self::$engineLoadedId, 1);
+				$session->set(self::$engineLoadedId, 1);
 			}
 		}
 	}
@@ -73,6 +76,7 @@ class PostsEngine
 		while($arr = $db->fetchArray())
 		{
 			$post = new Post($arr["post_id"]);
+			$post->setPostType($arr["post_type"]);
 			$post->setAuthor($arr["author"]);
 			$post->setDate($arr["date"]);
 			$post->setTitle($arr["title"]);
@@ -86,105 +90,106 @@ class PostsEngine
 		$postIds = "($postIds)";
 		
 		$db->query = 	"SELECT * FROM $this->postsTable AS p " .
-						"INNER JOIN $this->tagsTable AS t " .
+						"INNER JOIN $this->metaTagsTable AS t " .
 						"ON t.post_id = p.post_id " .
 						"WHERE p.post_id IN $postIds";
 		$db->query();
 		
 		while($arr = $db->fetchArray())
 		{
-			$this->posts[$arr["post_id"]]->addTag($arr["tag"]);
-		}
-		
-		$db->query = 	"SELECT * FROM $this->postsTable AS p " .
-						"INNER JOIN $this->imagesTable AS i " .
-						"ON i.post_id = p.post_id " .
-						"WHERE p.post_id IN $postIds";
-		$db->query();
-		
-		while($arr = $db->fetchArray())
-		{
-			$this->posts[$arr["post_id"]]->addImage($arr["image"]);
+			$this->posts[$arr["post_id"]]->addMetaTag($arr["name"], $arr["value"]);
 		}
 		
 	}
 	
 	private function dbInstall()
 	{
-		
 		$db = DatabaseEngine::getInstance();
 		
+		// Check if the tables exists
+		$like = DATABASE_PREFIX . "posts%";
+		$like = quote_smart($like);
+		
+		$db->query = "SHOW TABLES LIKE $like";
+		$db->query();
+		
+		$tables = array();
+		while($row = $db->fetchRow())
+		{
+			$tables[] = $row[0];
+		}
+		
+		if(	in_array($this->postsTable, $tables) &&
+			in_array($this->contentTable, $tables) &&
+			in_array($this->metaTagsTable, $tables)
+		)
+		{
+			return true;
+		}
+		
+		// If one of them is not found, we create them
 		$db->query = 	"CREATE TABLE IF NOT EXISTS $this->postsTable " .
 						"( " .
-						"post_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY ," .
-						"date TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ," .
-						"author VARCHAR(25) NOT NULL ," .
-						"title VARCHAR(255) NOT NULL ," .
-						"INDEX ( date ), " .
-						"INDEX ( author )" .
-						") ENGINE = MYISAM ";
+							"post_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY , " .
+							"post_type TINYINT NOT NULL DEFAULT 0, " .
+							"date TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , " .
+							"author VARCHAR(25) NOT NULL , " .
+							"title VARCHAR(255) NOT NULL , " .
+							"INDEX ( date ), " .
+							"INDEX ( post_type ), " .
+							"INDEX ( author ) " .
+						") " .
+						"ENGINE = InnoDB " .
+						"CHARACTER SET utf8 " .
+						"COLLATE utf8_general_ci";
 		$db->query();
 		
-		$db->query  = 	"CREATE TABLE IF NOT EXISTS $this->tagsTable " .
+		$db->query =	"CREATE TABLE IF NOT EXISTS $this->metaTagsTable " .
 						"( " .
-						"post_id INT NOT NULL , " .
-						"tag VARCHAR( 25 ) NOT NULL , " .
-						"INDEX ( post_id ), " .
-						"INDEX ( tag ), " .
-						"UNIQUE ( post_id, tag) " .
-						") ENGINE = MYISAM ";
-		$db->query();
-		
-		$db->query =	"CREATE TABLE IF NOT EXISTS $this->imagesTable " .
-						"( " .
-						"post_id INT NOT NULL ," .
-						"image VARCHAR( 255 ) NOT NULL , " .
-						"INDEX ( post_id ), " .
-						"UNIQUE ( post_id, image )" .
-						") ENGINE = MYISAM";
+							"post_id INT NOT NULL ," .
+							"name VARCHAR( 255 ) NOT NULL , " .
+							"value VARCHAR( 255 ) NULL , " .
+							"INDEX ( post_id ), " .
+							"UNIQUE (post_id, name, value), " .
+							"CONSTRAINT fk_posts_meta_tags " .
+								"FOREIGN KEY (post_id) REFERENCES $this->postsTable (post_id) " .
+								"ON UPDATE CASCADE " .
+								"ON DELETE CASCADE " .
+						") " .
+						"ENGINE = InnoDB " .
+						"CHARACTER SET utf8 " .
+						"COLLATE utf8_general_ci";
 		$db->query();
 		
 		$db->query =	"CREATE TABLE IF NOT EXISTS $this->contentTable " .
 						"( " .
-						"post_id INT NOT NULL PRIMARY KEY , " .
-						"content TEXT NOT NULL " .
-						") ENGINE = MYISAM ";
+							"post_id INT NOT NULL PRIMARY KEY , " .
+							"content TEXT NOT NULL, " .
+							"CONSTRAINT fk_posts_content " .
+								"FOREIGN KEY (post_id) REFERENCES $this->postsTable (post_id) " .
+								"ON UPDATE CASCADE " .
+								"ON DELETE CASCADE " .
+						") " .
+						"ENGINE = InnoDB " .
+						"CHARACTER SET utf8 " .
+						"COLLATE utf8_general_ci";
 		$db->query();
 		
-		
-		// Example post
-		$db->query = 	"INSERT IGNORE INTO $this->postsTable " .
-						"( post_id, date, author, title ) " .
-						"VALUES " .
-						"( 1, NOW(), 'manialib', 'Hello world !') ";
-		$db->query();
-		
-		$db->query = 	"INSERT IGNORE INTO $this->contentTable " .
-						"( post_id, content ) " .
-						"VALUES " .
-						"( 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing " .
-						"elit. Quisque nec felis eu ipsum tristique interdum. " .
-						"Quisque purus ante, rutrum at mattis non, imperdiet a " .
-						"turpis. Nunc malesuada cursus justo, id sodales est " .
-						"consequat id. Cras ipsum libero, cursus a semper sed, " .
-						"luctus in odio. Pellentesque nec leo ac est interdum " .
-						"pretium. Phasellus faucibus urna eu libero adipiscing " .
-						"suscipit. Etiam laoreet aliquam nunc quis sollicitudin.')";
-		$db->query();
-		
-		$db->query = 	"INSERT IGNORE INTO $this->imagesTable " .
-						"( post_id, image ) " .
-						"VALUES " .
-						"( 1, 'bg_coast.dds'), " .
-						"( 1, 'bg_island.dds') ";
-		$db->query();
-		
-		$db->query = 	"INSERT IGNORE INTO $this->tagsTable " .
-						"( post_id, tag ) " .
-						"VALUES " .
-						"( 1, 'trackmania'), " .
-						"( 1, 'manialib') ";
-		$db->query();
+		// Post example
+		$post = new Post;
+		$post->setAuthor("manialib");
+		$post->setPostType(POST_TYPE_NEWS);
+		$post->setTitle("Hello world !");
+		$post->addMetaTag("image", "bg_coast.dds");
+		$post->addMetaTag("tag", "welcome");
+		$post->addMetaTag("tag", "manialib");
+		$post->setContent("Lorem ipsum dolor sit amet, consectetur adipiscing " .
+				"elit. Donec sit amet nulla magna. Etiam consequat porttitor " .
+				"magna ac ultrices. Donec sed mattis ante. Aenean a felis nec " .
+				"mauris venenatis vehicula. Cras tempor pellentesque justo, et " .
+				"dapibus eros pharetra bibendum. Sed vitae auctor eros. Quisque " .
+				"et lectus est, ac fermentum massa.");
+		$post->dbUpdate();
 		
 		return true;
 	}

@@ -153,6 +153,19 @@ class DatabaseEngine
 		else
 			return false;
 	}
+	
+	/**
+	 * Fetch the current row
+	 * 
+	 * @return Array
+	 */
+	function fetchRow()
+	{
+		if ($this->rs)
+			return mysql_fetch_row($this->rs);
+		else
+			return false;
+	}
 
 	/**
 	 * Return the last inserted ID

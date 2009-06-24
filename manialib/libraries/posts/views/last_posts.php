@@ -15,7 +15,7 @@ $ui->draw();
 $i = 0;
 foreach($posts->getPosts() as $postId=>$post)
 {
-	$images = $post->getImages();
+	$images = (array) $post->getMetaTags("image");
 	$image = reset($images);
 	
 	Manialink::beginFrame(1, -6-$i*7, 1);

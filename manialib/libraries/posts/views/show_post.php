@@ -16,9 +16,9 @@ $ui->draw();
 
 if($post)
 {
-	$images = $post->getImages();
+	$images = (array) $post->getMetaTags("image");
 	$image = reset($images);
-	$tags = implode(", ", (array) $post->getTags());
+	$tags = implode(", ", (array) $post->getMetaTags("tag"));
 	
 	Manialink::beginFrame(1, -6, 1);
 		
