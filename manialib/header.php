@@ -14,6 +14,13 @@ $ui->setAlign("center", "center");
 $ui->setImage("bg_stadium.dds");
 $ui->draw();
 
+$ui = new Label;
+$ui->setAlign("center", "bottom");
+$ui->setPosition(15, -48, 1);
+$ui->setTextSize(1);
+$ui->setText('Powered by $<$ccc$o$h[manialib]ManiaLib$h$>');
+$ui->draw();
+
 $ui = new Navigation;
 $ui->title->setText("ManiaLib");
 $ui->subTitle->setText("Simple manialink framework");
@@ -26,19 +33,30 @@ $ui->lastItem()->text->setText("Home");
 $ui->lastItem()->icon->setSubStyle("United");
 $ui->lastItem()->setManialink($linkstr);
 
-$linkstr = $link->createLinkArgList("page.php");
 
-$ui->addItem();
-$ui->lastItem()->text->setText("Page");
-$ui->lastItem()->icon->setSubStyle("Advanced");
-$ui->lastItem()->setManialink($linkstr);
+$ui->quitButton->setManialink($link->createLinkArgList("index.php"));
+$ui->draw();
 
-$ui->quitButton->setManialink("Manialink:Home");
+$ui = new Icon64;
+$ui->setAlign("right", "bottom");
+$ui->setSubStyle("Refresh");
+$ui->setPosition(64, -48, 15);
+$ui->setManialink($link->createLink());
 $ui->draw();
 
 
+$link->setParam("XDEBUG_SESSION_START", "testID");
+$linkstr = $link->createLink();
+$link->deleteParam("DBGSESSID");
 
+$ui = new Icon64;
+$ui->setAlign("right", "bottom");
+$ui->setPosition(57, -48, 15);
+$ui->setSubStyle("ToolRoot");
+$ui->setManialink($linkstr);
+$ui->draw();
 
+Manialink::beginFrame(-34, 48, 1);
 
 
 ?>

@@ -13,5 +13,6 @@ define("DATABASE_HOST", "192.168.0.120");
 define("DATABASE_USER", "root");
 define("DATABASE_PASSWORD", "");
 define("DATABASE_NAME", "manialib");
+define("DATABASE_PREFIX", "manialib_");
 
 ?>

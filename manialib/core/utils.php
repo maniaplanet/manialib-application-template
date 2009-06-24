@@ -10,17 +10,48 @@
  */
 function __autoload($className)
 {
-	// TODO Recursive browsing for autoloading ?
-	if (file_exists($path = APP_CORE_PATH . "/api/$className.class.php"))
+	if (file_exists($path = APP_API_PATH . "$className.class.php"))
 	{
 		require_once ($path);
+		return true;
 	}
-	elseif (file_exists($path = APP_LIBRARIES_PATH . "/$className.class.php"))
+	elseif(file_exists($path = APP_API_PATH . "gui/cards/$className.class.php"))
 	{
 		require_once ($path);
+		return true;
+	}
+	elseif(autoload_recursive($className, APP_LIBRARIES_PATH))
+	{
+		return true;
 	}
 }
-spl_autoload_register("__autoload");
+
+/**
+ * Recursive autoloading
+ */
+function autoload_recursive($className, $path)
+{
+	if(file_exists($rpath = $path . "/" . $className . ".class.php"))
+	{
+		require_once($rpath);
+		return true;
+	}
+	if ($handle = opendir($path))
+	{
+		while (false !== ($file = readdir($handle)))
+		{
+			if (strcasecmp(substr($file, 0, 1), "."))
+			{
+				if(is_dir($path . $file))
+				{
+					return autoload_recursive($className, $path . $file);
+				}
+			}
+		}
+		closedir($handle);
+	}
+	return false;
+} 
 
 /**
  * i18n message
