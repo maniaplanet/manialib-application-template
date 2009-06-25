@@ -20,6 +20,7 @@ if($postId = Gpc::get("post_id"))
 		{
 			
 			$session->set("post_object", rawurlencode(serialize($post)));
+			$session->set("post_editing", 1);
 			$link->redirectManialink("posts_post.php");
 		}
 		elseif(Gpc::get("delete"))

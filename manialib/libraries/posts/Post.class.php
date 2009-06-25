@@ -54,6 +54,26 @@ class Post
 		return null;
 	}
 	
+	function getAllMetaTags()
+	{
+		$tags = array();
+		foreach($this->metaTags as $name=>$value)
+		{
+			if(is_array($value))
+			{
+				foreach($value as $_value)
+				{
+					$tags[] = array($name, $_value);
+				}
+			}
+			else
+			{
+				$tags[] = array($name, $value);
+			}
+		}
+		return $tags;
+	}
+	
 	function setAuthor($author)
 	{
 		$this->author = $author;

@@ -9,7 +9,8 @@ require_once( dirname(__FILE__) . "/../core.inc.php" );
 
 AdminEngine::checkAuthentication();
 
-// TODO If a post is found, pre-fill the entries 
+// TODO Save date created / date modified in posts
+// TODO Allow adding of more tags ?
 
 ////////////////////////////////////////////////////////////////////////////////
 // Processing
@@ -19,6 +20,7 @@ $session = SessionEngine::getInstance();
 $link = LinkEngine::getInstance();
 
 $currentStep = Gpc::get("step", 1);
+$isEditing = (bool) $session->get("post_editing", false);
 
 $steps = array (
 	1 => "Choose a type",
@@ -83,6 +85,8 @@ switch($currentStep)
 		$post->dbUpdate();
 		unset($post);
 		$session->delete("post_object");
+		$session->delete("post_editing");
+		$link->redirectManialink("posts_manage.php");
 	break;
 	
 	// Default
@@ -102,8 +106,16 @@ require_once( APP_PATH . "header.php" );
 
 // Begin navigation
 $ui = new Navigation;
-$ui->title->setText("New post");
-$ui->subTitle->setText("Add content");
+if($isEditing)
+{
+	$ui->title->setText("Edit post");
+	$ui->subTitle->setText("Manage content");
+}
+else
+{
+	$ui->title->setText("New post");
+	$ui->subTitle->setText("Add content");
+}
 $ui->logo->setSubStyle("Paint");
 
 foreach($steps as $stepId=>$stepName)
@@ -140,7 +152,7 @@ Manialink::beginFrame(-34, 48, 1);
 				$ui->title->setText("Post type");
 				$ui->draw();
 				
-				$ui = new Quad(60, 60);
+				$ui = new Quad(40, 60);
 				$ui->setHalign("center");
 				$ui->setPosition(0, -10, 1);
 				$ui->setSubStyle("BgCardList");
@@ -150,13 +162,19 @@ Manialink::beginFrame(-34, 48, 1);
 				
 				foreach(PostsStructure::getPostTypes() as $postTypeId=>$postTypeName)
 				{
+					$style = '$o';
+					if($post->getPostType() == $postTypeId)
+					{
+						$style .= '$ff0';
+					}
+					
 					$link->setParam("post_type", $postTypeId);
 					$link->setParam("step", $currentStep+1);
 					$linkstr = $link->createLink("posts_post.php");
 
-					Manialink::beginFrame(0, -11-6*$i, 2);
+					Manialink::beginFrame(0, -11-5*$i, 2);
 						
-						$ui = new Quad(58, 6);
+						$ui = new Quad(38, 5);
 						$ui->setHalign("center");
 						$ui->setSubStyle("BgCardSystem");
 						$ui->setManialink($linkstr);
@@ -164,10 +182,10 @@ Manialink::beginFrame(-34, 48, 1);
 						
 						$ui = new Label(50);
 						$ui->setAlign("center", "center");
-						$ui->setPosition(0, -3, 1);
+						$ui->setPosition(0, -2.5, 1);
 						$ui->setTextColor("000");
-						$ui->setTextSize(3);
-						$ui->setText('$o$w' . $postTypeName);
+						$ui->setTextSize(2);
+						$ui->setText($style . $postTypeName);
 						$ui->draw();
 					
 					Manialink::endFrame();
@@ -192,6 +210,7 @@ Manialink::beginFrame(-34, 48, 1);
 				$ui = new Entry(72);
 				$ui->setPosition(-36, -11, 1);
 				$ui->setName("title");
+				$ui->setDefault($post->getTitle());
 				$ui->draw();
 				
 				$link->setParam("post_title", "title");
@@ -207,6 +226,7 @@ Manialink::beginFrame(-34, 48, 1);
 				$ui->enableAutoNewLine();
 				$ui->setMaxline(13);
 				$ui->setName("content");
+				$ui->setDefault($post->getContent());
 				$ui->draw();
 				
 				$link->setParam("post_content", "content");
@@ -225,7 +245,10 @@ Manialink::beginFrame(-34, 48, 1);
 			
 			// Add tags
 			case 3:
-			
+				
+				$tags = $post->getAllMetaTags();
+				
+				
 				$ui = new Panel(80, 80);
 				$ui->setHalign("center");
 				$ui->title->setText("Add meta tags");
@@ -245,11 +268,21 @@ Manialink::beginFrame(-34, 48, 1);
 				
 				for($i=1; $i<=10; $i++)
 				{
+					$name = "";
+					$value = "";
+					if($tag = current($tags))
+					{
+						$name = $tag[0];
+						$value = $tag[1];
+						next($tags);
+					}
+					
 					Manialink::beginFrame(0, -11-5*$i, 1);
 					
 						$ui = new Entry(34);
 						$ui->setPositionX(-36);
 						$ui->setName("meta_tag_name$i");
+						$ui->setDefault($name);
 						$ui->draw();
 						
 						$link->setParam("meta_tag_name$i", "meta_tag_name$i");
@@ -257,6 +290,7 @@ Manialink::beginFrame(-34, 48, 1);
 						$ui = new Entry(34);
 						$ui->setPositionX(0);
 						$ui->setName("meta_tag_value$i");
+						$ui->setDefault($value);
 						$ui->draw();
 						
 						$link->setParam("meta_tag_value$i", "meta_tag_value$i");
@@ -313,9 +347,6 @@ Manialink::beginFrame(-34, 48, 1);
 				$ui->setStyle("TextRaceMessage");
 				$ui->setText("Your post was successfully published !");
 				$ui->draw();
-			case 5:
-			
-			break;
 			
 			// Default
 			default:
