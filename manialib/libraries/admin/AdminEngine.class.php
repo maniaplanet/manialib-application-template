@@ -8,7 +8,6 @@
 class AdminEngine 
 {
 	// TODO Admin management
-	// TODO Mettre les scripts d'install dans les classes "Structure"
 	private static $instance;
 	private static $engineLoadedId = "admin_engine_loaded";
  	protected $adminsTable;
@@ -17,7 +16,7 @@ class AdminEngine
  	{
  		if(!self::authenticate())
 		{
-			LinkEngine::getInstance()->redirectManialink("admin/login.php");
+			LinkEngine::getInstance()->redirectManialink("login.php");
 		}
  	}
  	 	

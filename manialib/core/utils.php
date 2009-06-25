@@ -224,8 +224,6 @@ function safe_div($numerator, $denominator)
 	return $numerator / $denominator;
 }
 
-// TODO Error handler de debug
-
 /**
  * Custom error handler
  */
@@ -285,6 +283,9 @@ function manialinkErrorHandler($errno, $errstr, $errfile, $errline)
 	}
 }
 
+/**
+ * Custom error handler debug
+ */
 function manialinkErrorHandlerDebug($errno, $errstr, $errfile, $errline)
 {
 	$session = SessionEngine :: getInstance();
@@ -341,9 +342,4 @@ function manialinkErrorHandlerDebug($errno, $errstr, $errfile, $errline)
 	}
 }
 
-
-
-
-set_error_handler("manialinkErrorHandlerDebug");
-error_reporting(E_ALL);
 ?>

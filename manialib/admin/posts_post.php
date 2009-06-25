@@ -9,8 +9,6 @@ require_once( dirname(__FILE__) . "/../core.inc.php" );
 
 AdminEngine::checkAuthentication();
 
-// TODO Ajouter l'auteur dans les posts
-
 ////////////////////////////////////////////////////////////////////////////////
 // Processing
 ////////////////////////////////////////////////////////////////////////////////
@@ -27,7 +25,7 @@ $steps = array (
 	4 => "Publish !"
 );
 
-$post = $session->get("new_post_object");
+$post = $session->get("post_object");
 if($post)
 {
 	$post = unserialize(rawurldecode($post));
@@ -35,6 +33,7 @@ if($post)
 else
 {
 	$post = new Post;
+	$post->setAuthor($session->get("login"));
 }
 
 switch($currentStep)
@@ -81,7 +80,7 @@ switch($currentStep)
 	case 5:
 		$post->dbUpdate();
 		unset($post);
-		$session->delete("new_post_object");
+		$session->delete("post_object");
 	break;
 	
 	// Default
@@ -91,7 +90,7 @@ switch($currentStep)
 }
 
 if(isset($post))
-	$session->set("new_post_object", rawurlencode(serialize($post)));
+	$session->set("post_object", rawurlencode(serialize($post)));
 
 ////////////////////////////////////////////////////////////////////////////////
 // GUI
@@ -122,7 +121,7 @@ foreach($steps as $stepId=>$stepName)
 
 }
 
-$ui->quitButton->setManialink($link->createLinkArgList("admin/posts.php"));
+$ui->quitButton->setManialink($link->createLinkArgList("posts.php"));
 $ui->draw();
 // End navigation
 
@@ -151,7 +150,7 @@ Manialink::beginFrame(-34, 48, 1);
 				{
 					$link->setParam("post_type", $postTypeId);
 					$link->setParam("step", $currentStep+1);
-					$linkstr = $link->createLink("admin/posts_new_post.php");
+					$linkstr = $link->createLink("posts_post.php");
 
 					Manialink::beginFrame(0, -11-6*$i, 2);
 						
@@ -211,7 +210,7 @@ Manialink::beginFrame(-34, 48, 1);
 				$link->setParam("post_content", "content");
 				
 				$link->setParam("step", $currentStep+1);
-				$linkstr = $link->createLink("admin/posts_new_post.php");
+				$linkstr = $link->createLink("posts_post.php");
 				
 				$ui = new Button;
 				$ui->setHalign("center");
@@ -264,7 +263,7 @@ Manialink::beginFrame(-34, 48, 1);
 				}
 				
 				$link->setParam("step", $currentStep+1);
-				$linkstr = $link->createLink("admin/posts_new_post.php");
+				$linkstr = $link->createLink("posts_post.php");
 				
 				$ui = new Button;
 				$ui->setHalign("center");
@@ -290,7 +289,7 @@ Manialink::beginFrame(-34, 48, 1);
 				$ui->draw();
 				
 				$link->setParam("step", $currentStep+1);
-				$linkstr = $link->createLink("admin/posts_new_post.php");
+				$linkstr = $link->createLink("posts_post.php");
 				
 				$ui = new Button;
 				$ui->setHalign("center");

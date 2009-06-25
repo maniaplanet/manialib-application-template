@@ -16,4 +16,8 @@ define("APP_LOGS_PATH", APP_PATH . "logs/" );
 define("ERROR_LOG", APP_LOGS_PATH . "error.log" );
 define("DEBUG_LOG", APP_LOGS_PATH . "debug.log" );  
 
+// Debug
+define("DEBUG_OFF", 0);
+define("DEBUG_ON", 1);
+
 ?>

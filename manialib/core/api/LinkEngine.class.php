@@ -102,9 +102,7 @@ class LinkEngine
 	 * @return String
 	 */
 	private function createLinkString($file=null, $relativePath=true, $params)
-	{		
-		// TODO Gérer les sous dossiers dans les liens
-		
+	{
 		// Baseurl
 		$link = "";
 		if($file==null)
@@ -113,7 +111,21 @@ class LinkEngine
 		}
 		if($relativePath)
 		{
-			$link = APP_URL;
+			$link = explode("/", strtolower($_SERVER["SERVER_PROTOCOL"]));
+			$link = (string) reset($link);
+			$link .= ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? "s" : "");
+			$link .= "://";
+			$link .= $_SERVER['SERVER_NAME'];
+			if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on')
+			{
+				if($_SERVER['SERVER_PORT']!='443') $link .= ":".$_SERVER['SERVER_PORT'];
+			}
+			elseif($_SERVER['SERVER_PORT']!='80')
+			{
+				$link .= ":".$_SERVER['SERVER_PORT'];
+			}
+			$link .= dirname($_SERVER['SCRIPT_NAME']);
+			$link .= "/";	
 		}
 		$link .= $file;
 		

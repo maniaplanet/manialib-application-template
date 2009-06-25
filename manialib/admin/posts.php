@@ -16,14 +16,21 @@ $ui->title->setText("Posts");
 $ui->subTitle->setText("Manage your posts");
 $ui->logo->setSubStyle("Paint");
 
-$linkstr = $link->createLinkArgList("admin/posts_new_post.php");
+$linkstr = $link->createLinkArgList("posts_post.php");
 
 $ui->addItem();
 $ui->lastItem()->text->setText("Add post");
 $ui->lastItem()->icon->setSubStyle("Paint");
 $ui->lastItem()->setManialink($linkstr);
 
-$ui->quitButton->setManialink($link->createLinkArgList("admin/index.php"));
+$linkstr = $link->createLinkArgList("posts_manage.php");
+
+$ui->addItem();
+$ui->lastItem()->text->setText("Manage posts");
+$ui->lastItem()->icon->setSubStyle("Paint");
+$ui->lastItem()->setManialink($linkstr);
+
+$ui->quitButton->setManialink($link->createLinkArgList("index.php"));
 $ui->draw();
 
 require_once( APP_PATH . "footer.php" );

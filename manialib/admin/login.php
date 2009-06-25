@@ -10,7 +10,7 @@ $link = LinkEngine::getInstance();
 
 if(AdminEngine::authenticate())
 {
-	$link->redirectManialink("admin/index.php");
+	$link->redirectManialink("index.php");
 }
 
 require_once( APP_PATH . "header.php" );
@@ -44,7 +44,7 @@ Manialink::beginFrame(15, 0, 2);
 	
 	$link->setParam("password", "password");
 	
-	$linkstr = $link->createLink("admin/login.php");
+	$linkstr = $link->createLink("login.php");
 	
 	$ui = new Button;
 	$ui->setHalign("center");
