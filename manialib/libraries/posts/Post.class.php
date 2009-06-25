@@ -130,14 +130,15 @@ class Post
 		$title = quote_smart($this->title);
 		$content = quote_smart($this->content);
 		
-		$db->query = 	"INSERT INTO $postsTable " .
-						"(post_id, post_type, author, title) " .
-						"VALUES " .
-						"($postId, $postType, $author, $title) " .
-						"ON DUPLICATE KEY UPDATE " .
-						"post_type = VALUES(post_type), " .
-						"author = VALUES(author), " .
-						"title = VALUES(title)";
+		$db->query = 	
+			"INSERT INTO $postsTable " .
+			"(post_id, post_type, author, title) " .
+			"VALUES " .
+			"($postId, $postType, $author, $title) " .
+			"ON DUPLICATE KEY UPDATE " .
+			"post_type = VALUES(post_type), " .
+			"author = VALUES(author), " .
+			"title = VALUES(title)";
 		$db->query();
 		
 		if(!$this->id)
@@ -146,16 +147,18 @@ class Post
 			$postId = $this->id ? $this->id : "NULL" ;
 		}
 		
-		$db->query = 	"INSERT INTO $contentTable " .
-						"(post_id, content) " .
-						"VALUES " .
-						"($postId, $content) " .
-						"ON DUPLICATE KEY UPDATE " .
-						"content = VALUES(content) ";
+		$db->query = 	
+			"INSERT INTO $contentTable " .
+			"(post_id, content) " .
+			"VALUES " .
+			"($postId, $content) " .
+			"ON DUPLICATE KEY UPDATE " .
+			"content = VALUES(content) ";
 		$db->query();
 		
-		$db->query = 	"DELETE FROM $metaTagsTable " .
-						"WHERE post_id=$postId";
+		$db->query = 	
+			"DELETE FROM $metaTagsTable " .
+			"WHERE post_id=$postId";
 		$db->query();
 		
 		if(empty($this->metaTags))
@@ -185,9 +188,10 @@ class Post
 		
 		$mysqlTags = implode(",", $mysqlTags);
 		
-		$db->query = 	"INSERT INTO $metaTagsTable " .
-						"(post_id, name, value) " .
-						"VALUES $mysqlTags";
+		$db->query = 	
+			"INSERT INTO $metaTagsTable " .
+			"(post_id, name, value) " .
+			"VALUES $mysqlTags";
 		$db->query();
 		
 		return true;

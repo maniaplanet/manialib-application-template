@@ -24,13 +24,14 @@ class Admin
 		$login = quote_smart($this->login);
 		$passwordHash = quote_smart($this->passwordHash);
 		
-		$db->query = 	"INSERT INTO $adminsTable " .
-						"(login, password_hash) " .
-						"VALUES " .
-						"($login, $passwordHash) " .
-						"ON DUPLICATE KEY UPDATE " .
-						"login = VALUES(login), " .
-						"password_hash = VALUES(password_hash) ";
+		$db->query = 
+			"INSERT INTO $adminsTable " .
+			"(login, password_hash) " .
+			"VALUES " .
+			"($login, $passwordHash) " .
+			"ON DUPLICATE KEY UPDATE " .
+			"login = VALUES(login), " .
+			"password_hash = VALUES(password_hash) ";
 		$db->query();
 		
 		return $db->affectedRows();	

@@ -66,10 +66,11 @@ class PostsEngine
 	{
 		$db = DatabaseEngine::getInstance();
 		
-		$db->query = 	"SELECT * FROM $this->postsTable AS p " .
-						"INNER JOIN $this->contentTable AS c " .
-						"ON c.post_id = p.post_id " .
-						$filter;
+		$db->query = 
+			"SELECT * FROM $this->postsTable AS p " .
+			"INNER JOIN $this->contentTable AS c " .
+			"ON c.post_id = p.post_id " .
+			$filter;
 		$db->query();
 		
 		while($arr = $db->fetchArray())
@@ -88,10 +89,11 @@ class PostsEngine
 		$postIds = implode("," , $postIds);
 		$postIds = "($postIds)";
 		
-		$db->query = 	"SELECT * FROM $this->postsTable AS p " .
-						"INNER JOIN $this->metaTagsTable AS t " .
-						"ON t.post_id = p.post_id " .
-						"WHERE p.post_id IN $postIds";
+		$db->query = 	
+			"SELECT * FROM $this->postsTable AS p " .
+			"INNER JOIN $this->metaTagsTable AS t " .
+			"ON t.post_id = p.post_id " .
+			"WHERE p.post_id IN $postIds";
 		$db->query();
 		
 		while($arr = $db->fetchArray())
@@ -127,51 +129,54 @@ class PostsEngine
 		}
 		
 		// If one of them is not found, we create them
-		$db->query = 	"CREATE TABLE IF NOT EXISTS $this->postsTable " .
-						"( " .
-							"post_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY , " .
-							"post_type TINYINT NOT NULL DEFAULT 0, " .
-							"date TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , " .
-							"author VARCHAR(25) NOT NULL , " .
-							"title VARCHAR(255) NOT NULL , " .
-							"INDEX ( date ), " .
-							"INDEX ( post_type ), " .
-							"INDEX ( author ) " .
-						") " .
-						"ENGINE = InnoDB " .
-						"CHARACTER SET utf8 " .
-						"COLLATE utf8_general_ci";
+		$db->query = 	
+			"CREATE TABLE IF NOT EXISTS $this->postsTable " .
+			"( " .
+				"post_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY , " .
+				"post_type TINYINT NOT NULL DEFAULT 0, " .
+				"date TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , " .
+				"author VARCHAR(25) NOT NULL , " .
+				"title VARCHAR(255) NOT NULL , " .
+				"INDEX ( date ), " .
+				"INDEX ( post_type ), " .
+				"INDEX ( author ) " .
+			") " .
+			"ENGINE = InnoDB " .
+			"CHARACTER SET utf8 " .
+			"COLLATE utf8_general_ci";
 		$db->query();
 		
-		$db->query =	"CREATE TABLE IF NOT EXISTS $this->metaTagsTable " .
-						"( " .
-							"post_id INT NOT NULL ," .
-							"name VARCHAR( 255 ) NOT NULL , " .
-							"value VARCHAR( 255 ) NULL , " .
-							"INDEX ( post_id ), " .
-							"UNIQUE (post_id, name, value), " .
-							"CONSTRAINT fk_posts_meta_tags " .
-								"FOREIGN KEY (post_id) REFERENCES $this->postsTable (post_id) " .
-								"ON UPDATE CASCADE " .
-								"ON DELETE CASCADE " .
-						") " .
-						"ENGINE = InnoDB " .
-						"CHARACTER SET utf8 " .
-						"COLLATE utf8_general_ci";
+		$db->query =	
+			"CREATE TABLE IF NOT EXISTS $this->metaTagsTable " .
+			"( " .
+				"post_id INT NOT NULL ," .
+				"name VARCHAR( 255 ) NOT NULL , " .
+				"value VARCHAR( 255 ) NULL , " .
+				"INDEX ( post_id ), " .
+				"UNIQUE (post_id, name, value), " .
+				"CONSTRAINT fk_posts_meta_tags " .
+					"FOREIGN KEY (post_id) REFERENCES $this->postsTable (post_id) " .
+					"ON UPDATE CASCADE " .
+					"ON DELETE CASCADE " .
+			") " .
+			"ENGINE = InnoDB " .
+			"CHARACTER SET utf8 " .
+			"COLLATE utf8_general_ci";
 		$db->query();
 		
-		$db->query =	"CREATE TABLE IF NOT EXISTS $this->contentTable " .
-						"( " .
-							"post_id INT NOT NULL PRIMARY KEY , " .
-							"content TEXT NOT NULL, " .
-							"CONSTRAINT fk_posts_content " .
-								"FOREIGN KEY (post_id) REFERENCES $this->postsTable (post_id) " .
-								"ON UPDATE CASCADE " .
-								"ON DELETE CASCADE " .
-						") " .
-						"ENGINE = InnoDB " .
-						"CHARACTER SET utf8 " .
-						"COLLATE utf8_general_ci";
+		$db->query =	
+			"CREATE TABLE IF NOT EXISTS $this->contentTable " .
+			"( " .
+				"post_id INT NOT NULL PRIMARY KEY , " .
+				"content TEXT NOT NULL, " .
+				"CONSTRAINT fk_posts_content " .
+					"FOREIGN KEY (post_id) REFERENCES $this->postsTable (post_id) " .
+					"ON UPDATE CASCADE " .
+					"ON DELETE CASCADE " .
+			") " .
+			"ENGINE = InnoDB " .
+			"CHARACTER SET utf8 " .
+			"COLLATE utf8_general_ci";
 		$db->query();
 		
 		// Post example

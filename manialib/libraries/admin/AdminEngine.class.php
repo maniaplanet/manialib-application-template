@@ -77,10 +77,11 @@ class AdminEngine
  		$login = quote_smart($login);
  		$passwordHash = quote_smart($passwordHash);
  		
- 		$db->query = 	"SELECT COUNT(*) AS c " .
- 						"FROM $this->adminsTable " .
- 						"WHERE login = $login " .
- 						"AND password_hash = $passwordHash";
+ 		$db->query = 
+			"SELECT COUNT(*) AS c " .
+ 			"FROM $this->adminsTable " .
+ 			"WHERE login = $login " .
+ 			"AND password_hash = $passwordHash";
  		$db->query();
  		
  		if($arr = $db->fetchArray())
@@ -116,14 +117,15 @@ class AdminEngine
 		}
 		
 		// If one of them is not found, we create them
-		$db->query = 	"CREATE TABLE IF NOT EXISTS $this->adminsTable " .
-						"(" .
-							"login VARCHAR(25) NOT NULL PRIMARY KEY, " .
-							"password_hash CHAR(40) NOT NULL" .
-						")" .
-						"ENGINE = InnoDB " .
-						"CHARACTER SET utf8 " .
-						"COLLATE utf8_general_ci";
+		$db->query = 	
+			"CREATE TABLE IF NOT EXISTS $this->adminsTable " .
+			"(" .
+				"login VARCHAR(25) NOT NULL PRIMARY KEY, " .
+				"password_hash CHAR(40) NOT NULL" .
+			")" .
+			"ENGINE = InnoDB " .
+			"CHARACTER SET utf8 " .
+			"COLLATE utf8_general_ci";
 		$db->query();
 		
 		// Admin
