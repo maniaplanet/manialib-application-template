@@ -29,13 +29,18 @@ class PostsEngine
 		return self :: $instance;
 	} 
 	
+	public function clear()
+	{
+		$this->posts = array();
+	}
+	
 	public function getPosts()
 	{
 		if(empty($this->posts))
 		{
 			$this->dbGetPosts();
 		}
-		return $this->posts;
+		return (array) $this->posts;
 	}
 	
 	public function getPost($postId)
@@ -86,6 +91,12 @@ class PostsEngine
 		}
 		
 		$postIds = array_keys($this->posts);
+		
+		if(empty($postIds))
+		{
+			return;
+		}
+		
 		$postIds = implode("," , $postIds);
 		$postIds = "($postIds)";
 		
