@@ -200,7 +200,7 @@ class LinkEngine
 		array_shift($arr);
 		array_unshift($arr, $file);
 		$linkstr = call_user_func_array(array($this,  "createLinkArgList"), $arr);
-		echo("<redirect>$linkstr</redirect>");
+		echo("<redirect addplayerid=\"1\">$linkstr</redirect>");
 		exit;
 	}
 	

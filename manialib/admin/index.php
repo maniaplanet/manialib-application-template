@@ -5,6 +5,9 @@
  */
  
 require_once( dirname(__FILE__) . "/../core.inc.php" );
+
+AdminEngine::checkAuthentication();
+
 $link = LinkEngine::getInstance();
 
 require_once( APP_PATH . "header.php" );
@@ -19,6 +22,16 @@ $linkstr = $link->createLinkArgList("admin/posts.php");
 $ui->addItem();
 $ui->lastItem()->text->setText("Posts");
 $ui->lastItem()->icon->setSubStyle("Paint");
+$ui->lastItem()->setManialink($linkstr);
+
+$ui->addGap(56);
+
+$linkstr = $link->createLinkArgList("admin/logout.php");
+
+$ui->addItem();
+$ui->lastItem()->text->setText("Logout");
+$ui->lastItem()->icon->setStyle("Icons64x64_1");
+$ui->lastItem()->icon->setSubStyle("QuitRace");
 $ui->lastItem()->setManialink($linkstr);
 
 $ui->quitButton->setManialink($link->createLinkArgList("index.php"));

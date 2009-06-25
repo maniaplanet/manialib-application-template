@@ -5,11 +5,14 @@
  
 require_once("core.inc.php");
 
+
 require_once("header.php");
 
 require_once("navigation.php");
 
 Manialink::beginFrame(-34, 48, 1);
+	
+	AdminEngine::getInstance();
 	
 	Manialink::beginFrame(25, -15, 1);
 		

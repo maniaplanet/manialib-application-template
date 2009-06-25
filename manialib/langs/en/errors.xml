@@ -7,7 +7,7 @@
     <error_msg_team_too_big>Team must have less than [1] players</error_msg_team_too_big>
     <fatal_error>Fatal error</fatal_error>
     <error_message>An error occurred. Please try again later.</error_message>
-    <error_back_button>Back to ManiaTeam</error_back_button>
+    <error_back_button>Back</error_back_button>
     <restricted_access>Restricted access</restricted_access>
     <warning>Warning</warning>
   </language>

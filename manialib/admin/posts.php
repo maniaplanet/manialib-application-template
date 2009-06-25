@@ -7,6 +7,8 @@
 
 require_once( dirname(__FILE__) . "/../core.inc.php" );
 
+AdminEngine::checkAuthentication();
+
 require_once( APP_PATH . "header.php" );
 
 $ui = new Navigation;

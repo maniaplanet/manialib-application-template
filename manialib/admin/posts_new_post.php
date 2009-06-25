@@ -7,6 +7,8 @@
  
 require_once( dirname(__FILE__) . "/../core.inc.php" );
 
+AdminEngine::checkAuthentication();
+
 // TODO Ajouter l'auteur dans les posts
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -18,6 +18,8 @@ $ui->lastItem()->text->setText("Home");
 $ui->lastItem()->icon->setSubStyle("United");
 $ui->lastItem()->setManialink($linkstr);
 
+$ui->addGap(56);
+
 $linkstr = $link->createLinkArgList("admin/index.php");
 
 $ui->addItem();

@@ -123,12 +123,6 @@ function __date($timestamp)
 	}
 }
 
-
-
-
-
-
-
 /**
  * Writes a message in the debug log file
  */
@@ -291,6 +285,65 @@ function manialinkErrorHandler($errno, $errstr, $errfile, $errline)
 	}
 }
 
-set_error_handler("manialinkErrorHandler");
+function manialinkErrorHandlerDebug($errno, $errstr, $errfile, $errline)
+{
+	$session = SessionEngine :: getInstance();
+	$link = LinkEngine :: getInstance();
+	switch ($errno)
+	{
+		case E_USER_WARNING :
+			$msg = date('d/m/y H:i:s') . " [warning] ";
+			$msg .= $errstr . " ";
+			$msg .= "at url " . $link->createLink() . "\n";
+			error_log(htmlspecialchars_decode($msg), 3, ERROR_LOG);
+			break;
+		default :
+			$msg = date('d/m/y H:i:s') . " [error] ";
+			$msg .= $errstr . " ";
+			$msg .= "at url " . $link->createLink() . " ";
+			$msg .= $errno . " ";
+			$msg .= "in file " . $errfile . " ";
+			$msg .= "on line " . $errline . "\n";
+			error_log(htmlspecialchars_decode($msg), 3, ERROR_LOG);
+			
+			ob_clean();
+	
+			$ui = new Manialink;
+			$ui->draw();
+
+			$ui = new Panel(115, 85);
+			$ui->setAlign("center", "center");
+			$ui->titleBg->setSubStyle("BgTitle2");
+			$ui->title->setStyle("TextTitleError");
+			$ui->title->setText("Fatal Error");
+			$ui->draw();
+			
+			$ui = new Label(110);
+			$ui->setAlign("center", "center");
+			$ui->setPositionZ(1);
+			$ui->enableAutoNewLine();
+			$ui->setText($msg);
+			$ui->draw();
+
+			$ui = new Button;
+			$ui->setText(__("error_back_button"));
+			$link = LinkEngine :: getInstance();
+			$link->resetParams();
+			$ui->setManialink($link->createLink("index.php"));
+			$ui->setPosition(0, -35, 5);
+			$ui->setHalign("center");
+			$ui->draw();
+
+			Manialink :: theEnd();
+
+			exit;
+			break;
+	}
+}
+
+
+
+
+set_error_handler("manialinkErrorHandlerDebug");
 error_reporting(E_ALL);
 ?>
