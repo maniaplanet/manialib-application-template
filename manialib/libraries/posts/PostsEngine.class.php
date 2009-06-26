@@ -57,7 +57,7 @@ class PostsEngine
 		$this->postsTable = PostsStructure::getPostsTable();
 		$this->metaTagsTable = PostsStructure::getMetaTagsTable();
 		$this->contentTable = PostsStructure::getContentTable();
-		
+
 		if(!$session->get(self::$engineLoadedId))
 		{
 			if($this->dbInstall() === true)
@@ -67,7 +67,7 @@ class PostsEngine
 		}
 	}
 	
-	private function dbGetPosts($filter = "ORDER BY date DESC LIMIT 0, 5")
+	private function dbGetPosts($filter = "ORDER BY date_created DESC LIMIT 0, 5")
 	{
 		$db = DatabaseEngine::getInstance();
 		
@@ -83,7 +83,7 @@ class PostsEngine
 			$post = new Post($arr["post_id"]);
 			$post->setPostType($arr["post_type"]);
 			$post->setAuthor($arr["author"]);
-			$post->setDate($arr["date"]);
+			$post->setDate($arr["date_created"]);
 			$post->setTitle($arr["title"]);
 			$post->setContent($arr["content"]);
 			
@@ -145,13 +145,13 @@ class PostsEngine
 			"( " .
 				"post_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY , " .
 				"post_type TINYINT NOT NULL DEFAULT 0, " .
-				"date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , " .
+				"date_created TIMESTAMP NOT NULL DEFAULT 0, " .
 				"date_modified TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , " .
 				"author VARCHAR(25) NOT NULL , " .
 				"title VARCHAR(255) NOT NULL , " .
-				"INDEX ( date ), " .
-				"INDEX ( post_type ), " .
-				"INDEX ( author ) " .
+				"INDEX ( date_created ), " .
+				"INDEX ( date_modified ), " .
+				"INDEX ( post_type ) " .
 			") " .
 			"ENGINE = InnoDB " .
 			"CHARACTER SET utf8 " .

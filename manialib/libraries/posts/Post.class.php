@@ -57,7 +57,7 @@ class Post
 	function getAllMetaTags()
 	{
 		$tags = array();
-		foreach($this->metaTags as $name=>$value)
+		foreach((array) $this->metaTags as $name=>$value)
 		{
 			if(is_array($value))
 			{
@@ -152,9 +152,9 @@ class Post
 		
 		$db->query = 	
 			"INSERT INTO $postsTable " .
-			"(post_id, post_type, author, title) " .
+			"(post_id, post_type, author, title, date_created) " .
 			"VALUES " .
-			"($postId, $postType, $author, $title) " .
+			"($postId, $postType, $author, $title, NOW()) " .
 			"ON DUPLICATE KEY UPDATE " .
 			"post_type = VALUES(post_type), " .
 			"author = VALUES(author), " .

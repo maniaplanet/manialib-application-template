@@ -5,6 +5,8 @@
  * @author Maxime Raoust
  */
 
+// TODO Class GPC may be useless. LinkEngine should become RequestHandler ?
+
 class Gpc
 {	
 	/**

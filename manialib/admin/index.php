@@ -25,7 +25,14 @@ $ui->lastItem()->text->setText("Posts");
 $ui->lastItem()->icon->setSubStyle("Paint");
 $ui->lastItem()->setManialink($linkstr);
 
-$ui->addGap(56);
+$linkstr = $link->createLinkArgList("admins.php");
+
+$ui->addItem();
+$ui->lastItem()->text->setText("Admins");
+$ui->lastItem()->icon->setSubStyle("Profile");
+$ui->lastItem()->setManialink($linkstr);
+
+$ui->addGap(47);
 
 $linkstr = $link->createLinkArgList("logout.php");
 
