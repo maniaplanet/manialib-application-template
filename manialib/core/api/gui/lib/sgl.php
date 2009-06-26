@@ -11,7 +11,7 @@
  * The manialink class helps creating headers and footers of a manialink page
  * @package gui_api
  */
-class Manialink
+final class Manialink
 {
 	protected $type = "default";
 	protected $timeout = 0;
@@ -207,7 +207,7 @@ abstract class GuiElement
 	protected $imageFocusFile;
 	protected $xmlTagName = "xmltag"; // Redeclare this for each child
 	protected $xmlTagEnd = "/";
-	public $outputStream = "";
+	protected $output = "";
 
 	function __construct($sx=20, $sy=20)
 	{
@@ -372,67 +372,67 @@ abstract class GuiElement
 	function getAddPlayerId () 	{return $this->addPlayerId;}
 	function getImage () 		{return $this->imageFile;}
 
-	protected function streamAddAttribute ($name, $value)
+	final protected function outputAddAttribute ($name, $value)
 	{
 		if($value !== null)
 		{
-			$this->outputStream .= " $name=\"$value\"";
+			$this->output .= " $name=\"$value\"";
 		}
 	}
 
-	protected function streamBegin()
+	final protected function outputBegin()
 	{
-		$this->outputStream .= "<$this->xmlTagName";
+		$this->output .= "<$this->xmlTagName";
 	}
 
-	protected function streamEnd()
+	final protected function outputEnd()
 	{
-		$this->outputStream .= $this->xmlTagEnd.">\n";
+		$this->output .= $this->xmlTagEnd.">\n";
 	}
 
-	protected function streamStandardInfo()
+	final protected function outputStandard()
 	{
 		// Add pos
 		if($this->posX || $this->posY || $this->posZ)
 		{
 			if ($this->classicPositioning)
-				$this->streamAddAttribute("pos", "$this->posX $this->posY $this->posZ");
+				$this->outputAddAttribute("pos", "$this->posX $this->posY $this->posZ");
 			else
-				$this->streamAddAttribute("posn", "$this->posX $this->posY $this->posZ");
+				$this->outputAddAttribute("posn", "$this->posX $this->posY $this->posZ");
 		}
 
 		// Add size
 		if($this->sizeX || $this->sizeY)
 		{
 			if ($this->classicSizing)
-				$this->streamAddAttribute("size", "$this->sizeX $this->sizeY");
+				$this->outputAddAttribute("size", "$this->sizeX $this->sizeY");
 			else
-				$this->streamAddAttribute("sizen", "$this->sizeX $this->sizeY");
+				$this->outputAddAttribute("sizen", "$this->sizeX $this->sizeY");
 		}
 
 		// Add alignement
-		$this->streamAddAttribute("halign", $this->halign);
-		$this->streamAddAttribute("valign", $this->valign);
-		$this->streamAddAttribute("scale", $this->scale);
+		$this->outputAddAttribute("halign", $this->halign);
+		$this->outputAddAttribute("valign", $this->valign);
+		$this->outputAddAttribute("scale", $this->scale);
 
 		// Add styles
-		$this->streamAddAttribute("style", $this->style);
-		$this->streamAddAttribute("substyle", $this->subStyle);
-		$this->streamAddAttribute("bgcolor", $this->bgcolor);
+		$this->outputAddAttribute("style", $this->style);
+		$this->outputAddAttribute("substyle", $this->subStyle);
+		$this->outputAddAttribute("bgcolor", $this->bgcolor);
 
 		// Add links
-		$this->streamAddAttribute("addplayerid", $this->addPlayerId);
-		$this->streamAddAttribute("manialink", $this->manialink);
-		$this->streamAddAttribute("url", $this->url);
-		$this->streamAddAttribute("maniazones", $this->maniazones);
+		$this->outputAddAttribute("addplayerid", $this->addPlayerId);
+		$this->outputAddAttribute("manialink", $this->manialink);
+		$this->outputAddAttribute("url", $this->url);
+		$this->outputAddAttribute("maniazones", $this->maniazones);
 
 		// Add action
-		$this->streamAddAttribute("action", $this->action);
-		$this->streamAddAttribute("actionkey", $this->actionKey);
+		$this->outputAddAttribute("action", $this->action);
+		$this->outputAddAttribute("actionkey", $this->actionKey);
 
 		// Add images
-		$this->streamAddAttribute("image", $this->imageFile);
-		$this->streamAddAttribute("imagefocus", $this->imageFocusFile);
+		$this->outputAddAttribute("image", $this->imageFile);
+		$this->outputAddAttribute("imagefocus", $this->imageFocusFile);
 
 
 	}
@@ -440,14 +440,15 @@ abstract class GuiElement
 	/**
 	 * Redeclare this method in children classes to add attributes
 	 */
-	protected function streamAdvancedInfo() {
+	protected function outputOptional() 
+	{
 
 	}
 
 	/**
 	 * Redeclare this method in chlidren classes to execute code before drawing
 	 */
-	protected function optionalPreInstructions()
+	protected function outputPreFilter()
 	{
 
 	}
@@ -455,22 +456,23 @@ abstract class GuiElement
 	/**
 	 * Redeclare this method in children classes to execute code after drawing
 	 */
-	protected function optionalInstructions() {
+	protected function outputPostFilter() 
+	{
 
 	}
 
 	/**
 	 * Get the xml output
 	 */
-	protected function getXmlOutput()
+	final protected function outputGetXml()
 	{
-		$this->optionalPreInstructions();
-		$this->streamBegin();
-		$this->streamStandardInfo();
-		$this->streamAdvancedInfo();
-		$this->streamEnd();
-		$this->optionalInstructions();
-		return $this->outputStream;
+		$this->outputPreFilter();
+		$this->outputBegin();
+		$this->outputStandard();
+		$this->outputOptional();
+		$this->outputEnd();
+		$this->outputPostFilter();
+		return $this->output;
 	}
 
 	/**
@@ -480,11 +482,11 @@ abstract class GuiElement
 	{
 		if($outputBuffer !== null)
 		{
-			$outputBuffer .= $this->getXmlOutput();
+			$outputBuffer .= $this->outputGetXml();
 		}
 		else
 		{
-			echo($this->getXmlOutput());
+			echo($this->outputGetXml());
 		}
 	}
 }
@@ -577,10 +579,10 @@ class Format extends GuiElement
 		$this->setSubStyle(null);
 	}
 
-	function streamAdvancedInfo()
+	function outputOptional()
 	{
-		$this->streamAddAttribute("textsize", $this->textSize);
-		$this->streamAddAttribute("textcolor", $this->textColor);
+		$this->outputAddAttribute("textsize", $this->textSize);
+		$this->outputAddAttribute("textcolor", $this->textColor);
 	}
 }
 
@@ -642,13 +644,13 @@ class Label extends Format
 		return $this->maxline;
 	}
 
-	function streamAdvancedInfo()
+	function outputOptional()
 	{
-		parent::streamAdvancedInfo();
-		$this->streamAddAttribute("text", $this->text);
-		$this->streamAddAttribute("textid", $this->textid);
-		$this->streamAddAttribute("autonewline", $this->autoNewLine);
-		$this->streamAddAttribute("maxline", $this->maxline);
+		parent::outputOptional();
+		$this->outputAddAttribute("text", $this->text);
+		$this->outputAddAttribute("textid", $this->textid);
+		$this->outputAddAttribute("autonewline", $this->autoNewLine);
+		$this->outputAddAttribute("maxline", $this->maxline);
 	}
 }
 
@@ -679,11 +681,11 @@ class Entry extends Label
 		$this->defaultValue = htmlspecialchars($plop);
 	}
 
-	function streamAdvancedInfo()
+	function outputOptional()
 	{
-		parent::streamAdvancedInfo();
-		$this->streamAddAttribute("name", $this->name);
-		$this->streamAddAttribute("default", $this->defaultValue);
+		parent::outputOptional();
+		$this->outputAddAttribute("name", $this->name);
+		$this->outputAddAttribute("default", $this->defaultValue);
 	}
 }
 
@@ -707,10 +709,10 @@ class FileEntry extends Entry
 		$this->folder = $plop;
 	}
 
-	function streamAdvancedInfo()
+	function outputOptional()
 	{
-		parent::streamAdvancedInfo();
-		$this->streamAddAttribute("folder", $this->folder );
+		parent::outputOptional();
+		$this->outputAddAttribute("folder", $this->folder );
 	}
 }
 

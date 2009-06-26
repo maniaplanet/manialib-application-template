@@ -40,7 +40,7 @@ class Panel extends Quad
 		$this->title->setSizeX($x-4);
 	}
 	
-	protected function optionalInstructions()
+	protected function outputPostFilter()
 	{
 		// Algin the title and its bg at the top center of the main quad		
 		$arr = Manialink::getAlignedPos ($this, "center", "top");
@@ -50,10 +50,10 @@ class Panel extends Quad
 		$this->title->setHalign("center");
 		
 		// Draw them
-		Manialink::beginFrame($x, $y-1, $this->posZ+1, $this->outputStream);
-			$this->titleBg->draw($this->outputStream);
-			$this->title->draw($this->outputStream);
-		Manialink::endFrame($this->outputStream);
+		Manialink::beginFrame($x, $y-1, $this->posZ+1, $this->output);
+			$this->titleBg->draw($this->output);
+			$this->title->draw($this->output);
+		Manialink::endFrame($this->output);
 	}
 }
 

@@ -31,7 +31,7 @@ class PageNavigator
 	protected $showText;
 	protected $pageNumber;
 	protected $pageIndex;
-	protected $outputStream;
+	protected $output;
 	protected $posX;
 	protected $posY;
 	protected $posZ;
@@ -51,7 +51,7 @@ class PageNavigator
 		$this->showText = true;
 		$this->pageIndex = 1;
 		$this->pageNumber = 2;
-		$this->outputStream = "";
+		$this->output = "";
 	}
 
 	function setIconSize($iconSize)
@@ -126,7 +126,7 @@ class PageNavigator
 		$this->pageIndex = $plop;
 	}
 
-	function getXmlOutput()
+	function outputGetXml()
 	{
 		// Arrow styles
 		if ($this->pageIndex <= 1)
@@ -194,39 +194,39 @@ class PageNavigator
 			0, 1);
 
 		// Get the output
-		Manialink::beginFrame($this->posX, $this->posY, $this->posZ, $this->outputStream);
+		Manialink::beginFrame($this->posX, $this->posY, $this->posZ, $this->output);
 
 			if ($this->showText)
 			{
-				$this->text->draw($this->outputStream);
+				$this->text->draw($this->output);
 			}
 			
-			$this->arrowNext->draw($this->outputStream);
-			$this->arrowPrev->draw($this->outputStream);
+			$this->arrowNext->draw($this->output);
+			$this->arrowPrev->draw($this->output);
 			
 			if ($this->showLast)
 			{
-				$this->arrowFirst->draw($this->outputStream);
-				$this->arrowLast->draw($this->outputStream);
+				$this->arrowFirst->draw($this->output);
+				$this->arrowLast->draw($this->output);
 			}
 			
 			if ($this->showFastNext)
 			{
-				$this->arrowFastNext->draw($this->outputStream);
-				$this->arrowFastPrev->draw($this->outputStream);
+				$this->arrowFastNext->draw($this->output);
+				$this->arrowFastPrev->draw($this->output);
 			}
 
-		Manialink::endFrame($this->outputStream);
+		Manialink::endFrame($this->output);
 
-		return $this->outputStream;
+		return $this->output;
 	}
 
 	function draw(& $outputBuffer = null)
 	{
 		if ($outputBuffer !== null)
-			$outputBuffer .= $this->getXmlOutput();
+			$outputBuffer .= $this->outputGetXml();
 		else
-			echo ($this->getXmlOutput());
+			echo ($this->outputGetXml());
 	}
 }
 ?>

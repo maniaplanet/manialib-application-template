@@ -83,33 +83,33 @@ class Navigation extends Quad
 		$this->showQuitButton = false;
 	}
 	
-	protected function optionalPreInstructions () 
+	protected function outputPreFilter () 
 	{
-		Manialink::beginFrame(-64, 48, 1, $this->outputStream);
+		Manialink::beginFrame(-64, 48, 1, $this->output);
 	}
 	
-	protected function optionalInstructions () 
+	protected function outputPostFilter () 
 	{
 		// Draw the header	
-		Manialink::beginFrame($this->posX+0.5, $this->posY-0.5, $this->posZ+1, $this->outputStream);
-		$this->titleBg->draw($this->outputStream);
-		$this->title->draw($this->outputStream);
-		$this->subTitle->draw($this->outputStream);
-		$this->logo->draw($this->outputStream);
+		Manialink::beginFrame($this->posX+0.5, $this->posY-0.5, $this->posZ+1, $this->output);
+		$this->titleBg->draw($this->output);
+		$this->title->draw($this->output);
+		$this->subTitle->draw($this->output);
+		$this->logo->draw($this->output);
 		
 		// Draw the items
 		foreach($this->items as $item) 
 		{
-			$item->draw($this->outputStream);
+			$item->draw($this->output);
 		}
 		if($this->showQuitButton) 
 		{
 			$this->quitButton->setSizeX($this->sizeX-1);
 			$this->quitButton->setPosition(0, -$this->sizeY+$this->quitButton->getSizeY()+2);
-			$this->quitButton->draw($this->outputStream);
+			$this->quitButton->draw($this->output);
 		}
-		Manialink::endFrame($this->outputStream);
-		Manialink::endFrame($this->outputStream);
+		Manialink::endFrame($this->output);
+		Manialink::endFrame($this->output);
 	}	
 }
 
@@ -154,7 +154,7 @@ class NavigationButton extends Quad
 		$this->text->setStyle(GUI_NAVIGATION_BUTTON_SELECTED_TEXT_DEFAULT_STYLE);	
 	}
 	
-	protected function optionalInstructions ()
+	protected function outputPostFilter ()
 	{
 		// Calculus and stuff
 		$newPos = Manialink::getAlignedPos ($this, "left", "center");
@@ -167,10 +167,10 @@ class NavigationButton extends Quad
 		}
 		
 		// Drawing
-		Manialink::beginFrame($newPos["x"], $newPos["y"], $this->posZ+1, $this->outputStream);
-			$this->text->draw($this->outputStream);
-			$this->icon->draw($this->outputStream);
-		Manialink::endFrame($this->outputStream);
+		Manialink::beginFrame($newPos["x"], $newPos["y"], $this->posZ+1, $this->output);
+			$this->text->draw($this->output);
+			$this->icon->draw($this->output);
+		Manialink::endFrame($this->output);
 	}
 }
 
