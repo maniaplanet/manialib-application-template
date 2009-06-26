@@ -6,7 +6,7 @@
  */
 
 $posts = PostsEngine::getInstance();
-$link = LinkEngine::GetInstance();
+$request = RequestEngine::GetInstance();
  
 $ui = new Panel(50, 60);
 $ui->title->setText("Last posts");
@@ -33,13 +33,13 @@ foreach($posts->getPosts() as $postId=>$post)
 		}
 		$ui->draw();
 		
-		$link->setParam("post_id", $post->id);
+		$request->set("post_id", $post->id);
 		
 		$ui = new Label(40);
 		$ui->setPosition(10, -1, 1);
 		$ui->setStyle("TextValueMedium");
 		$ui->setText('$ff0' . $post->getTitle());
-		$ui->setManialink($link->createLink());
+		$ui->setManialink($request->createLink());
 		$ui->draw();
 		
 		$ui = new Label(46);

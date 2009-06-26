@@ -11,7 +11,7 @@ AdminEngine::checkAuthentication();
 
 $session->delete("admin_authenticated");
 
-LinkEngine::getInstance()->redirectManialink("../index.php");
+RequestEngine::getInstance()->redirectManialink("../index.php");
 
 
 ?>

@@ -32,7 +32,7 @@ else
 
 // Core objects init
 $session = SessionEngine::getInstance();
-$link = LinkEngine::getInstance();
+$request = RequestEngine::getInstance();
 
 
 

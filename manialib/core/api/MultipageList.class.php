@@ -56,7 +56,7 @@ class MultipageList
 	{
 		if($this->currentPage === null)
 		{
-			$this->currentPage = Gpc::getInt($this->urlParamName, $this->defaultPage);
+			$this->currentPage = (int) RequestEngine::getInstance()->get($this->urlParamName, $this->defaultPage);
 		}
 		if( $this->currentPage < 1)
 		{
@@ -84,7 +84,7 @@ class MultipageList
 	
 	function drawPageNavigator($x, $y, $z, $file=null)
 	{
-		$link = LinkEngine::getInstance();
+		$request = RequestEngine::getInstance();
 		if($this->getPageNumber() > 1)
 		{
 			$ui = $this->pageNavigator;		
@@ -94,29 +94,29 @@ class MultipageList
 
 			if($ui->isLastShown())
 			{
-				$link->setParam($this->urlParamName, 1);
-				$ui->arrowFirst->setManialink($link->createLink($file));
+				$request->set($this->urlParamName, 1);
+				$ui->arrowFirst->setManialink($request->createLink($file));
 				
-				$link->setParam($this->urlParamName, $this->getPageNumber());
-				$ui->arrowLast->setManialink($link->createLink($file));
+				$request->set($this->urlParamName, $this->getPageNumber());
+				$ui->arrowLast->setManialink($request->createLink($file));
 			}
 			
 			if($ui->isFastNextShown())
 			{
-				$link->setParam($this->urlParamName, $this->currentPage+5);
-				$ui->arrowFastNext->setManialink($link->createLink($file));
+				$request->set($this->urlParamName, $this->currentPage+5);
+				$ui->arrowFastNext->setManialink($request->createLink($file));
 				
-				$link->setParam($this->urlParamName, $this->currentPage-5);
-				$ui->arrowFastPrev->setManialink($link->createLink($file));
+				$request->set($this->urlParamName, $this->currentPage-5);
+				$ui->arrowFastPrev->setManialink($request->createLink($file));
 			}
 				
-			$link->setParam($this->urlParamName, $this->currentPage+1);
-			$ui->arrowNext->setManialink($link->createLink($file));
+			$request->set($this->urlParamName, $this->currentPage+1);
+			$ui->arrowNext->setManialink($request->createLink($file));
 			
-			$link->setParam($this->urlParamName, $this->currentPage-1);
-			$ui->arrowPrev->setManialink($link->createLink($file));
+			$request->set($this->urlParamName, $this->currentPage-1);
+			$ui->arrowPrev->setManialink($request->createLink($file));
 			
-			$link->setParam($this->urlParamName, $this->currentPage);
+			$request->set($this->urlParamName, $this->currentPage);
 			
 			$ui->draw();
 		}

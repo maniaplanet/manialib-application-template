@@ -10,27 +10,25 @@ require_once( dirname(__FILE__) . "/../core.inc.php" );
 AdminEngine::checkAuthentication();
 
 $posts = PostsEngine::getInstance();
-$link = LinkEngine::getInstance();
+$request = RequestEngine::getInstance();
 
-if($postId = Gpc::get("post_id"))
+if($postId = $request->get("post_id"))
 {
 	if($post = $posts->getPost($postId))
 	{
-		if(Gpc::get("edit"))
+		if($request->get("edit"))
 		{
 			
 			$session->set("post_object", rawurlencode(serialize($post)));
 			$session->set("post_editing", 1);
-			$link->redirectManialink("posts_post.php");
+			$request->redirectManialink("posts_post.php");
 		}
-		elseif(Gpc::get("delete") && Gpc::get("confirm"))
+		elseif($request->get("delete") && $request->get("confirm"))
 		{
 			$post->dbDelete();
 			$posts->clear();
-			unset($_GET["delete"]);
-			unset($_GET["confirm"]);
-			$link->deleteParam("delete");
-			$link->deleteParam("confirm");
+			$request->delete("delete");
+			$request->delete("confirm");
 		}
 	}
 }
@@ -42,7 +40,7 @@ $ui->title->setText("Manage posts");
 $ui->subTitle->setText("Modify posts");
 $ui->logo->setSubStyle("Paint");
 
-$ui->quitButton->setManialink($link->createLinkArgList("posts.php"));
+$ui->quitButton->setManialink($request->createLinkArgList("posts.php"));
 $ui->draw();
 
 Manialink::beginFrame(15, 40, 1);
@@ -52,7 +50,7 @@ Manialink::beginFrame(15, 40, 1);
 	$ui->title->setText("Manage posts");
 	$ui->draw();
 
-	if(Gpc::get("delete"))
+	if($request->get("delete"))
 	{
 		$ui = new Label(50);
 		$ui->setHalign("center");
@@ -62,14 +60,14 @@ Manialink::beginFrame(15, 40, 1);
 		$ui->setText("Do you really want to delete this post ?");
 		$ui->draw();
 		
-		$link->setParam("confirm", 1);
-		$linkstr = $link->createLink();
+		$request->set("confirm", 1);
+		$link = $request->createLink();
 		
 		$ui = new Button;
 		$ui->setHalign("center");
 		$ui->setPosition(0, -30, 1);
 		$ui->setText("Confirm");
-		$ui->setManialink($linkstr);
+		$ui->setManialink($link);
 		$ui->draw();
 		
 	}
@@ -96,36 +94,36 @@ Manialink::beginFrame(15, 40, 1);
 				}
 				$ui->draw();
 				
-				$link->setParam("post_id", $post->id);
-				$linkstr = $link->createLink("../index.php");
+				$request->set("post_id", $post->id);
+				$link = $request->createLink("../index.php");
 				
 				$ui = new Label(40);
 				$ui->setPosition(10, -1, 1);
 				$ui->setStyle("TextValueMedium");
 				$ui->setText('$ff0' . $post->getTitle());
-				$ui->setManialink($linkstr);
+				$ui->setManialink($link);
 				$ui->draw();
 				
-				$link->setParam("edit", 1);
-				$linkstr = $link->createLink();
-				$link->deleteParam("edit");
+				$request->set("edit", 1);
+				$link = $request->createLink();
+				$request->delete("edit");
 				
 				$ui = new Label(10);
 				$ui->setPosition(58, -2.5, 1);
 				$ui->setStyle("TextValueSmall");
 				$ui->setText('$o$s' . "Edit");
-				$ui->setManialink($linkstr);
+				$ui->setManialink($link);
 				$ui->draw();
 				
-				$link->setParam("delete", 1);
-				$linkstr = $link->createLink();
-				$link->deleteParam("delete");
+				$request->set("delete", 1);
+				$link = $request->createLink();
+				$request->delete("delete");
 				
 				$ui = new Label(10);
 				$ui->setPosition(65, -2.5, 1);
 				$ui->setStyle("TextValueSmall");
 				$ui->setText('$o$s' . "Delete");
-				$ui->setManialink($linkstr);
+				$ui->setManialink($link);
 				$ui->draw();
 				
 				$ui = new Label(46);

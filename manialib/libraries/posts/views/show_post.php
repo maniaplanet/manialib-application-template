@@ -6,9 +6,9 @@
  */
 
 $posts = PostsEngine::getInstance();
-$link = LinkEngine::GetInstance();
+$request = RequestEngine::GetInstance();
 
-$post = $posts->getPost(Gpc::get("post_id"));
+$post = $posts->getPost($request->get("post_id"));
 
 $ui = new Panel(50, 60);
 $ui->title->setText("Post");
@@ -39,7 +39,7 @@ if($post)
 		$ui->setPosition(10, -1, 1);
 		$ui->setStyle("TextValueMedium");
 		$ui->setText('$ff0' . $post->getTitle());
-		$ui->setManialink($link->createLink());
+		$ui->setManialink($request->createLink());
 		$ui->draw();
 		
 		$ui = new Label(46);
@@ -63,15 +63,15 @@ if($post)
 	Manialink::endFrame();
 }
 
-$link->deleteParam("post_id");
-$linkstr = $link->createLink("index.php");
+$request->delete("post_id");
+$link = $request->createLink("index.php");
 
 $ui = new Button;
 $ui->setHalign("center");
 $ui->setPosition(25, -55, 1);
 $ui->setScale(0.8);
 $ui->setText("Back");
-$ui->setManialink($linkstr);
+$ui->setManialink($link);
 $ui->draw();
 
 

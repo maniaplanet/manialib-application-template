@@ -6,11 +6,11 @@
  */
 
 require_once( dirname(__FILE__) . "/../core.inc.php" );
-$link = LinkEngine::getInstance();
+$request = RequestEngine::getInstance();
 
 if(AdminEngine::authenticate())
 {
-	$link->redirectManialink("index.php");
+	$request->redirectManialink("index.php");
 }
 
 require_once( APP_PATH . "header.php" );
@@ -20,7 +20,7 @@ $ui->title->setText("Admin");
 $ui->subTitle->setText("Manage your Manialink");
 $ui->logo->setSubStyle("ProfileAdvanced");
 
-$ui->quitButton->setManialink($link->createLinkArgList("index.php"));
+$ui->quitButton->setManialink($request->createLinkArgList("index.php"));
 $ui->draw();
 
 Manialink::beginFrame(15, 0, 2);
@@ -42,16 +42,16 @@ Manialink::beginFrame(15, 0, 2);
 	$ui->setName("password");
 	$ui->draw();
 	
-	$link->setParam("password", "password");
+	$request->set("password", "password");
 	
-	$linkstr = $link->createLink("login.php");
+	$link = $request->createLink("login.php");
 	
 	$ui = new Button;
 	$ui->setHalign("center");
 	$ui->setPosition(0, -10, 1);
 	$ui->setText("Sign in");
 	$ui->addPlayerId();
-	$ui->setManialink($linkstr);
+	$ui->setManialink($link);
 	$ui->draw();
 	
 	

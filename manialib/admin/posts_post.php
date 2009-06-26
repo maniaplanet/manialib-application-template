@@ -14,9 +14,9 @@ AdminEngine::checkAuthentication();
 ////////////////////////////////////////////////////////////////////////////////
 
 $session = SessionEngine::getInstance();
-$link = LinkEngine::getInstance();
+$request = RequestEngine::getInstance();
 
-$currentStep = Gpc::get("step", 1);
+$currentStep = $request->get("step", 1);
 $isEditing = (bool) $session->get("post_editing", false);
 
 $steps = array (
@@ -46,17 +46,17 @@ switch($currentStep)
 	
 	// Save type
 	case 2:
-		$post->setPostType(intval(Gpc::get("post_type", 0)));
-		$link->deleteParam("post_type");
+		$post->setPostType(intval($request->get("post_type", 0)));
+		$request->delete("post_type");
 		
 	break;
 	
 	// Save content & title
 	case 3 :
-		$post->setTitle(Gpc::get("post_title"));
-		$post->setContent(Gpc::get("post_content"));
-		$link->deleteParam("post_title");
-		$link->deleteParam("post_content");
+		$post->setTitle($request->get("post_title"));
+		$post->setContent($request->get("post_content"));
+		$request->delete("post_title");
+		$request->delete("post_content");
 		
 	break;
 	
@@ -64,12 +64,12 @@ switch($currentStep)
 	case 4 :
 		for($i=1; $i<=10; $i++)
 		{
-			$link->deleteParam("meta_tag_name$i");
-			$link->deleteParam("meta_tag_value$i");
+			$request->delete("meta_tag_name$i");
+			$request->delete("meta_tag_value$i");
 			
-			if($tagName = Gpc::get("meta_tag_name$i"))
+			if($tagName = $request->get("meta_tag_name$i"))
 			{
-				if($tagValue = Gpc::get("meta_tag_value$i"))
+				if($tagValue = $request->get("meta_tag_value$i"))
 				{
 					$post->addMetaTag($tagName, $tagValue);
 				}
@@ -83,7 +83,7 @@ switch($currentStep)
 		unset($post);
 		$session->delete("post_object");
 		$session->delete("post_editing");
-		$link->redirectManialink("posts_manage.php");
+		$request->redirectManialink("posts_manage.php");
 	break;
 	
 	// Default
@@ -132,7 +132,7 @@ foreach($steps as $stepId=>$stepName)
 
 }
 
-$ui->quitButton->setManialink($link->createLinkArgList("posts.php"));
+$ui->quitButton->setManialink($request->createLinkArgList("posts.php"));
 $ui->draw();
 // End navigation
 
@@ -165,16 +165,16 @@ Manialink::beginFrame(-34, 48, 1);
 						$style .= '$ff0';
 					}
 					
-					$link->setParam("post_type", $postTypeId);
-					$link->setParam("step", $currentStep+1);
-					$linkstr = $link->createLink("posts_post.php");
+					$request->set("post_type", $postTypeId);
+					$request->set("step", $currentStep+1);
+					$link = $request->createLink("posts_post.php");
 
 					Manialink::beginFrame(0, -11-5*$i, 2);
 						
 						$ui = new Quad(38, 5);
 						$ui->setHalign("center");
 						$ui->setSubStyle("BgCardSystem");
-						$ui->setManialink($linkstr);
+						$ui->setManialink($link);
 						$ui->draw();
 						
 						$ui = new Label(50);
@@ -210,7 +210,7 @@ Manialink::beginFrame(-34, 48, 1);
 				$ui->setDefault($post->getTitle());
 				$ui->draw();
 				
-				$link->setParam("post_title", "title");
+				$request->set("post_title", "title");
 				
 				$ui = new Label;
 				$ui->setPosition(-36, -20, 1);
@@ -226,16 +226,16 @@ Manialink::beginFrame(-34, 48, 1);
 				$ui->setDefault($post->getContent());
 				$ui->draw();
 				
-				$link->setParam("post_content", "content");
+				$request->set("post_content", "content");
 				
-				$link->setParam("step", $currentStep+1);
-				$linkstr = $link->createLink("posts_post.php");
+				$request->set("step", $currentStep+1);
+				$link = $request->createLink("posts_post.php");
 				
 				$ui = new Button;
 				$ui->setHalign("center");
 				$ui->setPosition(0, -72, 1);
 				$ui->setText("Continue");
-				$ui->setManialink($linkstr);
+				$ui->setManialink($link);
 				$ui->draw();
 				
 			break;
@@ -282,7 +282,7 @@ Manialink::beginFrame(-34, 48, 1);
 						$ui->setDefault($name);
 						$ui->draw();
 						
-						$link->setParam("meta_tag_name$i", "meta_tag_name$i");
+						$request->set("meta_tag_name$i", "meta_tag_name$i");
 						
 						$ui = new Entry(34);
 						$ui->setPositionX(0);
@@ -290,19 +290,19 @@ Manialink::beginFrame(-34, 48, 1);
 						$ui->setDefault($value);
 						$ui->draw();
 						
-						$link->setParam("meta_tag_value$i", "meta_tag_value$i");
+						$request->set("meta_tag_value$i", "meta_tag_value$i");
 					
 					Manialink::endFrame();
 				}
 				
-				$link->setParam("step", $currentStep+1);
-				$linkstr = $link->createLink("posts_post.php");
+				$request->set("step", $currentStep+1);
+				$link = $request->createLink("posts_post.php");
 				
 				$ui = new Button;
 				$ui->setHalign("center");
 				$ui->setPosition(0, -72, 1);
 				$ui->setText("Continue");
-				$ui->setManialink($linkstr);
+				$ui->setManialink($link);
 				$ui->draw();
 				
 			break;
@@ -321,15 +321,15 @@ Manialink::beginFrame(-34, 48, 1);
 				$ui->setText("Your post is ready to be published.");
 				$ui->draw();
 				
-				$link->setParam("step", $currentStep+1);
-				$linkstr = $link->createLink("posts_post.php");
+				$request->set("step", $currentStep+1);
+				$link = $request->createLink("posts_post.php");
 				
 				$ui = new Button;
 				$ui->setHalign("center");
 				$ui->setPosition(0, -20, 1);
 				$ui->setScale(2);
 				$ui->setText("Publish");
-				$ui->setManialink($linkstr);
+				$ui->setManialink($link);
 				$ui->draw();
 				
 			break;

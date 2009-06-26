@@ -16,7 +16,7 @@ class AdminEngine
  	{
  		if(!self::authenticate())
 		{
-			LinkEngine::getInstance()->redirectManialink("login.php");
+			RequestEngine::getInstance()->redirectManialink("login.php");
 		}
  	}
  	 	
@@ -29,7 +29,7 @@ class AdminEngine
  			return true;
  		}
  		
- 		$password = Gpc::get("password");
+ 		$password = RequestEngine::getInstance()->get("password");
  		$login = $session->get("login", "");
  		
  		if(empty($login) || empty($password))

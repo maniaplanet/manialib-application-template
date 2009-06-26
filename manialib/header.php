@@ -4,7 +4,7 @@
  * @author Maxime Raoust
  */
 
-$link = LinkEngine::GetInstance();
+$request = RequestEngine::GetInstance();
 
 $ui = new Manialink;
 $ui->draw();
@@ -25,19 +25,19 @@ $ui = new Icon64;
 $ui->setAlign("right", "bottom");
 $ui->setSubStyle("Refresh");
 $ui->setPosition(64, -48, 15);
-$ui->setManialink($link->createLink());
+$ui->setManialink($request->createLink());
 $ui->draw();
 
 
-$link->setParam("XDEBUG_SESSION_START", "testID");
-$linkstr = $link->createLink();
-$link->deleteParam("XDEBUG_SESSION_START");
+$request->set("XDEBUG_SESSION_START", "testID");
+$link = $request->createLink();
+$request->delete("XDEBUG_SESSION_START");
 
 $ui = new Icon64;
 $ui->setAlign("right", "bottom");
 $ui->setPosition(57, -48, 15);
 $ui->setSubStyle("ToolRoot");
-$ui->setManialink($linkstr);
+$ui->setManialink($link);
 $ui->draw();
 
 

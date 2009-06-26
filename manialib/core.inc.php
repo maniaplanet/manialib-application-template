@@ -8,19 +8,19 @@
  
 require_once( "core/inc.php" );
 
+$request = RequestEngine::getInstance();
 
-if($playerLogin = Gpc::get("playerlogin"))
+if($playerLogin = $request->get("playerlogin"))
 {
 	$session->set("login", $playerLogin);
 }
 
-$link = LinkEngine::getInstance();
 
-$link->registerProtectedParam("playerlogin");
 
-$link->registerGlobalParam("login");
-$link->registerGlobalParam("nickname");
-$link->registerGlobalParam("path");
-$link->registerGlobalParam("lang");
+$request->registerProtectedParam("playerlogin");
+$request->registerGlobalParam("login");
+$request->registerGlobalParam("nickname");
+$request->registerGlobalParam("path");
+$request->registerGlobalParam("lang");
 
 ?>
