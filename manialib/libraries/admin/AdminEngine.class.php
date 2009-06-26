@@ -9,7 +9,6 @@ class AdminEngine
 {
 	// TODO Admin management
 	private static $instance;
-	private static $engineLoadedId = "admin_engine_loaded";
  	protected $adminsTable;
  	
  	public static function checkAuthentication()
@@ -24,15 +23,19 @@ class AdminEngine
  	{
  		$session = SessionEngine::getInstance();
  		
+ 		if(!($login = $session->get("login", "")))
+ 		{
+ 			return false;
+ 		}
+ 		
  		if($session->get("admin_authenticated"))
  		{
  			return true;
  		}
  		
  		$password = RequestEngine::getInstance()->get("password");
- 		$login = $session->get("login", "");
  		
- 		if(empty($login) || empty($password))
+ 		if(empty($password))
  		{
  			return false;
  		}
@@ -59,14 +62,19 @@ class AdminEngine
  	private function __construct()
  	{
  		$session = SessionEngine::getInstance();
+ 		$request = RequestEngine::getInstance();
  		
  		$this->adminsTable = AdminStructure::getAdminsTable();
  		
- 		if(!$session->get(self::$engineLoadedId))
+ 		if(!$session->get(__CLASS__))
 		{
-			if($this->dbInstall() === true)
+			if(!$session->get("login"))
 			{
-				$session->set(self::$engineLoadedId, 1);
+				$request->redirectManialink("login.php");
+			}
+			elseif($this->dbInstall() === true)
+			{
+				$session->set(__CLASS__, 1);
 			}
 		}
  	}
@@ -97,6 +105,7 @@ class AdminEngine
  	protected function dbInstall()
  	{
  		$db = DatabaseEngine::getInstance();
+		$session = SessionEngine::getInstance();
 		
 		// Check if the tables exists
 		$like = DATABASE_PREFIX . "admin%";
@@ -128,8 +137,8 @@ class AdminEngine
 			"COLLATE utf8_general_ci";
 		$db->query();
 		
-		// Admin
-		$admin = new Admin("gou1", "a");
+		// Default admin
+		$admin = new Admin($session->get("login"), $session->get("login"));
 		$admin->dbUpdate();
  	}
  	

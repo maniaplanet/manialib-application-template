@@ -11,10 +11,9 @@ define ("POST_TYPE_NEWS", 1);
 class PostsEngine 
 {
 	private static $instance;
-	private static $engineLoadedId = "posts_engine_loaded";
 	
 	private $posts = array();
-	
+		
 	public $postsTable;
 	public $contentTable;
 	public $metaTagsTable;
@@ -58,11 +57,11 @@ class PostsEngine
 		$this->metaTagsTable = PostsStructure::getMetaTagsTable();
 		$this->contentTable = PostsStructure::getContentTable();
 
-		if(!$session->get(self::$engineLoadedId))
+		if(!$session->get(__CLASS__))
 		{
 			if($this->dbInstall() === true)
 			{
-				$session->set(self::$engineLoadedId, 1);
+				$session->set(__CLASS__, 1);
 			}
 		}
 	}

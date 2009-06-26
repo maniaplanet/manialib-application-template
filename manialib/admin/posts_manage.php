@@ -69,7 +69,6 @@ Manialink::beginFrame(15, 40, 1);
 		$ui->setText("Confirm");
 		$ui->setManialink($link);
 		$ui->draw();
-		
 	}
 	else
 	{

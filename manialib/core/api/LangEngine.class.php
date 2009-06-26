@@ -45,14 +45,14 @@ class LangEngine
 	{
 		$session = SessionEngine::getInstance();
 		$this->currentLang = $session->get("lang", "en");
-		if($dico = $session->get("dico_cache"))
+		if($dico = $session->get(__CLASS__))
 		{
 			$this->dico = unserialize(rawurldecode($dico));
 		}
 		else
 		{
 			$this->loadDicoRecursive(APP_LANGS_PATH);
-			$session->set("dico_cache", rawurlencode(serialize($this->dico)));
+			$session->set(__CLASS__, rawurlencode(serialize($this->dico)));
 		}
 	}
 	
