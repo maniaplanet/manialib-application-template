@@ -46,11 +46,22 @@ final class RequestEngine
 	}
 	
 	/**
-	 * Deletes a request paramater
+	 * Deletes a request parameter
 	 */
 	function delete($name)
 	{
 		unset($this->params[$name]);
+	}
+	
+	/**
+	 * Restore a request parameter to the value it had when the page was loaded
+	 */
+	function restore($name)
+	{
+		if(isset($this->requestParams[$name]))
+		{
+			$this->params[$name] = $this->requestParams[$name];
+		}
 	}
 	
 	/**

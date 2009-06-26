@@ -7,7 +7,6 @@
 
 class AdminEngine 
 {
-	// TODO Admin management
 	private static $instance;
  	protected $adminsTable;
  	
@@ -47,6 +46,19 @@ class AdminEngine
  		}
  		
  		return false;
+ 	}
+ 	
+ 	public static function changePassword($login, $current, $new)
+ 	{
+ 		if(!self::getInstance()->dbAuthenticate($login, sha1($current)))
+ 		{
+ 			return false;
+ 		}
+ 		
+ 		$admin = new Admin($login, $new);
+		$admin->dbUpdate();
+		
+		return true;
  	}
  	
  	public static function getInstance()

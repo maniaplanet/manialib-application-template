@@ -30,7 +30,6 @@ class Admin
 			"VALUES " .
 			"($login, $passwordHash) " .
 			"ON DUPLICATE KEY UPDATE " .
-			"login = VALUES(login), " .
 			"password_hash = VALUES(password_hash) ";
 		$db->query();
 		

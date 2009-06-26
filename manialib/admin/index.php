@@ -25,7 +25,7 @@ $ui->lastItem()->text->setText("Posts");
 $ui->lastItem()->icon->setSubStyle("Paint");
 $ui->lastItem()->setManialink($link);
 
-$link = $request->createLinkArgList("admins.php");
+$link = $request->createLinkArgList("admin.php");
 
 $ui->addItem();
 $ui->lastItem()->text->setText("Admins");
