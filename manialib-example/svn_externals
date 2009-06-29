@@ -1,2 +1,8 @@
-core core https://manialib.googlecode.com/svn/trunk/manialib-framework/core
+core https://manialib.googlecode.com/svn/trunk/manialib-framework/core
+
+libraries/admin https://manialib.googlecode.com/svn/trunk/modules/admin/manialib/libraries/admin
 admin/login.php https://manialib.googlecode.com/svn/trunk/modules/admin/manialib/admin/login.php
+admin/logout.php https://manialib.googlecode.com/svn/trunk/modules/admin/manialib/admin/logout.php
+admin/admin.php https://manialib.googlecode.com/svn/trunk/modules/admin/manialib/admin/admin.php
+
+libraries/posts https://manialib.googlecode.com/svn/trunk/modules/posts/manialib/libraries/posts
