@@ -3,6 +3,7 @@
  * @author Maxime Raoust
  */
 
+// TODO Localize the application !
  
 require_once("core.inc.php");
 

@@ -4,12 +4,6 @@
  * 
  * @author Maxime Raoust
  */
- 
-/**
- * TODO Modify the lang engine to behave like gettext : you write your app in
- * english, then your parse your files with a dedicated tool which create the
- * indexes and xml files for translation
- */ 
   
 /**
  * i18n core class

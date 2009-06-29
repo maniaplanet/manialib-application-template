@@ -14,3 +14,6 @@ admin/logout.php https://manialib.googlecode.com/svn/trunk/modules/admin/maniali
 admin/admin.php https://manialib.googlecode.com/svn/trunk/modules/admin/manialib/admin/admin.php
 
 libraries/posts https://manialib.googlecode.com/svn/trunk/modules/posts/manialib/libraries/posts
+admin/posts.php https://manialib.googlecode.com/svn/trunk/modules/posts/manialib/admin/posts.php
+admin/posts_manage.php https://manialib.googlecode.com/svn/trunk/modules/posts/manialib/admin/posts_manage.php
+admin/posts_post.php https://manialib.googlecode.com/svn/trunk/modules/posts/manialib/admin/posts_post.php

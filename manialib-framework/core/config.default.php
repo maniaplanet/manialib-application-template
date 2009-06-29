@@ -8,7 +8,7 @@
 // All those default values can be overridden in config.php
 
 if (!defined("APP_PATH"))
-	define("APP_PATH", dirname(__FILE__) . "/");
+	define("APP_PATH", dirname(__FILE__) . "/../"); // This doesn't work well with USE_SHORT_MANIALINK set to true
 
 if (!defined("APP_URL"))
 	define("APP_URL", "http://localhost/manialib/");
