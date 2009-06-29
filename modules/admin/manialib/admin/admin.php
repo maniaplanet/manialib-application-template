@@ -29,6 +29,19 @@ switch($request->get("a"))
 		
 		$passwordChanged = AdminEngine::changePassword($login, $current, $new);
 	break;
+	
+	case "add_admin":
+		$adminLogin = $request->get("admin_login");
+		
+		if(!$adminLogin) break;
+		
+		if(AdminEngine::exists($adminLogin)) break;
+		
+		$admin = new Admin($adminLogin, $adminLogin);
+		$admin->dbUpdate();
+		
+		$adminCreated = true;
+	break;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -137,12 +150,93 @@ switch($request->get("a"))
 		Manialink::endFrame();	
 	break;
 	
+	case "choose_admin":
+		$request->delete("a");
+		$link = $request->createLinkArgList();
+		$request->restore("a");
+		
+		$ui->quitButton->setManialink($link);
+		$ui->draw();
+		
+		Manialink::beginFrame(15, 35, 2);
+			
+			$ui = new Panel(50, 50);
+			$ui->setHalign("center");
+			$ui->setPosition(0, 0, 0);
+			$ui->title->setText("New admin");
+			$ui->draw();
+			
+			$ui = new Label(35);
+			$ui->setHalign("center");
+			$ui->setPosition(0, -10, 1);
+			$ui->setText("Login:");
+			$ui->draw();
+			
+			$ui = new Entry(35);
+			$ui->setHalign("center");
+			$ui->setPosition(0, -15, 1);
+			$ui->setName("admin_login");
+			$ui->draw();
+			
+			$request->set("admin_login", "admin_login");
+						
+			$request->set("a", "add_admin");
+			$link = $request->createLink();
+			$request->restore("a");
+			
+			$ui = new Button;
+			$ui->setHalign("center");
+			$ui->setPosition(0, -35, 1);
+			$ui->setText("Continue");
+			$ui->setManialink($link);
+			$ui->draw();
+			
+		Manialink::endFrame();	
+	break;
+	
+	case "add_admin":
+	
+		$request->delete("a");
+		$link = $request->createLinkArgList();
+		$request->restore("a");
+		
+		$ui->quitButton->setManialink($link);
+		$ui->draw();
+		
+		Manialink::beginFrame(15, 35, 2);
+			
+			$ui = new Panel(50, 50);
+			$ui->setHalign("center");
+			$ui->setPosition(0, 0, 0);
+			$ui->title->setText("New admin");
+			$ui->draw();
+			
+			$ui = new Label(35);
+			$ui->setHalign("center");
+			$ui->setPosition(0, -10, 1);
+			$ui->enableAutoNewLine();
+			if(isset($adminCreated) && $adminCreated)
+			{
+				$ui->setText("New admin was successfully created with login=$adminLogin and password=$adminLogin");
+			}
+			else
+			{
+				$ui->setText('$f00' . "An error occurred while creating the new admin");
+			}
+			$ui->draw();
+			
+		Manialink::endFrame();	
+	break;
+	
 	default:
 			
+		$request->set("a", "choose_admin");
+		$link = $request->createLinkArgList(null, "a");
+		
 		$ui->addItem();
-		$ui->lastItem()->text->setText('$999' . "Add an admin");
+		$ui->lastItem()->text->setText("Add an admin");
 		$ui->lastItem()->icon->setSubStyle("Solo");
-		//$ui->lastItem()->setManialink($link);
+		$ui->lastItem()->setManialink($link);
 		
 		$request->set("a", "choose_password");
 		$link = $request->createLinkArgList(null, "a");

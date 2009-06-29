@@ -61,6 +61,11 @@ class AdminEngine
 		return true;
  	}
  	
+ 	public static function exists($login)
+ 	{
+ 		return self::getInstance()->dbExists($login);
+ 	}
+ 	
  	public static function getInstance()
 	{
 		if (!self :: $instance)
@@ -102,6 +107,27 @@ class AdminEngine
  			"FROM $this->adminsTable " .
  			"WHERE login = $login " .
  			"AND password_hash = $passwordHash";
+ 		$db->query();
+ 		
+ 		if($arr = $db->fetchArray())
+ 		{
+ 			if($arr["c"])
+ 			{
+ 				return true;
+ 			}
+ 		}
+ 		return false;
+ 	}
+ 	
+ 	protected function dbExists($login)
+ 	{
+ 		$db = DatabaseEngine::getInstance();
+ 		$login = quote_smart($login);
+ 		
+ 		$db->query = 
+			"SELECT COUNT(*) AS c " .
+ 			"FROM $this->adminsTable " .
+ 			"WHERE login = $login ";
  		$db->query();
  		
  		if($arr = $db->fetchArray())

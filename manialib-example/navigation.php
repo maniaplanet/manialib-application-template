@@ -20,12 +20,15 @@ $ui->lastItem()->setManialink($link);
 
 $ui->addGap(56);
 
-$link = $request->createLinkArgList("admin/index.php");
-
-$ui->addItem();
-$ui->lastItem()->text->setText("Admin");
-$ui->lastItem()->icon->setSubStyle("ProfileAdvanced");
-$ui->lastItem()->setManialink($link);
+if(DEBUG_LEVEL >= DEBUG_ON)
+{
+	$link = $request->createLinkArgList("admin/index.php");
+	
+	$ui->addItem();
+	$ui->lastItem()->text->setText("Admin");
+	$ui->lastItem()->icon->setSubStyle("ProfileAdvanced");
+	$ui->lastItem()->setManialink($link);	
+}
 
 $linkstr = $request->createLinkArgList("index.php");
 $ui->quitButton->setManialink($linkstr);
