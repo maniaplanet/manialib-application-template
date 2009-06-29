@@ -27,8 +27,9 @@ $ui->lastItem()->text->setText("Admin");
 $ui->lastItem()->icon->setSubStyle("ProfileAdvanced");
 $ui->lastItem()->setManialink($link);
 
+$linkstr = $request->createLinkArgList("index.php");
+$ui->quitButton->setManialink($linkstr);
 
-$ui->quitButton->setManialink($request->createLinkArgList("index.php"));
 $ui->draw();
 
 ?>

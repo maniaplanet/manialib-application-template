@@ -239,18 +239,17 @@ final class RequestEngine
 			
 			$file = preg_replace('/.*\.\.\//i', '', $file);
 			
-			$params = array_merge(array("rp"=>$file), $params);
+			if($file != "index.php")
+			{
+				$params = array_merge(array("rp"=>$file), $params);
+			}
 		}
 		else
 		{
 			$link = "";
 			if($file==null)
 			{
-				$file = str_ireplace(	
-					str_replace("\\", "/", APP_PATH),
-					"",
-					str_replace("\\", "/", $_SERVER["SCRIPT_FILENAME"])
-				);
+				$file = basename($_SERVER["SCRIPT_FILENAME"]);
 				
 			}
 			if($relativePath)

@@ -20,7 +20,7 @@ $ui->title->setText("Admin");
 $ui->subTitle->setText("Manage your Manialink");
 $ui->logo->setSubStyle("ProfileAdvanced");
 
-$ui->quitButton->setManialink($request->createLinkArgList("index.php"));
+$ui->quitButton->setManialink($request->createLinkArgList("../index.php"));
 $ui->draw();
 
 Manialink::beginFrame(15, 0, 2);

@@ -28,17 +28,22 @@ $ui->setPosition(64, -48, 15);
 $ui->setManialink($request->createLink());
 $ui->draw();
 
+// Debug button to reload the page while hooking to the XDEBUG listenner
+// Useful is you use XDEBUG to debug your application
+if(DEBUG_LEVEL >= DEBUG_ON)
+{
+	$request->set("XDEBUG_SESSION_START", "testID");
+	$link = $request->createLink();
+	$request->delete("XDEBUG_SESSION_START");
+	
+	$ui = new Icon64;
+	$ui->setAlign("right", "bottom");
+	$ui->setPosition(57, -48, 15);
+	$ui->setSubStyle("ToolRoot");
+	$ui->setManialink($link);
+	$ui->draw();
+}
 
-$request->set("XDEBUG_SESSION_START", "testID");
-$link = $request->createLink();
-$request->delete("XDEBUG_SESSION_START");
-
-$ui = new Icon64;
-$ui->setAlign("right", "bottom");
-$ui->setPosition(57, -48, 15);
-$ui->setSubStyle("ToolRoot");
-$ui->setManialink($link);
-$ui->draw();
 
 
 
