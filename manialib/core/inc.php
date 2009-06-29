@@ -5,7 +5,6 @@
  * @author Maxime Raoust
  */
 
-// bla
 
 // Log teh start time for debug
 $debugMtimeStart = microtime(true);
