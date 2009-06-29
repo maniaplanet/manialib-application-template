@@ -16,6 +16,12 @@ if (!defined("APP_URL"))
 if (!defined("MANIALINK_NAME"))
 	define("MANIALINK_NAME", "manialib");
 
+if (!defined("USE_SHORT_MANIALINKS"))
+	define("USE_SHORT_MANIALINKS", false);
+
+if (!defined("DEFAULT_TIMEZONE"))
+	define("DEFAULT_TIMEZONE", "Europe/Paris");
+
 if (!defined("DATABASE_HOST"))
 	define("DATABASE_HOST", "localhost");
 

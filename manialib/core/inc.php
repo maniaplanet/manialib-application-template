@@ -6,6 +6,7 @@
  */
 
 
+
 // Log teh start time for debug
 $debugMtimeStart = microtime(true);
 
@@ -19,9 +20,12 @@ require_once( dirname(__FILE__) . "/settings.php" );
 require_once( APP_CORE_PATH . "utils.php" );
 require_once( APP_CORE_PATH . "api/gui/inc.php" );
 
+// Date config
+date_default_timezone_set(DEFAULT_TIMEZONE);
+
 // Error handler
 error_reporting(E_ALL);
-if(DEBUG_LEVEL >= DEBUG_ON)
+if(DEBUG_LEVEL < DEBUG_ON)
 {
 	set_error_handler("manialinkErrorHandler");
 }

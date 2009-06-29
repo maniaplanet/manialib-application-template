@@ -8,8 +8,8 @@ $request = RequestEngine::getInstance();
 
 $ui = new Navigation;
 $ui->title->setText("ManiaLib");
-$ui->subTitle->setText("Lightweight framework");
-$ui->logo->setSubStyle("Forever");
+$ui->subTitle->setText("Lightweight PHP framework");
+$ui->logo->setImage("logo64.dds");
 
 $link = $request->createLinkArgList("index.php");
 

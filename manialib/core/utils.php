@@ -126,7 +126,7 @@ function __date($timestamp)
 /**
  * Writes a message in the debug log file
  */
-function debuglog($msg, $addDate = true, $log = MANIALINK_DEBUG_LOG)
+function debuglog($msg, $addDate = true, $log = DEBUG_LOG)
 {
 	if ($addDate)
 	{

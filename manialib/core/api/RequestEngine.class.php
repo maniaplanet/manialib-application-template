@@ -42,6 +42,10 @@ final class RequestEngine
 	 */
 	function set($name, $value)
 	{
+		if($name=="rp")
+		{
+			trigger_error("You can't use \"rp\" as a request parameter");
+		}
 		$this->params[$name] = $value;
 	}
 	
@@ -197,47 +201,90 @@ final class RequestEngine
 	{
 		$this->params = $_GET;
 		$this->requestParams = $_GET;
+		$this->registerProtectedParam("rp");
 	}
 	
 	private function createLinkString($file=null, $relativePath=true, $params)
 	{
-		// Baseurl
-		$link = "";
-		if($file==null)
+		// Baseurl		
+		if(USE_SHORT_MANIALINKS && $relativePath)
 		{
-			$file = basename($_SERVER["SCRIPT_FILENAME"]);
+			$link = MANIALINK_NAME;
+			if($file==null)
+			{
+				$file = str_ireplace(	
+					str_replace("\\", "/", APP_PATH),
+					"",
+					str_replace("\\", "/", $_SERVER["SCRIPT_FILENAME"])
+				);
+				
+			}
+			else
+			{
+				$serverPath = dirname(str_ireplace(	
+					str_replace("\\", "/", APP_PATH),
+					"",
+					str_replace("\\", "/", $_SERVER["SCRIPT_FILENAME"])
+				));
+				if(!$serverPath || $serverPath==".")
+				{
+					$serverPath = "";
+				}
+				else
+				{
+					$serverPath .= "/";
+				}
+				$file = $serverPath . $file;
+			}
+			
+			$file = preg_replace('/.*\.\.\//i', '', $file);
+			
+			$params = array_merge(array("rp"=>$file), $params);
 		}
-		if($relativePath)
+		else
 		{
-			$link = explode("/", strtolower($_SERVER["SERVER_PROTOCOL"]));
-			$link = (string) reset($link);
-			$link .= ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? "s" : "");
-			$link .= "://";
-			$link .= $_SERVER['SERVER_NAME'];
-			if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on')
+			$link = "";
+			if($file==null)
 			{
-				if($_SERVER['SERVER_PORT']!='443') $link .= ":".$_SERVER['SERVER_PORT'];
+				$file = str_ireplace(	
+					str_replace("\\", "/", APP_PATH),
+					"",
+					str_replace("\\", "/", $_SERVER["SCRIPT_FILENAME"])
+				);
+				
 			}
-			elseif($_SERVER['SERVER_PORT']!='80')
+			if($relativePath)
 			{
-				$link .= ":".$_SERVER['SERVER_PORT'];
+				$link = explode("/", strtolower($_SERVER["SERVER_PROTOCOL"]));
+				$link = (string) reset($link);
+				$link .= ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? "s" : "");
+				$link .= "://";
+				$link .= $_SERVER['SERVER_NAME'];
+				if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on')
+				{
+					if($_SERVER['SERVER_PORT']!='443') $link .= ":".$_SERVER['SERVER_PORT'];
+				}
+				elseif($_SERVER['SERVER_PORT']!='80')
+				{
+					$link .= ":".$_SERVER['SERVER_PORT'];
+				}
+				$link .= dirname($_SERVER['SCRIPT_NAME']);
+				$link .= "/";	
 			}
-			$link .= dirname($_SERVER['SCRIPT_NAME']);
-			$link .= "/";	
+			$link .= $file;
 		}
-		$link .= $file;
+		
+		// SID
+		if(SID) 
+		{
+			$link .= "?".htmlspecialchars(SID);
+		}
 		
 		// Params
 		foreach($params as $name=>$value)
 		{
 
 			$params[$name] = "$name=$value";
-		}	
-		
-		// SID
-		if(SID) 
-		{
-			$link .= "?".htmlspecialchars(SID);
 		}
 		
 		// Return if no params

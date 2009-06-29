@@ -2,8 +2,12 @@
 /**
  * @author Maxime Raoust
  */
+
  
 require_once("core.inc.php");
+
+
+//trigger_error(print_r($_GET, true));
 
 $request = RequestEngine::getInstance();
 
