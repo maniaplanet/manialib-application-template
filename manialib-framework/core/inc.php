@@ -14,7 +14,7 @@ ob_start();
 
 // Core includes. The classes will be loaded through the __autoload() function
 require_once( dirname(__FILE__) . "/../config.php" );
-require_once( dirname(__FILE__) . "/../config.default.php" );
+require_once( dirname(__FILE__) . "/config.default.php" );
 require_once( dirname(__FILE__) . "/settings.php" );
 require_once( APP_CORE_PATH . "utils.php" );
 require_once( APP_CORE_PATH . "api/gui/inc.php" );
