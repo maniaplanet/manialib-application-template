@@ -5,8 +5,6 @@
  * @package admin
  */
  
-// TODO Add an admin
- 
 require_once( dirname(__FILE__) . "/../core.inc.php" );
 
 AdminEngine::checkAuthentication();
