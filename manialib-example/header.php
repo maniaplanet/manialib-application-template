@@ -13,13 +13,6 @@ $ui->setAlign("center", "center");
 $ui->setImage("bg_stadium.dds");
 $ui->save();
 
-$ui = new Label;
-$ui->setAlign("center", "bottom");
-$ui->setPosition(15, -48, 1);
-$ui->setTextSize(1);
-$ui->setText('Powered by $<$ccc$o$h[manialib]ManiaLib$h$>');
-$ui->save();
-
 $ui = new Icon64;
 $ui->setAlign("right", "bottom");
 $ui->setSubStyle("Refresh");

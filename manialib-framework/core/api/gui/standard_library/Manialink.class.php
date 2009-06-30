@@ -13,13 +13,14 @@
  */
 abstract class Manialink
 {
-	public static $c;
 	public static $domDocument;
 	public static $parentNodes;
 	
 	static public function load()
 	{
 		self::$domDocument = new DOMDocument;
+		self::$parentNodes = array();
+		
 		$manialink = self::$domDocument->createElement("manialink");
 		self::$domDocument->appendChild($manialink);
 		self::$parentNodes[] = $manialink;
@@ -29,6 +30,14 @@ abstract class Manialink
 		$timeout = self::$domDocument->createElement("timeout");
 		$manialink->appendChild($timeout); 
 		$timeout->nodeValue = 0;
+		
+		// ManiaLib watermark. It would be nice to leave it :)
+		$ui = new Label;
+		$ui->setAlign("center", "bottom");
+		$ui->setPosition(15, -48, 1);
+		$ui->setTextSize(1);
+		$ui->setText('Powered by $<$ccc$o$h[manialib]ManiaLib$h$>');
+		$ui->save();
 	}
 		
 	static public function render()

@@ -240,10 +240,8 @@ function manialinkErrorHandler($errno, $errstr, $errfile, $errline)
 			error_log(($msg), 3, ERROR_LOG);
 			break;
 		default :
-			ob_clean();
-	
-			$ui = new Manialink;
-			$ui->save();
+			
+			Manialink::load();
 
 			$ui = new Panel(50, 20);
 			$ui->setAlign("center", "center");
@@ -268,7 +266,7 @@ function manialinkErrorHandler($errno, $errstr, $errfile, $errline)
 			$ui->setHalign("center");
 			$ui->save();
 
-			Manialink :: theEnd();
+			Manialink::render();
 	
 			$msg = date('d/m/y H:i:s') . " [error] ";
 			$msg .= $errstr . " ";
@@ -308,8 +306,7 @@ function manialinkErrorHandlerDebug($errno, $errstr, $errfile, $errline)
 			
 			ob_clean();
 	
-			$ui = new Manialink;
-			$ui->save();
+			Manialink::load();
 
 			$ui = new Panel(115, 85);
 			$ui->setAlign("center", "center");
@@ -333,7 +330,7 @@ function manialinkErrorHandlerDebug($errno, $errstr, $errfile, $errline)
 			$ui->setHalign("center");
 			$ui->save();
 
-			Manialink :: theEnd();
+			Manialink::render();
 
 			exit;
 			break;
