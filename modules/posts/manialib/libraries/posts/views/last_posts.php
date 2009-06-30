@@ -5,7 +5,6 @@
  * @package posts
  */
 
-// TODO Move the views elsewhere ?
 // TODO Write an example with usage of MultipageList
 
 $posts = PostsEngine::getInstance();

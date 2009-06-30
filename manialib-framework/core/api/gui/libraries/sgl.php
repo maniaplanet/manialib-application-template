@@ -208,7 +208,7 @@ abstract class GuiElement
 	protected $xmlTagName = "xmltag"; // Redeclare this for each child
 	protected $xmlTagEnd = "/";
 	protected $output = "";
-	protected $domElement;
+	protected $xml;
 
 	function __construct($sx=20, $sy=20)
 	{
@@ -376,12 +376,12 @@ abstract class GuiElement
 	final protected function outputBegin()
 	{
 		$doc = new DOMDocument;
-		$this->domElement = $doc->createElement($this->xmlTagName);
+		$this->xml = $doc->createElement($this->xmlTagName);
 	}
 
 	final protected function outputEnd()
 	{
-		$this->output .= $this->domElement->ownerDocument->saveXML($this->domElement) . "\n";
+		$this->output .= $this->xml->ownerDocument->saveXML($this->xml) . "\n";
 	}
 
 	final protected function outputStandard()
@@ -390,43 +390,43 @@ abstract class GuiElement
 		if($this->posX || $this->posY || $this->posZ)
 		{
 			if ($this->classicPositioning)
-				$this->domElement->setAttribute("pos", "$this->posX $this->posY $this->posZ");
+				$this->xml->setAttribute("pos", "$this->posX $this->posY $this->posZ");
 			else
-				$this->domElement->setAttribute("posn", "$this->posX $this->posY $this->posZ");
+				$this->xml->setAttribute("posn", "$this->posX $this->posY $this->posZ");
 		}
 
 		// Add size
 		if($this->sizeX || $this->sizeY)
 		{
 			if ($this->classicSizing)
-				$this->domElement->setAttribute("size", "$this->sizeX $this->sizeY");
+				$this->xml->setAttribute("size", "$this->sizeX $this->sizeY");
 			else
-				$this->domElement->setAttribute("sizen", "$this->sizeX $this->sizeY");
+				$this->xml->setAttribute("sizen", "$this->sizeX $this->sizeY");
 		}
 
 		// Add alignement
-		if($this->halign !== null) $this->domElement->setAttribute("halign", $this->halign);
-		if($this->valign !== null) $this->domElement->setAttribute("valign", $this->valign);
-		if($this->scale !== null) $this->domElement->setAttribute("scale", $this->scale);
+		if($this->halign !== null) $this->xml->setAttribute("halign", $this->halign);
+		if($this->valign !== null) $this->xml->setAttribute("valign", $this->valign);
+		if($this->scale !== null) $this->xml->setAttribute("scale", $this->scale);
 
 		// Add styles
-		if($this->style !== null) $this->domElement->setAttribute("style", $this->style);
-		if($this->subStyle !== null) $this->domElement->setAttribute("substyle", $this->subStyle);
-		if($this->bgcolor !== null) $this->domElement->setAttribute("bgcolor", $this->bgcolor);
+		if($this->style !== null) $this->xml->setAttribute("style", $this->style);
+		if($this->subStyle !== null) $this->xml->setAttribute("substyle", $this->subStyle);
+		if($this->bgcolor !== null) $this->xml->setAttribute("bgcolor", $this->bgcolor);
 
 		// Add links
-		if($this->addPlayerId !== null) $this->domElement->setAttribute("addplayerid", $this->addPlayerId);
-		if($this->manialink !== null) $this->domElement->setAttribute("manialink", $this->manialink);
-		if($this->url !== null) $this->domElement->setAttribute("url", $this->url);
-		if($this->maniazones !== null) $this->domElement->setAttribute("maniazones", $this->maniazones);
+		if($this->addPlayerId !== null) $this->xml->setAttribute("addplayerid", $this->addPlayerId);
+		if($this->manialink !== null) $this->xml->setAttribute("manialink", $this->manialink);
+		if($this->url !== null) $this->xml->setAttribute("url", $this->url);
+		if($this->maniazones !== null) $this->xml->setAttribute("maniazones", $this->maniazones);
 
 		// Add action
-		if($this->action !== null) $this->domElement->setAttribute("action", $this->action);
-		if($this->actionKey !== null) $this->domElement->setAttribute("actionkey", $this->actionKey);
+		if($this->action !== null) $this->xml->setAttribute("action", $this->action);
+		if($this->actionKey !== null) $this->xml->setAttribute("actionkey", $this->actionKey);
 
 		// Add images
-		if($this->imageFile !== null) $this->domElement->setAttribute("image", $this->imageFile);
-		if($this->imageFocusFile !== null) $this->domElement->setAttribute("imagefocus", $this->imageFocusFile);
+		if($this->imageFile !== null) $this->xml->setAttribute("image", $this->imageFile);
+		if($this->imageFocusFile !== null) $this->xml->setAttribute("imagefocus", $this->imageFocusFile);
 
 	}
 
@@ -568,8 +568,8 @@ class Format extends GuiElement
 
 	function outputOptional()
 	{
-		if($this->textSize !== null) $this->domElement->setAttribute("textsize", $this->textSize);
-		if($this->textColor !== null) $this->domElement->setAttribute("textcolor", $this->textColor);
+		if($this->textSize !== null) $this->xml->setAttribute("textsize", $this->textSize);
+		if($this->textColor !== null) $this->xml->setAttribute("textcolor", $this->textColor);
 	}
 }
 
@@ -634,10 +634,10 @@ class Label extends Format
 	function outputOptional()
 	{
 		parent::outputOptional();
-		if($this->text !== null) $this->domElement->setAttribute("text", $this->text);
-		if($this->textid !== null) $this->domElement->setAttribute("textid", $this->textid);
-		if($this->autoNewLine !== null) $this->domElement->setAttribute("autonewline", $this->autoNewLine);
-		if($this->maxline !== null) $this->domElement->setAttribute("maxline", $this->maxline);
+		if($this->text !== null) $this->xml->setAttribute("text", $this->text);
+		if($this->textid !== null) $this->xml->setAttribute("textid", $this->textid);
+		if($this->autoNewLine !== null) $this->xml->setAttribute("autonewline", $this->autoNewLine);
+		if($this->maxline !== null) $this->xml->setAttribute("maxline", $this->maxline);
 	}
 }
 
@@ -671,8 +671,8 @@ class Entry extends Label
 	function outputOptional()
 	{
 		parent::outputOptional();
-		if($this->name !== null) $this->domElement->setAttribute("name", $this->name);
-		if($this->defaultValue !== null) $this->domElement->setAttribute("default", $this->defaultValue);
+		if($this->name !== null) $this->xml->setAttribute("name", $this->name);
+		if($this->defaultValue !== null) $this->xml->setAttribute("default", $this->defaultValue);
 	}
 }
 
@@ -699,7 +699,7 @@ class FileEntry extends Entry
 	function outputOptional()
 	{
 		parent::outputOptional();
-		if($this->folder !== null) $this->domElement->setAttribute("folder", $this->folder);
+		if($this->folder !== null) $this->xml->setAttribute("folder", $this->folder);
 	}
 }
 
