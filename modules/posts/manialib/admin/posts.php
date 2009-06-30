@@ -31,7 +31,7 @@ $ui->lastItem()->icon->setSubStyle("Paint");
 $ui->lastItem()->setManialink($link);
 
 $ui->quitButton->setManialink($request->createLinkArgList("index.php"));
-$ui->draw();
+$ui->save();
 
 require_once( APP_PATH . "footer.php" );
 

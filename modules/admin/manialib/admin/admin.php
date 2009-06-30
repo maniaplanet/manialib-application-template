@@ -46,6 +46,7 @@ switch($request->get("a"))
 // Gui
 //////////////////////////////////////////////////////////////////////////////
 
+// TODO Not require the header for the pages to be stand-alone
 require_once( APP_PATH . "header.php" );
 
 $ui = new Navigation;
@@ -62,7 +63,7 @@ switch($request->get("a"))
 		$request->restore("a");
 		
 		$ui->quitButton->setManialink($link);
-		$ui->draw();
+		$ui->save();
 		
 		Manialink::beginFrame(15, 35, 2);
 			
@@ -70,19 +71,19 @@ switch($request->get("a"))
 			$ui->setHalign("center");
 			$ui->setPosition(0, 0, 0);
 			$ui->title->setText("Password update");
-			$ui->draw();
+			$ui->save();
 			
 			$ui = new Label(35);
 			$ui->setHalign("center");
 			$ui->setPosition(0, -10, 1);
 			$ui->setText("Current password:");
-			$ui->draw();
+			$ui->save();
 			
 			$ui = new Entry(35);
 			$ui->setHalign("center");
 			$ui->setPosition(0, -15, 1);
 			$ui->setName("current");
-			$ui->draw();
+			$ui->save();
 			
 			$request->set("current", "current");
 			
@@ -90,13 +91,13 @@ switch($request->get("a"))
 			$ui->setHalign("center");
 			$ui->setPosition(0, -20, 1);
 			$ui->setText("New password:");
-			$ui->draw();
+			$ui->save();
 			
 			$ui = new Entry(35);
 			$ui->setHalign("center");
 			$ui->setPosition(0, -25, 1);
 			$ui->setName("new");
-			$ui->draw();
+			$ui->save();
 			
 			$request->set("new", "new");
 			
@@ -109,7 +110,7 @@ switch($request->get("a"))
 			$ui->setPosition(0, -35, 1);
 			$ui->setText("Continue");
 			$ui->setManialink($link);
-			$ui->draw();
+			$ui->save();
 			
 		Manialink::endFrame();	
 		
@@ -122,7 +123,7 @@ switch($request->get("a"))
 		$request->restore("a");
 		
 		$ui->quitButton->setManialink($link);
-		$ui->draw();
+		$ui->save();
 		
 		Manialink::beginFrame(15, 35, 2);
 			
@@ -130,7 +131,7 @@ switch($request->get("a"))
 			$ui->setHalign("center");
 			$ui->setPosition(0, 0, 0);
 			$ui->title->setText("Password update");
-			$ui->draw();
+			$ui->save();
 			
 			$ui = new Label(35);
 			$ui->setHalign("center");
@@ -143,7 +144,7 @@ switch($request->get("a"))
 			{
 				$ui->setText('$f00' . "An error occurred while changing your password");
 			}
-			$ui->draw();
+			$ui->save();
 			
 		Manialink::endFrame();	
 	break;
@@ -154,7 +155,7 @@ switch($request->get("a"))
 		$request->restore("a");
 		
 		$ui->quitButton->setManialink($link);
-		$ui->draw();
+		$ui->save();
 		
 		Manialink::beginFrame(15, 35, 2);
 			
@@ -162,19 +163,19 @@ switch($request->get("a"))
 			$ui->setHalign("center");
 			$ui->setPosition(0, 0, 0);
 			$ui->title->setText("New admin");
-			$ui->draw();
+			$ui->save();
 			
 			$ui = new Label(35);
 			$ui->setHalign("center");
 			$ui->setPosition(0, -10, 1);
 			$ui->setText("Login:");
-			$ui->draw();
+			$ui->save();
 			
 			$ui = new Entry(35);
 			$ui->setHalign("center");
 			$ui->setPosition(0, -15, 1);
 			$ui->setName("admin_login");
-			$ui->draw();
+			$ui->save();
 			
 			$request->set("admin_login", "admin_login");
 						
@@ -187,7 +188,7 @@ switch($request->get("a"))
 			$ui->setPosition(0, -35, 1);
 			$ui->setText("Continue");
 			$ui->setManialink($link);
-			$ui->draw();
+			$ui->save();
 			
 		Manialink::endFrame();	
 	break;
@@ -199,7 +200,7 @@ switch($request->get("a"))
 		$request->restore("a");
 		
 		$ui->quitButton->setManialink($link);
-		$ui->draw();
+		$ui->save();
 		
 		Manialink::beginFrame(15, 35, 2);
 			
@@ -207,7 +208,7 @@ switch($request->get("a"))
 			$ui->setHalign("center");
 			$ui->setPosition(0, 0, 0);
 			$ui->title->setText("New admin");
-			$ui->draw();
+			$ui->save();
 			
 			$ui = new Label(35);
 			$ui->setHalign("center");
@@ -221,7 +222,7 @@ switch($request->get("a"))
 			{
 				$ui->setText('$f00' . "An error occurred while creating the new admin");
 			}
-			$ui->draw();
+			$ui->save();
 			
 		Manialink::endFrame();	
 	break;
@@ -245,7 +246,7 @@ switch($request->get("a"))
 		$ui->lastItem()->setManialink($link);
 		
 		$ui->quitButton->setManialink($request->createLinkArgList("index.php"));
-		$ui->draw();	
+		$ui->save();	
 		}
 
 require_once( APP_PATH . "footer.php" );

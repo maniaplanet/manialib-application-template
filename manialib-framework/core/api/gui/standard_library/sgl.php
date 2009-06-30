@@ -7,118 +7,8 @@
  * @author Maxime Raoust
  */
 
-/**
- * The manialink class helps creating headers and footers of a manialink page
- * @package gui_api
- */
-final class Manialink
+abstract class GuiTools
 {
-	protected $type = "default";
-	protected $timeout = 0;
-	protected $bgcolor = "0cff";
-	protected $bgborderx = 0;
-	protected $bgbordery = 0;
-
-	/**
-	 * Set the type
-	 * @param String $type
-	 */
-	function setType ($type)
-	{
-		$this->type = $type;
-	}
-
-	/**
-	 * Set the timeout (0 for dynamic pages)
-	 * @param Int $timeout
-	 */
-	function setTimeout ($timeout)
-	{
-		$this->timeout = $timeout;
-	}
-
-	/**
-	 * Set the bg color
-	 * @param String $color
-	 */
-	function setBgColor ($color)
-	{
-		$this->bgcolor = $color;
-	}
-
-	/**
-	 * Set the bg X border size
-	 * @param Int $size
-	 */
-	function setBgBorderX ($size)
-	{
-		$this->bgborderx = $size;
-	}
-
-	/**
-	 * Set the bg Y border size
-	 * @param Int $size
-	 */
-	function setBgBorderY ($size)
-	{
-		$this->bgbordery = $size;
-	}
-
-	/**
-	 * Draw the damn thing
-	 */
-	function draw()
-	{
-		header("Content-Type: text/xml; charset=utf-8");
-		echo ('<?xml version="1.0" encoding="utf-8"?>'."\n");
-		echo ('<manialink>'."\n");
-		echo ('<type>'.$this->type.'</type>'."\n");
-		echo ('<timeout>'.$this->timeout.'</timeout>'."\n");
-		echo ('<background bgcolor="'.$this->bgcolor.'" bgborderx="'.$this->bgborderx.'" bgbordery="'.$this->bgbordery.'" />'."\n");
-	}
-
-	/**
-	 * Static method to write the footer
-	 */
-	static function theEnd()
-	{
-		echo "</manialink>\n";
-	}
-
-	/**
-	 * Static method to draw a frame (only "posn" coordinates)
-	 * If the outbuffer is specified, it will be written in it
-	 * @param Int $x
-	 * @param Int $y
-	 * @param Int $z
-	 * @param Mixed &$outputBuffer
-	 * @return Mixed
-	 */
-	static function beginFrame ($x=0, $y=0, $z=0, &$outputBuffer=null)
-	{
-		$output = "<frame posn=\"$x $y $z\">\n";
-		if($outputBuffer !== null)
-			$outputBuffer .= $output;
-		else
-			echo $output;
-
-	}
-
-	/**
-	 * Static method to draw a frame and
-	 * If the outbuffer is specified, it will be written in it
-	 * @param Mixed &$outputBuffer
-	 * @return Mixed
-	 */
-	static function endFrame(&$outputBuffer=null)
-	{
-		$output = "</frame>\n";
-		if($outputBuffer !== null)
-			$outputBuffer .= $output;
-		else
-			echo $output;
-	}
-
 	/**
 	 * Static method to get the X coordinate of a point in relation to another element
 	 * @param Int $posX position of the parent element
@@ -127,7 +17,7 @@ final class Manialink
 	 * @param String $newAlign Halign of the to be positioned element
 	 * @return Int
 	 */
-	static function getAlignedPosX ($posX, $sizeX, $halign, $newAlign)
+	static public function getAlignedPosX ($posX, $sizeX, $halign, $newAlign)
 	{
 		if($halign==null) $halign="left";
 		switch(array($halign, $newAlign))
@@ -153,7 +43,7 @@ final class Manialink
 	 * @param String $newAlign Valign of the to be positioned element
 	 * @return Int
 	 */
-	static function getAlignedPosY ($posY, $sizeY, $valign, $newAlign)
+	static public function getAlignedPosY ($posY, $sizeY, $valign, $newAlign)
 	{
 		if($valign=="top" || $valign==null) $valign = "right";
 		else if($valign=="bottom") $valign = "left";
@@ -162,14 +52,14 @@ final class Manialink
 		return self::getAlignedPosX ($posY, $sizeY, $valign, $newAlign);
 	}
 
-	static function getAlignedPos ($object, $newHalign, $newValign)
+	static public function getAlignedPos ($object, $newHalign, $newValign)
 	{
 		$newPosX = self::getAlignedPosX ($object->getPosX(), $object->getSizeX(), $object->getHalign(), $newHalign);
 		$newPosY = self::getAlignedPosY ($object->getPosY(), $object->getSizeY(), $object->getValign(), $newValign);
 		return array("x" => $newPosX, "y" => $newPosY);
 	}
 
-	static function getAlignPosArray ($array, $newHalign, $newValign)
+	static public function getAlignPosArray ($array, $newHalign, $newValign)
 	{
 		$newPosX = self::getAlignedPosX ($array["posX"], $array["sizeX"], $array["halign"], $newHalign);
 		$newPosY = self::getAlignedPosY ($array["posY"], $array["sizeY"], $array["valign"], $newValign);
@@ -199,8 +89,6 @@ abstract class GuiElement
 	protected $maniazones;
 	protected $bgcolor;
 	protected $addPlayerId;
-	protected $classicPositioning;
-	protected $classicSizing;
 	protected $action;
 	protected $actionKey;
 	protected $imageFile;
@@ -310,16 +198,6 @@ abstract class GuiElement
 		$this->addPlayerId = 1;
 	}
 
-	function enableClassicPositioning ()
-	{
-		$this->classicPositioning = true;
-	}
-
-	function enableClassicSizing ()
-	{
-		$this->classicSizing = true;
-	}
-
 	function setAction ($plop)
 	{
 		$this->action = $plop;
@@ -372,36 +250,46 @@ abstract class GuiElement
 	function getValign () 		{return $this->valign;}
 	function getAddPlayerId () 	{return $this->addPlayerId;}
 	function getImage () 		{return $this->imageFile;}
-
-	final protected function outputBegin()
+	
+	/**
+	 * Redeclare this method in chlidren classes to execute code before drawing
+	 */
+	protected function preFilter()
 	{
-		$doc = new DOMDocument;
-		$this->xml = $doc->createElement($this->xmlTagName);
+
 	}
 
-	final protected function outputEnd()
+	/**
+	 * Redeclare this method in children classes to execute code after drawing
+	 */
+	protected function postFilter() 
 	{
-		$this->output .= $this->xml->ownerDocument->saveXML($this->xml) . "\n";
+
 	}
 
-	final protected function outputStandard()
+	/**
+	 * Draw the damn thing ! If the output buffer is specified, the result will
+	 * be written in it
+	 */
+	final public function save()
 	{
+		// Optional pre filtering
+		$this->preFilter();
+
+		// DOMElement creation
+		$this->xml = Manialink::$domDocument->createElement($this->xmlTagName);
+		end(Manialink::$parentNodes)->appendChild($this->xml);
+		
 		// Add pos
 		if($this->posX || $this->posY || $this->posZ)
 		{
-			if ($this->classicPositioning)
-				$this->xml->setAttribute("pos", "$this->posX $this->posY $this->posZ");
-			else
-				$this->xml->setAttribute("posn", "$this->posX $this->posY $this->posZ");
+			$this->xml->setAttribute("posn", "$this->posX $this->posY $this->posZ");
 		}
 
 		// Add size
 		if($this->sizeX || $this->sizeY)
 		{
-			if ($this->classicSizing)
-				$this->xml->setAttribute("size", "$this->sizeX $this->sizeY");
-			else
-				$this->xml->setAttribute("sizen", "$this->sizeX $this->sizeY");
+			$this->xml->setAttribute("sizen", "$this->sizeX $this->sizeY");
 		}
 
 		// Add alignement
@@ -427,54 +315,9 @@ abstract class GuiElement
 		// Add images
 		if($this->imageFile !== null) $this->xml->setAttribute("image", $this->imageFile);
 		if($this->imageFocusFile !== null) $this->xml->setAttribute("imagefocus", $this->imageFocusFile);
-
-	}
-
-	/**
-	 * Redeclare this method in children classes to add attributes
-	 */
-	protected function outputOptional() 
-	{
-
-	}
-
-	/**
-	 * Redeclare this method in chlidren classes to execute code before drawing
-	 */
-	protected function outputPreFilter()
-	{
-
-	}
-
-	/**
-	 * Redeclare this method in children classes to execute code after drawing
-	 */
-	protected function outputPostFilter() 
-	{
-
-	}
-
-	/**
-	 * Draw the damn thing ! If the output buffer is specified, the result will
-	 * be written in it
-	 */
-	final function draw(&$outputBuffer=null)
-	{
-		$this->outputPreFilter();
-		$this->outputBegin();
-		$this->outputStandard();
-		$this->outputOptional();
-		$this->outputEnd();
-		$this->outputPostFilter();
 		
-		if($outputBuffer !== null)
-		{
-			$outputBuffer .= $this->output;
-		}
-		else
-		{
-			echo($this->output);
-		}
+		// Post filtering
+		$this->postFilter();
 	}
 }
 
@@ -566,7 +409,7 @@ class Format extends GuiElement
 		$this->setSubStyle(null);
 	}
 
-	function outputOptional()
+	protected function postFilter()
 	{
 		if($this->textSize !== null) $this->xml->setAttribute("textsize", $this->textSize);
 		if($this->textColor !== null) $this->xml->setAttribute("textcolor", $this->textColor);
@@ -631,9 +474,9 @@ class Label extends Format
 		return $this->maxline;
 	}
 
-	function outputOptional()
+	protected function postFilter()
 	{
-		parent::outputOptional();
+		parent::postFilter();
 		if($this->text !== null) $this->xml->setAttribute("text", $this->text);
 		if($this->textid !== null) $this->xml->setAttribute("textid", $this->textid);
 		if($this->autoNewLine !== null) $this->xml->setAttribute("autonewline", $this->autoNewLine);
@@ -668,9 +511,9 @@ class Entry extends Label
 		$this->defaultValue = $plop;
 	}
 
-	function outputOptional()
+	protected function postFilter()
 	{
-		parent::outputOptional();
+		parent::postFilter();
 		if($this->name !== null) $this->xml->setAttribute("name", $this->name);
 		if($this->defaultValue !== null) $this->xml->setAttribute("default", $this->defaultValue);
 	}
@@ -696,9 +539,9 @@ class FileEntry extends Entry
 		$this->folder = $plop;
 	}
 
-	function outputOptional()
+	protected function postFilter()
 	{
-		parent::outputOptional();
+		parent::postFilter();
 		if($this->folder !== null) $this->xml->setAttribute("folder", $this->folder);
 	}
 }

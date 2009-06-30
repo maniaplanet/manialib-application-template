@@ -133,7 +133,7 @@ foreach($steps as $stepId=>$stepName)
 }
 
 $ui->quitButton->setManialink($request->createLinkArgList("posts.php"));
-$ui->draw();
+$ui->save();
 // End navigation
 
 Manialink::beginFrame(-34, 48, 1);
@@ -147,13 +147,13 @@ Manialink::beginFrame(-34, 48, 1);
 				$ui = new Panel(80, 80);
 				$ui->setHalign("center");
 				$ui->title->setText("Post type");
-				$ui->draw();
+				$ui->save();
 				
 				$ui = new Quad(40, 60);
 				$ui->setHalign("center");
 				$ui->setPosition(0, -10, 1);
 				$ui->setSubStyle("BgCardList");
-				$ui->draw();
+				$ui->save();
 				
 				$i = 0;
 				
@@ -175,7 +175,7 @@ Manialink::beginFrame(-34, 48, 1);
 						$ui->setHalign("center");
 						$ui->setSubStyle("BgCardSystem");
 						$ui->setManialink($link);
-						$ui->draw();
+						$ui->save();
 						
 						$ui = new Label(50);
 						$ui->setAlign("center", "center");
@@ -183,7 +183,7 @@ Manialink::beginFrame(-34, 48, 1);
 						$ui->setTextColor("000");
 						$ui->setTextSize(2);
 						$ui->setText($style . $postTypeName);
-						$ui->draw();
+						$ui->save();
 					
 					Manialink::endFrame();
 					
@@ -196,19 +196,19 @@ Manialink::beginFrame(-34, 48, 1);
 				$ui = new Panel(80, 80);
 				$ui->setHalign("center");
 				$ui->title->setText("Write content");
-				$ui->draw();
+				$ui->save();
 				
 				$ui = new Label;
 				$ui->setPosition(-36, -7, 1);
 				$ui->setStyle("TextRaceMessage");
 				$ui->setText("Title");
-				$ui->draw();
+				$ui->save();
 				
 				$ui = new Entry(72);
 				$ui->setPosition(-36, -11, 1);
 				$ui->setName("title");
 				$ui->setDefault($post->getTitle());
-				$ui->draw();
+				$ui->save();
 				
 				$request->set("post_title", "title");
 				
@@ -216,7 +216,7 @@ Manialink::beginFrame(-34, 48, 1);
 				$ui->setPosition(-36, -20, 1);
 				$ui->setStyle("TextRaceMessage");
 				$ui->setText("Content");
-				$ui->draw();
+				$ui->save();
 				
 				$ui = new Entry(72, 45);
 				$ui->setPosition(-36, -24, 1);
@@ -224,7 +224,7 @@ Manialink::beginFrame(-34, 48, 1);
 				$ui->setMaxline(13);
 				$ui->setName("content");
 				$ui->setDefault($post->getContent());
-				$ui->draw();
+				$ui->save();
 				
 				$request->set("post_content", "content");
 				
@@ -236,7 +236,7 @@ Manialink::beginFrame(-34, 48, 1);
 				$ui->setPosition(0, -72, 1);
 				$ui->setText("Continue");
 				$ui->setManialink($link);
-				$ui->draw();
+				$ui->save();
 				
 			break;
 			
@@ -249,19 +249,19 @@ Manialink::beginFrame(-34, 48, 1);
 				$ui = new Panel(80, 80);
 				$ui->setHalign("center");
 				$ui->title->setText("Add meta tags");
-				$ui->draw();
+				$ui->save();
 				
 				$ui = new Label;
 				$ui->setPosition(-36, -9, 1);
 				$ui->setStyle("TextRaceMessage");
 				$ui->setText("Meta tag name");
-				$ui->draw();
+				$ui->save();
 				
 				$ui = new Label;
 				$ui->setPosition(0, -9, 1);
 				$ui->setStyle("TextRaceMessage");
 				$ui->setText("Meta tag value");
-				$ui->draw();
+				$ui->save();
 				
 				for($i=1; $i<=10; $i++)
 				{
@@ -280,7 +280,7 @@ Manialink::beginFrame(-34, 48, 1);
 						$ui->setPositionX(-36);
 						$ui->setName("meta_tag_name$i");
 						$ui->setDefault($name);
-						$ui->draw();
+						$ui->save();
 						
 						$request->set("meta_tag_name$i", "meta_tag_name$i");
 						
@@ -288,7 +288,7 @@ Manialink::beginFrame(-34, 48, 1);
 						$ui->setPositionX(0);
 						$ui->setName("meta_tag_value$i");
 						$ui->setDefault($value);
-						$ui->draw();
+						$ui->save();
 						
 						$request->set("meta_tag_value$i", "meta_tag_value$i");
 					
@@ -303,7 +303,7 @@ Manialink::beginFrame(-34, 48, 1);
 				$ui->setPosition(0, -72, 1);
 				$ui->setText("Continue");
 				$ui->setManialink($link);
-				$ui->draw();
+				$ui->save();
 				
 			break;
 			
@@ -312,14 +312,14 @@ Manialink::beginFrame(-34, 48, 1);
 				$ui = new Panel(80, 80);
 				$ui->setHalign("center");
 				$ui->title->setText("Publish");
-				$ui->draw();
+				$ui->save();
 				
 				$ui = new Label(60);
 				$ui->setHalign("center");
 				$ui->setPosition(0, -10, 1);
 				$ui->setStyle("TextRaceMessage");
 				$ui->setText("Your post is ready to be published.");
-				$ui->draw();
+				$ui->save();
 				
 				$request->set("step", $currentStep+1);
 				$link = $request->createLink("posts_post.php");
@@ -330,20 +330,20 @@ Manialink::beginFrame(-34, 48, 1);
 				$ui->setScale(2);
 				$ui->setText("Publish");
 				$ui->setManialink($link);
-				$ui->draw();
+				$ui->save();
 				
 			break;
 				$ui = new Panel(80, 80);
 				$ui->setHalign("center");
 				$ui->title->setText("Published");
-				$ui->draw();
+				$ui->save();
 				
 				$ui = new Label(60);
 				$ui->setHalign("center");
 				$ui->setPosition(0, -10, 1);
 				$ui->setStyle("TextRaceMessage");
 				$ui->setText("Your post was successfully published !");
-				$ui->draw();
+				$ui->save();
 			
 			// Default
 			default:

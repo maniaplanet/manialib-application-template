@@ -21,26 +21,26 @@ $ui->subTitle->setText("Manage your Manialink");
 $ui->logo->setSubStyle("ProfileAdvanced");
 
 $ui->quitButton->setManialink($request->createLinkArgList("../index.php"));
-$ui->draw();
+$ui->save();
 
 Manialink::beginFrame(15, 0, 2);
 
 	$ui = new Panel(50, 50);
 	$ui->setAlign("center", "center");
 	$ui->title->setText("Login");
-	$ui->draw();
+	$ui->save();
 	
 	$ui = new Label;
 	$ui->setHalign("center");
 	$ui->setPosition(0, 10, 1);
 	$ui->setText("Enter your password");
-	$ui->draw();
+	$ui->save();
 	
 	$ui = new Entry(40);
 	$ui->setHalign("center");
 	$ui->setPosition(0, 5, 1);
 	$ui->setName("password");
-	$ui->draw();
+	$ui->save();
 	
 	$request->set("password", "password");
 	
@@ -52,7 +52,7 @@ Manialink::beginFrame(15, 0, 2);
 	$ui->setText("Sign in");
 	$ui->addPlayerId();
 	$ui->setManialink($link);
-	$ui->draw();
+	$ui->save();
 	
 	
 

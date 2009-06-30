@@ -41,14 +41,14 @@ $ui->subTitle->setText("Modify posts");
 $ui->logo->setSubStyle("Paint");
 
 $ui->quitButton->setManialink($request->createLinkArgList("posts.php"));
-$ui->draw();
+$ui->save();
 
 Manialink::beginFrame(15, 40, 1);
  
 	$ui = new Panel(80, 80);
 	$ui->setHalign("center");
 	$ui->title->setText("Manage posts");
-	$ui->draw();
+	$ui->save();
 
 	if($request->get("delete"))
 	{
@@ -58,7 +58,7 @@ Manialink::beginFrame(15, 40, 1);
 		$ui->enableAutoNewLine();
 		$ui->setStyle("TextRaceValue");
 		$ui->setText("Do you really want to delete this post ?");
-		$ui->draw();
+		$ui->save();
 		
 		$request->set("confirm", 1);
 		$link = $request->createLink();
@@ -68,7 +68,7 @@ Manialink::beginFrame(15, 40, 1);
 		$ui->setPosition(0, -30, 1);
 		$ui->setText("Confirm");
 		$ui->setManialink($link);
-		$ui->draw();
+		$ui->save();
 	}
 	else
 	{
@@ -82,7 +82,7 @@ Manialink::beginFrame(15, 40, 1);
 				
 				$ui = new Quad(78, 7);
 				$ui->setSubStyle("BgList");
-				$ui->draw();
+				$ui->save();
 				
 				$ui = new Icon(6);
 				$ui->setPosition(1, -0.5, 1);
@@ -91,7 +91,7 @@ Manialink::beginFrame(15, 40, 1);
 				{
 					$ui->setImage($image);			
 				}
-				$ui->draw();
+				$ui->save();
 				
 				$request->set("post_id", $post->id);
 				$link = $request->createLink("../index.php");
@@ -101,7 +101,7 @@ Manialink::beginFrame(15, 40, 1);
 				$ui->setStyle("TextValueMedium");
 				$ui->setText('$ff0' . $post->getTitle());
 				$ui->setManialink($link);
-				$ui->draw();
+				$ui->save();
 				
 				$request->set("edit", 1);
 				$link = $request->createLink();
@@ -112,7 +112,7 @@ Manialink::beginFrame(15, 40, 1);
 				$ui->setStyle("TextValueSmall");
 				$ui->setText('$o$s' . "Edit");
 				$ui->setManialink($link);
-				$ui->draw();
+				$ui->save();
 				
 				$request->set("delete", 1);
 				$link = $request->createLink();
@@ -123,13 +123,13 @@ Manialink::beginFrame(15, 40, 1);
 				$ui->setStyle("TextValueSmall");
 				$ui->setText('$o$s' . "Delete");
 				$ui->setManialink($link);
-				$ui->draw();
+				$ui->save();
 				
 				$ui = new Label(46);
 				$ui->setPosition(10, -4, 1);
 				$ui->setStyle("TextCardInfoSmall");
 				$ui->setText('by $<$ccf' . $post->getAuthor() . '$>, ' . $post->getDate());
-				$ui->draw();
+				$ui->save();
 				
 			Manialink::endFrame();
 			

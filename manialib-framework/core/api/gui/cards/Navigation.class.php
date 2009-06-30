@@ -83,30 +83,30 @@ class Navigation extends Quad
 		$this->showQuitButton = false;
 	}
 	
-	protected function outputPreFilter () 
+	protected function preFilter () 
 	{
 		Manialink::beginFrame(-64, 48, 1, $this->output);
 	}
 	
-	protected function outputPostFilter () 
+	protected function postFilter () 
 	{
 		// Draw the header	
 		Manialink::beginFrame($this->posX+0.5, $this->posY-0.5, $this->posZ+1, $this->output);
-		$this->titleBg->draw($this->output);
-		$this->title->draw($this->output);
-		$this->subTitle->draw($this->output);
-		$this->logo->draw($this->output);
+		$this->titleBg->save();
+		$this->title->save();
+		$this->subTitle->save();
+		$this->logo->save();
 		
 		// Draw the items
 		foreach($this->items as $item) 
 		{
-			$item->draw($this->output);
+			$item->save();
 		}
 		if($this->showQuitButton) 
 		{
 			$this->quitButton->setSizeX($this->sizeX-1);
 			$this->quitButton->setPosition(0, -$this->sizeY+$this->quitButton->getSizeY()+2);
-			$this->quitButton->draw($this->output);
+			$this->quitButton->save();
 		}
 		Manialink::endFrame($this->output);
 		Manialink::endFrame($this->output);
@@ -154,10 +154,10 @@ class NavigationButton extends Quad
 		$this->text->setStyle(GUI_NAVIGATION_BUTTON_SELECTED_TEXT_DEFAULT_STYLE);	
 	}
 	
-	protected function outputPostFilter ()
+	protected function postFilter ()
 	{
 		// Calculus and stuff
-		$newPos = Manialink::getAlignedPos ($this, "left", "center");
+		$newPos = GuiTools::getAlignedPos ($this, "left", "center");
 		$this->text->setSizeX($this->sizeX - $this->textXpos - $this->textSizeMinimizer);
 		$this->icon->setSize($this->sizeY-$this->iconSizeMinimizer, $this->sizeY-$this->iconSizeMinimizer);
 		if($this->forceLinks)
@@ -168,8 +168,8 @@ class NavigationButton extends Quad
 		
 		// Drawing
 		Manialink::beginFrame($newPos["x"], $newPos["y"], $this->posZ+1, $this->output);
-			$this->text->draw($this->output);
-			$this->icon->draw($this->output);
+			$this->text->save();
+			$this->icon->save();
 		Manialink::endFrame($this->output);
 	}
 }

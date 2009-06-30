@@ -33,6 +33,6 @@ if(DEBUG_LEVEL >= DEBUG_ON)
 $linkstr = $request->createLinkArgList("index.php");
 $ui->quitButton->setManialink($linkstr);
 
-$ui->draw();
+$ui->save();
 
 ?>

@@ -69,7 +69,7 @@ class ChallengeCard extends Quad
 		$this->clickable = false;
 	}
 	
-	protected function outputPreFilter()
+	protected function preFilter()
 	{
 		$this->setPositionZ($this->posZ+3);
 		
@@ -79,26 +79,26 @@ class ChallengeCard extends Quad
 		}
 	}
 	
-	protected function outputPostFilter()
+	protected function postFilter()
 	{
 		// Algin the title and its bg at the top center of the main quad		
-		$arr = Manialink::getAlignedPos ($this, "center", "top");
+		$arr = GuiTools::getAlignedPos ($this, "center", "top");
 		$x = $arr["x"];
 		$y = $arr["y"];
 		
 		Manialink::beginFrame($x, $y, $this->posZ-3, $this->output);
 
-			$this->image->draw($this->output);
-			$this->points->draw($this->output);		
+			$this->image->save();
+			$this->points->save();		
 			
 			if(!$this->clickable)
 			{
-				$this->clickableMask->draw($this->output);
-				$this->clickableLock->draw($this->output);
-				$this->lockedMessage->draw($this->output);
+				$this->clickableMask->save();
+				$this->clickableLock->save();
+				$this->lockedMessage->save();
 			}
 			
-			$this->text->draw($this->output);
+			$this->text->save();
 	
 		Manialink::endFrame($this->output);
 	}

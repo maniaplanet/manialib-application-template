@@ -12,7 +12,7 @@ $request = RequestEngine::GetInstance();
  
 $ui = new Panel(50, 60);
 $ui->title->setText("Last posts");
-$ui->draw();
+$ui->save();
 
 $i = 0;
 foreach($posts->getPosts() as $postId=>$post)
@@ -24,7 +24,7 @@ foreach($posts->getPosts() as $postId=>$post)
 		
 		$ui = new Quad(48, 7);
 		$ui->setSubStyle("BgList");
-		$ui->draw();
+		$ui->save();
 		
 		$ui = new Icon(6);
 		$ui->setPosition(1, -0.5, 1);
@@ -33,7 +33,7 @@ foreach($posts->getPosts() as $postId=>$post)
 		{
 			$ui->setImage($image);			
 		}
-		$ui->draw();
+		$ui->save();
 		
 		$request->set("post_id", $post->id);
 		
@@ -42,13 +42,13 @@ foreach($posts->getPosts() as $postId=>$post)
 		$ui->setStyle("TextValueMedium");
 		$ui->setText('$ff0' . $post->getTitle());
 		$ui->setManialink($request->createLink());
-		$ui->draw();
+		$ui->save();
 		
 		$ui = new Label(46);
 		$ui->setPosition(10, -4, 1);
 		$ui->setStyle("TextCardInfoSmall");
 		$ui->setText('by $<$ccf' . $post->getAuthor() . '$>, ' . $post->getDate());
-		$ui->draw();
+		$ui->save();
 		
 	Manialink::endFrame();
 	

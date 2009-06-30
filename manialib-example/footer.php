@@ -4,6 +4,6 @@
  * @author Maxime Raoust
  */
 
-Manialink::theEnd();
+Manialink::render();
 
 ?>

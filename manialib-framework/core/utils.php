@@ -243,14 +243,14 @@ function manialinkErrorHandler($errno, $errstr, $errfile, $errline)
 			ob_clean();
 	
 			$ui = new Manialink;
-			$ui->draw();
+			$ui->save();
 
 			$ui = new Panel(50, 20);
 			$ui->setAlign("center", "center");
 			$ui->title->setStyle("TextTitleError");
 			$ui->titleBg->setSubStyle("BgTitle2");
 			$ui->title->setText(__("fatal_error"));
-			$ui->draw();
+			$ui->save();
 
 			$ui = new Label(124);
 			$ui->enableAutoNewLine();
@@ -258,7 +258,7 @@ function manialinkErrorHandler($errno, $errstr, $errfile, $errline)
 			$ui->setPosition(0, 0, 2);
 
 			$ui->setText(__("error_message"));
-			$ui->draw();
+			$ui->save();
 
 			$ui = new Button;
 			$ui->setText(__("error_back_button"));
@@ -266,7 +266,7 @@ function manialinkErrorHandler($errno, $errstr, $errfile, $errline)
 			$ui->setManialink($request->createLinkArgList("index.php"));
 			$ui->setPosition(0, -3, 5);
 			$ui->setHalign("center");
-			$ui->draw();
+			$ui->save();
 
 			Manialink :: theEnd();
 	
@@ -309,21 +309,21 @@ function manialinkErrorHandlerDebug($errno, $errstr, $errfile, $errline)
 			ob_clean();
 	
 			$ui = new Manialink;
-			$ui->draw();
+			$ui->save();
 
 			$ui = new Panel(115, 85);
 			$ui->setAlign("center", "center");
 			$ui->titleBg->setSubStyle("BgTitle2");
 			$ui->title->setStyle("TextTitleError");
 			$ui->title->setText("Fatal Error");
-			$ui->draw();
+			$ui->save();
 			
 			$ui = new Label(110);
 			$ui->setAlign("center", "center");
 			$ui->setPositionZ(1);
 			$ui->enableAutoNewLine();
 			$ui->setText($msg);
-			$ui->draw();
+			$ui->save();
 
 			$ui = new Button;
 			$ui->setText(__("error_back_button"));
@@ -331,7 +331,7 @@ function manialinkErrorHandlerDebug($errno, $errstr, $errfile, $errline)
 			$ui->setManialink($request->createLinkArgList("index.php"));
 			$ui->setPosition(0, -35, 5);
 			$ui->setHalign("center");
-			$ui->draw();
+			$ui->save();
 
 			Manialink :: theEnd();
 

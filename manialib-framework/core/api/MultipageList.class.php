@@ -118,7 +118,7 @@ class MultipageList
 			
 			$request->set($this->urlParamName, $this->currentPage);
 			
-			$ui->draw();
+			$ui->save();
 		}
 	}
 }
