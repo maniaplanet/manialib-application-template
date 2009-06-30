@@ -208,6 +208,7 @@ abstract class GuiElement
 	protected $xmlTagName = "xmltag"; // Redeclare this for each child
 	protected $xmlTagEnd = "/";
 	protected $output = "";
+	protected $domElement;
 
 	function __construct($sx=20, $sy=20)
 	{
@@ -372,22 +373,15 @@ abstract class GuiElement
 	function getAddPlayerId () 	{return $this->addPlayerId;}
 	function getImage () 		{return $this->imageFile;}
 
-	final protected function outputAddAttribute ($name, $value)
-	{
-		if($value !== null)
-		{
-			$this->output .= " $name=\"$value\"";
-		}
-	}
-
 	final protected function outputBegin()
 	{
-		$this->output .= "<$this->xmlTagName";
+		$doc = new DOMDocument;
+		$this->domElement = $doc->createElement($this->xmlTagName);
 	}
 
 	final protected function outputEnd()
 	{
-		$this->output .= $this->xmlTagEnd.">\n";
+		$this->output .= $this->domElement->ownerDocument->saveXML($this->domElement) . "\n";
 	}
 
 	final protected function outputStandard()
@@ -396,44 +390,43 @@ abstract class GuiElement
 		if($this->posX || $this->posY || $this->posZ)
 		{
 			if ($this->classicPositioning)
-				$this->outputAddAttribute("pos", "$this->posX $this->posY $this->posZ");
+				$this->domElement->setAttribute("pos", "$this->posX $this->posY $this->posZ");
 			else
-				$this->outputAddAttribute("posn", "$this->posX $this->posY $this->posZ");
+				$this->domElement->setAttribute("posn", "$this->posX $this->posY $this->posZ");
 		}
 
 		// Add size
 		if($this->sizeX || $this->sizeY)
 		{
 			if ($this->classicSizing)
-				$this->outputAddAttribute("size", "$this->sizeX $this->sizeY");
+				$this->domElement->setAttribute("size", "$this->sizeX $this->sizeY");
 			else
-				$this->outputAddAttribute("sizen", "$this->sizeX $this->sizeY");
+				$this->domElement->setAttribute("sizen", "$this->sizeX $this->sizeY");
 		}
 
 		// Add alignement
-		$this->outputAddAttribute("halign", $this->halign);
-		$this->outputAddAttribute("valign", $this->valign);
-		$this->outputAddAttribute("scale", $this->scale);
+		if($this->halign !== null) $this->domElement->setAttribute("halign", $this->halign);
+		if($this->valign !== null) $this->domElement->setAttribute("valign", $this->valign);
+		if($this->scale !== null) $this->domElement->setAttribute("scale", $this->scale);
 
 		// Add styles
-		$this->outputAddAttribute("style", $this->style);
-		$this->outputAddAttribute("substyle", $this->subStyle);
-		$this->outputAddAttribute("bgcolor", $this->bgcolor);
+		if($this->style !== null) $this->domElement->setAttribute("style", $this->style);
+		if($this->subStyle !== null) $this->domElement->setAttribute("substyle", $this->subStyle);
+		if($this->bgcolor !== null) $this->domElement->setAttribute("bgcolor", $this->bgcolor);
 
 		// Add links
-		$this->outputAddAttribute("addplayerid", $this->addPlayerId);
-		$this->outputAddAttribute("manialink", $this->manialink);
-		$this->outputAddAttribute("url", $this->url);
-		$this->outputAddAttribute("maniazones", $this->maniazones);
+		if($this->addPlayerId !== null) $this->domElement->setAttribute("addplayerid", $this->addPlayerId);
+		if($this->manialink !== null) $this->domElement->setAttribute("manialink", $this->manialink);
+		if($this->url !== null) $this->domElement->setAttribute("url", $this->url);
+		if($this->maniazones !== null) $this->domElement->setAttribute("maniazones", $this->maniazones);
 
 		// Add action
-		$this->outputAddAttribute("action", $this->action);
-		$this->outputAddAttribute("actionkey", $this->actionKey);
+		if($this->action !== null) $this->domElement->setAttribute("action", $this->action);
+		if($this->actionKey !== null) $this->domElement->setAttribute("actionkey", $this->actionKey);
 
 		// Add images
-		$this->outputAddAttribute("image", $this->imageFile);
-		$this->outputAddAttribute("imagefocus", $this->imageFocusFile);
-
+		if($this->imageFile !== null) $this->domElement->setAttribute("image", $this->imageFile);
+		if($this->imageFocusFile !== null) $this->domElement->setAttribute("imagefocus", $this->imageFocusFile);
 
 	}
 
@@ -462,9 +455,10 @@ abstract class GuiElement
 	}
 
 	/**
-	 * Get the xml output
+	 * Draw the damn thing ! If the output buffer is specified, the result will
+	 * be written in it
 	 */
-	final protected function outputGetXml()
+	final function draw(&$outputBuffer=null)
 	{
 		$this->outputPreFilter();
 		$this->outputBegin();
@@ -472,21 +466,14 @@ abstract class GuiElement
 		$this->outputOptional();
 		$this->outputEnd();
 		$this->outputPostFilter();
-		return $this->output;
-	}
-
-	/**
-	 * Draw the damn thing ! If the outbuffer is specified, the result will be written in it
-	 */
-	function draw(&$outputBuffer=null)
-	{
+		
 		if($outputBuffer !== null)
 		{
-			$outputBuffer .= $this->outputGetXml();
+			$outputBuffer .= $this->output;
 		}
 		else
 		{
-			echo($this->outputGetXml());
+			echo($this->output);
 		}
 	}
 }
@@ -581,8 +568,8 @@ class Format extends GuiElement
 
 	function outputOptional()
 	{
-		$this->outputAddAttribute("textsize", $this->textSize);
-		$this->outputAddAttribute("textcolor", $this->textColor);
+		if($this->textSize !== null) $this->domElement->setAttribute("textsize", $this->textSize);
+		if($this->textColor !== null) $this->domElement->setAttribute("textcolor", $this->textColor);
 	}
 }
 
@@ -611,7 +598,7 @@ class Label extends Format
 
 	function setText($plop)
 	{
-		$this->text = htmlspecialchars($plop);
+		$this->text = $plop;
 	}
 
 	function setTextid($plop)
@@ -631,7 +618,7 @@ class Label extends Format
 
 	function getText()
 	{
-		return htmlspecialchars_decode($this->text);
+		return $this->text;
 	}
 
 	function getTextid()
@@ -647,10 +634,10 @@ class Label extends Format
 	function outputOptional()
 	{
 		parent::outputOptional();
-		$this->outputAddAttribute("text", $this->text);
-		$this->outputAddAttribute("textid", $this->textid);
-		$this->outputAddAttribute("autonewline", $this->autoNewLine);
-		$this->outputAddAttribute("maxline", $this->maxline);
+		if($this->text !== null) $this->domElement->setAttribute("text", $this->text);
+		if($this->textid !== null) $this->domElement->setAttribute("textid", $this->textid);
+		if($this->autoNewLine !== null) $this->domElement->setAttribute("autonewline", $this->autoNewLine);
+		if($this->maxline !== null) $this->domElement->setAttribute("maxline", $this->maxline);
 	}
 }
 
@@ -678,14 +665,14 @@ class Entry extends Label
 
 	function setDefault ($plop)
 	{
-		$this->defaultValue = htmlspecialchars($plop);
+		$this->defaultValue = $plop;
 	}
 
 	function outputOptional()
 	{
 		parent::outputOptional();
-		$this->outputAddAttribute("name", $this->name);
-		$this->outputAddAttribute("default", $this->defaultValue);
+		if($this->name !== null) $this->domElement->setAttribute("name", $this->name);
+		if($this->defaultValue !== null) $this->domElement->setAttribute("default", $this->defaultValue);
 	}
 }
 
@@ -712,7 +699,7 @@ class FileEntry extends Entry
 	function outputOptional()
 	{
 		parent::outputOptional();
-		$this->outputAddAttribute("folder", $this->folder );
+		if($this->folder !== null) $this->domElement->setAttribute("folder", $this->folder);
 	}
 }
 

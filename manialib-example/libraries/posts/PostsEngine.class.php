@@ -13,6 +13,7 @@ class PostsEngine
 	private static $instance;
 	
 	private $posts = array();
+	private $perPage;
 		
 	public $postsTable;
 	public $contentTable;
@@ -33,13 +34,26 @@ class PostsEngine
 		$this->posts = array();
 	}
 	
-	public function getPosts()
+	public function getPosts($page = 1, $perPage = 10)
 	{
 		if(empty($this->posts))
 		{
-			$this->dbGetPosts();
+			$page = (int) abs($page);
+			$this->perPage = (int) abs($perPage);
+			
+			$limit1 = ($page - 1)*$this->perPage + 1;
+			$limit2 = $this->perPage+1;
+			
+			$filter = "ORDER BY date_created DESC LIMIT $limit1, $limit2";
+			
+			$this->dbGetPosts($filter);
 		}
-		return (array) $this->posts;
+		return array_slice((array) $this->posts, 0, $perPage, true);
+	}
+	
+	public function hasMorePosts()
+	{
+		return count($this->posts) > $this->perPage;
 	}
 	
 	public function getPost($postId)

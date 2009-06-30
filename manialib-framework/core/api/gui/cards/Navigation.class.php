@@ -23,7 +23,7 @@ class Navigation extends Quad
 	protected $sizeY = 96;
 
 	function __construct () 
-	{
+	{	
 		$this->setStyle(GUI_NAVIGATION_DEFAULT_STYLE);
 		$this->setSubStyle(GUI_NAVIGATION_DEFAULT_SUBSTYLE);
 		

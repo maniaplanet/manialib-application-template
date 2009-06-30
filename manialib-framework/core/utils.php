@@ -237,7 +237,7 @@ function manialinkErrorHandler($errno, $errstr, $errfile, $errline)
 			$msg = date('d/m/y H:i:s') . " [warning] ";
 			$msg .= $errstr . " ";
 			$msg .= "at url " . $request->createLink() . "\n";
-			error_log(htmlspecialchars_decode($msg), 3, ERROR_LOG);
+			error_log(($msg), 3, ERROR_LOG);
 			break;
 		default :
 			ob_clean();
@@ -276,7 +276,7 @@ function manialinkErrorHandler($errno, $errstr, $errfile, $errline)
 			$msg .= $errno . " ";
 			$msg .= "in file " . $errfile . " ";
 			$msg .= "on line " . $errline . "\n";
-			error_log(htmlspecialchars_decode($msg), 3, ERROR_LOG);
+			error_log(($msg), 3, ERROR_LOG);
 			exit;
 			break;
 	}
@@ -295,7 +295,7 @@ function manialinkErrorHandlerDebug($errno, $errstr, $errfile, $errline)
 			$msg = date('d/m/y H:i:s') . " [warning] ";
 			$msg .= $errstr . " ";
 			$msg .= "at url " . $request->createLink() . "\n";
-			error_log(htmlspecialchars_decode($msg), 3, ERROR_LOG);
+			error_log(($msg), 3, ERROR_LOG);
 			break;
 		default :
 			$msg = date('d/m/y H:i:s') . " [error] ";
@@ -304,7 +304,7 @@ function manialinkErrorHandlerDebug($errno, $errstr, $errfile, $errline)
 			$msg .= $errno . " ";
 			$msg .= "in file " . $errfile . " ";
 			$msg .= "on line " . $errline . "\n";
-			error_log(htmlspecialchars_decode($msg), 3, ERROR_LOG);
+			error_log(($msg), 3, ERROR_LOG);
 			
 			ob_clean();
 	

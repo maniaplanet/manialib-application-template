@@ -276,7 +276,7 @@ final class RequestEngine
 		// SID
 		if(SID) 
 		{
-			$link .= "?".htmlspecialchars(SID);
+			$link .= "?".SID;
 		}
 		
 		// Params
@@ -293,10 +293,10 @@ final class RequestEngine
 		}
 		
 		// Create the output	
-		$params = implode("&amp;", $params);
+		$params = implode("&", $params);
 		if(SID)
 		{
-			$link .= "&amp;";
+			$link .= "&";
 		}
 		else
 		{
