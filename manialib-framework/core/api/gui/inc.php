@@ -10,7 +10,10 @@
 /**
  * Image web directory URL
  */
-define("GUI_IMAGE_DIR_URL", APP_URL . "images/" );
+if(defined("APP_URL"))
+	define("GUI_IMAGE_DIR_URL", APP_URL . "images/" );
+else
+	define("GUI_IMAGE_DIR_URL", "");
 
 /**#@+
  * Includes

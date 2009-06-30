@@ -34,14 +34,14 @@ class PostsEngine
 		$this->posts = array();
 	}
 	
-	public function getPosts($page = 1, $perPage = 10)
+	public function getPosts($page = 1, $perPage = 3)
 	{
 		if(empty($this->posts))
 		{
 			$page = (int) abs($page);
 			$this->perPage = (int) abs($perPage);
 			
-			$limit1 = ($page - 1)*$this->perPage + 1;
+			$limit1 = ($page - 1)*$this->perPage;
 			$limit2 = $this->perPage+1;
 			
 			$filter = "ORDER BY date_created DESC LIMIT $limit1, $limit2";

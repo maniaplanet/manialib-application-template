@@ -9,8 +9,6 @@ require_once( dirname(__FILE__) . "/../core.inc.php" );
 
 AdminEngine::checkAuthentication();
 
-// FIXME Adding two posts in a row doesn't work
-
 ////////////////////////////////////////////////////////////////////////////////
 // Processing
 ////////////////////////////////////////////////////////////////////////////////
@@ -90,8 +88,8 @@ switch($currentStep)
 	
 	// Default
 	default: 
-	
-	
+		unset($post);
+		$session->delete("post_object");
 }
 
 if(isset($post))
