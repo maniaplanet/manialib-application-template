@@ -30,7 +30,7 @@ class PageNavigator
 	protected $showFastNext;
 	protected $showText;
 	protected $pageNumber;
-	protected $pageIndex;
+	protected $currentPage;
 	protected $posX;
 	protected $posY;
 	protected $posZ;
@@ -45,12 +45,11 @@ class PageNavigator
 		$this->arrowFirst = new Icon64($iconSize);
 		$this->text = new Label(5);
 		
-		$this->showLast = true;
+		$this->showLast = false;
 		$this->showFastNext = false;
 		$this->showText = true;
-		$this->pageIndex = 1;
+		$this->currentPage = 1;
 		$this->pageNumber = 2;
-		$this->output = "";
 		
 		$this->arrowNext->setSubStyle($this->arrowNoneStyle);
 		$this->arrowPrev->setSubStyle($this->arrowNoneStyle);
@@ -59,8 +58,11 @@ class PageNavigator
 		$this->arrowLast->setSubStyle($this->arrowNoneStyle);
 		$this->arrowFirst->setSubStyle($this->arrowNoneStyle);
 	}
-
-	function setIconSize($iconSize)
+	
+	/**
+	 * Sets the size of the navigation icons
+	 */
+	function setSize($iconSize = 5)
 	{
 		$this->arrowNext->setSize($iconSize, $iconSize);
 		$this->arrowPrev->setSize($iconSize, $iconSize);
@@ -69,76 +71,101 @@ class PageNavigator
 		$this->arrowLast->setSize($iconSize, $iconSize);
 		$this->arrowFirst->setSize($iconSize, $iconSize);
 	}
-
-	function setPositionX($plop)
+	
+	/**
+	 * Sets the position of the center of the PageNavigator
+	 */
+	function setPosition($x = 0, $y = 0, $z = 0)
 	{
-		$this->posX = $plop;
+		$this->posX = $x;
+		$this->posY = $y;
+		$this->posZ = $z;
 	}
-
-	function setPositionY($plop)
+	
+	/**
+	 * Sets the page number
+	 */
+	function setPageNumber($pageNumber)
 	{
-		$this->posY = $plop;
+		$this->pageNumber = $pageNumber;
 	}
-
-	function setPositionZ($plop)
+	
+	/**
+	 * Sets the current page
+	 */
+	function setCurrentPage($currentPage)
 	{
-		$this->posZ = $plop;
+		$this->currentPage = $currentPage;
 	}
-
-	function setPosition($px = 0, $py = 0, $pz = 0)
+	
+	/**
+	 * Shows or hides the "go to first/last" navigation icons
+	 */
+	function showLast($show = true)
 	{
-		$this->setPositionX($px);
-		$this->setPositionY($py);
-		$this->setPositionZ($pz);
+		$this->showLast = $show;
 	}
-
-	function hideLast()
-	{
-		$this->showLast = false;
-	}
-
-	function showLast()
-	{
-		$this->showLast = true;
-	}
-
+	
+	/**
+	 * Returns whether the "go to first/last" navigation icons are shown 
+	 */
 	function isLastShown()
 	{
 		return $this->showLast;
 	}
 	
-	function isFastNextShown()
-	{
-		return $this->showFastNext;
-	}
-
+	/**
+	 * Shows or hides the "fast prev/next" navigation icons
+	 */
 	function showFastNext($show = true)
 	{
 		$this->showFastNext = $show;
 	}
-
-	function hideText()
+	
+	/**
+	 * Returns whether the "fast prev/next" navigation icons are shown 
+	 */
+	function isFastNextShown()
 	{
-		$this->showText = false;
+		return $this->showFastNext;
 	}
-
-	function setPageNumber($plop)
+	
+	/**
+	 * Shows or hides the text. Note that if the current page or the page number
+	 * isn't declared, the text won't be shown
+	 */
+	function showText($show = true)
 	{
-		$this->pageNumber = $plop;
+		$this->showText = $show;
 	}
-
-	function setPageIndex($plop)
+	
+	/**
+	 * Returns whether the text is shown
+	 */
+	function isTextShown()
 	{
-		$this->pageIndex = $plop;
+		return $this->showText;
 	}
-
+	
+	/**
+	 * Saves the PageNavigator in the GUI objects stack
+	 */
 	function save()
 	{
 		// Show / hide text
-		if(!$this->pageIndex || !$this->pageNumber)
+		if(!$this->currentPage || !$this->pageNumber)
 		{
 			$this->hideText();
-			$this->hideLast();
+		}
+		
+		// Auto show fast next / last
+		if($this->arrowFirst->hasLink() || $this->arrowLast->hasLink() )
+		{
+			$this->showLast();
+		}
+		if($this->arrowFastNext->hasLink() || $this->arrowFastPrev->hasLink() )
+		{
+			$this->showFastNext();
 		}
 		
 		// Arrow styles
@@ -151,7 +178,7 @@ class PageNavigator
 
 		// Text
 		$this->text->setStyle("TextStaticSmall");
-		$this->text->setText($this->pageIndex . "/" . $this->pageNumber);
+		$this->text->setText($this->currentPage . "/" . $this->pageNumber);
 
 		// Positioning in relation to the center of the containing frame
 		$this->text->setAlign("center", "center");

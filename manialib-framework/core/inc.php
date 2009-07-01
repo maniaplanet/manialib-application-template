@@ -9,9 +9,6 @@
 // Log teh start time for debug
 $debugMtimeStart = microtime(true);
 
-// Start the output buffer
-ob_start(); 
-
 // Core includes. The classes will be loaded through the __autoload() function
 require_once( dirname(__FILE__) . "/../config.php" );
 require_once( dirname(__FILE__) . "/config.default.php" );

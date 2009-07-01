@@ -212,7 +212,7 @@ switch($request->get("a"))
 			$ui = new Label(35);
 			$ui->setHalign("center");
 			$ui->setPosition(0, -10, 1);
-			$ui->enableAutoNewLine();
+			$ui->enableAutonewline();
 			if(isset($adminCreated) && $adminCreated)
 			{
 				$ui->setText("New admin was successfully created with login=$adminLogin and password=$adminLogin");

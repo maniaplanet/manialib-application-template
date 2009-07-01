@@ -16,7 +16,10 @@ abstract class Manialink
 	public static $domDocument;
 	public static $parentNodes;
 	
-	static public function load()
+	/**
+	 * Loads the Manialink objects stack
+	 */
+	final public static function load()
 	{
 		self::$domDocument = new DOMDocument;
 		self::$parentNodes = array();
@@ -39,14 +42,28 @@ abstract class Manialink
 		$ui->setText('Powered by $<$ccc$o$h[manialib]ManiaLib$h$>');
 		$ui->save();
 	}
-		
-	static public function render()
+	
+	/**
+	 * Render the manialink. If $return is set to true, the XML code will be
+	 * returned instead of echoed
+	 */	
+	final public static function render($return = false)
 	{
-		header("Content-Type: text/xml; charset=utf-8");
-		echo self::$domDocument->saveXML();
+		if($return)
+		{
+			return self::$domDocument->saveXML();
+		}
+		else
+		{
+			header("Content-Type: text/xml; charset=utf-8");
+			echo self::$domDocument->saveXML();
+		}
 	}
 	
-	static public function beginFrame($x=0, $y=0, $z=0)
+	/**
+	 * Creates a new Manialink frame
+	 */
+	final public static function beginFrame($x=0, $y=0, $z=0)
 	{
 		$frame = self::$domDocument->createElement("frame");
 		
@@ -59,7 +76,10 @@ abstract class Manialink
 		self::$parentNodes[] = $frame;
 	}
 	
-	static public function endFrame()
+	/**
+	 * Closes the current Manialink frame
+	 */
+	final public static function endFrame()
 	{
 		if(!end(self::$parentNodes)->hasChildNodes())
 		{

@@ -85,13 +85,13 @@ class Navigation extends Quad
 	
 	protected function preFilter () 
 	{
-		Manialink::beginFrame(-64, 48, 1, $this->output);
+		Manialink::beginFrame(-64, 48, 1);
 	}
 	
 	protected function postFilter () 
 	{
 		// Draw the header	
-		Manialink::beginFrame($this->posX+0.5, $this->posY-0.5, $this->posZ+1, $this->output);
+		Manialink::beginFrame($this->posX+0.5, $this->posY-0.5, $this->posZ+1);
 		$this->titleBg->save();
 		$this->title->save();
 		$this->subTitle->save();
@@ -108,8 +108,8 @@ class Navigation extends Quad
 			$this->quitButton->setPosition(0, -$this->sizeY+$this->quitButton->getSizeY()+2);
 			$this->quitButton->save();
 		}
-		Manialink::endFrame($this->output);
-		Manialink::endFrame($this->output);
+		Manialink::endFrame();
+		Manialink::endFrame();
 	}	
 }
 
@@ -167,10 +167,10 @@ class NavigationButton extends Quad
 		}
 		
 		// Drawing
-		Manialink::beginFrame($newPos["x"], $newPos["y"], $this->posZ+1, $this->output);
+		Manialink::beginFrame($newPos["x"], $newPos["y"], $this->posZ+1);
 			$this->text->save();
 			$this->icon->save();
-		Manialink::endFrame($this->output);
+		Manialink::endFrame();
 	}
 }
 

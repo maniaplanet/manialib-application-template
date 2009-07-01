@@ -22,7 +22,6 @@ class MultipageList
 	function __construct()
 	{
 		$this->pageNavigator = new PageNavigator;
-		$this->pageNavigator->hideLast();
 	}
 
 	function setSize($size)

@@ -59,8 +59,6 @@ foreach($posts->getPosts($currentPage) as $postId=>$post)
 
 $ui = new PageNavigator;
 $ui->setPosition(25, -80, 1);
-$ui->hideText();
-$ui->hideLast();
 
 
 if($currentPage > 1)

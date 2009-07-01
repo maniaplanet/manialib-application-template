@@ -220,7 +220,7 @@ Manialink::beginFrame(-34, 48, 1);
 				
 				$ui = new Entry(72, 45);
 				$ui->setPosition(-36, -24, 1);
-				$ui->enableAutoNewLine();
+				$ui->enableAutonewline();
 				$ui->setMaxline(13);
 				$ui->setName("content");
 				$ui->setDefault($post->getContent());

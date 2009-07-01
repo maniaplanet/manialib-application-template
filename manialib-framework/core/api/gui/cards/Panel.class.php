@@ -50,10 +50,10 @@ class Panel extends Quad
 		$this->title->setHalign("center");
 		
 		// Draw them
-		Manialink::beginFrame($x, $y-1, $this->posZ+1, $this->output);
+		Manialink::beginFrame($x, $y-1, $this->posZ+1);
 			$this->titleBg->save();
 			$this->title->save();
-		Manialink::endFrame($this->output);
+		Manialink::endFrame();
 	}
 }
 

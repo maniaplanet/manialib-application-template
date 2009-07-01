@@ -17,7 +17,7 @@ abstract class GuiTools
 	 * @param String $newAlign Halign of the to be positioned element
 	 * @return Int
 	 */
-	static public function getAlignedPosX ($posX, $sizeX, $halign, $newAlign)
+	final public static function getAlignedPosX ($posX, $sizeX, $halign, $newAlign)
 	{
 		if($halign==null) $halign="left";
 		switch(array($halign, $newAlign))
@@ -43,7 +43,7 @@ abstract class GuiTools
 	 * @param String $newAlign Valign of the to be positioned element
 	 * @return Int
 	 */
-	static public function getAlignedPosY ($posY, $sizeY, $valign, $newAlign)
+	final public static function getAlignedPosY ($posY, $sizeY, $valign, $newAlign)
 	{
 		if($valign=="top" || $valign==null) $valign = "right";
 		else if($valign=="bottom") $valign = "left";
@@ -52,14 +52,14 @@ abstract class GuiTools
 		return self::getAlignedPosX ($posY, $sizeY, $valign, $newAlign);
 	}
 
-	static public function getAlignedPos ($object, $newHalign, $newValign)
+	final public static function getAlignedPos ($object, $newHalign, $newValign)
 	{
 		$newPosX = self::getAlignedPosX ($object->getPosX(), $object->getSizeX(), $object->getHalign(), $newHalign);
 		$newPosY = self::getAlignedPosY ($object->getPosY(), $object->getSizeY(), $object->getValign(), $newValign);
 		return array("x" => $newPosX, "y" => $newPosY);
 	}
 
-	static public function getAlignPosArray ($array, $newHalign, $newValign)
+	final public static function getAlignPosArray ($array, $newHalign, $newValign)
 	{
 		$newPosX = self::getAlignedPosX ($array["posX"], $array["sizeX"], $array["halign"], $newHalign);
 		$newPosY = self::getAlignedPosY ($array["posY"], $array["sizeY"], $array["valign"], $newValign);
@@ -91,11 +91,9 @@ abstract class GuiElement
 	protected $addPlayerId;
 	protected $action;
 	protected $actionKey;
-	protected $imageFile;
-	protected $imageFocusFile;
+	protected $image;
+	protected $imageFocus;
 	protected $xmlTagName = "xmltag"; // Redeclare this for each child
-	protected $xmlTagEnd = "/";
-	protected $output = "";
 	protected $xml;
 
 	function __construct($sx=20, $sy=20)
@@ -213,46 +211,131 @@ abstract class GuiElement
 		$this->setStyle(null);
 		$this->setSubStyle(null);
 		if($absoluteUrl)
-			$this->imageFile = $absoluteUrl.$image;
+			$this->image = $absoluteUrl.$image;
 		else
-			$this->imageFile = $image;
+			$this->image = $image;
 	}
 
 	function setImageFocus($imageFocus, $absoluteUrl=GUI_IMAGE_DIR_URL)
 	{
 		if($absoluteUrl)
-			$this->imageFocusFile = $absoluteUrl.$imageFocus;
+			$this->imageFocus = $absoluteUrl.$imageFocus;
 		else
-			$this->imageFocusFile = $imageFocus;
+			$this->imageFocus = $imageFocus;
 	}
 
-	/**
-	 * Add links/action from another gui object
-	 */
-	function addLink($object)
+	function getStyle()
 	{
-		$this->setManialink($object->manialink);
-		$this->setUrl($object->url);
-		$this->setManiazones($object->maniazones);
-		$this->setAction($object->action);
+		return $this->style;
+	}
+	
+	function getSubStyle()
+	{
+		return $this->subStyle;
+	}
+	
+	function getPosX()
+	{
+		return $this->posX; 
+	}
+	
+	function getPosY()
+	{
+		return $this->posY;
+	}
+	
+	function getPosZ() 		
+	{
+		return $this->posZ;
+	}
+	function getSizeX ()
+	{
+		return $this->sizeX;
+	}
+	
+	function getSizeY()
+	{
+		return $this->sizeY;
+	}
+	
+	function getScale()
+	{
+		return $this->scale;
+	}
+	
+	function getHalign()
+	{
+		return $this->halign;
+	}
+	
+	function getValign()
+	{
+		return $this->valign;
+	}
+	
+	function getManialink()
+	{
+		return $this->manialink;
+	}
+	
+	function getManiazones()
+	{
+		return $this->maniazones;
+	}
+	
+	function getUrl()
+	{
+		return $this->url;
+	}
+	
+	function getAction()
+	{
+		return $this->action;
+	}
+	
+	function getActionKey()
+	{
+		return $this->actionKey;
+	}
+	
+	function getAddPlayerId() 	
+	{
+		return $this->addPlayerId;
+	}
+	
+	function getBgcolor()
+	{
+		return $this->bgcolor;
+	}
+	
+	function getImage()
+	{
+		return $this->image;
+	}
+	
+	function getImageFocus()
+	{
+		return $this->imageFocus;
+	}
+	
+	/**
+	 * Imports links/actions from another Manialink object
+	 */
+	function addLink(GuiElement $object)
+	{
+		$this->setManialink($object->getManialink());
+		$this->setUrl($object->getUrl());
+		$this->setManiazones($object->getManiazones());
+		$this->setAction($object->getAction());
 		if($object->getAddPlayerId())
 		{
 			$this->addPlayerId();
 		}
 	}
-
-	function getPosX () 		{return $this->posX; }
-	function getPosY () 		{return $this->posY;}
-	function getPosZ () 		{return $this->posZ;}
-	function getSizeX () 		{return $this->sizeX;}
-	function getSizeY () 		{return $this->sizeY;}
-	function getHalign () 		{return $this->halign;}
-	function getValign () 		{return $this->valign;}
-	function getAddPlayerId () 	{return $this->addPlayerId;}
-	function getImage () 		{return $this->imageFile;}
 	
 	/**
-	 * Returns true if a link (manialink, maniazone, url, action) is set
+	 * Returns true if a link was set on the object (manialink, maniazone, url,
+	 * action)
 	 */
 	function hasLink()
 	{
@@ -276,8 +359,7 @@ abstract class GuiElement
 	}
 
 	/**
-	 * Draw the damn thing ! If the output buffer is specified, the result will
-	 * be written in it
+	 * Saves the object in the Manialink objects stack
 	 */
 	final public function save()
 	{
@@ -321,8 +403,8 @@ abstract class GuiElement
 		if($this->actionKey !== null) $this->xml->setAttribute("actionkey", $this->actionKey);
 
 		// Add images
-		if($this->imageFile !== null) $this->xml->setAttribute("image", $this->imageFile);
-		if($this->imageFocusFile !== null) $this->xml->setAttribute("imagefocus", $this->imageFocusFile);
+		if($this->image !== null) $this->xml->setAttribute("image", $this->image);
+		if($this->imageFocus !== null) $this->xml->setAttribute("imagefocus", $this->imageFocus);
 		
 		// Post filtering
 		$this->postFilter();
@@ -395,7 +477,6 @@ class Format extends GuiElement
 	protected $xmlTagName = "format";
 	protected $halign = null;
 	protected $valign = null;
-
 	protected $textSize;
 	protected $textColor;
 
@@ -416,6 +497,16 @@ class Format extends GuiElement
 		$this->setStyle(null);
 		$this->setSubStyle(null);
 	}
+	
+	function getTextSize()
+	{
+		return $this->textSize;
+	}
+	
+	function getTextColor()
+	{
+		return $this->textColor;
+	}
 
 	protected function postFilter()
 	{
@@ -432,13 +523,9 @@ class Label extends Format
 {
 	protected $xmlTagName = "label";
 	protected $style = GUI_LABEL_DEFAULT_STYLE;
-
-	protected $textSize;
-	protected $textColor;
-
 	protected $text;
 	protected $textid;
-	protected $autoNewLine;
+	protected $autonewline;
 	protected $maxline;
 
 	function __construct ($sx = 20)
@@ -462,9 +549,9 @@ class Label extends Format
 		$this->maxline = $plop;
 	}
 
-	function enableAutoNewLine()
+	function enableAutonewline()
 	{
-		$this->autoNewLine = 1;
+		$this->autonewline = 1;
 	}
 
 	function getText()
@@ -481,13 +568,18 @@ class Label extends Format
 	{
 		return $this->maxline;
 	}
+	
+	function getAutonewline()
+	{
+		return $this->autonewline;
+	}
 
 	protected function postFilter()
 	{
 		parent::postFilter();
 		if($this->text !== null) $this->xml->setAttribute("text", $this->text);
 		if($this->textid !== null) $this->xml->setAttribute("textid", $this->textid);
-		if($this->autoNewLine !== null) $this->xml->setAttribute("autonewline", $this->autoNewLine);
+		if($this->autonewline !== null) $this->xml->setAttribute("autonewline", $this->autonewline);
 		if($this->maxline !== null) $this->xml->setAttribute("maxline", $this->maxline);
 	}
 }
@@ -509,14 +601,24 @@ class Entry extends Label
 		$this->sizeY = $sy;
 	}
 
-	function setName ($plop)
+	function setName ($name)
 	{
-		$this->name = $plop;
+		$this->name = $name;
 	}
 
-	function setDefault ($plop)
+	function setDefault ($value)
 	{
-		$this->defaultValue = $plop;
+		$this->defaultValue = $value;
+	}
+	
+	function getName()
+	{
+		return $this->name;
+	}
+	
+	function getDefault()
+	{
+		return $this->defaultValue;
 	}
 
 	protected function postFilter()
@@ -542,9 +644,14 @@ class FileEntry extends Entry
 		$this->sizeY = $sy;
 	}
 
-	function setFolder($plop)
+	function setFolder($folder)
 	{
-		$this->folder = $plop;
+		$this->folder = $folder;
+	}
+	
+	function getFolder()
+	{
+		return $this->folder;
 	}
 
 	protected function postFilter()
@@ -563,4 +670,5 @@ class Button extends Label
 	protected $subStyle = null;
 	protected $style = GUI_BUTTON_DEFAULT_STLE;
 }
+
 ?>

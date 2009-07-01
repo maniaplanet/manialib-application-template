@@ -251,7 +251,7 @@ function manialinkErrorHandler($errno, $errstr, $errfile, $errline)
 			$ui->save();
 
 			$ui = new Label(124);
-			$ui->enableAutoNewLine();
+			$ui->enableAutonewline();
 			$ui->setAlign("center", "center");
 			$ui->setPosition(0, 0, 2);
 
@@ -318,7 +318,7 @@ function manialinkErrorHandlerDebug($errno, $errstr, $errfile, $errline)
 			$ui = new Label(110);
 			$ui->setAlign("center", "center");
 			$ui->setPositionZ(1);
-			$ui->enableAutoNewLine();
+			$ui->enableAutonewline();
 			$ui->setText($msg);
 			$ui->save();
 

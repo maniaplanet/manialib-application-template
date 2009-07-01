@@ -55,7 +55,7 @@ if($post)
 		
 		$ui = new Label(44);
 		$ui->setPosition(2, -12, 1);
-		$ui->enableAutoNewLine();
+		$ui->enableAutonewline();
 		$ui->setMaxline(22);
 		$ui->setText($post->getContent());
 		$ui->save();

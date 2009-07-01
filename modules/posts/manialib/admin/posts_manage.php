@@ -57,7 +57,7 @@ Manialink::beginFrame(15, 44, 1);
 		$ui = new Label(50);
 		$ui->setHalign("center");
 		$ui->setPosition(0, -10, 1);
-		$ui->enableAutoNewLine();
+		$ui->enableAutonewline();
 		$ui->setStyle("TextRaceValue");
 		$ui->setText("Do you really want to delete this post ?");
 		$ui->save();
@@ -143,8 +143,6 @@ Manialink::beginFrame(15, 44, 1);
 	
 	$ui = new PageNavigator;
 	$ui->setPosition(0, -80, 1);
-	$ui->hideText();
-	$ui->hideLast();
 	
 	
 	if($currentPage > 1)

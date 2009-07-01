@@ -44,7 +44,7 @@ class ChallengeCard extends Quad
 		$this->lockedMessage = new Label(13);
 		$this->lockedMessage->setPosition(0, -1.5, 2);
 		$this->lockedMessage->setHalign("center");
-		$this->lockedMessage->enableAutoNewLine();
+		$this->lockedMessage->enableAutonewline();
 		$this->lockedMessage->setStyle("TextRaceChat");
 		
 		$this->clickableMask = new Quad($this->sizeX, $this->sizeY);
@@ -59,9 +59,9 @@ class ChallengeCard extends Quad
 		$this->clickableLock->setSubStyle("Padlock");
 	}
 	
-	function showArrow($plop = true)
+	function showArrow($show = true)
 	{
-		$this->showArrow = $plop;
+		$this->showArrow = $show;
 	}
 	
 	function setUnclickable()
@@ -86,7 +86,7 @@ class ChallengeCard extends Quad
 		$x = $arr["x"];
 		$y = $arr["y"];
 		
-		Manialink::beginFrame($x, $y, $this->posZ-3, $this->output);
+		Manialink::beginFrame($x, $y, $this->posZ-3);
 
 			$this->image->save();
 			$this->points->save();		
@@ -100,7 +100,7 @@ class ChallengeCard extends Quad
 			
 			$this->text->save();
 	
-		Manialink::endFrame($this->output);
+		Manialink::endFrame();
 	}
 }
 ?>
