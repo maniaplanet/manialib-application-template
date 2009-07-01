@@ -8,6 +8,8 @@
 define ("POST_TYPE_NULL", 0);
 define ("POST_TYPE_NEWS", 1);
  
+// TODO Method to get posts by (meta?) tag 
+ 
 class PostsEngine 
 {
 	private static $instance;

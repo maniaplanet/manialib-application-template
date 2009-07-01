@@ -21,11 +21,12 @@
  * 
  */
  
-// TODO Auto addplayerid to get the user's lang in the session for the LangEngine to work 
+// TODO Connection page with addplayerid for the LangEngine to work well
  
 require_once("core.inc.php");
 
 $request = RequestEngine::getInstance();
+$request->registerReferer();
 
 require_once("header.php");
 
@@ -34,10 +35,15 @@ require_once("navigation.php");
 Manialink::beginFrame(-34, 48, 1);
 	
 	Manialink::beginFrame(45, -4, 1);
-		
-		PostsEngine::getInstance();
-		if($request->get("post_id")) require_once( APP_LIBRARIES_PATH . "posts/views/show_post.php");
-		else                    require_once( APP_LIBRARIES_PATH . "posts/views/last_posts.php");
+
+		if($request->get("post_id"))
+		{
+			require_once( APP_LIBRARIES_PATH . "posts/views/show_post.php");
+		}
+		else
+		{
+			require_once( APP_LIBRARIES_PATH . "posts/views/last_posts.php");
+		}
 
 	Manialink::endFrame();
 
