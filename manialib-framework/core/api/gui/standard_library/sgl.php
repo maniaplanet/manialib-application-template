@@ -252,6 +252,14 @@ abstract class GuiElement
 	function getImage () 		{return $this->imageFile;}
 	
 	/**
+	 * Returns true if a link (manialink, maniazone, url, action) is set
+	 */
+	function hasLink()
+	{
+		return $this->manialink || $this->url || $this->action || $this->maniazones;
+	} 
+	
+	/**
 	 * Redeclare this method in chlidren classes to execute code before drawing
 	 */
 	protected function preFilter()

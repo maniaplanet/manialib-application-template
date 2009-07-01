@@ -34,7 +34,7 @@ class PostsEngine
 		$this->posts = array();
 	}
 	
-	public function getPosts($page = 1, $perPage = 3)
+	public function getPosts($page = 1, $perPage = 10)
 	{
 		if(empty($this->posts))
 		{

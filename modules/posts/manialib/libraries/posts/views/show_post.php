@@ -10,7 +10,7 @@ $request = RequestEngine::GetInstance();
 
 $post = $posts->getPost($request->get("post_id"));
 
-$ui = new Panel(50, 60);
+$ui = new Panel(50, 84);
 $ui->title->setText("Post");
 $ui->save();
 
@@ -22,7 +22,7 @@ if($post)
 	
 	Manialink::beginFrame(1, -6, 1);
 		
-		$ui = new Quad(48, 48);
+		$ui = new Quad(48, 70);
 		$ui->setSubStyle("BgList");
 		$ui->save();
 		
@@ -53,10 +53,10 @@ if($post)
 		$ui->setText('$<$o$ff0Tags: $>' . $tags);
 		$ui->save();
 		
-		$ui = new Label(46);
+		$ui = new Label(44);
 		$ui->setPosition(2, -12, 1);
 		$ui->enableAutoNewLine();
-		$ui->setMaxline(13);
+		$ui->setMaxline(22);
 		$ui->setText($post->getContent());
 		$ui->save();
 		
@@ -68,7 +68,7 @@ $link = $request->createLink("index.php");
 
 $ui = new Button;
 $ui->setHalign("center");
-$ui->setPosition(25, -55, 1);
+$ui->setPosition(25, -78, 1);
 $ui->setScale(0.8);
 $ui->setText("Back");
 $ui->setManialink($link);

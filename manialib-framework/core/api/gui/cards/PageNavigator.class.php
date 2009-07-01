@@ -31,7 +31,6 @@ class PageNavigator
 	protected $showText;
 	protected $pageNumber;
 	protected $pageIndex;
-	protected $output;
 	protected $posX;
 	protected $posY;
 	protected $posZ;
@@ -52,6 +51,13 @@ class PageNavigator
 		$this->pageIndex = 1;
 		$this->pageNumber = 2;
 		$this->output = "";
+		
+		$this->arrowNext->setSubStyle($this->arrowNoneStyle);
+		$this->arrowPrev->setSubStyle($this->arrowNoneStyle);
+		$this->arrowFastNext->setSubStyle($this->arrowNoneStyle);
+		$this->arrowFastPrev->setSubStyle($this->arrowNoneStyle);
+		$this->arrowLast->setSubStyle($this->arrowNoneStyle);
+		$this->arrowFirst->setSubStyle($this->arrowNoneStyle);
 	}
 
 	function setIconSize($iconSize)
@@ -126,40 +132,22 @@ class PageNavigator
 		$this->pageIndex = $plop;
 	}
 
-	function outputGetXml()
+	function save()
 	{
+		// Show / hide text
+		if(!$this->pageIndex || !$this->pageNumber)
+		{
+			$this->hideText();
+			$this->hideLast();
+		}
+		
 		// Arrow styles
-		if ($this->pageIndex <= 1)
-		{
-			$this->arrowFirst->setSubStyle($this->arrowNoneStyle);
-			$this->arrowFastPrev->setSubStyle($this->arrowNoneStyle);
-			$this->arrowPrev->setSubStyle($this->arrowNoneStyle);
-			$this->arrowFirst->setManialink(null);
-			$this->arrowFastPrev->setManialink(null);
-			$this->arrowPrev->setManialink(null);
-		}
-		else
-		{
-			$this->arrowFirst->setSubStyle($this->arrowFirstStyle);
-			$this->arrowFastPrev->setSubStyle($this->arrowFastPrevStyle);
-			$this->arrowPrev->setSubStyle($this->arrowPrevStyle);
-		}
-
-		if ($this->pageIndex >= $this->pageNumber)
-		{
-			$this->arrowLast->setSubStyle($this->arrowNoneStyle);
-			$this->arrowFastNext->setSubStyle($this->arrowNoneStyle);
-			$this->arrowNext->setSubStyle($this->arrowNoneStyle);
-			$this->arrowNext->setManialink(null);
-			$this->arrowFastNext->setManialink(null);
-			$this->arrowLast->setManialink(null);
-		}
-		else
-		{
-			$this->arrowLast->setSubStyle($this->arrowLastStyle);
-			$this->arrowFastNext->setSubStyle($this->arrowFastNextStyle);
-			$this->arrowNext->setSubStyle($this->arrowNextStyle);
-		}
+		if($this->arrowNext->hasLink()) $this->arrowNext->setSubStyle($this->arrowNextStyle);
+		if($this->arrowPrev->hasLink()) $this->arrowPrev->setSubStyle($this->arrowPrevStyle);
+		if($this->arrowFastNext->hasLink()) $this->arrowFastNext->setSubStyle($this->arrowFastNextStyle);
+		if($this->arrowFastPrev->hasLink()) $this->arrowFastPrev->setSubStyle($this->arrowFastPrevStyle);
+		if($this->arrowLast->hasLink()) $this->arrowLast->setSubStyle($this->arrowLastStyle);
+		if($this->arrowFirst->hasLink()) $this->arrowFirst->setSubStyle($this->arrowFirstStyle);
 
 		// Text
 		$this->text->setStyle("TextStaticSmall");
@@ -193,40 +181,30 @@ class PageNavigator
 			$this->arrowPrev->getSizeX(),
 			0, 1);
 
-		// Get the output
-		Manialink::beginFrame($this->posX, $this->posY, $this->posZ, $this->output);
+		// Save the gui
+		Manialink::beginFrame($this->posX, $this->posY, $this->posZ);
 
 			if ($this->showText)
 			{
-				$this->text->draw($this->output);
+				$this->text->save();
 			}
 			
-			$this->arrowNext->draw($this->output);
-			$this->arrowPrev->draw($this->output);
+			$this->arrowNext->save();
+			$this->arrowPrev->save();
 			
 			if ($this->showLast)
 			{
-				$this->arrowFirst->draw($this->output);
-				$this->arrowLast->draw($this->output);
+				$this->arrowFirst->save();
+				$this->arrowLast->save();
 			}
 			
 			if ($this->showFastNext)
 			{
-				$this->arrowFastNext->draw($this->output);
-				$this->arrowFastPrev->draw($this->output);
+				$this->arrowFastNext->save();
+				$this->arrowFastPrev->save();
 			}
 
-		Manialink::endFrame($this->output);
-
-		return $this->output;
-	}
-
-	function draw(& $outputBuffer = null)
-	{
-		if ($outputBuffer !== null)
-			$outputBuffer .= $this->outputGetXml();
-		else
-			echo ($this->outputGetXml());
+		Manialink::endFrame();
 	}
 }
 ?>

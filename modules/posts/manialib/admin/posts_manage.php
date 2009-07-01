@@ -12,6 +12,8 @@ AdminEngine::checkAuthentication();
 $posts = PostsEngine::getInstance();
 $request = RequestEngine::getInstance();
 
+$currentPage = abs((int) $request->get("page", 1)); 
+
 if($postId = $request->get("post_id"))
 {
 	if($post = $posts->getPost($postId))
@@ -43,9 +45,9 @@ $ui->logo->setSubStyle("Paint");
 $ui->quitButton->setManialink($request->createLinkArgList("posts.php"));
 $ui->save();
 
-Manialink::beginFrame(15, 40, 1);
+Manialink::beginFrame(15, 44, 1);
  
-	$ui = new Panel(80, 80);
+	$ui = new Panel(80, 84);
 	$ui->setHalign("center");
 	$ui->title->setText("Manage posts");
 	$ui->save();
@@ -73,7 +75,7 @@ Manialink::beginFrame(15, 40, 1);
 	else
 	{
 		$i = 0;
-		foreach($posts->getPosts() as $postId=>$post)
+		foreach($posts->getPosts($currentPage) as $postId=>$post)
 		{
 			$images = (array) $post->getMetaTags("image");
 			$image = reset($images);
@@ -136,6 +138,34 @@ Manialink::beginFrame(15, 40, 1);
 			$i++;
 		}
 	}
+	
+	$request->delete("post_id");
+	
+	$ui = new PageNavigator;
+	$ui->setPosition(0, -80, 1);
+	$ui->hideText();
+	$ui->hideLast();
+	
+	
+	if($currentPage > 1)
+	{
+		$request->set("page", $currentPage-1);
+		$link = $request->createLink();
+		
+		$ui->arrowPrev->setManialink($link);
+	}
+	
+	if($posts->hasMorePosts())
+	{
+		$request->set("page", $currentPage+1);
+		$link = $request->createLink();
+		
+		$ui->arrowNext->setManialink($link);
+	}
+	
+	$request->restore("page");
+	
+	$ui->save();
 	
 Manialink::endFrame();
 

@@ -5,17 +5,17 @@
  * @package posts
  */
 
-// TODO Write an example with usage of MultipageList
-
 $posts = PostsEngine::getInstance();
 $request = RequestEngine::GetInstance();
  
-$ui = new Panel(50, 60);
+$currentPage = abs((int) $request->get("page", 1)); 
+ 
+$ui = new Panel(50, 84);
 $ui->title->setText("Last posts");
 $ui->save();
 
 $i = 0;
-foreach($posts->getPosts() as $postId=>$post)
+foreach($posts->getPosts($currentPage) as $postId=>$post)
 {
 	$images = (array) $post->getMetaTags("image");
 	$image = reset($images);
@@ -36,12 +36,14 @@ foreach($posts->getPosts() as $postId=>$post)
 		$ui->save();
 		
 		$request->set("post_id", $post->id);
+		$link = $request->createLink();
+		$request->delete("post_id");
 		
 		$ui = new Label(40);
 		$ui->setPosition(10, -1, 1);
 		$ui->setStyle("TextValueMedium");
 		$ui->setText('$ff0' . $post->getTitle());
-		$ui->setManialink($request->createLink());
+		$ui->setManialink($link);
 		$ui->save();
 		
 		$ui = new Label(46);
@@ -54,6 +56,32 @@ foreach($posts->getPosts() as $postId=>$post)
 	
 	$i++;
 }
+
+$ui = new PageNavigator;
+$ui->setPosition(25, -80, 1);
+$ui->hideText();
+$ui->hideLast();
+
+
+if($currentPage > 1)
+{
+	$request->set("page", $currentPage-1);
+	$link = $request->createLink();
+	
+	$ui->arrowPrev->setManialink($link);
+}
+
+if($posts->hasMorePosts())
+{
+	$request->set("page", $currentPage+1);
+	$link = $request->createLink();
+	
+	$ui->arrowNext->setManialink($link);
+}
+
+$request->restore("page");
+
+$ui->save();
 
 
 ?>

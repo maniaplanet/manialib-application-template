@@ -46,7 +46,6 @@ switch($request->get("a"))
 // Gui
 //////////////////////////////////////////////////////////////////////////////
 
-// TODO Not require the header for the pages to be stand-alone
 require_once( APP_PATH . "header.php" );
 
 $ui = new Navigation;

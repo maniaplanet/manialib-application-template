@@ -33,7 +33,7 @@ require_once("navigation.php");
 
 Manialink::beginFrame(-34, 48, 1);
 	
-	Manialink::beginFrame(25, -15, 1);
+	Manialink::beginFrame(45, -4, 1);
 		
 		PostsEngine::getInstance();
 		if($request->get("post_id")) require_once( APP_LIBRARIES_PATH . "posts/views/show_post.php");
