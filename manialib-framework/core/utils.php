@@ -312,7 +312,7 @@ function manialinkErrorHandlerDebug($errno, $errstr, $errfile, $errline)
 			$ui->setAlign("center", "center");
 			$ui->titleBg->setSubStyle("BgTitle2");
 			$ui->title->setStyle("TextTitleError");
-			$ui->title->setText("Fatal Error");
+			$ui->title->setText(__("fatal_error"));
 			$ui->save();
 			
 			$ui = new Label(110);
