@@ -85,7 +85,9 @@ class PostsEngine
 		$db = DatabaseEngine::getInstance();
 		
 		$db->query = 
-			"SELECT * FROM $this->postsTable AS p " .
+			"SELECT p.post_id, post_type, author, title, content, " .
+			"UNIX_TIMESTAMP(date_modified) AS timestamp " .
+			"FROM $this->postsTable AS p " .
 			"INNER JOIN $this->contentTable AS c " .
 			"ON c.post_id = p.post_id " .
 			$filter;
@@ -96,7 +98,7 @@ class PostsEngine
 			$post = new Post($arr["post_id"]);
 			$post->setPostType($arr["post_type"]);
 			$post->setAuthor($arr["author"]);
-			$post->setDate($arr["date_created"]);
+			$post->setDate($arr["timestamp"]);
 			$post->setTitle($arr["title"]);
 			$post->setContent($arr["content"]);
 			

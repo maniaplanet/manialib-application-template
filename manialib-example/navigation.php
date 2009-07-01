@@ -14,7 +14,7 @@ $ui->logo->setImage("logo64.dds");
 $link = $request->createLinkArgList("index.php");
 
 $ui->addItem();
-$ui->lastItem()->text->setText("Home");
+$ui->lastItem()->text->setText(__("home"));
 $ui->lastItem()->icon->setSubStyle("United");
 $ui->lastItem()->setManialink($link);
 
@@ -25,7 +25,7 @@ if(DEBUG_LEVEL >= DEBUG_ON)
 	$link = $request->createLinkArgList("admin/index.php");
 	
 	$ui->addItem();
-	$ui->lastItem()->text->setText("Admin");
+	$ui->lastItem()->text->setText(__("admin"));
 	$ui->lastItem()->icon->setSubStyle("ProfileAdvanced");
 	$ui->lastItem()->setManialink($link);	
 }

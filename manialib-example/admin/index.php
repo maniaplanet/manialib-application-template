@@ -14,21 +14,21 @@ $request = RequestEngine::getInstance();
 require_once( APP_PATH . "header.php" );
 
 $ui = new Navigation;
-$ui->title->setText("Admin");
-$ui->subTitle->setText("Manage your Manialink");
+$ui->title->setText(__("admin"));
+$ui->subTitle->setText(__("manage_your_manialink"));
 $ui->logo->setSubStyle("ProfileAdvanced");
 
 $link = $request->createLinkArgList("posts.php");
 
 $ui->addItem();
-$ui->lastItem()->text->setText("Posts");
+$ui->lastItem()->text->setText(__("posts"));
 $ui->lastItem()->icon->setSubStyle("Paint");
 $ui->lastItem()->setManialink($link);
 
 $link = $request->createLinkArgList("admin.php");
 
 $ui->addItem();
-$ui->lastItem()->text->setText("Admins");
+$ui->lastItem()->text->setText(__("admins"));
 $ui->lastItem()->icon->setSubStyle("Profile");
 $ui->lastItem()->setManialink($link);
 

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<dico>
+  <language id="fr">
+  
+  <post>Post</post>
+  <posts>Posts</posts><last_posts>Derniers posts</last_posts>
+  	<delete_post_confirm>Voulez-vous vraiment supprimer ce post?</delete_post_confirm>
+  	<edit_post>Editer le post</edit_post>
+  	<new_post>Nouveau post</new_post>
+  	<add_post>Ajouter un post</add_post>
+  	<manage_posts>Gérer les posts</manage_posts>
+  	<choose_a_type>Choisissez un type</choose_a_type>
+  	<write_content>Rédiger le contenu</write_content>
+  	<add_meta_tags>Ajouter des meta tags</add_meta_tags>
+  	<publish>Publier </publish>
+  	<published>Publié</published>
+  	<post_type>Type de post</post_type>
+  	<title>Titre</title>
+  	<content>Contenu</content>
+  	<meta_tag_name>Nom du meta tag</meta_tag_name>
+  	<meta_tag_value>Valeur du meta tag</meta_tag_value>
+  	<post_ready_to_be_published>Le post est près à être publié</post_ready_to_be_published>
+  	<post_successfully_published>Le post a été publié !</post_successfully_published></language>
+</dico>

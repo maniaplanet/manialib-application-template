@@ -11,7 +11,7 @@ $request = RequestEngine::GetInstance();
 $post = $posts->getPost($request->get("post_id"));
 
 $ui = new Panel(50, 84);
-$ui->title->setText("Post");
+$ui->title->setText(__("post"));
 $ui->save();
 
 if($post)
@@ -45,7 +45,7 @@ if($post)
 		$ui = new Label(46);
 		$ui->setPosition(10, -4, 1);
 		$ui->setStyle("TextCardInfoSmall");
-		$ui->setText('by $<$ccf' . $post->getAuthor() . '$>, ' . $post->getDate());
+		$ui->setText('by $<$ccf' . $post->getAuthor() . '$>, ' . __date($post->getDate()));
 		$ui->save();
 		
 		$ui = new Label(46);

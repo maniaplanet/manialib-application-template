@@ -20,10 +20,10 @@ $currentStep = $request->get("step", 1);
 $isEditing = (bool) $session->get("post_editing", false);
 
 $steps = array (
-	1 => "Choose a type",
-	2 => "Write content",
-	3 => "Add meta tags",
-	4 => "Publish !"
+	1 => __("choose_a_type"),
+	2 => __("write_content"),
+	3 => __("add_meta_tags"),
+	4 => __("publish") . "!"
 );
 
 $post = $session->get("post_object");
@@ -105,14 +105,13 @@ require_once( APP_PATH . "header.php" );
 $ui = new Navigation;
 if($isEditing)
 {
-	$ui->title->setText("Edit post");
-	$ui->subTitle->setText("Manage content");
+	$ui->title->setText(__("edit_post"));
 }
 else
 {
-	$ui->title->setText("New post");
-	$ui->subTitle->setText("Add content");
+	$ui->title->setText(__("new_post"));
 }
+$ui->subTitle->setText(__("manage_posts"));
 $ui->logo->setSubStyle("Paint");
 
 foreach($steps as $stepId=>$stepName)
@@ -146,7 +145,7 @@ Manialink::beginFrame(-34, 48, 1);
 			case 1:
 				$ui = new Panel(80, 80);
 				$ui->setHalign("center");
-				$ui->title->setText("Post type");
+				$ui->title->setText(__("post_type"));
 				$ui->save();
 				
 				$ui = new Quad(40, 60);
@@ -195,13 +194,13 @@ Manialink::beginFrame(-34, 48, 1);
 			case 2:
 				$ui = new Panel(80, 80);
 				$ui->setHalign("center");
-				$ui->title->setText("Write content");
+				$ui->title->setText(__("write_content"));
 				$ui->save();
 				
 				$ui = new Label;
 				$ui->setPosition(-36, -7, 1);
 				$ui->setStyle("TextRaceMessage");
-				$ui->setText("Title");
+				$ui->setText(__("title"));
 				$ui->save();
 				
 				$ui = new Entry(72);
@@ -215,7 +214,7 @@ Manialink::beginFrame(-34, 48, 1);
 				$ui = new Label;
 				$ui->setPosition(-36, -20, 1);
 				$ui->setStyle("TextRaceMessage");
-				$ui->setText("Content");
+				$ui->setText(__("content"));
 				$ui->save();
 				
 				$ui = new Entry(72, 45);
@@ -248,19 +247,19 @@ Manialink::beginFrame(-34, 48, 1);
 				
 				$ui = new Panel(80, 80);
 				$ui->setHalign("center");
-				$ui->title->setText("Add meta tags");
+				$ui->title->setText(__("add_meta_tags"));
 				$ui->save();
 				
 				$ui = new Label;
 				$ui->setPosition(-36, -9, 1);
 				$ui->setStyle("TextRaceMessage");
-				$ui->setText("Meta tag name");
+				$ui->setText(__("meta_tag_name"));
 				$ui->save();
 				
 				$ui = new Label;
 				$ui->setPosition(0, -9, 1);
 				$ui->setStyle("TextRaceMessage");
-				$ui->setText("Meta tag value");
+				$ui->setText(__("meta_tag_value"));
 				$ui->save();
 				
 				for($i=1; $i<=10; $i++)
@@ -311,14 +310,14 @@ Manialink::beginFrame(-34, 48, 1);
 			case 4:
 				$ui = new Panel(80, 80);
 				$ui->setHalign("center");
-				$ui->title->setText("Publish");
+				$ui->title->setText(__("publish"));
 				$ui->save();
 				
 				$ui = new Label(60);
 				$ui->setHalign("center");
 				$ui->setPosition(0, -10, 1);
 				$ui->setStyle("TextRaceMessage");
-				$ui->setText("Your post is ready to be published.");
+				$ui->setText(__("post_ready_to_be_published"));
 				$ui->save();
 				
 				$request->set("step", $currentStep+1);
@@ -328,21 +327,21 @@ Manialink::beginFrame(-34, 48, 1);
 				$ui->setHalign("center");
 				$ui->setPosition(0, -20, 1);
 				$ui->setScale(2);
-				$ui->setText("Publish");
+				$ui->setText(__("publish"));
 				$ui->setManialink($link);
 				$ui->save();
 				
 			break;
 				$ui = new Panel(80, 80);
 				$ui->setHalign("center");
-				$ui->title->setText("Published");
+				$ui->title->setText(__("published"));
 				$ui->save();
 				
 				$ui = new Label(60);
 				$ui->setHalign("center");
 				$ui->setPosition(0, -10, 1);
 				$ui->setStyle("TextRaceMessage");
-				$ui->setText("Your post was successfully published !");
+				$ui->setText(__("post_successfully_published"));
 				$ui->save();
 			
 			// Default

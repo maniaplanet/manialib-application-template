@@ -12,21 +12,21 @@ AdminEngine::checkAuthentication();
 require_once( APP_PATH . "header.php" );
 
 $ui = new Navigation;
-$ui->title->setText("Posts");
-$ui->subTitle->setText("Manage your posts");
+$ui->title->setText(__("posts"));
+$ui->subTitle->setText(__("manage_posts"));
 $ui->logo->setSubStyle("Paint");
 
 $link = $request->createLinkArgList("posts_post.php");
 
 $ui->addItem();
-$ui->lastItem()->text->setText("Add post");
+$ui->lastItem()->text->setText(__("add_post"));
 $ui->lastItem()->icon->setSubStyle("Paint");
 $ui->lastItem()->setManialink($link);
 
 $link = $request->createLinkArgList("posts_manage.php");
 
 $ui->addItem();
-$ui->lastItem()->text->setText("Manage posts");
+$ui->lastItem()->text->setText(__("manage_posts"));
 $ui->lastItem()->icon->setSubStyle("Paint");
 $ui->lastItem()->setManialink($link);
 

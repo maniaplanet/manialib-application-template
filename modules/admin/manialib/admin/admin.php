@@ -49,7 +49,7 @@ switch($request->get("a"))
 require_once( APP_PATH . "header.php" );
 
 $ui = new Navigation;
-$ui->title->setText("Admins");
+$ui->title->setText(__("admins"));
 $ui->subTitle->setText("");
 $ui->logo->setSubStyle("Profile");
 
@@ -69,13 +69,13 @@ switch($request->get("a"))
 			$ui = new Panel(50, 50);
 			$ui->setHalign("center");
 			$ui->setPosition(0, 0, 0);
-			$ui->title->setText("Password update");
+			$ui->title->setText(__("password_update"));
 			$ui->save();
 			
 			$ui = new Label(35);
 			$ui->setHalign("center");
 			$ui->setPosition(0, -10, 1);
-			$ui->setText("Current password:");
+			$ui->setText(__("current_password") . ":");
 			$ui->save();
 			
 			$ui = new Entry(35);
@@ -89,7 +89,7 @@ switch($request->get("a"))
 			$ui = new Label(35);
 			$ui->setHalign("center");
 			$ui->setPosition(0, -20, 1);
-			$ui->setText("New password:");
+			$ui->setText(__("new_password") . ":");
 			$ui->save();
 			
 			$ui = new Entry(35);
@@ -129,7 +129,7 @@ switch($request->get("a"))
 			$ui = new Panel(50, 50);
 			$ui->setHalign("center");
 			$ui->setPosition(0, 0, 0);
-			$ui->title->setText("Password update");
+			$ui->title->setText(__("password_update"));
 			$ui->save();
 			
 			$ui = new Label(35);
@@ -137,11 +137,11 @@ switch($request->get("a"))
 			$ui->setPosition(0, -10, 1);
 			if(isset($passwordChanged) && $passwordChanged)
 			{
-				$ui->setText("Your password was successfully changed.");
+				$ui->setText(__("password_successfully_changed"));
 			}
 			else
 			{
-				$ui->setText('$f00' . "An error occurred while changing your password");
+				$ui->setText('$f00' . __("error_while_changing_password"));
 			}
 			$ui->save();
 			
@@ -161,7 +161,7 @@ switch($request->get("a"))
 			$ui = new Panel(50, 50);
 			$ui->setHalign("center");
 			$ui->setPosition(0, 0, 0);
-			$ui->title->setText("New admin");
+			$ui->title->setText(__("new_admin"));
 			$ui->save();
 			
 			$ui = new Label(35);
@@ -206,7 +206,7 @@ switch($request->get("a"))
 			$ui = new Panel(50, 50);
 			$ui->setHalign("center");
 			$ui->setPosition(0, 0, 0);
-			$ui->title->setText("New admin");
+			$ui->title->setText(__("new_admin"));
 			$ui->save();
 			
 			$ui = new Label(35);
@@ -215,11 +215,11 @@ switch($request->get("a"))
 			$ui->enableAutonewline();
 			if(isset($adminCreated) && $adminCreated)
 			{
-				$ui->setText("New admin was successfully created with login=$adminLogin and password=$adminLogin");
+				$ui->setText(__("admin_successfully_created", $adminLogin, $adminLogin));
 			}
 			else
 			{
-				$ui->setText('$f00' . "An error occurred while creating the new admin");
+				$ui->setText('$f00' . __("error_while_creating_admin"));
 			}
 			$ui->save();
 			
@@ -232,7 +232,7 @@ switch($request->get("a"))
 		$link = $request->createLinkArgList(null, "a");
 		
 		$ui->addItem();
-		$ui->lastItem()->text->setText("Add an admin");
+		$ui->lastItem()->text->setText(__("add_admin"));
 		$ui->lastItem()->icon->setSubStyle("Solo");
 		$ui->lastItem()->setManialink($link);
 		
@@ -240,7 +240,7 @@ switch($request->get("a"))
 		$link = $request->createLinkArgList(null, "a");
 		
 		$ui->addItem();
-		$ui->lastItem()->text->setText("Change your password");
+		$ui->lastItem()->text->setText(__("change_your_password"));
 		$ui->lastItem()->icon->setSubStyle("Options");
 		$ui->lastItem()->setManialink($link);
 		

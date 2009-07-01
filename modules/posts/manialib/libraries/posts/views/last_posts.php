@@ -11,7 +11,7 @@ $request = RequestEngine::GetInstance();
 $currentPage = abs((int) $request->get("page", 1)); 
  
 $ui = new Panel(50, 84);
-$ui->title->setText("Last posts");
+$ui->title->setText(__("last_posts"));
 $ui->save();
 
 $i = 0;
@@ -49,7 +49,7 @@ foreach($posts->getPosts($currentPage) as $postId=>$post)
 		$ui = new Label(46);
 		$ui->setPosition(10, -4, 1);
 		$ui->setStyle("TextCardInfoSmall");
-		$ui->setText('by $<$ccf' . $post->getAuthor() . '$>, ' . $post->getDate());
+		$ui->setText('by $<$ccf' . $post->getAuthor() . '$>, ' . __date($post->getDate()));
 		$ui->save();
 		
 	Manialink::endFrame();

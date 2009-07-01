@@ -16,8 +16,8 @@ if(AdminEngine::authenticate())
 require_once( APP_PATH . "header.php" );
 
 $ui = new Navigation;
-$ui->title->setText("Admin");
-$ui->subTitle->setText("Manage your Manialink");
+$ui->title->setText(__("admin"));
+$ui->subTitle->setText(__("manage_your_manialink"));
 $ui->logo->setSubStyle("ProfileAdvanced");
 
 $ui->quitButton->setManialink($request->createLinkArgList("../index.php"));
@@ -33,7 +33,7 @@ Manialink::beginFrame(15, 0, 2);
 	$ui = new Label;
 	$ui->setHalign("center");
 	$ui->setPosition(0, 10, 1);
-	$ui->setText("Enter your password");
+	$ui->setText(__("enter_your_password"));
 	$ui->save();
 	
 	$ui = new Entry(40);
@@ -49,7 +49,7 @@ Manialink::beginFrame(15, 0, 2);
 	$ui = new Button;
 	$ui->setHalign("center");
 	$ui->setPosition(0, -10, 1);
-	$ui->setText("Sign in");
+	$ui->setText(__("sign_in"));
 	$ui->addPlayerId();
 	$ui->setManialink($link);
 	$ui->save();

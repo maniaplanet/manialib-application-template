@@ -20,8 +20,8 @@
  * @author Maxime Raoust
  * 
  */
-
-// TODO Localize the application !
+ 
+// TODO Auto addplayerid to get the user's lang in the session for the LangEngine to work 
  
 require_once("core.inc.php");
 

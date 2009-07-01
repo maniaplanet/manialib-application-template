@@ -26,5 +26,7 @@
     <x_player>[1] joueur</x_player>
     <one_player>1 joueur</one_player>
     <date_x>Date: [1]</date_x>
-  </language>
+    <home>Accueil</home>
+    <edit>Editer</edit>
+    <delete>Supprimer</delete></language>
 </dico>

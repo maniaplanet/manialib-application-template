@@ -38,8 +38,8 @@ if($postId = $request->get("post_id"))
 require_once( APP_PATH . "header.php" );
 
 $ui = new Navigation;
-$ui->title->setText("Manage posts");
-$ui->subTitle->setText("Modify posts");
+$ui->title->setText(__("posts"));
+$ui->subTitle->setText(__("manage_posts"));
 $ui->logo->setSubStyle("Paint");
 
 $ui->quitButton->setManialink($request->createLinkArgList("posts.php"));
@@ -49,7 +49,7 @@ Manialink::beginFrame(15, 44, 1);
  
 	$ui = new Panel(80, 84);
 	$ui->setHalign("center");
-	$ui->title->setText("Manage posts");
+	$ui->title->setText(__("last_posts"));
 	$ui->save();
 
 	if($request->get("delete"))
@@ -59,7 +59,7 @@ Manialink::beginFrame(15, 44, 1);
 		$ui->setPosition(0, -10, 1);
 		$ui->enableAutonewline();
 		$ui->setStyle("TextRaceValue");
-		$ui->setText("Do you really want to delete this post ?");
+		$ui->setText(__("delete_post_confirm"));
 		$ui->save();
 		
 		$request->set("confirm", 1);
@@ -68,7 +68,7 @@ Manialink::beginFrame(15, 44, 1);
 		$ui = new Button;
 		$ui->setHalign("center");
 		$ui->setPosition(0, -30, 1);
-		$ui->setText("Confirm");
+		$ui->setText("Continue");
 		$ui->setManialink($link);
 		$ui->save();
 	}
@@ -112,7 +112,7 @@ Manialink::beginFrame(15, 44, 1);
 				$ui = new Label(10);
 				$ui->setPosition(58, -2.5, 1);
 				$ui->setStyle("TextValueSmall");
-				$ui->setText('$o$s' . "Edit");
+				$ui->setText('$o$s' . __("edit"));
 				$ui->setManialink($link);
 				$ui->save();
 				
@@ -123,14 +123,14 @@ Manialink::beginFrame(15, 44, 1);
 				$ui = new Label(10);
 				$ui->setPosition(65, -2.5, 1);
 				$ui->setStyle("TextValueSmall");
-				$ui->setText('$o$s' . "Delete");
+				$ui->setText('$o$s' . __("delete"));
 				$ui->setManialink($link);
 				$ui->save();
 				
 				$ui = new Label(46);
 				$ui->setPosition(10, -4, 1);
 				$ui->setStyle("TextCardInfoSmall");
-				$ui->setText('by $<$ccf' . $post->getAuthor() . '$>, ' . $post->getDate());
+				$ui->setText('by $<$ccf' . $post->getAuthor() . '$>, ' . __date($post->getDate()));
 				$ui->save();
 				
 			Manialink::endFrame();

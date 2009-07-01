@@ -26,5 +26,7 @@
     <x_player>[1] player</x_player>
     <one_player>1 player</one_player>
     <date_x>Date: [1]</date_x>
-  </language>
+    <home>Home</home>
+    <edit>Edit</edit>
+    <delete>Delete</delete></language>
 </dico>
