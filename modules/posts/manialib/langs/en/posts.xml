@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <dico>
   <language id="en">
-  
-  <post>Post</post>
-  <posts>Posts</posts><last_posts>Lasts posts</last_posts>
+    <post>Post</post>
+    <posts>Posts</posts>
+    <last_posts>Lasts posts</last_posts>
   	<delete_post_confirm>Do you really want to delete this post ?</delete_post_confirm>
   	<edit_post>Edit post</edit_post>
   	<new_post>New post</new_post>

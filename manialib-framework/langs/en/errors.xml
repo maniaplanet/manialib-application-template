@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <dico>
-  <language id="en">
-    <error_msg_teamname_empty>Team name is empty. </error_msg_teamname_empty>
-    <error_msg_teamname_too_long>Team name too long. </error_msg_teamname_too_long>
-    <error_msg_empty_team>Team is empty. </error_msg_empty_team>
-    <error_msg_team_too_big>Team must have less than [1] players</error_msg_team_too_big>
-    <fatal_error>Fatal error</fatal_error>
-    <error_message>An error occurred. Please try again later.</error_message>
-    <error_back_button>Back</error_back_button>
-    <restricted_access>Restricted access</restricted_access>
-    <warning>Warning</warning>
-  </language>
+	<language id="en">
+		<error_msg_teamname_empty>Team name is empty. </error_msg_teamname_empty>
+		<error_msg_teamname_too_long>Team name too long. </error_msg_teamname_too_long>
+		<error_msg_empty_team>Team is empty. </error_msg_empty_team>
+		<error_msg_team_too_big>Team must have less than [1] players</error_msg_team_too_big>
+		<fatal_error>Fatal error</fatal_error>
+		<error_message>An error occurred. Please try again later.</error_message>
+		<error_back_button>Back</error_back_button>
+		<restricted_access>Restricted access</restricted_access>
+		<warning>Warning</warning>
+	</language>
 </dico>

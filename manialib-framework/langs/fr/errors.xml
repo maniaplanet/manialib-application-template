@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <dico>
-  <language id="fr">
-    <error_msg_teamname_empty>Vous devez sp&#xE9;cifier un nom d'&#xE9;quipe. </error_msg_teamname_empty>
-    <error_msg_teamname_too_long>Le nom d'&#xE9;quipe est trop long. </error_msg_teamname_too_long>
-    <error_msg_empty_team>L'&#xE9;quipe doit comporter au moins un joueur</error_msg_empty_team>
-    <error_msg_team_too_big>L'&#xE9;quipe doit comporter moins de [1] joueurs</error_msg_team_too_big>
-    <fatal_error>Erreur fatale</fatal_error>
-    <error_message>Une erreur est survenue. Veuillez r&#xE9;essayer ult&#xE9;rieurement</error_message>
-    <error_back_button>Retour</error_back_button>
-    <restricted_access>Acc&#xE8;s r&#xE9;serv&#xE9;</restricted_access>
-    <warning>Attention</warning>
-  </language>
+	<language id="fr">
+		<error_msg_teamname_empty>Vous devez sp&#xE9;cifier un nom d'&#xE9;quipe. </error_msg_teamname_empty>
+		<error_msg_teamname_too_long>Le nom d'&#xE9;quipe est trop long. </error_msg_teamname_too_long>
+		<error_msg_empty_team>L'&#xE9;quipe doit comporter au moins un joueur</error_msg_empty_team>
+		<error_msg_team_too_big>L'&#xE9;quipe doit comporter moins de [1] joueurs</error_msg_team_too_big>
+		<fatal_error>Erreur fatale</fatal_error>
+		<error_message>Une erreur est survenue. Veuillez r&#xE9;essayer ult&#xE9;rieurement</error_message>
+		<error_back_button>Retour</error_back_button>
+		<restricted_access>Acc&#xE8;s r&#xE9;serv&#xE9;</restricted_access>
+		<warning>Attention</warning>
+	</language>
 </dico>

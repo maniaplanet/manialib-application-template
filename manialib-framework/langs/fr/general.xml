@@ -1,32 +1,33 @@
 <?xml version="1.0"?>
 <dico>
-  <language id="fr">
-    <waiting_for_confirmation>en attente de confirmation</waiting_for_confirmation>
-    <admin>admin</admin>
-    <refresh>Rafra&#xEE;chir</refresh>
-    <accept>Accepter</accept>
-    <decline>Refuser</decline>
-    <continue>Continuer</continue>
-    <close>Fermer</close>
-    <player>joueur</player>
-    <players>joueurs</players>
-    <record>Record</record>
-    <your_record>Votre record</your_record>
-    <details>Details</details>
-    <thank_you>Merci !</thank_you>
-    <welcome_x>Bienvenue [1] !</welcome_x>
-    <bill>Transaction</bill>
-    <reconnect>Se reconnecter</reconnect>
-    <world>World</world>
-    <world_ranking>Classement mondial</world_ranking>
-    <score>Score</score>
-    <number_of_player>Nombre de joueurs</number_of_player>
-    <date_created>Date de cr&#xE9;ation</date_created>
-    <x_players>[1] joueurs</x_players>
-    <x_player>[1] joueur</x_player>
-    <one_player>1 joueur</one_player>
-    <date_x>Date: [1]</date_x>
-    <home>Accueil</home>
-    <edit>Editer</edit>
-    <delete>Supprimer</delete></language>
+	<language id="fr">
+		<waiting_for_confirmation>en attente de confirmation</waiting_for_confirmation>
+		<admin>admin</admin>
+		<refresh>Rafra&#xEE;chir</refresh>
+		<accept>Accepter</accept>
+		<decline>Refuser</decline>
+		<continue>Continuer</continue>
+		<close>Fermer</close>
+		<player>joueur</player>
+		<players>joueurs</players>
+		<record>Record</record>
+		<your_record>Votre record</your_record>
+		<details>Details</details>
+		<thank_you>Merci !</thank_you>
+		<welcome_x>Bienvenue [1] !</welcome_x>
+		<bill>Transaction</bill>
+		<reconnect>Se reconnecter</reconnect>
+		<world>World</world>
+		<world_ranking>Classement mondial</world_ranking>
+		<score>Score</score>
+		<number_of_player>Nombre de joueurs</number_of_player>
+		<date_created>Date de cr&#xE9;ation</date_created>
+		<x_players>[1] joueurs</x_players>
+		<x_player>[1] joueur</x_player>
+		<one_player>1 joueur</one_player>
+		<date_x>Date: [1]</date_x>
+		<home>Accueil</home>
+		<edit>Editer</edit>
+		<delete>Supprimer</delete>
+	</language>
 </dico>
