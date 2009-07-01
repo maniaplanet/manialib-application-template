@@ -20,9 +20,7 @@
  * @author Maxime Raoust
  * 
  */
- 
-// TODO Connection page with addplayerid for the LangEngine to work well
- 
+  
 require_once("core.inc.php");
 
 $request = RequestEngine::getInstance();
