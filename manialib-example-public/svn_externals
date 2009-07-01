@@ -1,0 +1,21 @@
+manialib-example http://manialib.googlecode.com/svn/trunk/manialib-example
+
+manialib-example/core http://manialib.googlecode.com/svn/trunk/manialib-framework/core
+
+manialib-example/langs/en/general.xml http://manialib.googlecode.com/svn/trunk/manialib-framework/langs/en/general.xml
+manialib-example/langs/en/errors.xml http://manialib.googlecode.com/svn/trunk/manialib-framework/langs/en/errors.xml
+manialib-example/langs/en/date.xml http://manialib.googlecode.com/svn/trunk/manialib-framework/langs/en/date.xml
+
+manialib-example/langs/fr/general.xml http://manialib.googlecode.com/svn/trunk/manialib-framework/langs/fr/general.xml
+manialib-example/langs/fr/errors.xml http://manialib.googlecode.com/svn/trunk/manialib-framework/langs/fr/errors.xml
+manialib-example/langs/fr/date.xml http://manialib.googlecode.com/svn/trunk/manialib-framework/langs/fr/date.xml
+
+manialib-example/libraries/admin http://manialib.googlecode.com/svn/trunk/modules/admin/manialib/libraries/admin
+manialib-example/admin/login.php http://manialib.googlecode.com/svn/trunk/modules/admin/manialib/admin/login.php
+manialib-example/admin/logout.php http://manialib.googlecode.com/svn/trunk/modules/admin/manialib/admin/logout.php
+manialib-example/admin/admin.php http://manialib.googlecode.com/svn/trunk/modules/admin/manialib/admin/admin.php
+
+manialib-example/libraries/posts http://manialib.googlecode.com/svn/trunk/modules/posts/manialib/libraries/posts
+manialib-example/admin/posts.php http://manialib.googlecode.com/svn/trunk/modules/posts/manialib/admin/posts.php
+manialib-example/admin/posts_manage.php http://manialib.googlecode.com/svn/trunk/modules/posts/manialib/admin/posts_manage.php
+manialib-example/admin/posts_post.php http://manialib.googlecode.com/svn/trunk/modules/posts/manialib/admin/posts_post.php
