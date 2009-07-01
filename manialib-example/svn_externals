@@ -19,5 +19,5 @@
 ^/trunk/modules/posts/manialib/admin/posts.php                  admin/posts.php 
 ^/trunk/modules/posts/manialib/admin/posts_manage.php           admin/posts_manage.php 
 ^/trunk/modules/posts/manialib/admin/posts_post.php             admin/posts_post.php
-^/trunk/modules/admin/manialib/langs/en/posts.xml               langs/en/posts.xml
-^/trunk/modules/admin/manialib/langs/fr/posts.xml               langs/fr/posts.xml 
+^/trunk/modules/posts/manialib/langs/en/posts.xml               langs/en/posts.xml
+^/trunk/modules/posts/manialib/langs/fr/posts.xml               langs/fr/posts.xml 
