@@ -1,8 +1,9 @@
+admin http://manialib.googlecode.com/svn/trunk/manialib-example/admin
 core http://manialib.googlecode.com/svn/trunk/manialib-framework/core
 images http://manialib.googlecode.com/svn/trunk/manialib-example/images
+langs http://manialib.googlecode.com/svn/trunk/manialib-example/langs
+libraries http://manialib.googlecode.com/svn/trunk/manialib-example/libraries
 logs http://manialib.googlecode.com/svn/trunk/manialib-example/logs
-
-admin/index.php http://manialib.googlecode.com/svn/trunk/manialib-example/admin/index.php
 
 config-example.php http://manialib.googlecode.com/svn/trunk/manialib-example/config-example.php
 core.inc.php http://manialib.googlecode.com/svn/trunk/manialib-example/core.inc.php
