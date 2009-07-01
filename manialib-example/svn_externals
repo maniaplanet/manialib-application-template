@@ -20,4 +20,9 @@
 ^/trunk/modules/posts/manialib/admin/posts_manage.php           admin/posts_manage.php 
 ^/trunk/modules/posts/manialib/admin/posts_post.php             admin/posts_post.php
 ^/trunk/modules/posts/manialib/langs/en/posts.xml               langs/en/posts.xml
-^/trunk/modules/posts/manialib/langs/fr/posts.xml               langs/fr/posts.xml 
+^/trunk/modules/posts/manialib/langs/fr/posts.xml               langs/fr/posts.xml
+
+^/trunk/modules/auto_connect/manialib/libraries/auto_connect    libraries/auto_connect
+^/trunk/modules/auto_connect/manialib/langs/en/auto_connect.xml langs/en/auto_connect.xml
+^/trunk/modules/auto_connect/manialib/langs/fr/auto_connect.xml langs/fr/auto_connect.xml
+^/trunk/modules/auto_connect/manialib/connect.php               connect.php 
