@@ -74,7 +74,7 @@ final class RequestEngine
 	function createLink($file=null, $relativePath=true)
 	{
 		$arr = $this->params;
-		return $this->createLinkString($file, true, $arr);
+		return $this->createLinkString($file, $relativePath, $arr);
 	}
 	
 	/**
