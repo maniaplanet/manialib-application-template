@@ -1,5 +1,8 @@
 ^/trunk/manialib-framework/core                                 core
 
+^/trunk/manialib-framework/use_short_manialinks.htaccess        use_short_manialinks.htaccess
+^/trunk/manialib-framework/config-example.php                   config-example.php
+
 ^/trunk/manialib-framework/langs/en/general.xml                 langs/en/general.xml 
 ^/trunk/manialib-framework/langs/en/errors.xml                  langs/en/errors.xml 
 ^/trunk/manialib-framework/langs/en/date.xml                    langs/en/date.xml

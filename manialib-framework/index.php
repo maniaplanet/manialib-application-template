@@ -6,14 +6,13 @@
  
 require_once("core.inc.php");
 
-$ui = new Manialink;
-$ui->draw();
+Manialink::load();
 
 $ui = new Label;
 $ui->setText("Hello world");
 $ui->draw();
 
-Manialink::theEnd();
+Manialink::render();
 
 
 ?>
