@@ -186,11 +186,6 @@ abstract class GuiElement
 		$this->maniazones = $plop;
 	}
 
-	function setBgcolor ($plop)
-	{
-		$this->bgcolor = $plop;
-	}
-
 	function addPlayerId ()
 	{
 		$this->addPlayerId = 1;
@@ -205,7 +200,12 @@ abstract class GuiElement
 	{
 		$this->actionKey = $plop;
 	}
-
+	
+	function setBgcolor ($plop)
+	{
+		$this->bgcolor = $plop;
+	}
+	
 	function setImage($image, $absoluteUrl=GUI_IMAGE_DIR_URL)
 	{
 		$this->setStyle(null);
@@ -477,6 +477,9 @@ class Format extends GuiElement
 	protected $xmlTagName = "format";
 	protected $halign = null;
 	protected $valign = null;
+	protected $posX = null;
+	protected $posY = null;
+	protected $posZ = null;
 	protected $textSize;
 	protected $textColor;
 
@@ -523,6 +526,9 @@ class Label extends Format
 {
 	protected $xmlTagName = "label";
 	protected $style = GUI_LABEL_DEFAULT_STYLE;
+	protected $posX = 0;
+	protected $posY = 0;
+	protected $posZ = 0;
 	protected $text;
 	protected $textid;
 	protected $autonewline;
@@ -669,6 +675,103 @@ class Button extends Label
 {
 	protected $subStyle = null;
 	protected $style = GUI_BUTTON_DEFAULT_STLE;
+}
+
+/**
+ * Music
+ * @package gui_api
+ */
+class Music extends GuiElement
+{
+	protected $xmlTagName = "music";
+	protected $halign = null;
+	protected $valign = null;
+	protected $posX = null;
+	protected $posY = null;
+	protected $posZ = null;
+	protected $data;
+	
+	function __construct()
+	{
+	}
+	
+	function setData($filename, $relativePath = APP_URL)
+	{
+		if($relativePath)
+		{
+			$this->data = $relativePath . $filename;
+		}
+		else
+		{
+			$this->data = $filename;
+		}
+	}
+	
+	function getData()
+	{
+		return $this->data;
+	}
+	
+	protected function postFilter()
+	{
+		if($this->data !== null) $this->xml->setAttribute("data", $this->data);
+	}
+}
+
+/**
+ * Audio player
+ * @package gui_api
+ */
+class Audio extends Music
+{
+	protected $xmlTagName = "music";
+	protected $posX = 0;
+	protected $posY = 0;
+	protected $posZ = 0;
+	protected $play;
+	protected $looping = 0;
+	
+	function autoPlay()
+	{
+		$this->play = 1;
+	}
+	
+	function enableLooping()
+	{
+		$this->looping = 1;
+	}
+	
+	function getAutoPlay()
+	{
+		return $this->play;
+	}
+	
+	function getLooping()
+	{
+		return $this->looping;
+	}
+	
+	protected function postFilter()
+	{
+		parent::postFilter();
+		if($this->play !== null) $this->xml->setAttribute("play", $this->play);
+		if($this->looping !== null) $this->xml->setAttribute("looping", $this->looping);
+	}
+}
+
+/**
+ * Video
+ * @package gui_api
+ */
+class Video extends Audio
+{
+	protected $xmlTagName = "video";
+	
+	function __construct($sx=32, $sy=24)
+	{
+		$this->sizeX = $sx;
+		$this->sizeY = $sy;
+	}
 }
 
 ?>

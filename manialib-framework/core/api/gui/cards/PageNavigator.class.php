@@ -48,8 +48,6 @@ class PageNavigator
 		$this->showLast = false;
 		$this->showFastNext = false;
 		$this->showText = true;
-		$this->currentPage = 1;
-		$this->pageNumber = 2;
 		
 		$this->arrowNext->setSubStyle($this->arrowNoneStyle);
 		$this->arrowPrev->setSubStyle($this->arrowNoneStyle);
@@ -155,7 +153,7 @@ class PageNavigator
 		// Show / hide text
 		if(!$this->currentPage || !$this->pageNumber)
 		{
-			$this->hideText();
+			$this->showText(false);
 		}
 		
 		// Auto show fast next / last

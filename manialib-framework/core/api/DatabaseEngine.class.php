@@ -39,14 +39,13 @@ function quote_smart_ref(& $value, $gpc = true)
 	$value = "'" . mysql_real_escape_string($value) . "'";
 }
 
-class DatabaseEngine
+final class DatabaseEngine
 {
 	private static $instance;
-
-	public $db;
+	private $db;
+	private $rs;
 	public $query;
-	public $rs;
-
+	
 	/**
 	 * Get the instance
 	 */

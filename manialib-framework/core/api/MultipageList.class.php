@@ -81,7 +81,7 @@ class MultipageList
 		return array($offset, $length); 
 	}
 	
-	function drawPageNavigator($x, $y, $z, $file=null)
+	function savePageNavigator($x, $y, $z, $file=null)
 	{
 		$request = RequestEngine::getInstance();
 		if($this->getPageNumber() > 1)
