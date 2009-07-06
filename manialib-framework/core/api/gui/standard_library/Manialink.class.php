@@ -28,8 +28,6 @@ abstract class Manialink
 		self::$domDocument->appendChild($manialink);
 		self::$parentNodes[] = $manialink;
 		
-		// TODO Is the <type></type> tag usefull ?
-		
 		$timeout = self::$domDocument->createElement("timeout");
 		$manialink->appendChild($timeout); 
 		$timeout->nodeValue = 0;

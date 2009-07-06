@@ -11,14 +11,14 @@ $ui->title->setText("ManiaLib");
 $ui->subTitle->setText("Lightweight PHP framework");
 $ui->logo->setImage("logo64.dds");
 
-$link = $request->createLinkArgList("index.php");
+//$link = $request->createLinkArgList("index.php");
+//
+//$ui->addItem();
+//$ui->lastItem()->text->setText(__("home"));
+//$ui->lastItem()->icon->setSubStyle("United");
+//$ui->lastItem()->setManialink($link);
 
-$ui->addItem();
-$ui->lastItem()->text->setText(__("home"));
-$ui->lastItem()->icon->setSubStyle("United");
-$ui->lastItem()->setManialink($link);
-
-$ui->addGap(56);
+$ui->addGap(66);
 
 if(DEBUG_LEVEL >= DEBUG_ON)
 {
@@ -30,8 +30,18 @@ if(DEBUG_LEVEL >= DEBUG_ON)
 	$ui->lastItem()->setManialink($link);	
 }
 
-$linkstr = $request->createLinkArgList("index.php");
-$ui->quitButton->setManialink($linkstr);
+if($request->get("post_id"))
+{
+	$linkstr = $request->createLinkArgList("index.php");
+	$ui->quitButton->setManialink($linkstr);
+}
+else
+{
+	$ui->quitButton->setAction(0);
+	$ui->quitButton->text->setText("Quit");
+}
+
+
 
 $ui->save();
 
