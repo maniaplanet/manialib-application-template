@@ -188,8 +188,6 @@ final class RequestEngine
 		}
 	}
 	
-	// TODO Referer should be saved with short manialink if the option is enabled
-	
 	function __destruct()
 	{
 		if($this->registerRefererAtDestruct)

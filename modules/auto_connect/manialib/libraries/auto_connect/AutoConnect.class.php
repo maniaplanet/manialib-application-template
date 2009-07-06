@@ -19,8 +19,7 @@ abstract class AutoConnect
 			return true;
 		}
 		$request = RequestEngine::getInstance();
-		$link = $request->createLink(APP_URL . "connect.php", false);
-		$request->redirectManialinkAbsolute($link);
+		$request->redirectManialink("connect.php");
 	}
 }
 

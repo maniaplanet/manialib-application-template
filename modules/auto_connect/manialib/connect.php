@@ -17,7 +17,7 @@ require_once("header.php");
 		$ui->setAlign("center", "center");
 		$ui->setScale(2);
 		$ui->setText("Connect");
-		$ui->setManialink($request->getReferer());
+		$ui->setManialink($request->createLink("index.php"));
 		$ui->addPlayerId();
 		$ui->save();
 	

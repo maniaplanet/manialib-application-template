@@ -23,6 +23,6 @@ $request->registerGlobalParam("nickname");
 $request->registerGlobalParam("path");
 $request->registerGlobalParam("lang");
 
-//AutoConnect::check();
+AutoConnect::check();
 
 ?>

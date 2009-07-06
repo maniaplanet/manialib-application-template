@@ -64,9 +64,6 @@ switch($currentStep)
 	case 4 :
 		for($i=1; $i<=10; $i++)
 		{
-			$request->delete("meta_tag_name$i");
-			$request->delete("meta_tag_value$i");
-			
 			if($tagName = $request->get("meta_tag_name$i"))
 			{
 				if($tagValue = $request->get("meta_tag_value$i"))
@@ -74,6 +71,9 @@ switch($currentStep)
 					$post->addMetaTag($tagName, $tagValue);
 				}
 			}
+			
+			$request->delete("meta_tag_name$i");
+			$request->delete("meta_tag_value$i");
 		}
 	break;
 	
