@@ -1,0 +1,31 @@
+^/trunk/manialib-framework/core                                 core
+
+^/trunk/manialib-framework/use_short_manialinks.htaccess        use_short_manialinks.htaccess
+^/trunk/manialib-framework/config-example.php                   config-example.php
+
+^/trunk/manialib-framework/langs/en/general.xml                 langs/en/general.xml 
+^/trunk/manialib-framework/langs/en/errors.xml                  langs/en/errors.xml 
+^/trunk/manialib-framework/langs/en/date.xml                    langs/en/date.xml
+
+^/trunk/manialib-framework/langs/fr/general.xml                 langs/fr/general.xml 
+^/trunk/manialib-framework/langs/fr/errors.xml                  langs/fr/errors.xml 
+^/trunk/manialib-framework/langs/fr/date.xml                    langs/fr/date.xml
+
+^/trunk/modules/admin/manialib/libraries/admin                  libraries/admin
+^/trunk/modules/admin/manialib/admin/login.php                  admin/login.php
+^/trunk/modules/admin/manialib/admin/logout.php                 admin/logout.php 
+^/trunk/modules/admin/manialib/admin/admin.php                  admin/admin.php
+^/trunk/modules/admin/manialib/langs/en/admin.xml               langs/en/admin.xml
+^/trunk/modules/admin/manialib/langs/fr/admin.xml               langs/fr/admin.xml  
+
+^/trunk/modules/posts/manialib/libraries/posts                  libraries/posts 
+^/trunk/modules/posts/manialib/admin/posts.php                  admin/posts.php 
+^/trunk/modules/posts/manialib/admin/posts_manage.php           admin/posts_manage.php 
+^/trunk/modules/posts/manialib/admin/posts_post.php             admin/posts_post.php
+^/trunk/modules/posts/manialib/langs/en/posts.xml               langs/en/posts.xml
+^/trunk/modules/posts/manialib/langs/fr/posts.xml               langs/fr/posts.xml
+
+^/trunk/modules/auto_connect/manialib/libraries/auto_connect    libraries/auto_connect
+^/trunk/modules/auto_connect/manialib/langs/en/auto_connect.xml langs/en/auto_connect.xml
+^/trunk/modules/auto_connect/manialib/langs/fr/auto_connect.xml langs/fr/auto_connect.xml
+^/trunk/modules/auto_connect/manialib/connect.php               connect.php 
