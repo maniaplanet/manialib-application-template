@@ -57,71 +57,87 @@ function autoload_recursive($className, $path)
 	return false;
 } 
 
-/**
- * i18n message
- * 
- * examples
- * echo __("hello_world");
- * echo __("hello_login", $yetAnotherLogin);
- * 
- * @param String $TextId
- * @param Mixed $param...
- * @return String
- */
-function __($textId)
-{
-	$str = LangEngine::getTranslation($textId);
-	$i=1;
-	$args = func_get_args();
-	$search = array();
-	$replace = array();
-	while(strpos($str, "[$i]")!==false)
+if(LANG_ENGINE_MODE == LANG_ENGINE_MODE_DYNAMIC):
+	
+	/**
+	 * i18n message
+	 * 
+	 * examples
+	 * echo __("hello_world");
+	 * echo __("hello_login", $yetAnotherLogin);
+	 * 
+	 * @param String $TextId
+	 * @param Mixed $param...
+	 * @return String
+	 */
+	function __($textId)
 	{
-		$search[] = "[$i]";
-		if(isset($args[$i]))
+		$str = LangEngine::getTranslation($textId);
+		$i=1;
+		$args = func_get_args();
+		$search = array();
+		$replace = array();
+		while(strpos($str, "[$i]")!==false)
 		{
-			$replace[] = $args[$i];
+			$search[] = "[$i]";
+			if(isset($args[$i]))
+			{
+				$replace[] = $args[$i];
+			}
+			else
+			{
+				$replace[] = "";
+			}
+			$i++;
+		}
+		$str = str_replace($search, $replace, $str);
+		return $str;
+	}
+	
+	/**
+	 * i18n date
+	 * 
+	 * @param Int $timestamp
+	 * @return String
+	 */
+	function __date($timestamp)
+	{
+		if(!$timestamp)
+		{
+			return "-";
+		}
+		
+		$return=__("date_long", 
+					__( strtolower(date("l", $timestamp)) ),             // Day name
+					__( strtolower(date("F", $timestamp)) ),             // Month name
+					    date("j", $timestamp),                           // Day number
+					__( "date_ordinal_suffix", date("S", $timestamp) ),  // Suffix
+					    date("Y", $timestamp)                            // Year
+					);					
+		
+		if($return=="date_long")
+		{
+			return date("Y/M/j", $timestamp);
 		}
 		else
 		{
-			$replace[] = "";
+			return $return;
 		}
-		$i++;
 	}
-	$str = str_replace($search, $replace, $str);
-	return $str;
-}
-
-/**
- * i18n date
- * 
- * @param Int $timestamp
- * @return String
- */
-function __date($timestamp)
-{
-	if(!$timestamp)
+	
+else:
+	
+	function __($message)
 	{
-		return "-";
+		return $message;
 	}
 	
-	$return=__("date_long", 
-				__( strtolower(date("l", $timestamp)) ), 				// Day name
-				__( strtolower(date("F", $timestamp)) ), 				// Month name
-				    date("j", $timestamp),  							// Day number
-				__( "date_ordinal_suffix", date("S", $timestamp) ),		// Suffix
-				    date("Y", $timestamp)								// Year
-				);					
-	
-	if($return=="date_long")
+	function __date($timestamp)
 	{
 		return date("Y/M/j", $timestamp);
 	}
-	else
-	{
-		return $return;
-	}
-}
+
+endif;
 
 /**
  * Writes a message in the debug log file

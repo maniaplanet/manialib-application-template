@@ -8,6 +8,8 @@ $request = RequestEngine::GetInstance();
 
 Manialink::load();
 
+LangEngine::getInstance();
+
 $ui = new Quad(128, 128);
 $ui->setAlign("center", "center");
 $ui->setImage("bg_stadium.dds");

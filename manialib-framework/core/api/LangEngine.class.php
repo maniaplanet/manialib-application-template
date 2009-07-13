@@ -4,7 +4,17 @@
  * 
  * @author Maxime Raoust
  */
-  
+
+define("LANG_ENGINE_MODE_STATIC", 0);
+define("LANG_ENGINE_MODE_DYNAMIC", 1);
+
+
+if(!defined("LANG_ENGINE_MODE"))
+{
+	define("LANG_ENGINE_MODE", LANG_ENGINE_MODE_DYNAMIC);	
+}
+
+
 /**
  * i18n core class
  * 
@@ -25,35 +35,42 @@ class LangEngine
 		return $instance->getTranslationPrivate($textId, $instance->currentLang);
 	}
 		
-	public static function getInstance($toolMode = false)
+	public static function getInstance()
 	{
 		if (!self::$instance)
 		{
 			$class = __CLASS__;
-			self::$instance = new $class($toolMode);
+			self::$instance = new $class();
 		}
 		return self::$instance;
 	}
 
-	protected function __construct($toolMode = false)
+	protected function __construct($langEngineMode = LANG_ENGINE_MODE)
 	{
 		$session = SessionEngine::getInstance();
-		$this->currentLang = $session->get("lang", "en");
-		if($dico = $session->get(__CLASS__))
+		if($langEngineMode == LANG_ENGINE_MODE_DYNAMIC)
 		{
-			$this->dico = unserialize(rawurldecode($dico));
+			$this->currentLang = $session->get("lang", "en");
+			if($dico = $session->get(__CLASS__))
+			{
+				$this->dico = unserialize(rawurldecode($dico));
+			}
+			else
+			{
+				$this->loadDicoRecursive(APP_LANGS_PATH, $langEngineMode);
+				$session->set(__CLASS__, rawurlencode(serialize($this->dico)));
+			}
 		}
 		else
 		{
-			$this->loadDicoRecursive(APP_LANGS_PATH);
-			$session->set(__CLASS__, rawurlencode(serialize($this->dico)));
+			$this->loadDicoRecursive(APP_LANGS_PATH, $langEngineMode);
 		}
 	}
 	
 	/**
 	 * Recursive loading method
 	 */
-	protected function loadDicoRecursive($directoryPath)
+	protected function loadDicoRecursive($directoryPath, $langEngineMode = LANG_ENGINE_MODE)
 	{
 		if ($handle = opendir($directoryPath))
 		{
@@ -69,7 +86,20 @@ class LangEngine
 				}
 				elseif(substr($file, -4)==".xml")
 				{
-					$this->parseLangFile($directoryPath."/".$file);
+					if($langEngineMode == LANG_ENGINE_MODE_DYNAMIC)
+					{
+						$this->parseLangFile($directoryPath."/".$file);
+					}
+					else
+					{
+						$url = $directoryPath."/".$file;
+						$url = str_replace(APP_PATH, "", $url);
+						$url = APP_URL . $url;
+						
+						$ui = new IncludeManialink;
+						$ui->setUrl($url);
+						$ui->save();
+					}
 				}
 			}
 			closedir($handle);

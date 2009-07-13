@@ -22,6 +22,9 @@ if (!defined("USE_SHORT_MANIALINKS"))
 if (!defined("DEFAULT_TIMEZONE"))
 	define("DEFAULT_TIMEZONE", "Europe/Paris");
 
+if (!defined("LANG_ENGINE_MODE"))
+	define("LANG_ENGINE_MODE", 1);
+
 if (!defined("DATABASE_HOST"))
 	define("DATABASE_HOST", "localhost");
 

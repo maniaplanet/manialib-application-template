@@ -30,7 +30,14 @@ define("MANIALINK_NAME", "manialibdev");
  * htaccess" to .htaccess and check that Apache mod rewrite is enabled on your
  * server
  */
-define("USE_SHORT_MANIALINKS", true); 
+define("USE_SHORT_MANIALINKS", true);
+
+/**
+ * Lang engine mode: if 0, the lang files will be included to be used as normal
+ * dictionary files. if 1, the dynamic lang engine will be loaded and
+ * translation strings will be obtained with the __() function
+ */
+define("LANG_ENGINE_MODE", 1);
 
 /**#@+
  * Database config

@@ -469,6 +469,24 @@ class IconMedal extends Icon
 }
 
 /**
+ * Include
+ * @package gui_api
+ */
+class IncludeManialink extends GuiElement
+{
+	protected $xmlTagName = "include";
+	protected $halign = null;
+	protected $valign = null;
+	protected $posX = null;
+	protected $posY = null;
+	protected $posZ = null;
+	
+	function __construct()
+	{	
+	}
+}
+
+/**
  * Format
  * @package gui_api
  */

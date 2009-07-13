@@ -31,7 +31,7 @@ require_once("header.php");
 require_once("navigation.php");
 
 Manialink::beginFrame(-34, 48, 1);
-	
+
 	Manialink::beginFrame(45, -4, 1);
 
 		if($request->get("post_id"))
