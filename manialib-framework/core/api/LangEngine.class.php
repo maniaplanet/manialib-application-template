@@ -5,10 +5,6 @@
  * @author Maxime Raoust
  */
 
-define("LANG_ENGINE_MODE_STATIC", 0);
-define("LANG_ENGINE_MODE_DYNAMIC", 1);
-
-
 if(!defined("LANG_ENGINE_MODE"))
 {
 	define("LANG_ENGINE_MODE", LANG_ENGINE_MODE_DYNAMIC);	
