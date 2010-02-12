@@ -10,7 +10,7 @@
  */ 
 class ChallengeCard extends Quad
 {
-	public $image;
+	public $bgImage;
 	public $text;
 	public $points;
 	public $lockedMessage;
@@ -29,9 +29,9 @@ class ChallengeCard extends Quad
 		$this->setStyle("BgsChallengeMedals");
 		$this->setSubStyle("BgNotPlayed");
 		
-		$this->image = new Quad(15, 13.5);
-		$this->image->setHalign("center");
-		$this->image->setPosition(0, -0.5, 0);
+		$this->bgImage = new Quad(15, 13.5);
+		$this->bgImage->setHalign("center");
+		$this->bgImage->setPosition(0, -0.5, 0);
 		
 		$this->points = new Label(9);
 		$this->points->setPosition(-6.5, -10.75, 2);
@@ -88,7 +88,7 @@ class ChallengeCard extends Quad
 		
 		Manialink::beginFrame($x, $y, $this->posZ-3);
 
-			$this->image->save();
+			$this->bgImage->save();
 			$this->points->save();		
 			
 			if(!$this->clickable)
