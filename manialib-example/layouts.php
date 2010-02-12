@@ -133,10 +133,8 @@ $layout->setBorder(1, 6);
 	$ui = new Quad(5, 5);
 	$layout->add($ui);
 	
-	$ui = new Quad(5, 5);
-	$layout->add($ui);
-	
 	$ui = new Quad(35, 5);
+	$layout->add($ui);$ui = new Quad(35, 5);
 	$layout->add($ui);
 }
 $layout->save();
