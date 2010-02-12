@@ -15,8 +15,6 @@ if($playerLogin = $request->get("playerlogin"))
 	$session->set("login", $playerLogin);
 }
 
-
-
 $request->registerProtectedParam("playerlogin");
 $request->registerGlobalParam("login");
 $request->registerGlobalParam("nickname");

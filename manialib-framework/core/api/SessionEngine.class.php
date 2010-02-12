@@ -15,7 +15,7 @@ class SessionEngine
 	 */
 	private function __construct()
 	{
-		session_name(self :: $name);
+		session_name(self::$name);
 		session_start();
 	}
 
@@ -24,12 +24,12 @@ class SessionEngine
 	 */
 	public static function getInstance()
 	{
-		if (!self :: $instance)
+		if (!self::$instance)
 		{
 			$class = __CLASS__;
-			self :: $instance = new $class;
+			self::$instance = new $class;
 		}
-		return self :: $instance;
+		return self::$instance;
 	}
 
 	/**

@@ -15,8 +15,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ManiaLib.  If not, see <http://www.gnu.org/licenses/>.
  * 
- * Copyright Maxime Raoust 2009
- * 
  * @author Maxime Raoust
  * 
  */

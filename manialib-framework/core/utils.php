@@ -20,6 +20,11 @@ function __autoload($className)
 		require_once ($path);
 		return true;
 	}
+	elseif(file_exists($path = APP_API_PATH . "gui/layouts/$className.class.php"))
+	{
+		require_once ($path);
+		return true;
+	}
 	elseif(autoload_recursive($className, APP_LIBRARIES_PATH))
 	{
 		return true;
@@ -245,8 +250,8 @@ function safe_div($numerator, $denominator)
  */
 function manialinkErrorHandler($errno, $errstr, $errfile, $errline)
 {
-	$session = SessionEngine :: getInstance();
-	$request = RequestEngine :: getInstance();
+	$session = SessionEngine::getInstance();
+	$request = RequestEngine::getInstance();
 	switch ($errno)
 	{
 		case E_USER_WARNING :
@@ -276,7 +281,7 @@ function manialinkErrorHandler($errno, $errstr, $errfile, $errline)
 
 			$ui = new Button;
 			$ui->setText(__("error_back_button"));
-			$request = RequestEngine :: getInstance();
+			$request = RequestEngine::getInstance();
 			$ui->setManialink($request->createLinkArgList("index.php"));
 			$ui->setPosition(0, -3, 5);
 			$ui->setHalign("center");
@@ -301,8 +306,8 @@ function manialinkErrorHandler($errno, $errstr, $errfile, $errline)
  */
 function manialinkErrorHandlerDebug($errno, $errstr, $errfile, $errline)
 {
-	$session = SessionEngine :: getInstance();
-	$request = RequestEngine :: getInstance();
+	$session = SessionEngine::getInstance();
+	$request = RequestEngine::getInstance();
 	switch ($errno)
 	{
 		case E_USER_WARNING :
@@ -340,7 +345,7 @@ function manialinkErrorHandlerDebug($errno, $errstr, $errfile, $errline)
 
 			$ui = new Button;
 			$ui->setText(__("error_back_button"));
-			$request = RequestEngine :: getInstance();
+			$request = RequestEngine::getInstance();
 			$ui->setManialink($request->createLinkArgList("index.php"));
 			$ui->setPosition(0, -35, 5);
 			$ui->setHalign("center");

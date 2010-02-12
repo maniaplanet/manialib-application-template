@@ -68,12 +68,12 @@ class AdminEngine
  	
  	public static function getInstance()
 	{
-		if (!self :: $instance)
+		if (!self::$instance)
 		{
 			$class = __CLASS__;
-			self :: $instance = new $class;
+			self::$instance = new $class;
 		}
-		return self :: $instance;
+		return self::$instance;
 	}
  	
  	private function __construct()
