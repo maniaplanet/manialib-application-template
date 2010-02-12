@@ -140,15 +140,16 @@ abstract class AbstractLayout extends GuiElement
 	 */
 	public function save()
 	{
-		$this->xIndex += $this->borderWidth;
-		$this->yIndex -= $this->borderHeight;
+		$this->xIndex = $this->borderWidth;
+		$this->yIndex = - $this->borderHeight;
 
 		Manialink::beginFrame($this->posX, $this->posY, $this->posZ);
 		foreach ($this->items as $item)
 		{
+			$this->prepareLayout($item);
 			$item->setPosition($this->xIndex, $this->yIndex, 1);
-			$this->updateLayout($item);
 			$item->save();
+			$this->updateLayout($item);
 		}
 		Manialink::endFrame();
 	}
@@ -158,6 +159,14 @@ abstract class AbstractLayout extends GuiElement
 	 * Override it to define the layout behaviour. 
 	 */
 	abstract protected function updateLayout(GuiElement $item);
+	
+	/**
+	 * Override this method if you want to perform an action just before 
+	 * drawing the item
+	 */
+	protected function prepareLayout(GuiElement $item) 
+	{	
+	}
 
 }
 ?>

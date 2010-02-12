@@ -56,5 +56,90 @@ $layout->setBorder(1, 6);
 }
 $layout->save();
 
+$ui = new Panel(30, 30);
+$ui->title->setText("FlowLayout");
+$ui->setPosition(-33, 12, 1);
+$ui->save();
+
+$layout = new FlowLayout($ui);
+$layout->setMargin(1, 1);
+$layout->setBorder(1, 6);
+{
+	$ui = new Quad(5, 5);
+	$layout->add($ui);
+
+	$ui = new Quad(5, 5);
+	$layout->add($ui);
+
+	$ui = new Quad(5, 5);
+	$layout->add($ui);
+	
+	$ui = new Quad(5, 5);
+	$layout->add($ui);
+
+	$ui = new Quad(5, 5);
+	$layout->add($ui);
+
+	$ui = new Quad(5, 5);
+	$layout->add($ui);
+	
+	$ui = new Quad(5, 5);
+	$layout->add($ui);
+	
+	$ui = new Quad(5, 5);
+	$layout->add($ui);
+	
+	$ui = new Quad(5, 5);
+	$layout->add($ui);
+}
+$layout->save();
+
+$ui = new Panel(30, 30);
+$ui->title->setText("FlowLayout");
+$ui->setPosition(0, 12, 1);
+$ui->save();
+
+$layout = new FlowLayout($ui);
+$layout->setMargin(1, 1);
+$layout->setBorder(1, 6);
+{
+	$ui = new Quad(5, 1);
+	$layout->add($ui);
+
+	$ui = new Quad(5, 2);
+	$layout->add($ui);
+
+	$ui = new Quad(5, 3);
+	$layout->add($ui);
+	
+	$ui = new Quad(5, 4);
+	$layout->add($ui);
+
+	$ui = new Quad(5, 5);
+	$layout->add($ui);
+
+	$ui = new Quad(1, 5);
+	$layout->add($ui);
+	
+	$ui = new Quad(2, 5);
+	$layout->add($ui);
+	
+	$ui = new Quad(3, 5);
+	$layout->add($ui);
+	
+	$ui = new Quad(4, 5);
+	$layout->add($ui);
+	
+	$ui = new Quad(5, 5);
+	$layout->add($ui);
+	
+	$ui = new Quad(5, 5);
+	$layout->add($ui);
+	
+	$ui = new Quad(35, 5);
+	$layout->add($ui);
+}
+$layout->save();
+
 require_once ("footer.php");
 ?>
