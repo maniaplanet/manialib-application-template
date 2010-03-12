@@ -5,8 +5,9 @@
  * 
  * @author Maxime Raoust
  */
- 
-require_once( 'manialib/manialib.inc.php' );
+
+require_once( dirname(__FILE__).'/config.php' );
+require_once( dirname(__FILE__).'/manialib/manialib.inc.php' );
 
 $request = RequestEngine::getInstance();
 
