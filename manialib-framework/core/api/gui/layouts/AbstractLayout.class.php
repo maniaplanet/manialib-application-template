@@ -19,7 +19,6 @@ abstract class AbstractLayout extends GuiElement
 	protected $borderHeight;
 
 	// TODO Support scaling
-	// TODO Support aligning
 	// TODO Support overflow on/off
 
 	/**
@@ -37,8 +36,10 @@ abstract class AbstractLayout extends GuiElement
 			{
 				$this->sizeX = $args[0]->getSizeX();
 				$this->sizeY = $args[0]->getSizeY();
-				$this->posX = $args[0]->getPosX();
-				$this->posY = $args[0]->getPosY();
+				// Align the layout according to the container
+				$arr = GuiTools::getAlignedPos ($args[0], "left", "top");
+				$this->posX = $arr["x"];
+				$this->posY = $arr["y"];
 				$this->posZ = $args[0]->getPosZ() + 1;
 			}
 			else

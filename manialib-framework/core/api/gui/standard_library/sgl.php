@@ -631,10 +631,10 @@ class Label extends Format
 	protected $autonewline;
 	protected $maxline;
 
-	function __construct($sx = 20)
+	function __construct($sx = 20, $sy = 0)
 	{
 		$this->sizeX = $sx;
-		$this->sizeY = 0;
+		$this->sizeY = $sy;
 	}
 
 	function setText($plop)
