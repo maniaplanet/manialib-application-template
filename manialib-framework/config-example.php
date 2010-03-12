@@ -4,6 +4,7 @@
  * Other overridable config constants can be found in core/config-default.php
  * 
  * @author Maxime Raoust
+ * @package Manialib
  */
 
 /**
@@ -30,7 +31,7 @@ define('MANIALINK_NAME', 'manialibdev');
  * htaccess" to .htaccess and check that Apache mod rewrite is enabled on your
  * server.
  */
-define('USE_SHORT_MANIALINKS', true);
+define('USE_SHORT_MANIALINKS', false);
 
 /**
  * Lang engine mode: if 0, the lang files will be included to be used as normal

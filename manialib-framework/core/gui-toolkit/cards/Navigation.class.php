@@ -125,7 +125,7 @@ class NavigationButton extends Quad
 	protected $forceLinks = true;
 	protected $iconSizeMinimizer = 1.5;
 	protected $textSizeMinimizer = 3;
-	protected $textXpos = 9;
+	protected $textOffset = 9;
 
 	function __construct ($sx=29.5, $sy=8.5) 
 	{
@@ -137,12 +137,13 @@ class NavigationButton extends Quad
 		
 		$this->text = new Label();
 		$this->text->setValign("center");
-		$this->text->setPosition($this->textXpos, 0.25, 1);
+		$this->text->setPosition($this->textOffset, 0.25, 1);
 		$this->text->setStyle(GUI_NAVIGATION_BUTTON_TEXT_DEFAULT_STYLE);
 		
 		$this->icon = new Icon($this->sizeY-$this->iconSizeMinimizer);
 		$this->icon->setValign("center");
 		$this->icon->setPosition(1, 0, 1);
+		
 	}
 	
 	/**
@@ -155,16 +156,16 @@ class NavigationButton extends Quad
 	}
 	
 	protected function postFilter ()
-	{
-		// Calculus and stuff
-		$newPos = GuiTools::getAlignedPos ($this, "left", "center");
-		$this->text->setSizeX($this->sizeX - $this->textXpos - $this->textSizeMinimizer);
+	{		
+		$this->text->setSizeX($this->sizeX - $this->text->getPosX() - $this->textSizeMinimizer);
 		$this->icon->setSize($this->sizeY-$this->iconSizeMinimizer, $this->sizeY-$this->iconSizeMinimizer);
+		
 		if($this->forceLinks)
 		{
 			$this->text->addLink($this);
 			$this->icon->addLink($this);
 		}
+		$newPos = GuiTools::getAlignedPos ($this, "left", "center");
 		
 		// Drawing
 		Manialink::beginFrame($newPos["x"], $newPos["y"], $this->posZ+1);

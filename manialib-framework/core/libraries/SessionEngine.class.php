@@ -3,6 +3,7 @@
  * Session engine
  * 
  * @author Maxime Raoust
+ * @package Manialib
  */
 
 class SessionEngine
@@ -62,22 +63,28 @@ class SessionEngine
 	/**
 	 * Get a session var, or the default value if nothing was found
 	 * 
-	 * @param String $name
-	 * @param Mixed $default=null
-	 * @return Mixed
+	 * @param string The name of the variable
+	 * @param mixed The default value
+	 * @return mixed
 	 */
 	function get($name, $default = null)
 	{
-		if (isset ($_SESSION[$name]))
-			$value = $_SESSION[$name];
-		else
-			return $default;
-
-		if (get_magic_quotes_gpc())
-			return stripslashes($value);
-		else
-			return $value;
-
+		return isset ($_SESSION[$name]) ? $_SESSION[$name] : $default;
+	}
+	
+	/**
+	 * Gets a session var, throws an exception if not found
+	 * 
+	 * @param string The name of the variable
+	 * @return mixed
+	 */
+	function getStrict($name)
+	{
+		if(isset ($_SESSION[$name]))
+		{
+			return $_SESSION[$name];
+		}
+		throw new ManialinkException('Session variable "'.$name.'" not found');
 	}
 
 	/**

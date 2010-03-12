@@ -10,25 +10,19 @@
  */
 function __autoload($className)
 {
-	if (file_exists($path = APP_API_PATH . "$className.class.php"))
+	if (autoload_recursive($className, APP_CORE_LIBRARIES_PATH))
 	{
-		require_once ($path);
-		return true;
-	}
-	elseif(file_exists($path = APP_API_PATH . "gui/cards/$className.class.php"))
-	{
-		require_once ($path);
-		return true;
-	}
-	elseif(file_exists($path = APP_API_PATH . "gui/layouts/$className.class.php"))
-	{
-		require_once ($path);
 		return true;
 	}
 	elseif(autoload_recursive($className, APP_LIBRARIES_PATH))
 	{
 		return true;
 	}
+	elseif(autoload_recursive($className, APP_CORE_GUI_PATH))
+	{
+		return true;
+	}
+	return false;
 }
 
 /**
@@ -50,7 +44,7 @@ function autoload_recursive($className, $path)
 			{
 				if(is_dir($path . $file))
 				{
-					if(autoload_recursive($className, $path . $file))
+					if(autoload_recursive($className, $path.$file.'/'))
 					{
 						return true;
 					}
@@ -59,7 +53,7 @@ function autoload_recursive($className, $path)
 		}
 		closedir($handle);
 	}
-	return false;
+	return $return;
 } 
 
 if(LANG_ENGINE_MODE == LANG_ENGINE_MODE_DYNAMIC):
@@ -243,119 +237,6 @@ function safe_div($numerator, $denominator)
 		return 0;
 	}
 	return $numerator / $denominator;
-}
-
-/**
- * Custom error handler
- */
-function manialinkErrorHandler($errno, $errstr, $errfile, $errline)
-{
-	$session = SessionEngine::getInstance();
-	$request = RequestEngine::getInstance();
-	switch ($errno)
-	{
-		case E_USER_WARNING :
-			$msg = date('d/m/y H:i:s') . " [warning] ";
-			$msg .= $errstr . " ";
-			$msg .= "at url " . $request->createLink() . "\n";
-			error_log($msg, 3, ERROR_LOG);
-			break;
-		default :
-			
-			Manialink::load();
-
-			$ui = new Panel(50, 20);
-			$ui->setAlign("center", "center");
-			$ui->title->setStyle("TextTitleError");
-			$ui->titleBg->setSubStyle("BgTitle2");
-			$ui->title->setText(__("fatal_error"));
-			$ui->save();
-
-			$ui = new Label(124);
-			$ui->enableAutonewline();
-			$ui->setAlign("center", "center");
-			$ui->setPosition(0, 0, 2);
-
-			$ui->setText(__("error_message"));
-			$ui->save();
-
-			$ui = new Button;
-			$ui->setText(__("error_back_button"));
-			$request = RequestEngine::getInstance();
-			$ui->setManialink($request->createLinkArgList("index.php"));
-			$ui->setPosition(0, -3, 5);
-			$ui->setHalign("center");
-			$ui->save();
-
-			Manialink::render();
-	
-			$msg = date('d/m/y H:i:s') . " [error] ";
-			$msg .= $errstr . " ";
-			$msg .= "at url " . $request->createLink() . " ";
-			$msg .= $errno . " ";
-			$msg .= "in file " . $errfile . " ";
-			$msg .= "on line " . $errline . "\n";
-			error_log($msg, 3, ERROR_LOG);
-			exit;
-			break;
-	}
-}
-
-/**
- * Custom error handler debug
- */
-function manialinkErrorHandlerDebug($errno, $errstr, $errfile, $errline)
-{
-	$session = SessionEngine::getInstance();
-	$request = RequestEngine::getInstance();
-	switch ($errno)
-	{
-		case E_USER_WARNING :
-			$msg = date('d/m/y H:i:s') . " [warning] ";
-			$msg .= $errstr . " ";
-			$msg .= "at url " . $request->createLink() . "\n";
-			error_log($msg, 3, ERROR_LOG);
-			break;
-		default :
-			$msg = date('d/m/y H:i:s') . " [error] ";
-			$msg .= $errstr . " ";
-			$msg .= "at url " . $request->createLink() . " ";
-			$msg .= $errno . " ";
-			$msg .= "in file " . $errfile . " ";
-			$msg .= "on line " . $errline . "\n";
-			error_log($msg, 3, ERROR_LOG);
-			
-			ob_clean();
-	
-			Manialink::load();
-
-			$ui = new Panel(115, 85);
-			$ui->setAlign("center", "center");
-			$ui->titleBg->setSubStyle("BgTitle2");
-			$ui->title->setStyle("TextTitleError");
-			$ui->title->setText(__("fatal_error"));
-			$ui->save();
-			
-			$ui = new Label(110);
-			$ui->setAlign("center", "center");
-			$ui->setPositionZ(1);
-			$ui->enableAutonewline();
-			$ui->setText($msg);
-			$ui->save();
-
-			$ui = new Button;
-			$ui->setText(__("error_back_button"));
-			$request = RequestEngine::getInstance();
-			$ui->setManialink($request->createLinkArgList("index.php"));
-			$ui->setPosition(0, -35, 5);
-			$ui->setHalign("center");
-			$ui->save();
-
-			Manialink::render();
-
-			exit;
-			break;
-	}
 }
 
 ?>

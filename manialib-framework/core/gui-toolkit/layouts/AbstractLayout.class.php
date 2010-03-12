@@ -13,6 +13,7 @@ abstract class AbstractLayout extends GuiElement
 	protected $items;
 	protected $xIndex;
 	protected $yIndex;
+	protected $zIndex;
 	protected $marginWidth;
 	protected $marginHeight;
 	protected $borderWidth;
@@ -143,12 +144,13 @@ abstract class AbstractLayout extends GuiElement
 	{
 		$this->xIndex = $this->borderWidth;
 		$this->yIndex = - $this->borderHeight;
+		$this->zIndex = 1;
 
 		Manialink::beginFrame($this->posX, $this->posY, $this->posZ);
 		foreach ($this->items as $item)
 		{
 			$this->prepareLayout($item);
-			$item->setPosition($this->xIndex, $this->yIndex, 1);
+			$item->setPosition($this->xIndex, $this->yIndex, $this->zIndex);
 			$item->save();
 			$this->updateLayout($item);
 		}
@@ -156,18 +158,21 @@ abstract class AbstractLayout extends GuiElement
 	}
 
 	/**
-	 * This method is called after each rendering of a GUI item. 
-	 * Override it to define the layout behaviour. 
+	 * Override this method to perform an action after rendering an an item.
+	 * Typical use: update x,y,z indexes for the next item 
 	 */
-	abstract protected function updateLayout(GuiElement $item);
+	protected function updateLayout(GuiElement $item)
+	{
+	}
 	
 	/**
-	 * Override this method if you want to perform an action just before 
-	 * drawing the item
+	 * Override this method to perform an action before rendering an item.
+	 * Typical use: look for overflow
 	 */
 	protected function prepareLayout(GuiElement $item) 
 	{	
 	}
 
 }
+
 ?>

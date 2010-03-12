@@ -5,6 +5,8 @@
  * @author Maxime Raoust
  */
 
+// TODO LangEngine refactoring
+
 if(!defined("LANG_ENGINE_MODE"))
 {
 	define("LANG_ENGINE_MODE", LANG_ENGINE_MODE_DYNAMIC);	

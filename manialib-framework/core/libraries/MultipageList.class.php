@@ -3,6 +3,7 @@
  * Multipage helper
  * 
  * @author Maxime Raoust
+ * @package Manialib
  */ 
 
 /**
@@ -13,10 +14,12 @@ class MultipageList
 {
 	protected $size;
 	protected $urlParamName = "page";
+	protected $urlPageName = null;
 	protected $currentPage;
 	protected $defaultPage=1;
 	protected $perPage = 8;
 	protected $pageNumber;
+	protected $hasMorePages;
 	public $pageNavigator;
 
 	function __construct()
@@ -51,6 +54,11 @@ class MultipageList
 		$this->urlParamName = $name;
 	}
 	
+	function setUrlPageName($file)
+	{
+		$this->urlPageName = $file;
+	}
+	
 	function getCurrentPage()
 	{
 		if($this->currentPage === null)
@@ -81,39 +89,73 @@ class MultipageList
 		return array($offset, $length); 
 	}
 	
-	function savePageNavigator($x, $y, $z, $file=null)
+	function setHasMorePages($hasMorePages)
+	{
+		$this->hasMorePages = $hasMorePages;
+	}
+	
+	 function addPlayerId()
+	 {
+		$this->arrowNext->addPlayerId();
+		$this->arrowPrev->addPlayerId();
+		$this->arrowFastNext->addPlayerId();
+		$this->arrowFastPrev->addPlayerId();
+		$this->arrowLast->addPlayerId();
+		$this->arrowFirst->addPlayerId();
+	 }
+	
+	function savePageNavigator()
 	{
 		$request = RequestEngine::getInstance();
+		
+		if($this->hasMorePages !== null)
+		{
+			if($this->hasMorePages)
+			{
+				$this->setSize($this->getCurrentPage()*$this->perPage + 1);
+			}
+			else
+			{
+				$this->setSize($this->getCurrentPage()*$this->perPage);
+			}
+		}
+		
 		if($this->getPageNumber() > 1)
 		{
 			$ui = $this->pageNavigator;		
-			$ui->setPosition($x, $y, $z);
 			$ui->setPageNumber($this->getPageNumber());
-			$ui->setPageIndex($this->getCurrentPage());
+			$ui->setCurrentPage($this->getCurrentPage());
 
 			if($ui->isLastShown())
 			{
 				$request->set($this->urlParamName, 1);
-				$ui->arrowFirst->setManialink($request->createLink($file));
+				$ui->arrowFirst->setManialink($request->createLink($this->urlPageName));
 				
 				$request->set($this->urlParamName, $this->getPageNumber());
-				$ui->arrowLast->setManialink($request->createLink($file));
+				$ui->arrowLast->setManialink($request->createLink($this->urlPageName));
 			}
 			
 			if($ui->isFastNextShown())
 			{
 				$request->set($this->urlParamName, $this->currentPage+5);
-				$ui->arrowFastNext->setManialink($request->createLink($file));
+				$ui->arrowFastNext->setManialink($request->createLink($this->urlPageName));
 				
 				$request->set($this->urlParamName, $this->currentPage-5);
-				$ui->arrowFastPrev->setManialink($request->createLink($file));
+				$ui->arrowFastPrev->setManialink($request->createLink($this->urlPageName));
 			}
 				
-			$request->set($this->urlParamName, $this->currentPage+1);
-			$ui->arrowNext->setManialink($request->createLink($file));
 			
-			$request->set($this->urlParamName, $this->currentPage-1);
-			$ui->arrowPrev->setManialink($request->createLink($file));
+			if($this->currentPage < $this->pageNumber)
+			{
+				$request->set($this->urlParamName, $this->currentPage+1);
+				$ui->arrowNext->setManialink($request->createLink($this->urlPageName));
+			}
+			
+			if($this->currentPage > 1)
+			{
+				$request->set($this->urlParamName, $this->currentPage-1);
+				$ui->arrowPrev->setManialink($request->createLink($this->urlPageName));
+			}
 			
 			$request->set($this->urlParamName, $this->currentPage);
 			

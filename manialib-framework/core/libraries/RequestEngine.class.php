@@ -3,6 +3,7 @@
  * Request handler
  * 
  * @author Maxime Raoust
+ * @package Manialib
  */
 
 final class RequestEngine
@@ -32,9 +33,25 @@ final class RequestEngine
 	function get($name, $default=null)
 	{
 		if(isset($this->params[$name]))
+		{
 			return $this->params[$name];
+		}	
 		else
+		{
 			return $default;
+		}	
+	}
+	
+	/**
+	 * Retrieves a request parameter and throws an exception if not found
+	 */
+	function getStrict($name)
+	{
+		if(isset($this->params[$name]))
+		{
+			return $this->params[$name];
+		}	
+		throw new ManialinkException('Parameter "'.$name.'" not set');
 	}
 		
 	/**
@@ -42,9 +59,9 @@ final class RequestEngine
 	 */
 	function set($name, $value)
 	{
-		if($name=="rp")
+		if($name=='rp')
 		{
-			trigger_error("You can't use \"rp\" as a request parameter");
+			throw new ManialinkException('You cannot use "rp" as a request parameter');
 		}
 		$this->params[$name] = $value;
 	}
@@ -65,6 +82,10 @@ final class RequestEngine
 		if(isset($this->requestParams[$name]))
 		{
 			$this->params[$name] = $this->requestParams[$name];
+		}
+		else
+		{
+			$this->delete($name);
 		}
 	}
 	
@@ -200,7 +221,11 @@ final class RequestEngine
 	private function __construct()
 	{
 		$this->params = $_GET;
-		$this->requestParams = $_GET;
+		if(get_magic_quotes_gpc())
+		{
+			$this->params = array_filter($this->params, 'stripslashes');
+		}
+		$this->requestParams = $this->params;
 		$this->registerProtectedParam("rp");
 	}
 	
@@ -213,7 +238,7 @@ final class RequestEngine
 			if($file==null)
 			{
 				$file = str_ireplace(	
-					str_replace("\\", "/", APP_PATH),
+					str_replace("\\", "/", APP_WWW_PATH),
 					"",
 					str_replace("\\", "/", $_SERVER["SCRIPT_FILENAME"])
 				);
@@ -222,7 +247,7 @@ final class RequestEngine
 			else
 			{
 				$serverPath = dirname(str_ireplace(	
-					str_replace("\\", "/", APP_PATH),
+					str_replace("\\", "/", APP_WWW_PATH),
 					"",
 					str_replace("\\", "/", $_SERVER["SCRIPT_FILENAME"])
 				));
@@ -268,7 +293,10 @@ final class RequestEngine
 					$link .= ":".$_SERVER['SERVER_PORT'];
 				}
 				$link .= dirname($_SERVER['SCRIPT_NAME']);
-				$link .= "/";	
+				if(substr($link, -1) != '/')
+				{
+					$link .= "/";
+				}	
 			}
 			$link .= $file;
 		}

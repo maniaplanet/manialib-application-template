@@ -6,7 +6,7 @@
  * @author Maxime Raoust
  */
  
-require_once( "core/inc.php" );
+require_once( 'manialib/manialib.inc.php' );
 
 $request = RequestEngine::getInstance();
 
