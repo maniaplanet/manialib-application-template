@@ -1,4 +1,4 @@
-^/trunk/manialib-framework/core                                 core
+^/trunk/manialib-framework/manialib                             manialib
 
 ^/trunk/manialib-framework/use_short_manialinks.htaccess        use_short_manialinks.htaccess
 ^/trunk/manialib-framework/config-example.php                   config-example.php
