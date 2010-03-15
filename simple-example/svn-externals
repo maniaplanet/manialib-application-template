@@ -1,0 +1,11 @@
+^/trunk/manialib-framework/manialib                             manialib
+
+^/trunk/manialib-framework/config-example.php                   config-example.php
+
+^/trunk/manialib-framework/langs/en/general.xml                 langs/en/general.xml 
+^/trunk/manialib-framework/langs/en/errors.xml                  langs/en/errors.xml 
+^/trunk/manialib-framework/langs/en/date.xml                    langs/en/date.xml
+
+^/trunk/manialib-framework/langs/fr/general.xml                 langs/fr/general.xml 
+^/trunk/manialib-framework/langs/fr/errors.xml                  langs/fr/errors.xml 
+^/trunk/manialib-framework/langs/fr/date.xml                    langs/fr/date.xml
