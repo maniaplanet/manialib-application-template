@@ -10,7 +10,7 @@ Manialink::load();
 
 $ui = new Label;
 $ui->setText("Hello world");
-$ui->draw();
+$ui->save();
 
 Manialink::render();
 

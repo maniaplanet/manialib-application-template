@@ -2,8 +2,8 @@
 /**
  * Default config file
  * 
- * You shouldn't modify anything here. Use config.php to override constants
- * instead.
+ * You shouldn't modify anything here. Use config.php to override 
+ * constants instead.
  * 
  * @author Maxime Raoust
  * @package Manialib
@@ -16,14 +16,14 @@ if (!defined('APP_PATH'))
 if (!defined('APP_URL'))
 	define('APP_URL', 'http://localhost/manialib/');
 	
-if (!defined('APP_CORE_PATH'))
-	define('APP_CORE_PATH', APP_PATH.'manialib/' );
+if (!defined('APP_FRAMEWORK_PATH'))
+	define('APP_FRAMEWORK_PATH', APP_PATH.'manialib/' );
 		
-if (!defined('APP_CORE_LIBRARIES_PATH'))
-	define('APP_CORE_LIBRARIES_PATH', APP_CORE_PATH.'libraries/' );
+if (!defined('APP_FRAMEWORK_LIBRARIES_PATH'))
+	define('APP_FRAMEWORK_LIBRARIES_PATH', APP_FRAMEWORK_PATH.'libraries/' );
 	
-if (!defined('APP_CORE_GUI_PATH'))
-	define('APP_CORE_GUI_PATH', APP_CORE_PATH.'gui-toolkit/' );
+if (!defined('APP_FRAMEWORK_GUI_TOOLKIT_PATH'))
+	define('APP_FRAMEWORK_GUI_TOOLKIT_PATH', APP_FRAMEWORK_PATH.'gui-toolkit/' );
 		
 if (!defined('APP_LIBRARIES_PATH'))
 	define('APP_LIBRARIES_PATH', APP_PATH.'libraries/' );
@@ -38,7 +38,7 @@ if (!defined('APP_INCLUDE_PATH'))
 	define('APP_INCLUDE_PATH', APP_PATH.'include/' );
 		
 if (!defined('APP_CONFIG_PATH'))
-	define('APP_CONFIG_PATH', APP_PATH);
+	define('APP_CONFIG_PATH', APP_PATH.'config/');
 		
 if (!defined('APP_WWW_PATH'))
 	define('APP_WWW_PATH', APP_PATH.'www/' );

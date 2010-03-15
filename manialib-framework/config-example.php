@@ -1,7 +1,8 @@
 <?php
 /**
  * Example config file. Rename to config.php
- * Other overridable config constants can be found in core/config-default.php
+ * Other overridable config constants can be found in manialib/config-default.
+ * php
  * 
  * @author Maxime Raoust
  * @package Manialib
