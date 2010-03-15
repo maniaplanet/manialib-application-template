@@ -176,4 +176,87 @@ function formatLongDate($timestamp)
 	return date('l jS \of F Y @ h:i A ', $timestamp).TIMEZONE_NAME;
 }
 
+
+if(LANG_ENGINE_MODE == LANG_ENGINE_MODE_DYNAMIC):
+	
+	/**
+	 * i18n message
+	 * 
+	 * examples
+	 * echo __("hello_world");
+	 * echo __("hello_login", $yetAnotherLogin);
+	 * 
+	 * @param String $TextId
+	 * @param Mixed $param...
+	 * @return String
+	 */
+	function __($textId)
+	{
+		$str = LangEngine::getTranslation($textId);
+		$i=1;
+		$args = func_get_args();
+		$search = array();
+		$replace = array();
+		while(strpos($str, "[$i]")!==false)
+		{
+			$search[] = "[$i]";
+			if(isset($args[$i]))
+			{
+				$replace[] = $args[$i];
+			}
+			else
+			{
+				$replace[] = "";
+			}
+			$i++;
+		}
+		$str = str_replace($search, $replace, $str);
+		return $str;
+	}
+	
+	/**
+	 * i18n date
+	 * 
+	 * @param Int $timestamp
+	 * @return String
+	 */
+	function __date($timestamp)
+	{
+		if(!$timestamp)
+		{
+			return "-";
+		}
+		
+		$return=__("date_long", 
+					__( strtolower(date("l", $timestamp)) ),             // Day name
+					__( strtolower(date("F", $timestamp)) ),             // Month name
+					    date("j", $timestamp),                           // Day number
+					__( "date_ordinal_suffix", date("S", $timestamp) ),  // Suffix
+					    date("Y", $timestamp)                            // Year
+					);					
+		
+		if($return=="date_long")
+		{
+			return date("Y/M/j", $timestamp);
+		}
+		else
+		{
+			return $return;
+		}
+	}
+	
+else:
+	
+	function __($message)
+	{
+		return $message;
+	}
+	
+	function __date($timestamp)
+	{
+		return date("Y/M/j", $timestamp);
+	}
+
+endif;
+
 ?>
