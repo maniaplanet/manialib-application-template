@@ -1,23 +1,25 @@
 <?php
 /**
- * Manialink GUI API
- * 
+ * @package Manialib
  * @author Maxime Raoust
  */
 
 /**
- * Static class that provides tools for GuiElement
- * @package gui_api
+ * Static class that provides tools for Manialink handling
+ * 
+ * @package Manialib
  */
 abstract class GuiTools
 {
 	/**
-	 * Static method to get the X coordinate of a point in relation to another element
-	 * @param Int $posX position of the parent element
-	 * @param Int $sizeX Size of the parent element
-	 * @param String $halign Halign of the parent element
-	 * @param String $newAlign Halign of the to be positioned element
-	 * @return Int
+	 * Returns the X position of an element in relation to another element and
+	 * according to their respective alignments
+	 * 
+	 * @param int X position of the parent element
+	 * @param int Width of the parent element
+	 * @param string Horizontal alignement of the parent element
+	 * @param string Horizontal alignement of the element you want to place
+	 * @return int Calculated X position of the element you want to place
 	 */
 	final public static function getAlignedPosX($posX, $sizeX, $halign, $newAlign)
 	{
@@ -68,12 +70,14 @@ abstract class GuiTools
 	}
 
 	/**
-	 * Static method to get the Y coordinate of a point in relation to another element
-	 * @param Int $posY position of the parent element
-	 * @param Int $sizeY Size of the parent element
-	 * @param String $valign Valign of the parent element
-	 * @param String $newAlign Valign of the to be positioned element
-	 * @return Int
+	 * Returns the Y position of an element in relation to another element and
+	 * according to their respective alignments
+	 * 
+	 * @param int Y position of the parent element
+	 * @param int Height of the parent element
+	 * @param string Vertical alignement of the parent element
+	 * @param string Vertical alignement of the element you want to place
+	 * @return int Calculated Y position of the element you want to place
 	 */
 	final public static function getAlignedPosY($posY, $sizeY, $valign, $newAlign)
 	{
@@ -102,7 +106,17 @@ abstract class GuiTools
 		return self::getAlignedPosX($posY, $sizeY, $valign, $newAlign);
 	}
 
-	final public static function getAlignedPos($object, $newHalign, $newValign)
+	/**
+	 * Returns the position of an element in relation to another element and
+	 * according to their respective alignments
+	 * 
+	 * @param GuiElement Parent element
+	 * @param string Horizontal alignement of the element you want to place
+	 * @param string Vertical alignement of the element you want to place
+	 * @return array Calculated position of the element you want to place. The
+	 * array contains 2 elements with "x" and "y" indexes
+	 */
+	final public static function getAlignedPos(GuiElement $object, $newHalign, $newValign)
 	{
 		$newPosX = self::getAlignedPosX(
 			$object->getPosX(), 
@@ -113,21 +127,6 @@ abstract class GuiTools
 			$object->getPosY(), 
 			$object->getSizeY(), 
 			$object->getValign(), 
-			$newValign);
-		return array('x' => $newPosX, 'y' => $newPosY);
-	}
-
-	final public static function getAlignPosArray($array, $newHalign, $newValign)
-	{
-		$newPosX = self::getAlignedPosX(
-			$array['posX'],
-			$array['sizeX'], 
-			$array['halign'], 
-			$newHalign);
-		$newPosY = self::getAlignedPosY(
-			$array['posY'], 
-			$array['sizeY'], 
-			$array['valign'], 
 			$newValign);
 		return array('x' => $newPosX, 'y' => $newPosY);
 	}

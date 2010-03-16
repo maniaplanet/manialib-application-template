@@ -1,9 +1,6 @@
 <?php
 /**
- * Manialink GUI API
- * 
- * Standard Gui Library
- * 
+ * @package Manialib
  * @author Maxime Raoust
  */
 
@@ -11,8 +8,8 @@ require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'GuiTools.class.php' );
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'styles.php' );
 
 /**
- * Abstract GUI element. Extends that class to create a GUI class
- * @package gui_api
+ * Base class for creating GUI elements
+ * @package Manialib
  */
 abstract class GuiElement
 {
@@ -38,117 +35,227 @@ abstract class GuiElement
 	protected $imageFocus;
 	protected $xmlTagName = 'xmltag'; // Redeclare this for each child
 	protected $xml;
-
-	function __construct($sx = 20, $sy = 20)
+	
+	/**
+	 * Manialink element default constructor. It's common to specify the size of
+	 * the element in the constructor.
+	 * 
+	 * @param float Width of the element
+	 * @param float Height of the element
+	 */
+	function __construct($sizeX = 20, $sizeY = 20)
 	{
-		$this->sizeX = $sx;
-		$this->sizeY = $sy;
+		$this->sizeX = $sizeX;
+		$this->sizeY = $sizeY;
+	}
+	
+	/**
+	 * Sets the X position of the element
+	 * @param float
+	 */
+	function setPositionX($posX)
+	{
+		$this->posX = $posX;
+	}
+	
+	/**
+	 * Sets the Y position of the element
+	 * @param float
+	 */
+	function setPositionY($posY)
+	{
+		$this->posY = $posY;
+	}
+	
+	/**
+	 * Sets the Z position of the element
+	 * @param float
+	 */
+	function setPositionZ($posZ)
+	{
+		$this->posZ = $posZ;
+	}
+	
+	/**
+	 * Sets the position of the element
+	 * @param float
+	 * @param float
+	 * @param float
+	 */
+	function setPosition($posX = 0, $posY = 0, $posZ = 0)
+	{
+		$this->setPositionX($posX);
+		$this->setPositionY($posY);
+		$this->setPositionZ($posZ);
+	}
+	
+	/**
+	 * Sets the width of the element
+	 * @param float
+	 */
+	function setSizeX($sizeX)
+	{
+		$this->sizeX = $sizeX;
+	}
+	
+	/**
+	 * Sets the height of the element
+	 * @param float
+	 */
+	function setSizeY($sizeY)
+	{
+		$this->sizeY = $sizeY;
+	}
+	
+	/**
+	 * Sets the size of the element
+	 * @param float
+	 * @param float
+	 */
+	function setSize($sizeX, $sizeY)
+	{
+		$this->setSizeX($sizeX);
+		$this->setSizeY($sizeY);
+	}
+	
+	/**
+	 * Sets the scale factor of the element. 1=original size, 2=double size, 0.5
+	 * =half size
+	 * @param float
+	 */
+	function setScale($scale)
+	{
+		$this->scale = $scale;
+	}
+	
+	/**
+	 * Sets the style of the element. See http://fish.stabb.de/styles/ of the
+	 * manialink 'example' for more information on Manialink styles.
+	 * @param string
+	 */
+	function setStyle($style)
+	{
+		$this->style = $style;
+	}
+	
+	/**
+	 * Sets the sub-style of the element. See http://fish.stabb.de/styles/ of
+	 * the manialink 'example' for more information on Manialink styles.
+	 * @param string
+	 */
+	function setSubStyle($substyle)
+	{
+		$this->subStyle = $substyle;
+	}
+	
+	/**
+	 * Sets the vertical alignment of the element.
+	 * @param string Vertical alignment can be either "top", "center" or
+	 * "bottom"
+	 */
+	function setValign($valign)
+	{
+		$this->valign = $valign;
+	}
+	
+	/**
+	 * Sets the horizontal alignment of the element
+	 * @param string Horizontal alignement can be eithe "left", "center" or
+	 * "right"
+	 */
+	function setHalign($halign)
+	{
+		$this->halign = $halign;
 	}
 
-	function setPositionX($plop)
+	/**
+	 * Sets the alignment of the element
+	 * @param string Horizontal alignement can be eithe "left", "center" or
+	 * "right"
+	 * @param string Vertical alignment can be either "top", "center" or
+	 * "bottom"
+	 */
+	function setAlign($halign = null, $valign = null)
 	{
-		$this->posX = $plop;
+		$this->setHalign($halign);
+		$this->setValign($valign);
 	}
 
-	function setPositionY($plop)
+	/**
+	 * Sets the Manialink of the element. It works as a hyperlink.
+	 * @param string Can be either a short Manialink or an URL pointing to a
+	 * Manialink
+	 */
+	function setManialink($manialink)
 	{
-		$this->posY = $plop;
+		$this->manialink = $manialink;
 	}
 
-	function setPositionZ($plop)
+	/**
+	 * Sets the hyperlink of the element
+	 * @param string An URL
+	 */
+	function setUrl($url)
 	{
-		$this->posZ = $plop;
+		$this->url = $url;
+	}
+	
+	/**
+	 * Sets the Maniazones link of the element
+	 * @param string
+	 */
+	function setManiazones($maniazones)
+	{
+		$this->maniazones = $maniazones;
 	}
 
-	function setPosition($px = 0, $py = 0, $pz = 0)
-	{
-		$this->setPositionX($px);
-		$this->setPositionY($py);
-		$this->setPositionZ($pz);
-	}
-
-	function setSizeX($plop)
-	{
-		$this->sizeX = $plop;
-	}
-
-	function setSizeY($plop)
-	{
-		$this->sizeY = $plop;
-	}
-
-	function setSize($plopx, $plopy)
-	{
-		$this->setSizeX($plopx);
-		$this->setSizeY($plopy);
-	}
-
-	function setScale($plop)
-	{
-		$this->scale = $plop;
-	}
-
-	function setStyle($plop)
-	{
-		$this->style = $plop;
-	}
-
-	function setSubStyle($plop)
-	{
-		$this->subStyle = $plop;
-	}
-
-	function setValign($plop)
-	{
-		$this->valign = $plop;
-	}
-
-	function setHalign($plop)
-	{
-		$this->halign = $plop;
-	}
-
-	function setAlign($hplop = null, $vplop = null)
-	{
-		$this->setHalign($hplop);
-		$this->setValign($vplop);
-	}
-
-	function setManialink($plop)
-	{
-		$this->manialink = $plop;
-	}
-
-	function setUrl($plop)
-	{
-		$this->url = $plop;
-	}
-
-	function setManiazones($plop)
-	{
-		$this->maniazones = $plop;
-	}
-
+	/**
+	 * Adds the player information parameters ("playerlogin", "nickname",
+	 * "path", "lang") to the URL when you click on the link
+	 */
 	function addPlayerId()
 	{
 		$this->addPlayerId = 1;
 	}
-
-	function setAction($plop)
+	
+	/**
+	 * Sets the action of the element. For example, if you use the action "0" in
+	 * the explorer, it closes the explorer when you click on the element.
+	 * @param int
+	 */
+	function setAction($action)
 	{
-		$this->action = $plop;
+		$this->action = $action;
 	}
 
-	function setActionKey($plop)
+	/**
+	 * Sets the action key associated to the element. Only works on dedicated
+	 * servers.
+	 * @param int
+	 */
+	function setActionKey($actionKey)
 	{
-		$this->actionKey = $plop;
+		$this->actionKey = $actionKey;
 	}
 
-	function setBgcolor($plop)
+	/**
+	 * Sets the background color of the element using a 3-digit RGB hexadecimal
+	 * value. For example, "fff" is white and "000" is black
+	 * @param string 3-digit RGB hexadecimal value
+	 */
+	function setBgcolor($bgcolor)
 	{
-		$this->bgcolor = $plop;
+		$this->bgcolor = $bgcolor;
 	}
-
+	
+	/**
+	 * Applies an image to the element. If you don't specify the second
+	 * parameter, it will look for the image in the path defined by the
+	 * APP_IMAGE_DIR_URL constant
+	 * @param string The image filename (or URL)
+	 * @param string The URL that will be appended to the image. Use null if you
+	 * want to specify an absolute URL as first parameter
+	 */
 	function setImage($image, $absoluteUrl = APP_IMAGE_DIR_URL)
 	{
 		$this->setStyle(null);
@@ -163,6 +270,13 @@ abstract class GuiElement
 		}
 	}
 
+	/**
+	 * Applies an image to the highlighter state of the element. The second
+	 * parameter works just like GuiElement::setImage()
+	 * @param string The image filename (or URL)
+	 * @param string The URL that will be appended to the image. Use null if you
+	 * want to specify an absolute URL as first parameter
+	 */
 	function setImageFocus($imageFocus, $absoluteUrl = APP_IMAGE_DIR_URL)
 	{
 		if($absoluteUrl)
@@ -174,103 +288,182 @@ abstract class GuiElement
 			$this->imageFocus = $imageFocus;
 		}
 	}
-
+	
+	/**
+	 * Returns the style of the element
+	 * @return string
+	 */
 	function getStyle()
 	{
 		return $this->style;
 	}
 
+	/**
+	 * Returns the substyle of the element
+	 * @return string
+	 */
 	function getSubStyle()
 	{
 		return $this->subStyle;
 	}
-
+	
+	/**
+	 * Returns the X position of the element
+	 * @return float
+	 */
 	function getPosX()
 	{
 		return $this->posX;
 	}
-
+	
+	/**
+	 * Returns the Y position of the element
+	 * @return float
+	 */
 	function getPosY()
 	{
 		return $this->posY;
 	}
-
+	
+	/**
+	 * Returns the Z position of the element
+	 * @return float
+	 */
 	function getPosZ()
 	{
 		return $this->posZ;
 	}
+	
+	/**
+	 * Returns the width of the element
+	 * @return float
+	 */
 	function getSizeX()
 	{
 		return $this->sizeX;
 	}
-
+	
+	/**
+	 * Returns the height of the element
+	 * @return float
+	 */
 	function getSizeY()
 	{
 		return $this->sizeY;
 	}
-
+	
+	/**
+	 * Returns the scale of the element
+	 * @return float
+	 */
 	function getScale()
 	{
 		return $this->scale;
 	}
-
+	
+	/**
+	 * Returns the horizontal alignment of the element
+	 * @return string
+	 */
 	function getHalign()
 	{
 		return $this->halign;
 	}
-
+	
+	/**
+	 * Returns the vertical alignment of the element
+	 * @return string
+	 */
 	function getValign()
 	{
 		return $this->valign;
 	}
-
+	
+	/**
+	 * Returns the Manialink hyperlink of the element
+	 * @return string
+	 */
 	function getManialink()
 	{
 		return $this->manialink;
 	}
-
+	
+	/**
+	 * Returns the Maniazones hyperlink of the element
+	 * @return string
+	 */
 	function getManiazones()
 	{
 		return $this->maniazones;
 	}
-
+	
+	/**
+	 * Returns the hyperlink of the element
+	 * @return string
+	 */
 	function getUrl()
 	{
 		return $this->url;
 	}
-
+	
+	/**
+	 * Returns the action associated to the element
+	 * @return int
+	 */
 	function getAction()
 	{
 		return $this->action;
 	}
 
+	/**
+	 * Returns the action key associated to the element
+	 * @return int
+	 */
 	function getActionKey()
 	{
 		return $this->actionKey;
 	}
-
+	
+	/**
+	 * Returns whether the elements adds player information parameter to the URL
+	 * when it's clicked
+	 * @return boolean
+	 */
 	function getAddPlayerId()
 	{
 		return $this->addPlayerId;
 	}
 
+	/**
+	 * Returns the background color of the element
+	 * @return string 3-digit RGB hexadecimal value
+	 */
 	function getBgcolor()
 	{
 		return $this->bgcolor;
 	}
-
+	
+	/**
+	 * Returns the image placed in the element
+	 * @return string The image URL
+	 */
 	function getImage()
 	{
 		return $this->image;
 	}
 
+	/**
+	 * Returns the image placed in the element in its highlighted state
+	 * @return string The image URL
+	 */
 	function getImageFocus()
 	{
 		return $this->imageFocus;
 	}
 
 	/**
-	 * Imports links/actions from another Manialink object
+	 * Imports links and actions from another Manialink element
+	 * @param GuiElement The source object
 	 */
 	function addLink(GuiElement $object)
 	{
@@ -278,6 +471,7 @@ abstract class GuiElement
 		$this->setUrl($object->getUrl());
 		$this->setManiazones($object->getManiazones());
 		$this->setAction($object->getAction());
+		$this->setActionKey($object->getActionKey());
 		if($object->getAddPlayerId())
 		{
 			$this->addPlayerId();
@@ -285,8 +479,9 @@ abstract class GuiElement
 	}
 
 	/**
-	 * Returns true if a link was set on the object (manialink, maniazone, url,
-	 * action)
+	 * Returns whether the object has a link or an action (either Manialink,
+	 * Maniazones link, hyperlink or action)
+	 * @return string
 	 */
 	function hasLink()
 	{
@@ -294,7 +489,8 @@ abstract class GuiElement
 	}
 
 	/**
-	 * Redeclare this method in children classes to execute code before drawing
+	 * Override this method in subclasses to perform some action before
+	 * rendering the element
 	 */
 	protected function preFilter()
 	{
@@ -302,7 +498,8 @@ abstract class GuiElement
 	}
 
 	/**
-	 * Redeclare this method in children classes to execute code after drawing
+	 * Override this method in subclasses to perform some action after rendering
+	 * the element
 	 */
 	protected function postFilter()
 	{
@@ -310,16 +507,17 @@ abstract class GuiElement
 	}
 
 	/**
-	 * Saves the object in the Manialink objects stack. 
-	 * You shouldn't have to override this method
+	 * Saves the object in the Manialink object stack for further rendering.
+	 * Thanks to the use of GuiElement::preFilter() and GuiElement::
+	 * postFilter(), you shouldn't have to override this method
 	 */
-	public function save()
+	final function save()
 	{
 		// Optional pre filtering
 		$this->preFilter();
 		
 		// Layout handling
-		$layout = end(Manialink::$layoutStack);
+		$layout = end(Manialink::$parentLayouts);
 		if($layout instanceof AbstractLayout)
 		{
 			$layout->preFilter($this);
@@ -397,6 +595,10 @@ abstract class GuiElement
 	}
 }
 
+/**
+ * A blank element, useful to place gaps between elements when using layouts
+ * @package Manialib
+ */
 class Spacer extends GuiElement
 {
 	protected $xmlTagName = null;
@@ -404,7 +606,7 @@ class Spacer extends GuiElement
 
 /**
  * Quad
- * @package gui_api
+ * @package Manialib
  */
 class Quad extends GuiElement
 {
@@ -414,8 +616,8 @@ class Quad extends GuiElement
 }
 
 /**
- * Icon 128
- * @package gui_api
+ * Icon with the "Icons128x128_1" style
+ * @package Manialib
  */
 class Icon extends Quad
 {
@@ -430,8 +632,8 @@ class Icon extends Quad
 }
 
 /**
- * Icon 64
- * @package gui_api
+ * Icon with the "Icons64x64_1" style
+ * @package Manialib
  */
 class Icon64 extends Icon
 {
@@ -440,8 +642,8 @@ class Icon64 extends Icon
 }
 
 /**
- * Icon 128x32
- * @package gui_api
+ * Icon with the "Icons128x32_1" style
+ * @package Manialib
  */
 class Icon128 extends Icon
 {
@@ -450,8 +652,8 @@ class Icon128 extends Icon
 }
 
 /**
- * Icon medal
- * @package gui_api
+ * Icon with the "MedalsBig" style
+ * @package Manialib
  */
 class IconMedal extends Icon
 {
@@ -461,7 +663,7 @@ class IconMedal extends Icon
 
 /**
  * Include
- * @package gui_api
+ * @package Manialib
  */
 class IncludeManialink extends GuiElement
 {
@@ -479,7 +681,7 @@ class IncludeManialink extends GuiElement
 
 /**
  * Format
- * @package gui_api
+ * @package Manialib
  */
 class Format extends GuiElement
 {
@@ -489,32 +691,46 @@ class Format extends GuiElement
 	protected $posX = null;
 	protected $posY = null;
 	protected $posZ = null;
+	protected $style = null;
+	protected $subStyle = null;
 	protected $textSize;
 	protected $textColor;
 
 	function __construct()
 	{
 	}
-
-	function setTextSize($plop)
+	
+	/**
+	 * Sets the text size
+	 * @param int
+	 */
+	function setTextSize($textsize)
 	{
-		$this->textSize = $plop;
-		$this->setStyle(null);
-		$this->setSubStyle(null);
+		$this->textSize = $textsize;
 	}
-
-	function setTextColor($plop)
+	
+	/**
+	 * Sets the text color
+	 * @param string 3-digit RGB hexadecimal value
+	 */
+	function setTextColor($textcolor)
 	{
-		$this->textColor = $plop;
-		$this->setStyle(null);
-		$this->setSubStyle(null);
+		$this->textColor = $textcolor;
 	}
-
+	
+	/**
+	 * Returns the text size
+	 * @return int
+	 */
 	function getTextSize()
 	{
 		return $this->textSize;
 	}
 
+	/**
+	 * Returns the text color
+	 * @return string 3-digit RGB hexadecimal value
+	 */
 	function getTextColor()
 	{
 		return $this->textColor;
@@ -531,7 +747,7 @@ class Format extends GuiElement
 
 /**
  * Label
- * @package gui_api
+ * @package Manialib
  */
 class Label extends Format
 {
@@ -545,47 +761,77 @@ class Label extends Format
 	protected $autonewline;
 	protected $maxline;
 
-	function __construct($sx = 20, $sy = 0)
+	function __construct($sizeX = 20, $sizeY = 3)
 	{
-		$this->sizeX = $sx;
-		$this->sizeY = $sy;
+		$this->sizeX = $sizeX;
+		$this->sizeY = $sizeY;
 	}
-
-	function setText($plop)
+	
+	/**
+	 * Sets the text
+	 * @param string
+	 */
+	function setText($text)
 	{
-		$this->text = $plop;
+		$this->text = $text;
 	}
-
-	function setTextid($plop)
+	
+	/**
+	 * Sets the text Id for use with Manialink dictionaries
+	 */
+	function setTextid($textid)
 	{
-		$this->textid = $plop;
+		$this->textid = $textid;
 	}
-
-	function setMaxline($plop)
+	
+	/**
+	 * Sets the maximum number of lines to display
+	 * @param int
+	 */
+	function setMaxline($maxline)
 	{
-		$this->maxline = $plop;
+		$this->maxline = $maxline;
 	}
-
+	
+	/**
+	 * Enables wraping the text into several lines if the line is too short
+	 */
 	function enableAutonewline()
 	{
 		$this->autonewline = 1;
 	}
-
+	
+	/**
+	 * Returns the text
+	 * @return string
+	 */
 	function getText()
 	{
 		return $this->text;
 	}
-
+	
+	/**
+	 * Returns the text Id
+	 * @return string
+	 */
 	function getTextid()
 	{
 		return $this->textid;
 	}
-
+	
+	/**
+	 * Returns the maximum number of lines to display
+	 * @return int
+	 */
 	function getMaxline()
 	{
 		return $this->maxline;
 	}
-
+	
+	/**
+	 * Returns whether word wrapping is enabled
+	 * @return boolean
+	 */
 	function getAutonewline()
 	{
 		return $this->autonewline;
@@ -606,8 +852,8 @@ class Label extends Format
 }
 
 /**
- * Entry : input fields
- * @package gui_api
+ * Entry (input field)
+ * @package Manialib
  */
 class Entry extends Label
 {
@@ -615,28 +861,39 @@ class Entry extends Label
 	protected $style = GUI_ENTRY_DEFAULT_STYLE;
 	protected $name;
 	protected $defaultValue;
-
-	function __construct($sx = 20, $sy = 3)
-	{
-		$this->sizeX = $sx;
-		$this->sizeY = $sy;
-	}
-
+	
+	/**
+	 * Sets the name of the entry. Will be used as the parameter name in the URL
+	 * when submitting the page
+	 * @param string
+	 */
 	function setName($name)
 	{
 		$this->name = $name;
 	}
-
+	
+	/**
+	 * Sets the default value of the entry
+	 * @param mixed
+	 */
 	function setDefault($value)
 	{
 		$this->defaultValue = $value;
 	}
-
+	
+	/**
+	 * Returns the name of the entry
+	 * @return string
+	 */
 	function getName()
 	{
 		return $this->name;
 	}
-
+	
+	/**
+	 * Returns the default value of the entry
+	 * @return mixed
+	 */
 	function getDefault()
 	{
 		return $this->defaultValue;
@@ -653,25 +910,27 @@ class Entry extends Label
 }
 
 /**
- * FileEntry : input fields
- * @package gui_api
+ * FileEntry
+ * @package Manialib
  */
 class FileEntry extends Entry
 {
 	protected $xmlTagName = 'fileentry';
 	protected $folder;
-
-	function __construct($sx = 20, $sy = 3)
-	{
-		$this->sizeX = $sx;
-		$this->sizeY = $sy;
-	}
-
+	
+	/**
+	 * Sets the default folder
+	 * @param string
+	 */
 	function setFolder($folder)
 	{
 		$this->folder = $folder;
 	}
 
+	/**
+	 * Returns the default folder
+	 * @return string
+	 */
 	function getFolder()
 	{
 		return $this->folder;
@@ -686,8 +945,8 @@ class FileEntry extends Entry
 }
 
 /**
- * Buttons
- * @package gui_api
+ * Button
+ * @package Manialib
  */
 class Button extends Label
 {
@@ -697,7 +956,7 @@ class Button extends Label
 
 /**
  * Music
- * @package gui_api
+ * @package Manialib
  */
 class Music extends GuiElement
 {
@@ -712,19 +971,30 @@ class Music extends GuiElement
 	function __construct()
 	{
 	}
-
-	function setData($filename, $relativePath = APP_URL)
+	
+	/**
+	 * Sets the data to play. If you don't specify the second parameter, it will
+	 * look for the image in the path defined by the APP_DATA_DIR_URL constant
+	 * @param string The image filename (or URL)
+	 * @param string The URL that will be appended to the image. Use null if you
+	 * want to specify an absolute URL as first parameter
+	 */
+	function setData($filename, $absoluteUrl = APP_DATA_DIR_URL)
 	{
-		if($relativePath)
+		if($absoluteUrl)
 		{
-			$this->data = $relativePath . $filename;
+			$this->data = $absoluteUrl . $filename;
 		}
 		else
 		{
 			$this->data = $filename;
 		}
 	}
-
+	
+	/**
+	 * Returns the data URL
+	 * @return string
+	 */
 	function getData()
 	{
 		return $this->data;
@@ -739,7 +1009,7 @@ class Music extends GuiElement
 
 /**
  * Audio player
- * @package gui_api
+ * @package Manialib
  */
 class Audio extends Music
 {
@@ -750,21 +1020,35 @@ class Audio extends Music
 	protected $play;
 	protected $looping = 0;
 
+	/**
+	 * Autoplay the data when it's done loading
+	 */
 	function autoPlay()
 	{
 		$this->play = 1;
 	}
 
+	/**
+	 * Loop when the end of the data is reached
+	 */
 	function enableLooping()
 	{
 		$this->looping = 1;
 	}
 
+	/**
+	 * Returns whether auto playing is enabled
+	 * @return boolean
+	 */
 	function getAutoPlay()
 	{
 		return $this->play;
 	}
 
+	/**
+	 * Returns whether looping is enabled
+	 * @return boolean
+	 */
 	function getLooping()
 	{
 		return $this->looping;
@@ -782,7 +1066,7 @@ class Audio extends Music
 
 /**
  * Video
- * @package gui_api
+ * @package Manialib
  */
 class Video extends Audio
 {

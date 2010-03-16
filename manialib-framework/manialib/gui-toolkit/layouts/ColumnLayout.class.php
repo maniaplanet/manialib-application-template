@@ -1,12 +1,12 @@
 <?php
 /**
- * Manialink GUI API
+ * @package Manialib
  * @author Maxime Raoust
  */
 
 /**
  * Column layout: elements are added below their predecessor
- * @package gui_api
+ * @package Manialib
  */
 class ColumnLayout extends AbstractLayout
 {
@@ -15,4 +15,5 @@ class ColumnLayout extends AbstractLayout
 		$this->yIndex -= $item->getSizeY() + $this->marginHeight;
 	}
 }
+
 ?>

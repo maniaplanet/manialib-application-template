@@ -1,32 +1,36 @@
 <?php
 /**
- * Manialink GUI API
- * 
+ * @package Manialib
  * @author Maxime Raoust
  */
 
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'standard.php' );
 
 /**
- * Manialink handler class
+ * Manialink GUI toolkit main class
  * 
- * @author Maxime Raoust
- * @package gui_api
+ * @package Manialib
  */
 abstract class Manialink
 {
 	public static $domDocument;
 	public static $parentNodes;
-	public static $layoutStack;
+	public static $parentLayouts;
 	
 	/**
-	 * Loads the Manialink objects stack
+	 * Loads the Manialink GUI toolkit. This should be called before doing
+	 * anything with the toolkit.
+	 * 
+	 * @param bool Whether you want to create the root "<manialink>" element in
+	 * the XML
+	 * @param int The timeout value in seconds. Use 0 if you have dynamic pages
+	 * to avoid caching
 	 */
 	final public static function load($createManialinkElement = true, $timeoutValue=0)
 	{
 		self::$domDocument = new DOMDocument;
 		self::$parentNodes = array();
-		self::$layoutStack = array();
+		self::$parentLayouts = array();
 		
 		if($createManialinkElement)
 		{
@@ -41,8 +45,9 @@ abstract class Manialink
 	}
 	
 	/**
-	 * Render the manialink. If $return is set to true, the XML code will be
-	 * returned instead of echoed
+	 * Renders the Manialink
+	 * 
+	 * @param boolean Wehther you want to return the XML instead of printing it
 	 */	
 	final public static function render($return = false)
 	{
@@ -58,12 +63,20 @@ abstract class Manialink
 	}
 	
 	/**
-	 * Creates a new Manialink frame
+	 * Creates a new Manialink frame, with an optionnal associated layout
+	 * 
+	 * @param float X position
+	 * @param float Y position
+	 * @param float Z position
+	 * @param AbstractLayout The optionnal layout associated with the frame. If
+	 * you pass a layout object, all the items inside the frame will be
+	 * positionned using constraints defined by the layout
 	 */
-	final public static function beginFrame($x=0, $y=0, $z=0, $layout=null)
+	final public static function beginFrame($x=0, $y=0, $z=0, 
+		AbstractLayout $layout=null)
 	{
 		// Update parent layout
-		$parentLayout = end(self::$layoutStack);
+		$parentLayout = end(self::$parentLayouts);
 		if($parentLayout instanceof AbstractLayout)
 		{
 			// If we have a current layout, we have a container size to deal with
@@ -90,7 +103,7 @@ abstract class Manialink
 		
 		// Update stacks
 		self::$parentNodes[] = $frame;
-		self::$layoutStack[] = $layout;
+		self::$parentLayouts[] = $layout;
 	}
 	
 	/**
@@ -103,7 +116,7 @@ abstract class Manialink
 			end(self::$parentNodes)->nodeValue = ' ';
 		}
 		array_pop(self::$parentNodes);
-		array_pop(self::$layoutStack);
+		array_pop(self::$parentLayouts);
 	}
 }
 

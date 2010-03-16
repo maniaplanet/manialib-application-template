@@ -1,13 +1,14 @@
 <?php
 /**
- * Functions
+ * Misc functions
  * 
  * @author Maxime Raoust
  * @package Manialib
  */
 
 /**
- * Autoloading function
+ * Class autoloader
+ * @param string Class to load
  */
 function __autoload($className)
 {
@@ -27,7 +28,9 @@ function __autoload($className)
 }
 
 /**
- * Recursive autoloading
+ * Recursive class autoloader
+ * @param string Class to load
+ * @param string Path to browse 
  */
 function autoload_recursive($className, $path)
 {
@@ -58,8 +61,7 @@ function autoload_recursive($className, $path)
 } 
 
 /**
- * Prints a line
- * 
+ * Prints a line with a break at the end
  * @param string
  */
 function println($string)
@@ -68,7 +70,10 @@ function println($string)
 }
 
 /**
- * Writes a message in the debug log file
+ * Writes a message in the debug log
+ * @param string The message
+ * @param boolean Whether to add the date to the message
+ * @param string The log filename
  */
 function debuglog($msg, $addDate = true, $log = APP_DEBUG_LOG)
 {
@@ -80,7 +85,11 @@ function debuglog($msg, $addDate = true, $log = APP_DEBUG_LOG)
 }
 
 /**
- * "Safely" get an element from an array.
+ * Tries to get an element from an array. Returns the default value if not
+ * found.
+ * @param array Source array
+ * @param string Array key
+ * @param mixed Default value
  */
 function array_get($array, $key, $default = null)
 {
@@ -92,7 +101,12 @@ function array_get($array, $key, $default = null)
 }
 
 /**
- * Protect TM styles to put a formatted text in the middle of a sentence
+ * Allows to safely put any TM-formatted string into another TM-formatted string
+ * without conflicts (conflict example: you put a nickname in the middle of the
+ * sentance, the nickname has some bold characters and all the end of the
+ * sentance becomes bold)
+ * @param string Unprotected string
+ * @param string Protected string
  */
 function protectStyles($string)
 {
@@ -100,7 +114,9 @@ function protectStyles($string)
 }
 
 /**
- * Unprotect the TM styles
+ * Removes the protecting styles ($< and $>) from a string
+ * @param string Protected string
+ * @return string Unprotected string
  */
 function unprotectStyles($string)
 {
@@ -111,37 +127,44 @@ function unprotectStyles($string)
 }
 
 /**
- * Remove the TM font styles (wide, bold, underline)
+ * Removes some TM styles (wide, bold and shadowed) to avoid wide words
+ * @param string
+ * @return string
  */
-function stripWideFonts($str)
+function stripWideFonts($string)
 {
 	return str_replace(array (
 		'$w',
 		'$o',
 		'$s'
-	), "", $str);
+	), "", $string);
 }
 
 /**
- * Remove the TM links
+ * Removes TM links
+ * @param string
+ * @return string
  */
-function stripLinks($str)
+function stripLinks($string)
 {
-	return preg_replace('/\\$[hlp](.*?)(?:\\[.*?\\](.*?))*(?:\\$[hlp]|$)/ixu', '$1$2', $str);
+	return preg_replace(
+		'/\\$[hlp](.*?)(?:\\[.*?\\](.*?))*(?:\\$[hlp]|$)/ixu', '$1$2', 
+		$string);
 }
 
 /**
- * Include all the files of the given directory
+ * Includes all the files from the specified directory
+ * @param string Source directory
  */
-function require_once_dir($directory_path)
+function require_once_dir($path)
 {
-	if ($handle = opendir($directory_path))
+	if ($handle = opendir($path))
 	{
 		while (false !== ($file = readdir($handle)))
 		{
 			if (strcasecmp(substr($file, 0, 1), "."))
 			{
-				require_once ($directory_path . $file);
+				require_once ($path . $file);
 			}
 		}
 		closedir($handle);
@@ -150,6 +173,9 @@ function require_once_dir($directory_path)
 
 /**
  * Safe division. Returns 0 if the denominator is 0
+ * @param float Numerator
+ * @param float Denominator
+ * @return float Numerator/Denominator
  */
 function safe_div($numerator, $denominator)
 {
@@ -161,7 +187,9 @@ function safe_div($numerator, $denominator)
 }
 
 /**
- * Format a short english date from a timestamp
+ * Formats a short english date from a timestamp
+ * @param int
+ * @return string
  */
 function formatDate($timestamp)
 {
@@ -169,7 +197,9 @@ function formatDate($timestamp)
 }
 
 /**
- * Format a long english date+time from a timestamp
+ * Formats an english date+time from a timestamp
+ * @param int
+ * @return string
  */
 function formatLongDate($timestamp)
 {
@@ -180,15 +210,11 @@ function formatLongDate($timestamp)
 if(LANG_ENGINE_MODE == LANG_ENGINE_MODE_DYNAMIC):
 	
 	/**
-	 * i18n message
-	 * 
-	 * examples
-	 * echo __("hello_world");
+	 * i18n message. Examples: 
+	 * echo __("hello_world"); 
 	 * echo __("hello_login", $yetAnotherLogin);
-	 * 
-	 * @param String $TextId
-	 * @param Mixed $param...
-	 * @return String
+	 * @param string
+	 * @return string
 	 */
 	function __($textId)
 	{
@@ -216,9 +242,8 @@ if(LANG_ENGINE_MODE == LANG_ENGINE_MODE_DYNAMIC):
 	
 	/**
 	 * i18n date
-	 * 
-	 * @param Int $timestamp
-	 * @return String
+	 * @param int Unix timestamp
+	 * @return string
 	 */
 	function __date($timestamp)
 	{

@@ -1,16 +1,22 @@
 <?php
 /**
- * Manialink GUI API
+ * @package Manialib
  * @author Maxime Raoust
  */
 
 /**
- * Panel : quad with a title and a background title
- * @package gui_api
+ * <b>Panel:</b> A quad with a title and a title background
+ * @package Manialib
  */
 class Panel extends Quad
 {
+	/**
+	 * Reference on the title object (Label)
+	 */
 	public $title;
+	/**
+	 * Reference on the title background object (Quad)
+	 */
 	public $titleBg;
 	
 	function __construct ($sx=20, $sy=20)

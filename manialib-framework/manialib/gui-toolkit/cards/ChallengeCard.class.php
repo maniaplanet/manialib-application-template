@@ -1,12 +1,13 @@
 <?php
 /**
- * Manialink GUI API
+ * @package Manialib
  * @author Maxime Raoust
  */
 
 /**
- * Challenge card
- * @package gui_api
+ * <b>Challenge card</b>: just like challenge cards that can be found when you
+ * browse TrackMania's campaigns
+ * @package Manialib
  */ 
 class ChallengeCard extends Quad
 {
@@ -59,11 +60,19 @@ class ChallengeCard extends Quad
 		$this->clickableLock->setSubStyle("Padlock");
 	}
 	
+	/**
+	 * Whether to show the blue arrow above the challenge icon
+	 * @param boolean
+	 */
 	function showArrow($show = true)
 	{
 		$this->showArrow = $show;
 	}
 	
+	/**
+	 * Sets the element un-clickable, dims the challenge icon and displays a
+	 * lock icon
+	 */
 	function setUnclickable()
 	{
 		$this->clickable = false;
@@ -87,20 +96,17 @@ class ChallengeCard extends Quad
 		$y = $arr["y"];
 		
 		Manialink::beginFrame($x, $y, $this->posZ-3);
-
 			$this->bgImage->save();
 			$this->points->save();		
-			
 			if(!$this->clickable)
 			{
 				$this->clickableMask->save();
 				$this->clickableLock->save();
 				$this->lockedMessage->save();
 			}
-			
 			$this->text->save();
-	
 		Manialink::endFrame();
 	}
 }
+
 ?>

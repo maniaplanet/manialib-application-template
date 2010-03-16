@@ -46,6 +46,9 @@ if (!defined('APP_WWW_PATH'))
 if(!defined('APP_IMAGE_DIR_URL'))
 	define('APP_IMAGE_DIR_URL', APP_URL.'images/');
 
+if(!defined('APP_DATA_DIR_URL'))
+	define('APP_IMAGE_DIR_URL', APP_URL.'data/');	
+
 if (!defined('APP_ERROR_LOG'))
 	define('APP_ERROR_LOG', APP_LOGS_PATH.'error.log' );
 	

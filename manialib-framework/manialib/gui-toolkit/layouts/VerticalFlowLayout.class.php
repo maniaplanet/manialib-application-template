@@ -1,13 +1,13 @@
 <?php
 /**
- * Manialink GUI API
+ * @package Manialib
  * @author Philippe Melot
  */
 
 /**
  * Flow layout: column-like, items fill vertically the current column then 
  * the next one on the right etc.
- * @package gui_api
+ * @package Manialib
  */
 class VerticalFlowLayout extends AbstractLayout
 {

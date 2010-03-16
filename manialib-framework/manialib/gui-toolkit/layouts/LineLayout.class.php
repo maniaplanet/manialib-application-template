@@ -1,12 +1,12 @@
 <?php
 /**
- * Manialink GUI API
+ * @package Manialib
  * @author Maxime Raoust
  */
  
 /**
  * Line layout: elements are added at the right of their predecessor
- * @package gui_api
+ * @package Manialib
  */
 class LineLayout extends AbstractLayout
 {
@@ -15,4 +15,5 @@ class LineLayout extends AbstractLayout
 		$this->xIndex += $item->getSizeX() + $this->marginWidth;
 	}
 }
+
 ?>

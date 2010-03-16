@@ -1,12 +1,12 @@
 <?php
 /**
- * Manialink GUI API
+ * @package Manialib
  * @author Maxime Raoust
  */
 
 /**
  * Navigation menu
- * @package gui_api
+ * @package Manialib
  */
 class Navigation extends Quad
 {
@@ -49,7 +49,7 @@ class Navigation extends Quad
 	}
 	
 	/**
-	 * A a button to the menu
+	 * Adds a navigation button to the menu
 	 */
 	function addItem() 
 	{
@@ -60,7 +60,8 @@ class Navigation extends Quad
 	}
 	
 	/**
-	 * Return the last added button
+	 * Return a reference of the last added item
+	 * @return NavigationButton Reference on a NavigationButton object
 	 */
 	function lastItem() 
 	{
@@ -68,7 +69,8 @@ class Navigation extends Quad
 	}
 	
 	/**
-	 * Add a vertical gap before the next item
+	 * Adds a vertical gap before the next item
+	 * @param float
 	 */
 	function addGap($gap = 3) 
 	{
@@ -76,7 +78,7 @@ class Navigation extends Quad
 	}
 	
 	/**
-	 * Hide the quit/back button
+	 * Hides the quit/back button
 	 */
 	function hideQuitButton() 
 	{
@@ -111,68 +113,6 @@ class Navigation extends Quad
 		Manialink::endFrame();
 		Manialink::endFrame();
 	}	
-}
-
-/**
- * Navigation button
- * @package gui_api
- */ 
-class NavigationButton extends Quad
-{
-	public $text;
-	public $icon;
-	
-	protected $forceLinks = true;
-	protected $iconSizeMinimizer = 1.5;
-	protected $textSizeMinimizer = 3;
-	protected $textOffset = 9;
-
-	function __construct ($sx=29.5, $sy=8.5) 
-	{
-		$this->sizeX = $sx;
-		$this->sizeY = $sy;	
-		
-		$this->setStyle(GUI_NAVIGATION_BUTTON_DEFAULT_STYLE);
-		$this->setSubStyle(GUI_NAVIGATION_BUTTON_DEFAULT_SUBSTYLE);
-		
-		$this->text = new Label();
-		$this->text->setValign("center");
-		$this->text->setPosition($this->textOffset, 0.25, 1);
-		$this->text->setStyle(GUI_NAVIGATION_BUTTON_TEXT_DEFAULT_STYLE);
-		
-		$this->icon = new Icon($this->sizeY-$this->iconSizeMinimizer);
-		$this->icon->setValign("center");
-		$this->icon->setPosition(1, 0, 1);
-		
-	}
-	
-	/**
-	 * Set the button selected
-	 */
-	function setSelected() 
-	{
-		$this->setSubStyle(GUI_NAVIGATION_BUTTON_SELECTED_DEFAULT_SUBSTYLE);
-		$this->text->setStyle(GUI_NAVIGATION_BUTTON_SELECTED_TEXT_DEFAULT_STYLE);	
-	}
-	
-	protected function postFilter ()
-	{		
-		$this->text->setSizeX($this->sizeX - $this->text->getPosX() - $this->textSizeMinimizer);
-		$this->icon->setSize($this->sizeY-$this->iconSizeMinimizer, $this->sizeY-$this->iconSizeMinimizer);
-		
-		if($this->forceLinks)
-		{
-			$this->text->addLink($this);
-			$this->icon->addLink($this);
-		}
-		$newPos = GuiTools::getAlignedPos ($this, "left", "center");
-		
-		// Drawing
-		Manialink::beginFrame($newPos["x"], $newPos["y"], $this->posZ+1);
-			$this->text->save();
-			$this->icon->save();
-		Manialink::endFrame();
-	}
 }
 
 ?>

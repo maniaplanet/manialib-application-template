@@ -1,12 +1,14 @@
 <?php
 /**
- * Manialink GUI API
+ * @package Manialib
  * @author Maxime Raoust
  */
 
+// TODO Update PHPDoc
+
 /**
  * Page Navigator
- * @package gui_api
+ * @package Manialib
  */
 class PageNavigator
 {

@@ -30,7 +30,7 @@ abstract class ErrorHandling
 	/**
 	 * Default handler
 	 */
-	static public function manialinkHandler($errno, $errstr, $errfile, $errline)
+	static function manialinkHandler($errno, $errstr, $errfile, $errline)
 	{
 		self::logMessage($errno, $errstr, $errfile, $errline);
 		self::filterMessage($errno, $errstr);

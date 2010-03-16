@@ -1,12 +1,12 @@
 <?php
 /**
- * Manialink GUI API
+ * @package Manialib
  * @author Maxime Raoust
  */
 
 /**
  * Flow layout: text-like, items fill the current line then next line etc.
- * @package gui_api
+ * @package Manialib
  */
 class FlowLayout extends AbstractLayout
 {
@@ -38,4 +38,5 @@ class FlowLayout extends AbstractLayout
 		$this->currentLineElementCount++;
 	}
 }
+
 ?>
