@@ -1,7 +1,7 @@
 <?php
 /**
- * @package Manialib
  * @author Maxime Raoust
+ * @package Manialib
  */
 
 /**
