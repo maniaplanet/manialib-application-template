@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Created on 11 févr. 2010
+ * Created on 11 fï¿½vr. 2010
  *
  * To change the template for this generated file go to
  * Window - Preferences - PHPeclipse - PHP - Code Templates
@@ -16,128 +16,161 @@ require_once ("header.php");
 
 require_once ("navigation.php");
 
-$ui = new Panel(30, 30);
-$ui->title->setText("ColumnLayout");
-$ui->setPosition(-33, 45, 1);
-$ui->save();
 
-$layout = new ColumnLayout($ui);
-$layout->setMarginHeight(1);
-$layout->setBorder(1, 6);
+$layout = new FlowLayout(70, 70);
+$layout->setMargin(3, 3);
+
+Manialink::beginFrame(-33, 45, 1, $layout);
 {
-	$ui = new Quad(5, 5);
-	$layout->add($ui);
+	$layout = new NullLayout(30, 30);
+	Manialink::beginFrame(0, 0, 0, $layout);
+	{
+		$ui = new Panel(30, 30);
+		$ui->title->setText("ColumnLayout");
+		$ui->save();
+		
+		$layout = new ColumnLayout(30, 30);
+		$layout->setMarginHeight(1);
+		$layout->setBorder(1, 6);
+		
+		Manialink::beginFrame(0, 0, 0, $layout);
+		{
+			$ui = new Quad(5, 5);
+			$ui->save();
+		
+			$ui = new Quad(5, 5);
+			$ui->save();
+		
+			$ui = new Quad(5, 5);
+			$ui->save();
+		}
+		Manialink::endFrame();
+	}
+	Manialink::endFrame();
 
-	$ui = new Quad(5, 5);
-	$layout->add($ui);
+	$layout = new NullLayout(30, 30);
+	Manialink::beginFrame(0, 0, 0, $layout);
+	{
+		$ui = new Panel(30, 30);
+		$ui->title->setText("LineLayout");
+		$ui->save();
+		
+		$layout = new LineLayout(30, 30);
+		$layout->setMarginWidth(1);
+		$layout->setBorder(1, 6);
+		
+		Manialink::beginFrame(0, 0, 0, $layout);
+		{
+			$ui = new Quad(5, 5);
+			$ui->save();
+		
+			$ui = new Quad(5, 5);
+			$ui->save();
+		
+			$ui = new Quad(5, 5);
+			$ui->save();
+		}
+		Manialink::endFrame();
+	}
+	Manialink::endFrame();
 
-	$ui = new Quad(5, 5);
-	$layout->add($ui);
+	$layout = new NullLayout(30, 30);
+	Manialink::beginFrame(0, 0, 0, $layout);
+	{
+		$ui = new Panel(30, 30);
+		$ui->title->setText("FlowLayout");
+		$ui->save();
+		
+		$layout = new FlowLayout(30, 30);
+		$layout->setMargin(1, 1);
+		$layout->setBorder(1, 6);
+		
+		Manialink::beginFrame(0, 0, 0, $layout);
+		{
+			$ui = new Quad(5, 5);
+			$ui->save();
+		
+			$ui = new Quad(5, 5);
+			$ui->save();
+		
+			$ui = new Quad(5, 5);
+			$ui->save();
+			
+			$ui = new Quad(5, 5);
+			$ui->save();
+		
+			$ui = new Quad(5, 5);
+			$ui->save();
+		
+			$ui = new Quad(5, 5);
+			$ui->save();
+			
+			$ui = new Quad(5, 5);
+			$ui->save();
+			
+			$ui = new Quad(5, 5);
+			$ui->save();
+			
+			$ui = new Quad(5, 5);
+			$ui->save();
+		}
+		Manialink::endFrame();
+	}
+	Manialink::endFrame();
+
+	$layout = new NullLayout(30, 30);
+	Manialink::beginFrame(0, 0, 0, $layout);
+	{
+		$ui = new Panel(30, 30);
+		$ui->title->setText("FlowLayout");
+		$ui->save();
+		
+		$layout = new FlowLayout(30, 30);
+		$layout->setMargin(1, 1);
+		$layout->setBorder(1, 6);
+		
+		Manialink::beginFrame(0, 0, 0, $layout);
+		{
+			$ui = new Quad(5, 1);
+			$ui->save();
+		
+			$ui = new Quad(5, 2);
+			$ui->save();
+		
+			$ui = new Quad(5, 3);
+			$ui->save();
+			
+			$ui = new Quad(5, 4);
+			$ui->save();
+		
+			$ui = new Quad(5, 5);
+			$ui->save();
+		
+			$ui = new Quad(1, 5);
+			$ui->save();
+			
+			$ui = new Quad(2, 5);
+			$ui->save();
+			
+			$ui = new Quad(3, 5);
+			$ui->save();
+			
+			$ui = new Quad(4, 5);
+			$ui->save();
+			
+			$ui = new Quad(5, 5);
+			$ui->save();
+			
+			$ui = new Quad(35, 5);
+			$ui->save();$ui = new Quad(35, 5);
+			$ui->save();
+		}
+		Manialink::endFrame();
+		
+	}
+	Manialink::endFrame();
 }
-$layout->save();
-
-$ui = new Panel(30, 30);
-$ui->title->setText("LineLayout");
-$ui->setPosition(0, 45, 1);
-$ui->save();
-
-$layout = new LineLayout($ui);
-$layout->setMarginWidth(1);
-$layout->setBorder(1, 6);
-{
-	$ui = new Quad(5, 5);
-	$layout->add($ui);
-
-	$ui = new Quad(5, 5);
-	$layout->add($ui);
-
-	$ui = new Quad(5, 5);
-	$layout->add($ui);
-}
-$layout->save();
-
-$ui = new Panel(30, 30);
-$ui->title->setText("FlowLayout");
-$ui->setPosition(-33, 12, 1);
-$ui->save();
-
-$layout = new FlowLayout($ui);
-$layout->setMargin(1, 1);
-$layout->setBorder(1, 6);
-{
-	$ui = new Quad(5, 5);
-	$layout->add($ui);
-
-	$ui = new Quad(5, 5);
-	$layout->add($ui);
-
-	$ui = new Quad(5, 5);
-	$layout->add($ui);
-	
-	$ui = new Quad(5, 5);
-	$layout->add($ui);
-
-	$ui = new Quad(5, 5);
-	$layout->add($ui);
-
-	$ui = new Quad(5, 5);
-	$layout->add($ui);
-	
-	$ui = new Quad(5, 5);
-	$layout->add($ui);
-	
-	$ui = new Quad(5, 5);
-	$layout->add($ui);
-	
-	$ui = new Quad(5, 5);
-	$layout->add($ui);
-}
-$layout->save();
-
-$ui = new Panel(30, 30);
-$ui->title->setText("FlowLayout");
-$ui->setPosition(0, 12, 1);
-$ui->save();
-
-$layout = new FlowLayout($ui);
-$layout->setMargin(1, 1);
-$layout->setBorder(1, 6);
-{
-	$ui = new Quad(5, 1);
-	$layout->add($ui);
-
-	$ui = new Quad(5, 2);
-	$layout->add($ui);
-
-	$ui = new Quad(5, 3);
-	$layout->add($ui);
-	
-	$ui = new Quad(5, 4);
-	$layout->add($ui);
-
-	$ui = new Quad(5, 5);
-	$layout->add($ui);
-
-	$ui = new Quad(1, 5);
-	$layout->add($ui);
-	
-	$ui = new Quad(2, 5);
-	$layout->add($ui);
-	
-	$ui = new Quad(3, 5);
-	$layout->add($ui);
-	
-	$ui = new Quad(4, 5);
-	$layout->add($ui);
-	
-	$ui = new Quad(5, 5);
-	$layout->add($ui);
-	
-	$ui = new Quad(35, 5);
-	$layout->add($ui);$ui = new Quad(35, 5);
-	$layout->add($ui);
-}
-$layout->save();
+Manialink::endFrame();
 
 require_once ("footer.php");
 ?>

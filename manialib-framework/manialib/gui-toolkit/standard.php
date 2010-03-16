@@ -1,6 +1,4 @@
 <?php
-
-
 /**
  * Manialink GUI API
  * 
@@ -9,117 +7,8 @@
  * @author Maxime Raoust
  */
 
-/**
- * Static class that provides tools for GuiElement
- * @package gui_api
- */
-abstract class GuiTools
-{
-	/**
-	 * Static method to get the X coordinate of a point in relation to another element
-	 * @param Int $posX position of the parent element
-	 * @param Int $sizeX Size of the parent element
-	 * @param String $halign Halign of the parent element
-	 * @param String $newAlign Halign of the to be positioned element
-	 * @return Int
-	 */
-	final public static function getAlignedPosX($posX, $sizeX, $halign, $newAlign)
-	{
-		if($halign == null)
-		{
-			$halign = "left";
-		}
-		switch(array($halign, $newAlign))
-		{
-			case array("center", "center") :
-				$factor = 0;
-				break;
-				
-			case array("center", "left") :
-				$factor = -0.5;
-				break;
-				
-			case array("center", "right") :
-				$factor = 0.5;
-				break;
-				
-			case array("left", "center") :
-				$factor = 0.5;
-				break;
-				
-			case array("left", "left") :
-				$factor = 0;
-				break;
-				
-			case array("left", "right") :
-				$factor = 1;
-				break;
-				
-			case array("right", "center") :
-				$factor = -0.5;
-				break;
-				
-			case array("right", "left") :
-				$factor = -1;
-				break;
-				
-			case array("right", "right") :
-				$factor = 0;
-				break;
-				
-		}
-		return $posX + $factor * $sizeX;
-	}
-
-	/**
-	 * Static method to get the Y coordinate of a point in relation to another element
-	 * @param Int $posY position of the parent element
-	 * @param Int $sizeY Size of the parent element
-	 * @param String $valign Valign of the parent element
-	 * @param String $newAlign Valign of the to be positioned element
-	 * @return Int
-	 */
-	final public static function getAlignedPosY($posY, $sizeY, $valign, $newAlign)
-	{
-		if($valign == "top" || $valign == null)
-		{
-			$valign = "right";
-		}
-		else
-		{
-			if($valign == "bottom")
-			{
-				$valign = "left";
-			}
-		}
-		if($newAlign == "top")
-		{
-			$newAlign = "right";
-		}
-		else
-		{
-			if($newAlign == "bottom")
-			{
-				$newAlign = "left";
-			}
-		}
-		return self::getAlignedPosX($posY, $sizeY, $valign, $newAlign);
-	}
-
-	final public static function getAlignedPos($object, $newHalign, $newValign)
-	{
-		$newPosX = self::getAlignedPosX($object->getPosX(), $object->getSizeX(), $object->getHalign(), $newHalign);
-		$newPosY = self::getAlignedPosY($object->getPosY(), $object->getSizeY(), $object->getValign(), $newValign);
-		return array("x" => $newPosX, "y" => $newPosY);
-	}
-
-	final public static function getAlignPosArray($array, $newHalign, $newValign)
-	{
-		$newPosX = self::getAlignedPosX($array["posX"], $array["sizeX"], $array["halign"], $newHalign);
-		$newPosY = self::getAlignedPosY($array["posY"], $array["sizeY"], $array["valign"], $newValign);
-		return array("x" => $newPosX, "y" => $newPosY);
-	}
-}
+require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'GuiTools.class.php' );
+require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'styles.php' );
 
 /**
  * Abstract GUI element. Extends that class to create a GUI class
@@ -147,7 +36,7 @@ abstract class GuiElement
 	protected $actionKey;
 	protected $image;
 	protected $imageFocus;
-	protected $xmlTagName = "xmltag"; // Redeclare this for each child
+	protected $xmlTagName = 'xmltag'; // Redeclare this for each child
 	protected $xml;
 
 	function __construct($sx = 20, $sy = 20)
@@ -428,65 +317,90 @@ abstract class GuiElement
 	{
 		// Optional pre filtering
 		$this->preFilter();
-
+		
+		// Layout handling
+		$layout = end(Manialink::$layoutStack);
+		if($layout instanceof AbstractLayout)
+		{
+			$layout->preFilter($this);
+			$this->posX += $layout->xIndex;
+			$this->posY += $layout->yIndex;
+			$this->posZ += $layout->zIndex;
+		}
+		
 		// DOM element creation
-		$this->xml = Manialink::$domDocument->createElement($this->xmlTagName);
-		end(Manialink::$parentNodes)->appendChild($this->xml);
-
-		// Add pos
-		if($this->posX || $this->posY || $this->posZ)
+		if($this->xmlTagName)
 		{
-			$this->xml->setAttribute("posn", "$this->posX $this->posY $this->posZ");
+			$this->xml = Manialink::$domDocument->createElement($this->xmlTagName);
+			end(Manialink::$parentNodes)->appendChild($this->xml);
+			
+			// Add pos
+			if($this->posX || $this->posY || $this->posZ)
+			{
+				$this->xml->setAttribute('posn', 
+					$this->posX.' '.$this->posY.' '.$this->posZ);
+			}
+	
+			// Add size
+			if($this->sizeX || $this->sizeY)
+			{
+				$this->xml->setAttribute('sizen', $this->sizeX.' '.$this->sizeY);
+			}
+	
+			// Add alignement
+			if($this->halign !== null)
+				$this->xml->setAttribute('halign', $this->halign);
+			if($this->valign !== null)
+				$this->xml->setAttribute('valign', $this->valign);
+			if($this->scale !== null)
+				$this->xml->setAttribute('scale', $this->scale);
+	
+			// Add styles
+			if($this->style !== null)
+				$this->xml->setAttribute('style', $this->style);
+			if($this->subStyle !== null)
+				$this->xml->setAttribute('substyle', $this->subStyle);
+			if($this->bgcolor !== null)
+				$this->xml->setAttribute('bgcolor', $this->bgcolor);
+	
+			// Add links
+			if($this->addPlayerId !== null)
+				$this->xml->setAttribute('addplayerid', $this->addPlayerId);
+			if($this->manialink !== null)
+				$this->xml->setAttribute('manialink', $this->manialink);
+			if($this->url !== null)
+				$this->xml->setAttribute('url', $this->url);
+			if($this->maniazones !== null)
+				$this->xml->setAttribute('maniazones', $this->maniazones);
+	
+			// Add action
+			if($this->action !== null)
+				$this->xml->setAttribute('action', $this->action);
+			if($this->actionKey !== null)
+				$this->xml->setAttribute('actionkey', $this->actionKey);
+	
+			// Add images
+			if($this->image !== null)
+				$this->xml->setAttribute('image', $this->image);
+			if($this->imageFocus !== null)
+				$this->xml->setAttribute('imagefocus', $this->imageFocus);
 		}
-
-		// Add size
-		if($this->sizeX || $this->sizeY)
+		
+		// Layout post filtering
+		if($layout instanceof AbstractLayout)
 		{
-			$this->xml->setAttribute("sizen", "$this->sizeX $this->sizeY");
+			$layout->postFilter($this);
 		}
-
-		// Add alignement
-		if($this->halign !== null)
-			$this->xml->setAttribute("halign", $this->halign);
-		if($this->valign !== null)
-			$this->xml->setAttribute("valign", $this->valign);
-		if($this->scale !== null)
-			$this->xml->setAttribute("scale", $this->scale);
-
-		// Add styles
-		if($this->style !== null)
-			$this->xml->setAttribute("style", $this->style);
-		if($this->subStyle !== null)
-			$this->xml->setAttribute("substyle", $this->subStyle);
-		if($this->bgcolor !== null)
-			$this->xml->setAttribute("bgcolor", $this->bgcolor);
-
-		// Add links
-		if($this->addPlayerId !== null)
-			$this->xml->setAttribute("addplayerid", $this->addPlayerId);
-		if($this->manialink !== null)
-			$this->xml->setAttribute("manialink", $this->manialink);
-		if($this->url !== null)
-			$this->xml->setAttribute("url", $this->url);
-		if($this->maniazones !== null)
-			$this->xml->setAttribute("maniazones", $this->maniazones);
-
-		// Add action
-		if($this->action !== null)
-			$this->xml->setAttribute("action", $this->action);
-		if($this->actionKey !== null)
-			$this->xml->setAttribute("actionkey", $this->actionKey);
-
-		// Add images
-		if($this->image !== null)
-			$this->xml->setAttribute("image", $this->image);
-		if($this->imageFocus !== null)
-			$this->xml->setAttribute("imagefocus", $this->imageFocus);
-
+		
 		// Post filtering
 		$this->postFilter();
 	}
 }
+
+class Spacer extends GuiElement
+{
+	protected $xmlTagName = null;
+} 
 
 /**
  * Quad
@@ -494,7 +408,7 @@ abstract class GuiElement
  */
 class Quad extends GuiElement
 {
-	protected $xmlTagName = "quad";
+	protected $xmlTagName = 'quad';
 	protected $style = GUI_QUAD_DEFAULT_STYLE;
 	protected $subStyle = GUI_QUAD_DEFAULT_SUBSTYLE;
 }
@@ -555,7 +469,7 @@ class IncludeManialink extends GuiElement
 	{
 	}
 
-	protected $xmlTagName = "include";
+	protected $xmlTagName = 'include';
 	protected $halign = null;
 	protected $valign = null;
 	protected $posX = null;
@@ -569,7 +483,7 @@ class IncludeManialink extends GuiElement
  */
 class Format extends GuiElement
 {
-	protected $xmlTagName = "format";
+	protected $xmlTagName = 'format';
 	protected $halign = null;
 	protected $valign = null;
 	protected $posX = null;
@@ -609,9 +523,9 @@ class Format extends GuiElement
 	protected function postFilter()
 	{
 		if($this->textSize !== null)
-			$this->xml->setAttribute("textsize", $this->textSize);
+			$this->xml->setAttribute('textsize', $this->textSize);
 		if($this->textColor !== null)
-			$this->xml->setAttribute("textcolor", $this->textColor);
+			$this->xml->setAttribute('textcolor', $this->textColor);
 	}
 }
 
@@ -621,7 +535,7 @@ class Format extends GuiElement
  */
 class Label extends Format
 {
-	protected $xmlTagName = "label";
+	protected $xmlTagName = 'label';
 	protected $style = GUI_LABEL_DEFAULT_STYLE;
 	protected $posX = 0;
 	protected $posY = 0;
@@ -681,13 +595,13 @@ class Label extends Format
 	{
 		parent::postFilter();
 		if($this->text !== null)
-			$this->xml->setAttribute("text", $this->text);
+			$this->xml->setAttribute('text', $this->text);
 		if($this->textid !== null)
-			$this->xml->setAttribute("textid", $this->textid);
+			$this->xml->setAttribute('textid', $this->textid);
 		if($this->autonewline !== null)
-			$this->xml->setAttribute("autonewline", $this->autonewline);
+			$this->xml->setAttribute('autonewline', $this->autonewline);
 		if($this->maxline !== null)
-			$this->xml->setAttribute("maxline", $this->maxline);
+			$this->xml->setAttribute('maxline', $this->maxline);
 	}
 }
 
@@ -697,7 +611,7 @@ class Label extends Format
  */
 class Entry extends Label
 {
-	protected $xmlTagName = "entry";
+	protected $xmlTagName = 'entry';
 	protected $style = GUI_ENTRY_DEFAULT_STYLE;
 	protected $name;
 	protected $defaultValue;
@@ -732,9 +646,9 @@ class Entry extends Label
 	{
 		parent::postFilter();
 		if($this->name !== null)
-			$this->xml->setAttribute("name", $this->name);
+			$this->xml->setAttribute('name', $this->name);
 		if($this->defaultValue !== null)
-			$this->xml->setAttribute("default", $this->defaultValue);
+			$this->xml->setAttribute('default', $this->defaultValue);
 	}
 }
 
@@ -744,7 +658,7 @@ class Entry extends Label
  */
 class FileEntry extends Entry
 {
-	protected $xmlTagName = "fileentry";
+	protected $xmlTagName = 'fileentry';
 	protected $folder;
 
 	function __construct($sx = 20, $sy = 3)
@@ -767,7 +681,7 @@ class FileEntry extends Entry
 	{
 		parent::postFilter();
 		if($this->folder !== null)
-			$this->xml->setAttribute("folder", $this->folder);
+			$this->xml->setAttribute('folder', $this->folder);
 	}
 }
 
@@ -787,7 +701,7 @@ class Button extends Label
  */
 class Music extends GuiElement
 {
-	protected $xmlTagName = "music";
+	protected $xmlTagName = 'music';
 	protected $halign = null;
 	protected $valign = null;
 	protected $posX = null;
@@ -819,7 +733,7 @@ class Music extends GuiElement
 	protected function postFilter()
 	{
 		if($this->data !== null)
-			$this->xml->setAttribute("data", $this->data);
+			$this->xml->setAttribute('data', $this->data);
 	}
 }
 
@@ -829,7 +743,7 @@ class Music extends GuiElement
  */
 class Audio extends Music
 {
-	protected $xmlTagName = "music";
+	protected $xmlTagName = 'music';
 	protected $posX = 0;
 	protected $posY = 0;
 	protected $posZ = 0;
@@ -860,9 +774,9 @@ class Audio extends Music
 	{
 		parent::postFilter();
 		if($this->play !== null)
-			$this->xml->setAttribute("play", $this->play);
+			$this->xml->setAttribute('play', $this->play);
 		if($this->looping !== null)
-			$this->xml->setAttribute("looping", $this->looping);
+			$this->xml->setAttribute('looping', $this->looping);
 	}
 }
 
@@ -872,7 +786,7 @@ class Audio extends Music
  */
 class Video extends Audio
 {
-	protected $xmlTagName = "video";
+	protected $xmlTagName = 'video';
 
 	function __construct($sx = 32, $sy = 24)
 	{

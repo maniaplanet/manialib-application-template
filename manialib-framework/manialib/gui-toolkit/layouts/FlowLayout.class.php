@@ -13,7 +13,7 @@ class FlowLayout extends AbstractLayout
 	protected $maxHeight = 0;
 	protected $currentLineElementCount = 0;
 
-	protected function prepareLayout(GuiElement $item)
+	function preFilter(GuiElement $item)
 	{
 		$availableWidth = $this->sizeX - $this->xIndex - $this->borderWidth;
 
@@ -28,7 +28,7 @@ class FlowLayout extends AbstractLayout
 
 	}
 
-	protected function updateLayout(GuiElement $item)
+	function postFilter(GuiElement $item)
 	{
 		$this->xIndex += $item->getSizeX() + $this->marginWidth;
 		if(!$this->maxHeight || $item->getSizeY() > $this->maxHeight)

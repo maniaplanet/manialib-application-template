@@ -5,6 +5,8 @@
  * @author Maxime Raoust
  */
 
+require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'standard.php' );
+
 /**
  * Manialink handler class
  * 
@@ -15,22 +17,24 @@ abstract class Manialink
 {
 	public static $domDocument;
 	public static $parentNodes;
+	public static $layoutStack;
 	
 	/**
 	 * Loads the Manialink objects stack
 	 */
-	final public static function load($setManilinkStructure = true, $timeoutValue=0)
+	final public static function load($createManialinkElement = true, $timeoutValue=0)
 	{
 		self::$domDocument = new DOMDocument;
 		self::$parentNodes = array();
+		self::$layoutStack = array();
 		
-		if($setManilinkStructure)
+		if($createManialinkElement)
 		{
-			$manialink = self::$domDocument->createElement("manialink");
+			$manialink = self::$domDocument->createElement('manialink');
 			self::$domDocument->appendChild($manialink);
 			self::$parentNodes[] = $manialink;
 			
-			$timeout = self::$domDocument->createElement("timeout");
+			$timeout = self::$domDocument->createElement('timeout');
 			$manialink->appendChild($timeout); 
 			$timeout->nodeValue = $timeoutValue;
 		}
@@ -48,7 +52,7 @@ abstract class Manialink
 		}
 		else
 		{
-			header("Content-Type: text/xml; charset=utf-8");
+			header('Content-Type: text/xml; charset=utf-8');
 			echo self::$domDocument->saveXML();
 		}
 	}
@@ -56,17 +60,37 @@ abstract class Manialink
 	/**
 	 * Creates a new Manialink frame
 	 */
-	final public static function beginFrame($x=0, $y=0, $z=0)
+	final public static function beginFrame($x=0, $y=0, $z=0, $layout=null)
 	{
-		$frame = self::$domDocument->createElement("frame");
-		
-		if($x||$y||$z)
-		{ 
-			$frame->setAttribute("posn", "$x $y $z");
+		// Update parent layout
+		$parentLayout = end(self::$layoutStack);
+		if($parentLayout instanceof AbstractLayout)
+		{
+			// If we have a current layout, we have a container size to deal with
+			if($layout instanceof AbstractLayout)
+			{
+				$ui = new Spacer($layout->getSizeX(), $layout->getSizeY());
+				$ui->setPosition($x, $y, $z);
+				
+				$parentLayout->preFilter($ui);
+				$x += $parentLayout->xIndex;
+				$y += $parentLayout->yIndex;
+				$z += $parentLayout->zIndex;
+				$parentLayout->postFilter($ui);
+			}
 		}
 		
+		// Create DOM element
+		$frame = self::$domDocument->createElement('frame');
+		if($x || $y || $z)
+		{ 
+			$frame->setAttribute('posn', $x.' '.$y.' '.$z);
+		}
 		end(self::$parentNodes)->appendChild($frame);
+		
+		// Update stacks
 		self::$parentNodes[] = $frame;
+		self::$layoutStack[] = $layout;
 	}
 	
 	/**
@@ -76,9 +100,10 @@ abstract class Manialink
 	{
 		if(!end(self::$parentNodes)->hasChildNodes())
 		{
-			end(self::$parentNodes)->nodeValue = " ";
+			end(self::$parentNodes)->nodeValue = ' ';
 		}
 		array_pop(self::$parentNodes);
+		array_pop(self::$layoutStack);
 	}
 }
 

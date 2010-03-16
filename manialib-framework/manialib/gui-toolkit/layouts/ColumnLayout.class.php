@@ -10,7 +10,7 @@
  */
 class ColumnLayout extends AbstractLayout
 {
-	protected function updateLayout(GuiElement $item)
+	function postFilter(GuiElement $item)
 	{
 		$this->yIndex -= $item->getSizeY() + $this->marginHeight;
 	}

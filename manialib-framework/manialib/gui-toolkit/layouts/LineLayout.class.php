@@ -10,7 +10,7 @@
  */
 class LineLayout extends AbstractLayout
 {
-	protected function updateLayout(GuiElement $item)
+	function postFilter(GuiElement $item)
 	{
 		$this->xIndex += $item->getSizeX() + $this->marginWidth;
 	}
