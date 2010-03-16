@@ -1,10 +1,6 @@
 <?php
-
-/*
- * Created on 11 f�vr. 2010
- *
- * To change the template for this generated file go to
- * Window - Preferences - PHPeclipse - PHP - Code Templates
+/**
+ * @author Maxime Raoust
  */
 
 require_once ("core.inc.php");
@@ -22,6 +18,9 @@ $layout->setMargin(3, 3);
 
 Manialink::beginFrame(-33, 45, 1, $layout);
 {
+	// ColumnLayout example
+	////////////////////////////////////////////////////////////////////////////
+	
 	$layout = new NullLayout(30, 30);
 	Manialink::beginFrame(0, 0, 0, $layout);
 	{
@@ -47,7 +46,10 @@ Manialink::beginFrame(-33, 45, 1, $layout);
 		Manialink::endFrame();
 	}
 	Manialink::endFrame();
-
+	
+	// LineLayout example
+	////////////////////////////////////////////////////////////////////////////
+	
 	$layout = new NullLayout(30, 30);
 	Manialink::beginFrame(0, 0, 0, $layout);
 	{
@@ -74,6 +76,9 @@ Manialink::beginFrame(-33, 45, 1, $layout);
 	}
 	Manialink::endFrame();
 
+	// FlowLayout example
+	////////////////////////////////////////////////////////////////////////////
+	
 	$layout = new NullLayout(30, 30);
 	Manialink::beginFrame(0, 0, 0, $layout);
 	{
@@ -118,6 +123,9 @@ Manialink::beginFrame(-33, 45, 1, $layout);
 	}
 	Manialink::endFrame();
 
+	// FlowLayout example 2
+	////////////////////////////////////////////////////////////////////////////
+	
 	$layout = new NullLayout(30, 30);
 	Manialink::beginFrame(0, 0, 0, $layout);
 	{
@@ -166,7 +174,6 @@ Manialink::beginFrame(-33, 45, 1, $layout);
 			$ui->save();
 		}
 		Manialink::endFrame();
-		
 	}
 	Manialink::endFrame();
 }
