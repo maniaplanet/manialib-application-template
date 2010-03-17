@@ -18,7 +18,8 @@ define('APP_PATH', dirname(__FILE__) . '/');
  * manialink 'manialibdev' is definied and points to 
  * 'http://localhost/manialib/'.
  */
-define('APP_URL', 'http://localhost/manialib/');
+define('APP_URL_BASE', 'http://localhost/');
+define('APP_URL_PATH', 'manialib/');
 
 /**
  * URL of your manialink. For easy local access when developing, the short

@@ -23,48 +23,39 @@ abstract class GuiTools
 	 */
 	final public static function getAlignedPosX($posX, $sizeX, $halign, $newAlign)
 	{
-		if($halign == null)
+		if(!$halign)
 		{
 			$halign = 'left';
 		}
-		switch(array($halign, $newAlign))
+		$alignmentString = $halign.'|'.$newAlign;
+		switch($alignmentString)
 		{
-			case array('center', 'center') :
+			case 'center|center':
+			case 'left|left':
+			case 'right|right':
 				$factor = 0;
 				break;
 				
-			case array('center', 'left') :
+			case 'center|left':
+			case 'right|center':
 				$factor = -0.5;
 				break;
 				
-			case array('center', 'right') :
+			case 'center|right':
+			case 'left|center':
 				$factor = 0.5;
 				break;
-				
-			case array('left', 'center') :
-				$factor = 0.5;
-				break;
-				
-			case array('left', 'left') :
-				$factor = 0;
-				break;
-				
-			case array('left', 'right') :
+
+			case 'left|right':
 				$factor = 1;
 				break;
-				
-			case array('right', 'center') :
-				$factor = -0.5;
-				break;
-				
-			case array('right', 'left') :
+
+			case 'right|left':
 				$factor = -1;
-				break;
-				
-			case array('right', 'right') :
-				$factor = 0;
-				break;
-				
+				break;		
+			
+			default:
+				throw new ManialinkException('Unsupported positions');
 		}
 		return $posX + $factor * $sizeX;
 	}
@@ -81,27 +72,26 @@ abstract class GuiTools
 	 */
 	final public static function getAlignedPosY($posY, $sizeY, $valign, $newAlign)
 	{
-		if($valign == 'top' || $valign == null)
+		switch($valign)
 		{
-			$valign = 'right';
+			case 'top': 
+			case null: 
+				$valign = 'right';
+				break;
+				
+			case 'bottom':
+				$valign = 'left';   
+				break;
 		}
-		else
+		switch($newAlign)
 		{
-			if($valign == 'bottom')
-			{
-				$valign = 'left';
-			}
-		}
-		if($newAlign == 'top')
-		{
-			$newAlign = 'right';
-		}
-		else
-		{
-			if($newAlign == 'bottom')
-			{
+			case 'top':
+				$newAlign = 'right';
+				break;
+				
+			case 'bottom': 
 				$newAlign = 'left';
-			}
+				break;
 		}
 		return self::getAlignedPosX($posY, $sizeY, $valign, $newAlign);
 	}

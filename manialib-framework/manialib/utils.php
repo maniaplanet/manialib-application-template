@@ -12,53 +12,28 @@
  */
 function __autoload($className)
 {
-	if (autoload_recursive($className, APP_FRAMEWORK_LIBRARIES_PATH))
+	if(file_exists($path = APP_LIBRARIES_PATH.$className.'.class.php'))
 	{
+		require_once($path);
 		return true;
 	}
-	elseif(autoload_recursive($className, APP_LIBRARIES_PATH))
+	if(file_exists($path = APP_FRAMEWORK_LIBRARIES_PATH.$className.'.class.php'))
 	{
+		require_once($path);
 		return true;
 	}
-	elseif(autoload_recursive($className, APP_FRAMEWORK_GUI_TOOLKIT_PATH))
+	if(file_exists($path = APP_FRAMEWORK_GUI_TOOLKIT_PATH.'cards/'.$className.'.class.php'))
 	{
+		require_once($path);
+		return true;
+	}
+	if(file_exists($path = APP_FRAMEWORK_GUI_TOOLKIT_PATH.'layouts/'.$className.'.class.php'))
+	{
+		require_once($path);
 		return true;
 	}
 	return false;
 }
-
-/**
- * Recursive class autoloader
- * @param string Class to load
- * @param string Path to browse 
- */
-function autoload_recursive($className, $path)
-{
-	if(file_exists($rpath = $path . "/" . $className . ".class.php"))
-	{
-		require_once($rpath);
-		return true;
-	}
-	$return = false;
-	if ($handle = opendir($path))
-	{
-		while (false !== ($file = readdir($handle)))
-		{
-			if (strcasecmp(substr($file, 0, 1), "."))
-			{
-				if(is_dir($path . $file))
-				{
-					if(autoload_recursive($className, $path.$file.'/'))
-					{
-						return true;
-					}
-				}
-			}
-		}
-		closedir($handle);
-	}
-	return $return;
-} 
 
 /**
  * Prints a line with a break at the end
@@ -82,6 +57,18 @@ function debuglog($msg, $addDate = true, $log = APP_DEBUG_LOG)
 		$msg = date('d/m/y H:i:s') . " $msg\n";
 	}
 	file_put_contents($log, $msg, FILE_APPEND);
+}
+
+/**
+ * Writes a pair name/value in the debug log, the value beeing print_r-ed
+ * @param string The message
+ * @param boolean Whether to add the date to the message
+ * @param string The log filename
+ */
+ 
+function debuglogplusplus($name, $value)
+{
+	debuglog($name.'='.print_r($value, true));	
 }
 
 /**

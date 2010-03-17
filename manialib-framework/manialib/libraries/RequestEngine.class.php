@@ -1,11 +1,17 @@
 <?php
 /**
- * Request handler
- * 
  * @author Maxime Raoust
  * @package Manialib
  */
 
+// TODO RequestEngine debug: short manialinks
+// TODO RequestEngine debug: sub-directories
+// TODO RequestEngine debug: absolute URLs
+
+/**
+ * <b>Request engine</b>: used to handle GET parameters and to create hyperlink
+ * strings and redirections
+ */
 final class RequestEngine
 {
 	private static $instance;
@@ -14,6 +20,10 @@ final class RequestEngine
 	private $params = array();
 	private $protectedParams = array();
 	private $globalParams = array();
+	
+	private $URLBase;
+	private $URLPath;
+	private $URLFile;
 	
 	private $registerRefererAtDestruct;
 	
@@ -231,110 +241,84 @@ final class RequestEngine
 	
 	private function createLinkString($file=null, $relativePath=true, $params)
 	{
-		// Baseurl		
-		if(USE_SHORT_MANIALINKS && $relativePath)
+		// If absolute path, there's nothing to do
+		if(!$relativePath)
 		{
-			$link = MANIALINK_NAME;
-			if($file==null)
+			$link = $file;
+		}
+		
+		// If relative path, we have to compute the link
+		else
+		{
+			// URL base
+			if($this->URLBase === null)
 			{
-				$file = str_ireplace(	
-					str_replace("\\", "/", APP_WWW_PATH),
-					"",
-					str_replace("\\", "/", $_SERVER["SCRIPT_FILENAME"])
-				);
-				
+				$this->URLBase = USE_SHORT_MANIALINKS ? MANIALINK_NAME : APP_URL;
 			}
-			else
+			
+			// URL path
+			if($this->URLPath === null)
 			{
-				$serverPath = dirname(str_ireplace(	
-					str_replace("\\", "/", APP_WWW_PATH),
-					"",
-					str_replace("\\", "/", $_SERVER["SCRIPT_FILENAME"])
-				));
-				if(!$serverPath || $serverPath==".")
+				if(APP_URL_PATH)
 				{
-					$serverPath = "";
+					$this->URLPath = dirname(str_ireplace(
+						str_replace('\\', '/', APP_URL_PATH),
+						'',
+						str_replace('\\', '/', $_SERVER['REQUEST_URI'])
+					));
 				}
 				else
 				{
-					$serverPath .= "/";
+					$this->URLPath = dirname(
+						str_replace('\\', '/', $_SERVER['REQUEST_URI']));
 				}
-				$file = $serverPath . $file;
+				if($this->URLPath == '.' || $this->URLPath == '/' 
+					|| $this->URLPath == '\\' )
+				{
+					$this->URLPath = '';
+				}
 			}
 			
-			$file = preg_replace('/.*\.\.\//i', '', $file);
-			
-			if($file != "index.php")
+			// URL file
+			$this->URLFile = $file ? $file : basename($_SERVER['SCRIPT_FILENAME']);
+						
+			// Create the link
+			if(USE_SHORT_MANIALINKS)
 			{
-				$params = array_merge(array("rp"=>$file), $params);
+				$link = $this->URLBase;
+				$params['rp'] = $this->URLPath.$this->URLFile;
 			}
-		}
-		else
-		{
-			$link = "";
-			if($file==null)
+			else
 			{
-				$file = basename($_SERVER["SCRIPT_FILENAME"]);
-				
+				$link = $this->URLBase.$this->URLPath.$this->URLFile;
 			}
-			if($relativePath)
-			{
-				$link = explode("/", strtolower($_SERVER["SERVER_PROTOCOL"]));
-				$link = (string) reset($link);
-				$link .= ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? "s" : "");
-				$link .= "://";
-				$link .= $_SERVER['SERVER_NAME'];
-				if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on')
-				{
-					if($_SERVER['SERVER_PORT']!='443') $link .= ":".$_SERVER['SERVER_PORT'];
-				}
-				elseif($_SERVER['SERVER_PORT']!='80')
-				{
-					$link .= ":".$_SERVER['SERVER_PORT'];
-				}
-				$link .= dirname($_SERVER['SCRIPT_NAME']);
-				if(substr($link, -1) != '/')
-				{
-					$link .= "/";
-				}	
-			}
-			$link .= $file;
 		}
 		
-		// SID
-		if(SID) 
-		{
-			$link .= "?".SID;
-		}
-		
-		// Params
+		// Modify parameters array
 		foreach($params as $name=>$value)
 		{
-
-			$params[$name] = "$name=$value";
+			// TODO Check if urlencode/urldecode is needed
+			$params[$name] = $name.'='.$value;
 		}
 		
-		// Return if no params
-		if(count($params)==0)
-		{
-			return $link;
-		}
-		
-		// Create the output	
-		$params = implode("&", $params);
+		// Check if SID needs to be added
 		if(SID)
 		{
-			$link .= "&";
+			$params[] = SID;
+		}
+		
+		// Create parameter string
+		if(count($params))
+		{
+			$params = '?'.implode('&', $params); 
 		}
 		else
 		{
-			$link .= "?";	
+			$params = '';
 		}
-		$link .= $params;
-			
-		// Return the output
-		return $link;
+				
+		return $link.$params;
 	}
-	
 }
+
 ?>

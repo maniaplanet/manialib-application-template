@@ -49,6 +49,7 @@ class NavigationButton extends Quad
 	protected function postFilter ()
 	{		
 		$this->text->setSizeX($this->sizeX - $this->text->getPosX() - $this->textSizeMinimizer);
+		$this->text->setSizeY(0);
 		$this->icon->setSize($this->sizeY-$this->iconSizeMinimizer, $this->sizeY-$this->iconSizeMinimizer);
 		
 		if($this->forceLinks)

@@ -13,8 +13,14 @@
 if (!defined('APP_PATH'))
 	define('APP_PATH', dirname(__FILE__) . '/../'); 
 
+if(!defined('APP_URL_BASE'))
+	define('APP_URL_BASE', 'http://localhost/');
+
+if(!defined('APP_URL_PATH'))
+	define('APP_URL_PATH', 'manialib/');
+
 if (!defined('APP_URL'))
-	define('APP_URL', 'http://localhost/manialib/');
+	define('APP_URL', APP_URL_BASE.APP_URL_PATH);
 	
 if (!defined('APP_FRAMEWORK_PATH'))
 	define('APP_FRAMEWORK_PATH', APP_PATH.'manialib/' );
@@ -41,13 +47,13 @@ if (!defined('APP_CONFIG_PATH'))
 	define('APP_CONFIG_PATH', APP_PATH.'config/');
 		
 if (!defined('APP_WWW_PATH'))
-	define('APP_WWW_PATH', APP_PATH.'www/' );
+	define('APP_WWW_PATH', APP_PATH );
 
 if(!defined('APP_IMAGE_DIR_URL'))
 	define('APP_IMAGE_DIR_URL', APP_URL.'images/');
 
 if(!defined('APP_DATA_DIR_URL'))
-	define('APP_IMAGE_DIR_URL', APP_URL.'data/');	
+	define('APP_DATA_DIR_URL', APP_URL.'data/');	
 
 if (!defined('APP_ERROR_LOG'))
 	define('APP_ERROR_LOG', APP_LOGS_PATH.'error.log' );

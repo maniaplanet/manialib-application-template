@@ -4,6 +4,9 @@
  * @package Manialib
  */
 
+require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'cards/NavigationButton.class.php' );
+// TODO Use a column layout in the navigation menu
+
 /**
  * Navigation menu
  * @package Manialib
@@ -92,25 +95,30 @@ class Navigation extends Quad
 	
 	protected function postFilter () 
 	{
-		// Draw the header	
-		Manialink::beginFrame($this->posX+0.5, $this->posY-0.5, $this->posZ+1);
-		$this->titleBg->save();
-		$this->title->save();
-		$this->subTitle->save();
-		$this->logo->save();
-		
-		// Draw the items
-		foreach($this->items as $item) 
+		// Frame was created in preFilter
+		// Manialink::beginFrame()
 		{
-			$item->save();
-		}
-		if($this->showQuitButton) 
-		{
-			$this->quitButton->setSizeX($this->sizeX-1);
-			$this->quitButton->setPosition(0, -$this->sizeY+$this->quitButton->getSizeY()+2);
-			$this->quitButton->save();
-		}
-		Manialink::endFrame();
+			Manialink::beginFrame($this->posX+0.5, $this->posY-0.5, $this->posZ+1);
+			{
+				$this->titleBg->save();
+				$this->title->save();
+				$this->subTitle->save();
+				$this->logo->save();
+				
+				foreach($this->items as $item) 
+				{
+					$item->save();
+				}
+				
+				if($this->showQuitButton) 
+				{
+					$this->quitButton->setSizeX($this->sizeX-1);
+					$this->quitButton->setPosition(0, -$this->sizeY+$this->quitButton->getSizeY()+2);
+					$this->quitButton->save();
+				}
+			}
+			Manialink::endFrame();
+		}	
 		Manialink::endFrame();
 	}	
 }

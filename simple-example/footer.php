@@ -1,6 +1,5 @@
 <?php
 /**
- * Footer
  * @author Maxime Raoust
  */
 

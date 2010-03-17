@@ -3,14 +3,14 @@
  * @author Maxime Raoust
  */
 
-require_once ("core.inc.php");
+require_once ('core.inc.php');
 
 $request = RequestEngine::getInstance();
 $request->registerReferer();
 
-require_once ("header.php");
+require_once ('header.php');
 
-require_once ("navigation.php");
+require_once ('navigation.php');
 
 
 $layout = new FlowLayout(70, 70);
@@ -22,17 +22,17 @@ Manialink::beginFrame(-33, 45, 1, $layout);
 	////////////////////////////////////////////////////////////////////////////
 	
 	$layout = new NullLayout(30, 30);
-	Manialink::beginFrame(0, 0, 0, $layout);
+	Manialink::beginFrame(0, 0, 1, $layout);
 	{
 		$ui = new Panel(30, 30);
-		$ui->title->setText("ColumnLayout");
+		$ui->title->setText('ColumnLayout');
 		$ui->save();
 		
 		$layout = new ColumnLayout(30, 30);
 		$layout->setMarginHeight(1);
 		$layout->setBorder(1, 6);
 		
-		Manialink::beginFrame(0, 0, 0, $layout);
+		Manialink::beginFrame(0, 0, 1, $layout);
 		{
 			$ui = new Quad(5, 5);
 			$ui->save();
@@ -51,17 +51,17 @@ Manialink::beginFrame(-33, 45, 1, $layout);
 	////////////////////////////////////////////////////////////////////////////
 	
 	$layout = new NullLayout(30, 30);
-	Manialink::beginFrame(0, 0, 0, $layout);
+	Manialink::beginFrame(0, 0, 1, $layout);
 	{
 		$ui = new Panel(30, 30);
-		$ui->title->setText("LineLayout");
+		$ui->title->setText('LineLayout');
 		$ui->save();
 		
 		$layout = new LineLayout(30, 30);
 		$layout->setMarginWidth(1);
 		$layout->setBorder(1, 6);
 		
-		Manialink::beginFrame(0, 0, 0, $layout);
+		Manialink::beginFrame(0, 0, 1, $layout);
 		{
 			$ui = new Quad(5, 5);
 			$ui->save();
@@ -80,17 +80,17 @@ Manialink::beginFrame(-33, 45, 1, $layout);
 	////////////////////////////////////////////////////////////////////////////
 	
 	$layout = new NullLayout(30, 30);
-	Manialink::beginFrame(0, 0, 0, $layout);
+	Manialink::beginFrame(0, 0, 1, $layout);
 	{
 		$ui = new Panel(30, 30);
-		$ui->title->setText("FlowLayout");
+		$ui->title->setText('FlowLayout');
 		$ui->save();
 		
 		$layout = new FlowLayout(30, 30);
 		$layout->setMargin(1, 1);
 		$layout->setBorder(1, 6);
 		
-		Manialink::beginFrame(0, 0, 0, $layout);
+		Manialink::beginFrame(0, 0, 1, $layout);
 		{
 			$ui = new Quad(5, 5);
 			$ui->save();
@@ -127,17 +127,17 @@ Manialink::beginFrame(-33, 45, 1, $layout);
 	////////////////////////////////////////////////////////////////////////////
 	
 	$layout = new NullLayout(30, 30);
-	Manialink::beginFrame(0, 0, 0, $layout);
+	Manialink::beginFrame(0, 0, 1, $layout);
 	{
 		$ui = new Panel(30, 30);
-		$ui->title->setText("FlowLayout");
+		$ui->title->setText('FlowLayout');
 		$ui->save();
 		
 		$layout = new FlowLayout(30, 30);
 		$layout->setMargin(1, 1);
 		$layout->setBorder(1, 6);
 		
-		Manialink::beginFrame(0, 0, 0, $layout);
+		Manialink::beginFrame(0, 0, 1, $layout);
 		{
 			$ui = new Quad(5, 1);
 			$ui->save();
@@ -179,5 +179,5 @@ Manialink::beginFrame(-33, 45, 1, $layout);
 }
 Manialink::endFrame();
 
-require_once ("footer.php");
+require_once ('footer.php');
 ?>

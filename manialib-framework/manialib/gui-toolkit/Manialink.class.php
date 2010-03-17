@@ -5,6 +5,7 @@
  */
 
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'standard.php' );
+require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'layouts/AbstractLayout.class.php' );
 
 /**
  * Manialink GUI toolkit main class
