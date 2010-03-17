@@ -13,6 +13,23 @@ class FrameworkException extends Exception
 	protected $dateThrown;
 	protected $logMessage;
 	
+	/**
+	 * Handles what to do when an exception is catched.
+	 * @param Exception
+	 */
+	static function handle(Exception $e)
+	{
+		if($e instanceof FrameworkException)
+		{
+			$e->showErrorDialog();
+		}
+		else
+		{
+			$ie = new FrameworkImportedException($e);
+			$ie->showErrorDialog();
+		}
+	}
+		
 	function __construct($message='', $code=0)
 	{
 		parent::__construct($message, $code);
