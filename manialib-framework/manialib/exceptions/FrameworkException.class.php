@@ -71,6 +71,8 @@ class FrameworkException extends Exception
 		$session = SessionEngine::getInstance();
 		$linkstr = $request->getReferer();
 		
+		// TODO Put the manialink error dialog code in an included file
+		
 		Manialink::load();
 		{
 			$ui = new Panel(70, 35);

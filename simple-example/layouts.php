@@ -180,4 +180,5 @@ Manialink::beginFrame(-33, 45, 1, $layout);
 Manialink::endFrame();
 
 require_once ('footer.php');
+
 ?>
