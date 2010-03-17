@@ -84,7 +84,7 @@ abstract class ErrorHandling
 	/**
 	 * Log the message with the right format and tag
 	 */
-	static private function logMessage($errno, &$errstr, $errfile, $errline, $forcelog = null)
+	static protected function logMessage($errno, &$errstr, $errfile, $errline, $forcelog = null)
 	{
 		switch($errno)
 		{
@@ -138,7 +138,7 @@ abstract class ErrorHandling
 	/**
 	 * Filter the message before being printed to the user 
 	 */
-	static private function filterMessage($errno, &$errstr)
+	static protected function filterMessage($errno, &$errstr)
 	{
 		if(DEBUG_LEVEL > 0)
 		{

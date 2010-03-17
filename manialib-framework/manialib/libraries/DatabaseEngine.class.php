@@ -1,7 +1,6 @@
 <?php
 /**
- * Database abstraction
- * 
+ * @package Manialib
  * @author Maxime Raoust
  */
 
@@ -21,7 +20,7 @@ function quote_smart($value, $gpc = true)
 	{
 		$value = stripslashes($value);
 	}
-	$value = "'" . mysql_real_escape_string($value) . "'";
+	$value = '\'' . mysql_real_escape_string($value) . '\'';
 	return $value;
 }
 
@@ -38,18 +37,21 @@ function quote_smart_ref(& $value, $gpc = true)
 	{
 		$value = stripslashes($value);
 	}
-	$value = "'" . mysql_real_escape_string($value) . "'";
+	$value = '\'' . mysql_real_escape_string($value) . '\'';
 }
 
+/**
+ * Simple Mysql abstraction class
+ */
 final class DatabaseEngine
 {
-	private static $instance;
-	private $db;
-	private $rs;
+	protected static $instance;
+	protected $connection;
+	protected $result;
 	public $query;
 	
 	/**
-	 * Get the instance
+	 * Gets the instance
 	 */
 	public static function getInstance()
 	{
@@ -61,121 +63,117 @@ final class DatabaseEngine
 		return self::$instance;
 	}
 
-	/** 
-	 * Constructor
-	 */
-	private function __construct()
+	protected function __construct()
 	{
 		
-		$this->db = mysql_connect(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD);
+		$this->connection = mysql_connect(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD);
 		
 
-		if ($this->db === false)
+		if ($this->connection === false)
 		{
-			trigger_error("Database connection error");
+			throw new DatabaseException;
 		}
 
-		if (function_exists("mysql_set_charset"))
+		if (function_exists('mysql_set_charset'))
 		{
-			mysql_set_charset("utf8");
+			mysql_set_charset('utf8');
 		} else
 		{
-			$this->query = "SET NAMES 'utf8'";
+			$this->query = 'SET NAMES \'utf8\'';
 			$this->query();
 		}
 
-		if (mysql_select_db(DATABASE_NAME, $this->db) === false)
+		if (mysql_select_connection(DATABASE_NAME, $this->connection) === false)
 		{
-			trigger_error("Database selection error");
+			throw new DatabaseException;
 		}
 	}
 
 	/**
-	 * Execute the database query stored in $this->query. Store the result in
-	 * $this->rs. Returns false on error. Behavior can be changed with both 
-	 * params
-	 * 
-	 * @param String $query=null
-	 * @param Bool $onlyReturnResult=false
-	 * @return AdodbRecordSet (or false)
+	 * Executes the database query stored in self::$query. Store the result in
+	 * self::rs. Behavior can be changed with both params. Throws an exception
+	 * on error.
+	 * @param string
+	 * @param boolean
+	 * @return ressource Mysql result
 	 */
 	function query($query = null, $saveResult = true)
 	{
-		if ($query == null)
-			$_query = $this->query;
-		else
-			$_query = $query;
-
-		$rs = mysql_query($_query, $this->db);
-
+		$_query = $query ? $query : $this->query;
+		$result = mysql_query($_query, $this->connection);
+		
+		if ($result == false)
+		{
+			throw new DatabaseException($_query);
+		}
 		if ($saveResult)
 		{
-			$this->rs = $rs;
+			$this->result = $result;
 		}
-		if ($rs == false)
-		{
-			trigger_error("Database query error : " . mysql_error() . ", query= $_query");
-			return false;
-		} else
-		{
-			return $rs;
-		}
+		return $result;
 	}
 
 	/**
-	 * Count the rows the last result
-	 * 
-	 * @return Int
+	 * Counts the rows in the last result set
+	 * @return int
 	 */
 	function numRows()
 	{
-		return mysql_num_rows($this->rs);
+		return mysql_num_rows($this->result);
 	}
 
 	/**
-	 * Count the affected rows of the last query
-	 * 
-	 * @return Int
+	 * Counts the affected rows of the last query
+	 * @return int
 	 */
 	function affectedRows()
 	{
-		return mysql_affected_rows($this->db);
+		return mysql_affected_rows($this->connection);
 	}
 
 	/**
-	 * Fetch the last result into an array
-	 * 
+	 * Fetches the last result into an array
+	 * @param int Mysql result type (MYSQL_FETCH_ASSOC, MYSQL_FETCH_NUM,
+	 * MYSQL_FETCH_BOTH)
 	 * @return Array
 	 */
-	function fetchArray()
+	function fetchArray($resultType = MYSQL_FETCH_ASSOC)
 	{
-		if ($this->rs)
-			return mysql_fetch_array($this->rs);
+		if ($this->result)
+			return mysql_fetch_array($this->result, $resultType);
 		else
 			return false;
 	}
 	
 	/**
-	 * Fetch the current row
-	 * 
-	 * @return Array
+	 * Fetches the current row
+	 * @return array
 	 */
 	function fetchRow()
 	{
-		if ($this->rs)
-			return mysql_fetch_row($this->rs);
+		if ($this->result)
+			return mysql_fetch_row($this->result);
 		else
 			return false;
 	}
 
 	/**
-	 * Return the last inserted ID
-	 * 
-	 * @return Int
+	 * Returns the last inserted ID
+	 * @return int
 	 */
 	function insertId()
 	{
-		return mysql_insert_id($this->db);
+		return mysql_insert_id($this->connection);
+	}
+}
+
+class DatabaseException extends ManialinkException
+{
+	protected $query;
+	function __construct($query='')
+	{
+		parent::__construct(mysql_error(), mysql_errno());
+		$this->query = $query;
 	}
 }
 ?>

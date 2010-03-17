@@ -14,19 +14,22 @@
  */
 final class RequestEngine
 {
-	private static $instance;
+	protected static $instance;
 	
-	private $requestParams = array();
-	private $params = array();
-	private $protectedParams = array();
-	private $globalParams = array();
+	protected $requestParams = array();
+	protected $params = array();
+	protected $protectedParams = array();
+	protected $globalParams = array();
 	
-	private $URLBase;
-	private $URLPath;
-	private $URLFile;
+	protected $URLBase;
+	protected $URLPath;
+	protected $URLFile;
 	
-	private $registerRefererAtDestruct;
+	protected $registerRefererAtDestruct;
 	
+	/**
+	 * Gets the instance
+	 */
 	public static function getInstance()
 	{
 		if (!self::$instance)
@@ -38,7 +41,10 @@ final class RequestEngine
 	}
 	
 	/**
-	 * Retrieves a request parameter
+	 * Retrieves a request parameter, or the default value if not found
+	 * @param string
+	 * @param mixed
+	 * @return mixed
 	 */
 	function get($name, $default=null)
 	{
@@ -53,7 +59,9 @@ final class RequestEngine
 	}
 	
 	/**
-	 * Retrieves a request parameter and throws an exception if not found
+	 * Retrieves a request parameter, or throws an exception if not found
+	 * @param string
+	 * @return mixed
 	 */
 	function getStrict($name)
 	{
@@ -65,7 +73,9 @@ final class RequestEngine
 	}
 		
 	/**
-	 * Sets a request parameter
+	 * Sets a request parameter. Note that you cannot use "rp" as parameter name
+	 * @param string
+	 * @param mixed
 	 */
 	function set($name, $value)
 	{
@@ -78,6 +88,7 @@ final class RequestEngine
 	
 	/**
 	 * Deletes a request parameter
+	 * @param mixed
 	 */
 	function delete($name)
 	{
@@ -85,7 +96,8 @@ final class RequestEngine
 	}
 	
 	/**
-	 * Restore a request parameter to the value it had when the page was loaded
+	 * Restores a request parameter to the value it had when the page was loaded
+	 * @param string
 	 */
 	function restore($name)
 	{
@@ -101,6 +113,11 @@ final class RequestEngine
 	
 	/**
 	 * Returns an url with all the currently defined request parameters
+	 * @param string The filename (eg: "index.php" or "admin/login.php")
+	 * @param boolean Whether the first parameter is a relative URL (default:
+	 * true). Set this parameter to false if you want to create and external
+	 * link.
+	 * @return string
 	 */
 	function createLink($file=null, $relativePath=true)
 	{
@@ -111,6 +128,7 @@ final class RequestEngine
 	/**
 	 * Returns an url with the request parameters specified as method arguments
 	 * (eg. createLinkArgList("index.php", "id", "page") )
+	 * @param string The filename (eg: "index.php" or "admin/login.php")
 	 */
 	function createLinkArgList($file=null)
 	{
@@ -129,7 +147,9 @@ final class RequestEngine
 	
 	/**
 	 * Creates a Manialink redirection to the specified file with request
-	 * parameters specified as method arguments
+	 * parameters specified as method arguments (eg. redirectManialink("index.
+	 * php", "id", "page") )
+	 * @param string The filename (eg: "index.php" or "admin/login.php")
 	 */
 	function redirectManialink($file="index.php")
 	{
@@ -144,7 +164,8 @@ final class RequestEngine
 	}
 	
 	/**
-	 * Creates a Manialink redirection to the specified URI
+	 * Creates a Manialink redirection to the specified absolute URI
+	 * @param string
 	 */
 	function redirectManialinkAbsolute($absoluteUri)
 	{
@@ -154,7 +175,8 @@ final class RequestEngine
 	}
 	
 	/**
-	 * Creates a Manialink redirection to the previously saved referer
+	 * Creates a Manialink redirection to the previously registered referer, or
+	 * the index if no referer was previously registedred
 	 */
 	function redirectToReferer()
 	{
@@ -165,7 +187,10 @@ final class RequestEngine
 	}
 	
 	/**
-	 * Protected request parameters will always be deleted from the list
+	 * Registers the "$name" parameter as protected parameters. Protected
+	 * parameters are always removed from the parameter array when the page is
+	 * loaded.
+	 * @param string
 	 */
 	function registerProtectedParam($name)
 	{
@@ -174,8 +199,10 @@ final class RequestEngine
 	}
 	
 	/**
-	 * Global request parameters will always be saved in the session and then
-	 * deleted from the list
+	 * Registers the "$name" parameter as protected parameters. Global
+	 * parameters atr always removed from the parameter array and saved as a
+	 * session parameter when the page is loaded.
+	 * @param string
 	 */
 	function registerGlobalParam($name)
 	{
@@ -199,7 +226,8 @@ final class RequestEngine
 	}
 	
 	/**
-	 * Returns the  referer, or the specified default page, or index.php
+	 * Returns the referer, or the specified default page, or index.php
+	 * @param string
 	 */
 	function getReferer($default=null)
 	{
@@ -228,7 +256,7 @@ final class RequestEngine
 		}
 	}
 
-	private function __construct()
+	protected function __construct()
 	{
 		$this->params = $_GET;
 		if(get_magic_quotes_gpc())
@@ -239,7 +267,7 @@ final class RequestEngine
 		$this->registerProtectedParam("rp");
 	}
 	
-	private function createLinkString($file=null, $relativePath=true, $params)
+	protected function createLinkString($file=null, $relativePath=true, $params)
 	{
 		// If absolute path, there's nothing to do
 		if(!$relativePath)

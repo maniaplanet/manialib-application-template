@@ -1,27 +1,24 @@
 <?php
 /**
- * Session engine
- * 
  * @author Maxime Raoust
  * @package Manialib
  */
 
-class SessionEngine
+/**
+ * <b>Session engine</b>: helps handling PHP sessions
+ */
+final class SessionEngine
 {
-	private static $instance;
-	public static $name = "maniasid";
-
 	/**
-	 * Constructor
+	 * Session identifier name. Used as parameter name for transporting the
+	 * session Id in the URL when the client doesn't support cookies.
 	 */
-	private function __construct()
-	{
-		session_name(self::$name);
-		session_start();
-	}
+	const SIDName = 'maniasid';
+	protected static $instance;
+	
 
 	/**
-	 * Get the instance
+	 * Gets the instance
 	 */
 	public static function getInstance()
 	{
@@ -32,12 +29,17 @@ class SessionEngine
 		}
 		return self::$instance;
 	}
+	
+	protected function __construct()
+	{
+		session_name(self::SIDName);
+		session_start();
+	}
 
 	/**
-	 * Set a session var
-	 * 
-	 * @param String $name
-	 * @param Mixed $value=null
+	 * Sets a session var
+	 * @param string
+	 * @param mixed
 	 */
 	function set($name, $value = null)
 	{
@@ -45,24 +47,16 @@ class SessionEngine
 	}
 
 	/**
-	 * Delete a session var
-	 * 
-	 * @param String $name
+	 * Deletes a session var
+	 * @param string
 	 */
 	function delete($name)
 	{
-		if ($this->exists($name))
-		{
-			unset ($_SESSION[$name]);
-			return true;
-		}
-
-		return false;
+		unset ($_SESSION[$name]);
 	}
 
 	/**
-	 * Get a session var, or the default value if nothing was found
-	 * 
+	 * Gets a session var, or the default value if nothing was found
 	 * @param string The name of the variable
 	 * @param mixed The default value
 	 * @return mixed
@@ -74,7 +68,6 @@ class SessionEngine
 	
 	/**
 	 * Gets a session var, throws an exception if not found
-	 * 
 	 * @param string The name of the variable
 	 * @return mixed
 	 */
@@ -88,13 +81,13 @@ class SessionEngine
 	}
 
 	/**
-	 * Check if the specified session var exists
-	 * 
-	 * @return Bool
+	 * Checks if the specified session var exists
+	 * @return boolean
 	 */
 	function exists($name)
 	{
 		return isset ($_SESSION[$name]);
 	}
 }
+
 ?>

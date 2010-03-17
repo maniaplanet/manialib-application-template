@@ -1,22 +1,14 @@
 <?php
 /**
- * i18n package
- * 
+ * @package Manialib
  * @author Maxime Raoust
  */
 
 // TODO LangEngine refactoring
 
-if(!defined("LANG_ENGINE_MODE"))
-{
-	define("LANG_ENGINE_MODE", LANG_ENGINE_MODE_DYNAMIC);	
-}
-
-
 /**
- * i18n core class
- * 
- * You shouldn't have to do anything with it. Use "__()" & "__date()" instead
+ * i18n core class. You shouldn't have to do anything with it. Use "__()" &
+ * "__date()" instead
  */
 class LangEngine
 {
