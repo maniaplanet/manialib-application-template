@@ -167,13 +167,4 @@ final class DatabaseEngine
 	}
 }
 
-class DatabaseException extends ManialinkException
-{
-	protected $query;
-	function __construct($query='')
-	{
-		parent::__construct(mysql_error(), mysql_errno());
-		$this->query = $query;
-	}
-}
 ?>

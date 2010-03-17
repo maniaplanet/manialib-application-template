@@ -55,7 +55,7 @@ abstract class GuiTools
 				break;		
 			
 			default:
-				throw new ManialinkException('Unsupported positions');
+				throw new GuiToolkitException('Unsupported positions');
 		}
 		return $posX + $factor * $sizeX;
 	}

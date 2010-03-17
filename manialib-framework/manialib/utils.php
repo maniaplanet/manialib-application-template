@@ -32,6 +32,11 @@ function __autoload($className)
 		require_once($path);
 		return true;
 	}
+	if(file_exists($path = APP_FRAMEWORK_EXCEPTIONS_PATH.$className.'.class.php'))
+	{
+		require_once($path);
+		return true;
+	}
 	return false;
 }
 

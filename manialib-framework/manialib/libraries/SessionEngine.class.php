@@ -77,7 +77,7 @@ final class SessionEngine
 		{
 			return $_SESSION[$name];
 		}
-		throw new ManialinkException('Session variable "'.$name.'" not found');
+		throw new FrameworkException('Session variable "'.$name.'" not found');
 	}
 
 	/**

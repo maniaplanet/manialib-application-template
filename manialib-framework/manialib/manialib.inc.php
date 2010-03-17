@@ -35,7 +35,7 @@ date_default_timezone_set(DEFAULT_TIMEZONE);
 
 // Error handler
 error_reporting(E_ALL);
-set_error_handler(array('ErrorHandling', 'manialinkHandler'));
+set_error_handler(array('ErrorHandling', 'exceptionErrorHandler'));
 set_exception_handler(array('ErrorHandling', 'exceptionHandler'));
 
 ?>

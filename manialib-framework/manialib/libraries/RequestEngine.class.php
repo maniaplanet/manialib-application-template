@@ -69,7 +69,7 @@ final class RequestEngine
 		{
 			return $this->params[$name];
 		}	
-		throw new ManialinkException('Parameter "'.$name.'" not set');
+		throw new RequestParameterNotFoundException($name);
 	}
 		
 	/**
@@ -81,7 +81,7 @@ final class RequestEngine
 	{
 		if($name=='rp')
 		{
-			throw new ManialinkException('You cannot use "rp" as a request parameter');
+			throw new RequestException('You cannot use "rp" as a request parameter');
 		}
 		$this->params[$name] = $value;
 	}

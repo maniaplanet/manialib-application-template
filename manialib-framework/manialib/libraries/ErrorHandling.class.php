@@ -22,11 +22,22 @@
  * 
  */
 
+// TODO Kill the error handler!
+
 /**
  * Error handling class
  */
 abstract class ErrorHandling
 {
+	/**
+	 * Exception handler: transforms standard PHP errors into
+	 * FrameworkErrorException
+	 */
+	static function exceptionErrorHandler($errno, $errstr, $errfile, $errline) 
+	{
+    	throw new FrameworkErrorException($errstr, 0, $errno, $errfile, $errline);
+	}
+	
 	/**
 	 * Default handler
 	 */
@@ -76,9 +87,7 @@ abstract class ErrorHandling
 	
 	static function exceptionHandler($exception)
 	{
-		trigger_error(
-			'Uncaught exception: ' . print_r($exception, true), 
-			E_USER_ERROR);
+		$exception->showErrorDialog();
 	}
 	
 	/**
