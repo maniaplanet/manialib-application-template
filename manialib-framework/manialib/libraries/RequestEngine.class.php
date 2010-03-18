@@ -61,15 +61,17 @@ final class RequestEngine
 	/**
 	 * Retrieves a request parameter, or throws an exception if not found
 	 * @param string
+	 * @param string Optional human readable name for error dialog
 	 * @return mixed
 	 */
-	function getStrict($name)
+	function getStrict($name, $humanReadableName=null)
 	{
 		if(isset($this->params[$name]))
 		{
 			return $this->params[$name];
 		}	
-		throw new RequestParameterNotFoundException($name);
+		$humanReadableName = $humanReadableName ? $humanReadableName : $name;
+		throw new RequestParameterNotFoundException($humanReadableName);
 	}
 		
 	/**

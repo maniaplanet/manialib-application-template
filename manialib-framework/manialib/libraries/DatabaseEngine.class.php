@@ -4,8 +4,6 @@
  * @author Maxime Raoust
  */
 
-// TODO DatabaseEngine refactoring
-
 /**
  * Protects a string to be used in a database query
  * 

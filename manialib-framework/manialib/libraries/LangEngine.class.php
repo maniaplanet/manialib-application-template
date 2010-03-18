@@ -4,8 +4,6 @@
  * @author Maxime Raoust
  */
 
-// TODO LangEngine refactoring
-
 /**
  * i18n core class. You shouldn't have to do anything with it. Use "__()" &
  * "__date()" instead

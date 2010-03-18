@@ -55,8 +55,16 @@ abstract class ErrorHandling
 	 */
 	static function exceptionErrorHandler($errno, $errstr, $errfile, $errline) 
 	{
-    	// TODO Do not throw FrameworkErrorException when the error level is low
-    	throw new FrameworkErrorException($errstr, 0, $errno, $errfile, $errline);
+    	switch($errno)
+    	{
+    		case E_USER_WARNING:
+    			debuglog('Warning: '.$errstr.' in '.$errfile.':'.$errline);
+    			break;
+    		
+    		default:
+    			throw new FrameworkErrorException(
+    				$errstr, 0, $errno, $errfile, $errline);
+    	}
 	}
 	
 	/**

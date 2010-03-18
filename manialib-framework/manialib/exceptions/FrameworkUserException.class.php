@@ -9,6 +9,7 @@
  */
 class FrameworkUserException extends FrameworkException 
 {
+	// TODO Maybe log those exceptions in a different log since it's not for bugs but for user errors 
 }
 
 ?>
