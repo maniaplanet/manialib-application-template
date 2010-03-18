@@ -14,10 +14,13 @@ class FrameworkErrorException extends FrameworkException
 	
     function __construct ($message, $code, $severity, $filename, $lineno)
     {
-    	parent::__construct($message, $code);
+    	parent::__construct($message, $code, null, false);
     	$this->file = $filename;
     	$this->line = $lineno;
     	$this->severity = $severity;
+    	$this->optionalMessageLabel = 'Severity';
+    	$this->optionalMessageContent = $severity;
+    	$this->iLog();
     }
     
     /**

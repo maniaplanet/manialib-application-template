@@ -9,10 +9,6 @@
  */
 class RequestParameterNotFoundException extends RequestException 
 {
-	function showErrorDialog()
-	{
-		parent::showErrorDialog('You must specify "'.$this->message.'"');
-	}
 }
 
 ?>

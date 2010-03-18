@@ -9,11 +9,12 @@
  */
 class DatabaseException extends FrameworkException
 {
-	protected $query;
 	function __construct($query='')
 	{
-		parent::__construct(mysql_error(), mysql_errno());
-		$this->query = $query;
+		parent::__construct(mysql_error(), mysql_errno(), null, false);
+		$this->optionalMessageLabel = 'Query';
+		$this->optionalMessageContent = $query;
+		$this->iLog();
 	}
 }
 ?>

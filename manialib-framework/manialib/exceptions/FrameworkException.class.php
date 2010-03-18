@@ -12,6 +12,8 @@ class FrameworkException extends Exception
 	protected $requestURL;
 	protected $dateThrown;
 	protected $logMessage;
+	protected $optionalMessageLabel;
+	protected $optionalMessageContent;
 	
 	/**
 	 * Handles what to do when an exception is catched.
@@ -19,36 +21,87 @@ class FrameworkException extends Exception
 	 */
 	static function handle(Exception $e)
 	{
+		if($e instanceof FrameworkUserException)
+		{
+			ErrorHandling::showErrorDialog($e->getMessage());
+		}
 		if($e instanceof FrameworkException)
 		{
-			$e->showErrorDialog();
+			ErrorHandling::showErrorDialog();
 		}
 		else
 		{
 			$ie = new FrameworkImportedException($e);
-			$ie->showErrorDialog();
+			ErrorHandling::showErrorDialog();
 		}
 	}
+	
+	/**
+	 * Logs an exception
+	 * @param Exception 
+	 * @param string The label of the optional message
+	 * @param string An optional message that will be logged with the exception
+	 * (eg: usefull to log Mysql queries in database exceptions)
+	 */
+	static function logException(Exception $e, $optionalMessageLabel=null,
+		$optionalMessageContent=null)
+	{
+		// Message config
+		$spacerPrefix = '    ';
+		$charPrefix = '# ';
+		$prefix = $spacerPrefix.$charPrefix;
+		$padLendth = 15;
 		
-	function __construct($message='', $code=0)
+		// Request URL if it exists
+		$requestURL = 
+			method_exists($e, 'getRequestURL') ?
+			$prefix.str_pad('Request:', $padLendth).$e->getRequestURL()."\n" : 
+			'';
+			
+		// optionnal message if it exists	
+		$optionalMessage = 
+			$optionalMessageLabel ?
+			$prefix.str_pad($optionalMessageLabel.':', $padLendth)."\n" :
+			'';
+		
+		// The message itself
+		$message = 
+			get_class($e) ."\n".
+			$prefix.str_pad('Date:', $padLendth).date('d/m/y H:i:s') ."\n".
+			$prefix.str_pad('Message:', $padLendth).
+			print_r($e->getMessage(), true).' ('.$e->getCode().')' ."\n".
+			$optionalMessage .
+			$requestURL .
+			$prefix.str_pad('File:', $padLendth).
+			$e->getFile().':'.$e->getLine() ."\n".
+			$prefix.str_pad('Backtrace:', $padLendth)."\n".
+			$spacerPrefix. 
+			str_replace("\n", "\n".$spacerPrefix, $e->getTraceAsString())
+			."\n"."\n";
+
+		return $message;
+	}
+
+	/**
+	 * Default constructor
+	 * @param string The Exception message to throw
+	 * @param int The Exception code
+	 * @param Exception The previous exception used for the exception chaining
+	 * (since PHP 5.3, used here for forward compatibility)
+	 * @param boolean Whether you want to log the exception or not (useful to
+	 * modify the log message in subclasses)
+	 */	
+	function __construct($message='', $code=0, Exception $previous=null, $logException=true)
 	{
 		parent::__construct($message, $code);
-		
+
 		$request = RequestEngine::getInstance();
 		$this->dateThrown = time();
 		$this->requestURL = $request->createLink();
-
-		$this->logMessage =
-			get_class($this) ."\n".
-			'    # Date:      '. date('d/m/y H:i:s') ."\n".
-			'    # Message:   '. print_r($this->message, true).' ('.$this->code.')' ."\n".
-			'    # Request:   '. $this->requestURL ."\n".
-			'    # File:      '. $this->file.':'.$this->line ."\n".
-			'    # Backtrace: ' ."\n".
-			'    ' . str_replace("\n", "\n    ", $this->getTraceAsString()) ."\n".
-			"\n";
-
-		$this->iLog();
+		if($logException)
+		{
+			$this->iLog();			
+		}
 	}
 	
 	/**
@@ -70,52 +123,34 @@ class FrameworkException extends Exception
 	}
 	
 	/**
+	 * Returns the label of the optional message
+	 * @return string
+	 */
+	function getOptionalMessageLabel()
+	{
+		return $this->optionalMessageLabel;
+	}
+	
+	/**
+	 * Returns the content of the optional message
+	 * @return srting
+	 */
+	function getOptionalMessage()
+	{
+		return $this->optionalMessageContent;
+	}
+	
+	/**
 	 * Logs the exception in the specified log file.
 	 * @param string The log file. Default is APP_ERROR_LOG
 	 */
 	function iLog($logfile=APP_ERROR_LOG)
 	{
-		file_put_contents($logfile, $this->logMessage, FILE_APPEND);
-	}
-	
-	/**
-	 * Shows an error dialog to the user with the specified message
-	 * @param The message to show, defaukt is 'Fatal error'
-	 */
-	function showErrorDialog($message='Fatal error')
-	{
-		$request = RequestEngine::getInstance();
-		$session = SessionEngine::getInstance();
-		$linkstr = $request->getReferer();
-		
-		// TODO Put the manialink error dialog code in an included file
-		
-		Manialink::load();
+		if(!$this->logMessage)
 		{
-			$ui = new Panel(70, 35);
-			$ui->setAlign('center', 'center');
-			$ui->title->setStyle('TextTitleError');
-			$ui->titleBg->setSubStyle('BgTitle2');
-			$ui->title->setText('Error');
-			$ui->save();
-
-			$ui = new Label(68);
-			$ui->enableAutonewline();
-			$ui->setAlign('center', 'center');
-			$ui->setPosition(0, 0, 2);
-			$ui->setText($message);
-			$ui->save();
-
-			$ui = new Button;
-			$ui->setText('Back');
-			
-			$ui->setManialink($linkstr);
-			$ui->setPosition(0, -12, 5);
-			$ui->setHalign('center');
-			$ui->save();
+			$this->logMessage = self::logException($this);
 		}
-		Manialink::render();
-		exit;
+		file_put_contents($logfile, $this->logMessage, FILE_APPEND);
 	}
 }
 

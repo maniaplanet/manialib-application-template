@@ -151,15 +151,15 @@ final class RequestEngine
 	 * php", "id", "page") )
 	 * @param string The filename (eg: "index.php" or "admin/login.php")
 	 */
-	function redirectManialink($file="index.php")
+	function redirectManialink($file='index.php')
 	{
 		ob_clean();
 		$arr = func_get_args();
 		array_shift($arr);
 		array_unshift($arr, $file);
-		$link = call_user_func_array(array($this,  "createLinkArgList"), $arr);
-		header("Content-Type: text/xml; charset=utf-8");
-		echo("<redirect>$link</redirect>");
+		$link = call_user_func_array(array($this,  'createLinkArgList'), $arr);
+		header('Content-Type: text/xml; charset=utf-8');
+		echo('<redirect>'.$link.'</redirect>');
 		exit;
 	}
 	
@@ -170,7 +170,7 @@ final class RequestEngine
 	function redirectManialinkAbsolute($absoluteUri)
 	{
 		ob_clean();
-		echo("<redirect>$absoluteUri</redirect>");
+		echo('<redirect>'.$absoluteUri.'</redirect>');
 		exit;
 	}
 	
@@ -182,12 +182,12 @@ final class RequestEngine
 	{
 		ob_clean();
 		$link = $this->getReferer();
-		echo("<redirect>$link</redirect>");
+		echo('<redirect>'.$link.'</redirect>');
 		exit;
 	}
 	
 	/**
-	 * Registers the "$name" parameter as protected parameters. Protected
+	 * Registers the '$name' parameter as protected parameters. Protected
 	 * parameters are always removed from the parameter array when the page is
 	 * loaded.
 	 * @param string
@@ -232,7 +232,7 @@ final class RequestEngine
 	function getReferer($default=null)
 	{
 		$session = SessionEngine::getInstance();
-		$referer = $session->get("referer");
+		$referer = $session->get('referer');
 		if($referer)
 		{
 			return rawurldecode($referer);
@@ -243,7 +243,7 @@ final class RequestEngine
 		}
 		else
 		{
-			return APP_URL."index.php";
+			return APP_URL.'index.php';
 		}
 	}
 	
@@ -252,7 +252,7 @@ final class RequestEngine
 		if($this->registerRefererAtDestruct)
 		{
 			$session = SessionEngine::getInstance();
-			$session->set("referer", rawurlencode($this->registerRefererAtDestruct));
+			$session->set('referer', rawurlencode($this->registerRefererAtDestruct));
 		}
 	}
 
@@ -264,7 +264,7 @@ final class RequestEngine
 			$this->params = array_filter($this->params, 'stripslashes');
 		}
 		$this->requestParams = $this->params;
-		$this->registerProtectedParam("rp");
+		$this->registerProtectedParam('rp');
 	}
 	
 	protected function createLinkString($file=null, $relativePath=true, $params)
