@@ -38,6 +38,7 @@ final class ManialinkUploadHandler
 		$inputStream = fopen('php://input', 'r');
 		$this->inputFile = '' ;
 		$streamSize = 0;
+		
 		while(!feof($inputStream))
 		{
 			$this->inputFile .= fread($inputStream, self::READ_PACKET_SIZE);
