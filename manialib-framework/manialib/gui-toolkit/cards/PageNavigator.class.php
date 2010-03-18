@@ -4,13 +4,10 @@
  * @package Manialib
  */
 
-// TODO Update PHPDoc
-
 /**
  * Page Navigator
- * @package Manialib
  */
-class PageNavigator
+class PageNavigator extends GuiComponent
 {
 	public $arrowNext;
 	public $arrowPrev;
@@ -33,9 +30,6 @@ class PageNavigator
 	protected $showText;
 	protected $pageNumber;
 	protected $currentPage;
-	protected $posX;
-	protected $posY;
-	protected $posZ;
 
 	function __construct($iconSize = 5)
 	{
@@ -70,16 +64,6 @@ class PageNavigator
 		$this->arrowFastPrev->setSize($iconSize, $iconSize);
 		$this->arrowLast->setSize($iconSize, $iconSize);
 		$this->arrowFirst->setSize($iconSize, $iconSize);
-	}
-	
-	/**
-	 * Sets the position of the center of the PageNavigator
-	 */
-	function setPosition($x = 0, $y = 0, $z = 0)
-	{
-		$this->posX = $x;
-		$this->posY = $y;
-		$this->posZ = $z;
 	}
 	
 	/**

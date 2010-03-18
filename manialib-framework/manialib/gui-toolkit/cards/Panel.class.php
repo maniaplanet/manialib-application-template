@@ -6,7 +6,6 @@
 
 /**
  * <b>Panel:</b> A quad with a title and a title background
- * @package Manialib
  */
 class Panel extends Quad
 {

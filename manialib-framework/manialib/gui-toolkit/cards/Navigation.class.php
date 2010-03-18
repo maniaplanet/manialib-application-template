@@ -5,11 +5,9 @@
  */
 
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'cards/NavigationButton.class.php' );
-// TODO Use a column layout in the navigation menu
 
 /**
  * Navigation menu
- * @package Manialib
  */
 class Navigation extends Quad
 {
@@ -57,9 +55,7 @@ class Navigation extends Quad
 	function addItem() 
 	{
 		$item = new NavigationButton($this->sizeX-1);
-		$item->setPosition(0, $this->yIndex);
 		$this->items[] = $item;
-		$this->yIndex -= $item->getSizeY() + $this->marginHeight;
 	}
 	
 	/**
@@ -77,7 +73,8 @@ class Navigation extends Quad
 	 */
 	function addGap($gap = 3) 
 	{
-		$this->yIndex -= $gap;
+		$item = new Spacer(1, $gap);
+		$this->items[] = $item;
 	}
 	
 	/**
@@ -105,11 +102,16 @@ class Navigation extends Quad
 				$this->subTitle->save();
 				$this->logo->save();
 				
-				foreach($this->items as $item) 
+				$layout = new ColumnLayout($this->sizeX-1, $this->sizeY-10);
+				$layout->setMarginHeight(1);
+				Manialink::beginFrame(0, -10, 0, $layout);
 				{
-					$item->save();
+					foreach($this->items as $item) 
+					{
+						$item->save();
+					}
+					Manialink::endFrame();
 				}
-				
 				if($this->showQuitButton) 
 				{
 					$this->quitButton->setSizeX($this->sizeX-1);

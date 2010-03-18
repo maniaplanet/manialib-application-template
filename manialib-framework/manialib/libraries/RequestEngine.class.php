@@ -7,6 +7,7 @@
 // TODO RequestEngine debug: short manialinks
 // TODO RequestEngine debug: sub-directories
 // TODO RequestEngine debug: absolute URLs
+// TODO RequestEngine: should the parameters be automatically rawurlencod()/rawurldecod() ?
 
 /**
  * <b>Request engine</b>: used to handle GET parameters and to create hyperlink
@@ -333,7 +334,6 @@ final class RequestEngine
 		// Modify parameters array
 		foreach($params as $name=>$value)
 		{
-			// TODO Check if urlencode/urldecode is needed
 			$params[$name] = $name.'='.$value;
 		}
 		

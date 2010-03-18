@@ -24,10 +24,13 @@
 ob_start();
 
 // Framework includes. The classes will be loaded through the __autoload() function
+// However we load a few classes statically to enhance performances
 require_once( dirname(__FILE__).'/config.default.php' );
 require_once( dirname(__FILE__).'/settings.php' );
 require_once( APP_FRAMEWORK_PATH.'utils.php' );
-
+require_once( APP_FRAMEWORK_LIBRARIES_PATH.'ErrorHandling.class.php' );
+require_once( APP_FRAMEWORK_LIBRARIES_PATH.'RequestEngine.class.php' );
+require_once( APP_FRAMEWORK_LIBRARIES_PATH.'SessionEngine.class.php' );
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'Manialink.class.php' );
 
 // Date config

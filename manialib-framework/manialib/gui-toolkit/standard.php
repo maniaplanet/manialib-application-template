@@ -8,46 +8,17 @@ require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'GuiTools.class.php' );
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'styles.php' );
 
 /**
- * Base class for creating GUI elements
- * @package Manialib
+ * The GuiComponent is a generic and abstract element that only contains
+ * position, size and scale info.
  */
-abstract class GuiElement
+abstract class GuiComponent
 {
-	protected $style;
-	protected $subStyle;
 	protected $posX = 0;
 	protected $posY = 0;
 	protected $posZ = 0;
 	protected $sizeX;
 	protected $sizeY;
-	protected $sizeZ;
 	protected $scale;
-	protected $valign = null;
-	protected $halign = null;
-	protected $manialink;
-	protected $url;
-	protected $maniazones;
-	protected $bgcolor;
-	protected $addPlayerId;
-	protected $action;
-	protected $actionKey;
-	protected $image;
-	protected $imageFocus;
-	protected $xmlTagName = 'xmltag'; // Redeclare this for each child
-	protected $xml;
-	
-	/**
-	 * Manialink element default constructor. It's common to specify the size of
-	 * the element in the constructor.
-	 * 
-	 * @param float Width of the element
-	 * @param float Height of the element
-	 */
-	function __construct($sizeX = 20, $sizeY = 20)
-	{
-		$this->sizeX = $sizeX;
-		$this->sizeY = $sizeY;
-	}
 	
 	/**
 	 * Sets the X position of the element
@@ -84,9 +55,9 @@ abstract class GuiElement
 	 */
 	function setPosition($posX = 0, $posY = 0, $posZ = 0)
 	{
-		$this->setPositionX($posX);
-		$this->setPositionY($posY);
-		$this->setPositionZ($posZ);
+		$this->posX = $posX;
+		$this->posY = $posY;
+		$this->posZ = $posZ;
 	}
 	
 	/**
@@ -114,8 +85,8 @@ abstract class GuiElement
 	 */
 	function setSize($sizeX, $sizeY)
 	{
-		$this->setSizeX($sizeX);
-		$this->setSizeY($sizeY);
+		$this->sizeX = $sizeX;
+		$this->sizeY = $sizeY;
 	}
 	
 	/**
@@ -126,6 +97,96 @@ abstract class GuiElement
 	function setScale($scale)
 	{
 		$this->scale = $scale;
+	}
+	
+	/**
+	 * Returns the X position of the element
+	 * @return float
+	 */
+	function getPosX()
+	{
+		return $this->posX;
+	}
+	
+	/**
+	 * Returns the Y position of the element
+	 * @return float
+	 */
+	function getPosY()
+	{
+		return $this->posY;
+	}
+	
+	/**
+	 * Returns the Z position of the element
+	 * @return float
+	 */
+	function getPosZ()
+	{
+		return $this->posZ;
+	}
+	
+	/**
+	 * Returns the width of the element
+	 * @return float
+	 */
+	function getSizeX()
+	{
+		return $this->sizeX;
+	}
+	
+	/**
+	 * Returns the height of the element
+	 * @return float
+	 */
+	function getSizeY()
+	{
+		return $this->sizeY;
+	}
+	
+	/**
+	 * Returns the scale of the element
+	 * @return float
+	 */
+	function getScale()
+	{
+		return $this->scale;
+	}
+}
+
+/**
+ * Base class for creating GUI elements
+ * @package Manialib
+ */
+abstract class GuiElement extends GuiComponent
+{
+	protected $style;
+	protected $subStyle;
+	protected $valign = null;
+	protected $halign = null;
+	protected $manialink;
+	protected $url;
+	protected $maniazones;
+	protected $bgcolor;
+	protected $addPlayerId;
+	protected $action;
+	protected $actionKey;
+	protected $image;
+	protected $imageFocus;
+	protected $xmlTagName = 'xmltag'; // Redeclare this for each child
+	protected $xml;
+	
+	/**
+	 * Manialink element default constructor. It's common to specify the size of
+	 * the element in the constructor.
+	 * 
+	 * @param float Width of the element
+	 * @param float Height of the element
+	 */
+	function __construct($sizeX = 20, $sizeY = 20)
+	{
+		$this->sizeX = $sizeX;
+		$this->sizeY = $sizeY;
 	}
 	
 	/**
@@ -308,60 +369,6 @@ abstract class GuiElement
 	}
 	
 	/**
-	 * Returns the X position of the element
-	 * @return float
-	 */
-	function getPosX()
-	{
-		return $this->posX;
-	}
-	
-	/**
-	 * Returns the Y position of the element
-	 * @return float
-	 */
-	function getPosY()
-	{
-		return $this->posY;
-	}
-	
-	/**
-	 * Returns the Z position of the element
-	 * @return float
-	 */
-	function getPosZ()
-	{
-		return $this->posZ;
-	}
-	
-	/**
-	 * Returns the width of the element
-	 * @return float
-	 */
-	function getSizeX()
-	{
-		return $this->sizeX;
-	}
-	
-	/**
-	 * Returns the height of the element
-	 * @return float
-	 */
-	function getSizeY()
-	{
-		return $this->sizeY;
-	}
-	
-	/**
-	 * Returns the scale of the element
-	 * @return float
-	 */
-	function getScale()
-	{
-		return $this->scale;
-	}
-	
-	/**
 	 * Returns the horizontal alignment of the element
 	 * @return string
 	 */
@@ -467,14 +474,14 @@ abstract class GuiElement
 	 */
 	function addLink(GuiElement $object)
 	{
-		$this->setManialink($object->getManialink());
-		$this->setUrl($object->getUrl());
-		$this->setManiazones($object->getManiazones());
-		$this->setAction($object->getAction());
-		$this->setActionKey($object->getActionKey());
+		$this->manialink = $object->getManialink();
+		$this->url = $object->getUrl();
+		$this->maniazones = $object->getManiazones();
+		$this->action = $object->getAction();
+		$this->actionKey = $object->getActionKey();
 		if($object->getAddPlayerId())
 		{
-			$this->addPlayerId();
+			$this->addPlayerId = 1;
 		}
 	}
 

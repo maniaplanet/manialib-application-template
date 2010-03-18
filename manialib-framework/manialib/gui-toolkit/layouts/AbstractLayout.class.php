@@ -4,19 +4,15 @@
  * @author Maxime Raoust
  */
 
-// TODO Create a parent class of GuiElement that only defines size, position and scale and use this class as parent of AbstractLayout
-
 /**
  * Abstract class used for building layouts
  * @package Manialib
  */
-abstract class AbstractLayout
+abstract class AbstractLayout extends GuiComponent
 {
 	public $xIndex = 0;
 	public $yIndex = 0;
 	public $zIndex = 0;
-	protected $sizeX;
-	protected $sizeY;
 	protected $marginWidth;
 	protected $marginHeight;
 	protected $borderWidth;
@@ -33,25 +29,7 @@ abstract class AbstractLayout
 		$this->sizeX = $sizeX;
 		$this->sizeY = $sizeY;
 	}
-	
-	/**
-	 * Returns the width of the layout
-	 * @return float
-	 */	
-	function getSizeX()
-	{
-		return $this->sizeX;
-	}
-	
-	/**
-	 * Returns the height of the layout
-	 * @return float
-	 */
-	function getSizeY()
-	{
-		return $this->sizeY;
-	}
-	
+		
 	/**
 	 * Sets the horizontal margin between two elements of the layout
 	 * @param float

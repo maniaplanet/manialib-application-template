@@ -6,7 +6,6 @@
 
 /**
  * Navigation button
- * @package Manialib
  */ 
 class NavigationButton extends Quad
 {

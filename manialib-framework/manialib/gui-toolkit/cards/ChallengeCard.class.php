@@ -7,7 +7,6 @@
 /**
  * <b>Challenge card</b>: just like challenge cards that can be found when you
  * browse TrackMania's campaigns
- * @package Manialib
  */ 
 class ChallengeCard extends Quad
 {
