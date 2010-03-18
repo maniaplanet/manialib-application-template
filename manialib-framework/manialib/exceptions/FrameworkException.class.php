@@ -37,13 +37,25 @@ class FrameworkException extends Exception
 	}
 	
 	/**
-	 * Logs an exception
+	 * Logs an exception (useful for foreign exceptions)
+	 * @param Exception 
+	 * @param string The log filename
+	 */
+	static function logException(Exception $e, $logfile=APP_ERROR_LOG)
+	{
+		file_put_contents($logfile, 
+			self::getExceptionLogMessage($e), FILE_APPEND);
+	}
+	
+	/**
+	 * Returns the exception log message
 	 * @param Exception 
 	 * @param string The label of the optional message
 	 * @param string An optional message that will be logged with the exception
 	 * (eg: usefull to log Mysql queries in database exceptions)
+	 * @return string
 	 */
-	static function logException(Exception $e, $optionalMessageLabel=null,
+	static function getExceptionLogMessage(Exception $e, $optionalMessageLabel=null,
 		$optionalMessageContent=null)
 	{
 		// Message config
@@ -148,7 +160,7 @@ class FrameworkException extends Exception
 	{
 		if(!$this->logMessage)
 		{
-			$this->logMessage = self::logException($this);
+			$this->logMessage = self::getExceptionLogMessage($this);
 		}
 		file_put_contents($logfile, $this->logMessage, FILE_APPEND);
 	}

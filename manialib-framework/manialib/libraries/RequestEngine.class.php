@@ -271,6 +271,12 @@ final class RequestEngine
 	
 	protected function createLinkString($file=null, $relativePath=true, $params)
 	{
+		// Check for context
+		if(!isset($_SERVER))
+		{
+			return $file;
+		}
+		
 		// If absolute path, there's nothing to do
 		if(!$relativePath)
 		{
