@@ -9,6 +9,11 @@
  */
 class FrameworkException extends Exception 
 {
+	/**
+	 * Message to display to the user
+	 */
+	protected $userMessage='An error occured';
+	
 	protected $requestURL;
 	protected $dateThrown;
 	protected $logMessage;
@@ -21,13 +26,9 @@ class FrameworkException extends Exception
 	 */
 	static function handle(Exception $e)
 	{
-		if($e instanceof FrameworkUserException)
-		{
-			ErrorHandling::showErrorDialog($e->getMessage());
-		}
 		if($e instanceof FrameworkException)
 		{
-			ErrorHandling::showErrorDialog();
+			ErrorHandling::showErrorDialog($e->getUserMessage());
 		}
 		else
 		{
@@ -114,6 +115,15 @@ class FrameworkException extends Exception
 		{
 			$this->iLog();			
 		}
+	}
+	
+	/**
+	 * Returns the message to display to the user
+	 * @return string
+	 */
+	function getUserMessage()
+	{
+		return $this->userMessage;
 	}
 	
 	/**

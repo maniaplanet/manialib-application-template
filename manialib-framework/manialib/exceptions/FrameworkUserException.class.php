@@ -9,7 +9,15 @@
  */
 class FrameworkUserException extends FrameworkException 
 {
-	// TODO Maybe log those exceptions in a different log since it's not for bugs but for user errors 
+	/**
+	 * @param string The message to display to the user
+	 */
+	function __construct($userMessage)
+	{
+		parent::__construct($userMessage, 0, null, false);
+		$this->userMessage = $userMessage;
+		$this->iLog(APP_DEBUG_LOG);
+	} 
 }
 
 ?>

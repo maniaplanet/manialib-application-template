@@ -5,7 +5,6 @@
  */
 
 // TODO RequestEngine debug: short manialinks
-// TODO RequestEngine debug: sub-directories
 // TODO RequestEngine: should the parameters be automatically rawurlencod()/rawurldecod() ?
 
 /**
@@ -271,8 +270,6 @@ final class RequestEngine
 	
 	protected function createLinkString($file=null, $relativePath=true, $params)
 	{
-		// FIXME Bug with subfolders
-		
 		// Check for context
 		if(!isset($_SERVER))
 		{
