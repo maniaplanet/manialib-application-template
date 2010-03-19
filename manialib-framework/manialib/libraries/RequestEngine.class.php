@@ -6,7 +6,6 @@
 
 // TODO RequestEngine debug: short manialinks
 // TODO RequestEngine debug: sub-directories
-// TODO RequestEngine debug: absolute URLs
 // TODO RequestEngine: should the parameters be automatically rawurlencod()/rawurldecod() ?
 
 /**
@@ -272,6 +271,8 @@ final class RequestEngine
 	
 	protected function createLinkString($file=null, $relativePath=true, $params)
 	{
+		// FIXME Bug with subfolders
+		
 		// Check for context
 		if(!isset($_SERVER))
 		{
@@ -296,21 +297,18 @@ final class RequestEngine
 			// URL path
 			if($this->URLPath === null)
 			{
-				if(APP_URL_PATH)
-				{
-					$this->URLPath = dirname(str_ireplace(
-						str_replace('\\', '/', APP_URL_PATH),
+				$this->URLPath = str_replace(
+					'\\',
+					'/',
+					str_ireplace(
+						realpath(APP_WWW_PATH),
 						'',
-						str_replace('\\', '/', $_SERVER['REQUEST_URI'])
-					));
-				}
-				else
-				{
-					$this->URLPath = dirname(
-						str_replace('\\', '/', $_SERVER['REQUEST_URI']));
-				}
-				if($this->URLPath == '.' || $this->URLPath == '/' 
-					|| $this->URLPath == '\\' )
+						realpath(dirname($_SERVER['SCRIPT_FILENAME']))
+					)
+				);
+				$this->URLPath = implode('/', 
+						array_filter(explode('/', $this->URLPath))).'/';
+				if($this->URLPath == '.' || $this->URLPath == '/')
 				{
 					$this->URLPath = '';
 				}
@@ -318,7 +316,7 @@ final class RequestEngine
 			
 			// URL file
 			$this->URLFile = $file ? $file : basename($_SERVER['SCRIPT_FILENAME']);
-						
+		
 			// Create the link
 			if(USE_SHORT_MANIALINKS)
 			{
