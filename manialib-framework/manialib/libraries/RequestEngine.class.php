@@ -262,7 +262,7 @@ final class RequestEngine
 		$this->params = $_GET;
 		if(get_magic_quotes_gpc())
 		{
-			$this->params = array_filter($this->params, 'stripslashes');
+			$this->params = array_map('stripslashes', $this->params);
 		}
 		$this->requestParams = $this->params;
 		$this->registerProtectedParam('rp');
