@@ -297,17 +297,12 @@ final class RequestEngine
 			// URL path
 			if($this->URLPath === null)
 			{
-				$this->URLPath = str_replace(
-					'\\',
-					'/',
-					str_ireplace(
-						realpath(APP_WWW_PATH),
-						'',
+				$this->URLPath = str_replace('\\', '/',
+					str_ireplace(realpath(APP_WWW_PATH), '',
 						realpath(dirname($_SERVER['SCRIPT_FILENAME']))
-					)
-				);
-				$this->URLPath = implode('/', 
-						array_filter(explode('/', $this->URLPath))).'/';
+					));
+				$this->URLPath = implode('/', array_filter(
+					explode('/', $this->URLPath))).'/';
 				if($this->URLPath == '.' || $this->URLPath == '/')
 				{
 					$this->URLPath = '';
