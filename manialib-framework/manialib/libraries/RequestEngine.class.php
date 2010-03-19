@@ -47,7 +47,7 @@ final class RequestEngine
 	 */
 	function get($name, $default=null)
 	{
-		if(isset($this->params[$name]))
+		if(array_key_exists($name, $this->params))
 		{
 			return $this->params[$name];
 		}	
@@ -65,7 +65,7 @@ final class RequestEngine
 	 */
 	function getStrict($name, $humanReadableName=null)
 	{
-		if(isset($this->params[$name]))
+		if(array_key_exists($name, $this->params))
 		{
 			return $this->params[$name];
 		}	
@@ -102,7 +102,7 @@ final class RequestEngine
 	 */
 	function restore($name)
 	{
-		if(isset($this->requestParams[$name]))
+		if(array_key_exists($name, $this->requestParams))
 		{
 			$this->params[$name] = $this->requestParams[$name];
 		}

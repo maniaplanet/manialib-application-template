@@ -65,7 +65,7 @@ final class SessionEngine
 	 */
 	function get($name, $default = null)
 	{
-		return isset ($_SESSION[$name]) ? $_SESSION[$name] : $default;
+		return array_key_exists($name, $_SESSION) ? $_SESSION[$name] : $default;
 	}
 	
 	/**
@@ -75,7 +75,7 @@ final class SessionEngine
 	 */
 	function getStrict($name)
 	{
-		if(isset ($_SESSION[$name]))
+		if(array_key_exists($name, $_SESSION))
 		{
 			return $_SESSION[$name];
 		}
@@ -88,7 +88,7 @@ final class SessionEngine
 	 */
 	function exists($name)
 	{
-		return isset ($_SESSION[$name]);
+		return array_key_exists($name, $_SESSION);
 	}
 }
 
