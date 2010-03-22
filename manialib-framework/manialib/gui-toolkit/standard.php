@@ -714,6 +714,8 @@ class Format extends GuiElement
 	function setTextSize($textsize)
 	{
 		$this->textSize = $textsize;
+		$this->setStyle(null);
+		$this->setSubStyle(null);
 	}
 	
 	/**
@@ -723,6 +725,8 @@ class Format extends GuiElement
 	function setTextColor($textcolor)
 	{
 		$this->textColor = $textcolor;
+		$this->setStyle(null);
+		$this->setSubStyle(null);
 	}
 	
 	/**
