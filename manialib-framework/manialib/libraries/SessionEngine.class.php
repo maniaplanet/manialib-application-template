@@ -4,8 +4,6 @@
  * @package Manialib
  */
  
-// TODO SessioEngine: should the parameters be automatically rawurlencod()/rawurldecod() ?
-
 /**
  * <b>Session engine</b>: helps handling PHP sessions
  */

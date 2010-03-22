@@ -5,7 +5,6 @@
  */
 
 // TODO RequestEngine debug: short manialinks
-// TODO RequestEngine: should the parameters be automatically rawurlencod()/rawurldecod() ?
 
 /**
  * <b>Request engine</b>: used to handle GET parameters and to create hyperlink
