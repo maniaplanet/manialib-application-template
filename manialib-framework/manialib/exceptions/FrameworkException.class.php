@@ -74,8 +74,9 @@ class FrameworkException extends Exception
 		// optionnal message if it exists	
 		$optionalMessage = 
 			$optionalMessageLabel ?
-			$prefix.str_pad($optionalMessageLabel.':', $padLendth)."\n" :
-			'';
+			$prefix.str_pad($optionalMessageLabel.':', $padLendth).
+			$optionalMessageContent."\n" 
+			: '';
 		
 		// The message itself
 		$message = 
@@ -170,7 +171,8 @@ class FrameworkException extends Exception
 	{
 		if(!$this->logMessage)
 		{
-			$this->logMessage = self::getExceptionLogMessage($this);
+			$this->logMessage = self::getExceptionLogMessage($this, 
+				$this->optionalMessageLabel, $this->optionalMessageContent);
 		}
 		file_put_contents($logfile, $this->logMessage, FILE_APPEND);
 	}

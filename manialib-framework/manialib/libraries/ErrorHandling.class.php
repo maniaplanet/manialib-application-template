@@ -62,6 +62,8 @@ abstract class ErrorHandling
     			break;
     		
     		default:
+    			// Hack: sometimes classes can't be loaded throuh __autoload
+    			require_once(APP_FRAMEWORK_EXCEPTIONS_PATH.'FrameworkErrorException.class.php');
     			throw new FrameworkErrorException(
     				$errstr, 0, $errno, $errfile, $errline);
     	}

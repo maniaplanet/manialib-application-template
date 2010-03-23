@@ -56,7 +56,7 @@ class PageNavigator extends GuiComponent
 	/**
 	 * Sets the size of the navigation icons
 	 */
-	function setSize($iconSize = 5)
+	function setSize($iconSize = 5, $nullValue=null)
 	{
 		$this->arrowNext->setSize($iconSize, $iconSize);
 		$this->arrowPrev->setSize($iconSize, $iconSize);
