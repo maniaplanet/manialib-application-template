@@ -218,4 +218,5 @@ class PageNavigator extends GuiComponent
 		Manialink::endFrame();
 	}
 }
+
 ?>

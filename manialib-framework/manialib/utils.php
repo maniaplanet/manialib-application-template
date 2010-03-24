@@ -195,11 +195,11 @@ function formatDate($timestamp)
  */
 function formatLongDate($timestamp)
 {
-	return date('l jS \of F Y @ h:i A ', $timestamp).TIMEZONE_NAME;
+	return date('l jS \of F Y @ h:i A ', $timestamp).APP_TIMEZONE_NAME;
 }
 
 
-if(LANG_ENGINE_MODE == LANG_ENGINE_MODE_DYNAMIC):
+if(APP_LANG_ENGINE_MODE == APP_LANG_ENGINE_MODE_DYNAMIC):
 	
 	/**
 	 * i18n message. Examples: 

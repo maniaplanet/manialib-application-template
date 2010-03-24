@@ -16,8 +16,8 @@ define('DEBUG_ON', 1);
 /**@#+
  * Lang engine modes
  */
-define('LANG_ENGINE_MODE_STATIC', 0);
-define('LANG_ENGINE_MODE_DYNAMIC', 1);
+define('APP_LANG_ENGINE_MODE_STATIC', 0);
+define('APP_LANG_ENGINE_MODE_DYNAMIC', 1);
 /**#@-*/
 
 ?>

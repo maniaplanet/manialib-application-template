@@ -64,7 +64,7 @@ final class DatabaseEngine
 	protected function __construct()
 	{
 		
-		$this->connection = mysql_connect(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD);
+		$this->connection = mysql_connect(APP_DATABASE_HOST, APP_DATABASE_USER, APP_DATABASE_PASSWORD);
 		
 
 		if ($this->connection === false)
@@ -81,7 +81,7 @@ final class DatabaseEngine
 			$this->query();
 		}
 
-		if (mysql_select_connection(DATABASE_NAME, $this->connection) === false)
+		if (mysql_select_connection(APP_DATABASE_NAME, $this->connection) === false)
 		{
 			throw new DatabaseException;
 		}

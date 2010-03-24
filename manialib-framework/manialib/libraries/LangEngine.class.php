@@ -33,10 +33,10 @@ class LangEngine
 		return self::$instance;
 	}
 
-	protected function __construct($langEngineMode = LANG_ENGINE_MODE)
+	protected function __construct($langEngineMode = APP_LANG_ENGINE_MODE)
 	{
 		$session = SessionEngine::getInstance();
-		if($langEngineMode == LANG_ENGINE_MODE_DYNAMIC)
+		if($langEngineMode == APP_LANG_ENGINE_MODE_DYNAMIC)
 		{
 			$this->currentLang = $session->get("lang", "en");
 			if($dico = $session->get(__CLASS__))
@@ -58,7 +58,7 @@ class LangEngine
 	/**
 	 * Recursive loading method
 	 */
-	protected function loadDicoRecursive($directoryPath, $langEngineMode = LANG_ENGINE_MODE)
+	protected function loadDicoRecursive($directoryPath, $langEngineMode = APP_LANG_ENGINE_MODE)
 	{
 		if ($handle = opendir($directoryPath))
 		{
@@ -74,7 +74,7 @@ class LangEngine
 				}
 				elseif(substr($file, -4)==".xml")
 				{
-					if($langEngineMode == LANG_ENGINE_MODE_DYNAMIC)
+					if($langEngineMode == APP_LANG_ENGINE_MODE_DYNAMIC)
 					{
 						$this->parseLangFile($directoryPath."/".$file);
 					}

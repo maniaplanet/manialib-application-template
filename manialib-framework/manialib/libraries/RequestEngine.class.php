@@ -287,7 +287,7 @@ final class RequestEngine
 			// URL base
 			if($this->URLBase === null)
 			{
-				$this->URLBase = USE_SHORT_MANIALINKS ? MANIALINK_NAME : APP_URL;
+				$this->URLBase = APP_USE_SHORT_MANIALINKS ? APP_MANIALINK : APP_URL;
 			}
 			
 			// URL path
@@ -309,7 +309,7 @@ final class RequestEngine
 			$this->URLFile = $file ? $file : basename($_SERVER['SCRIPT_FILENAME']);
 		
 			// Create the link
-			if(USE_SHORT_MANIALINKS)
+			if(APP_USE_SHORT_MANIALINKS)
 			{
 				$link = $this->URLBase;
 				$params['rp'] = $this->URLPath.$this->URLFile;
