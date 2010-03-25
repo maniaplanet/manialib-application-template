@@ -156,7 +156,7 @@ function require_once_dir($path)
 		{
 			if (strcasecmp(substr($file, 0, 1), "."))
 			{
-				require_once ($path . $file);
+				require_once($path . $file);
 			}
 		}
 		closedir($handle);

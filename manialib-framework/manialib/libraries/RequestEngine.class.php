@@ -327,7 +327,7 @@ final class RequestEngine
 		}
 		
 		// Check if SID needs to be added
-		if(SID)
+		if(defined('SID') && SID)
 		{
 			$params[] = SID;
 		}
