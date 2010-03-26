@@ -9,6 +9,14 @@
  */
 class FrameworkException extends Exception 
 {
+	/**#@+
+	 * Parameters for self::handle()
+	 */
+	const HANDLE_SHOW_ERRORS = true;
+	const HANDLE_SILENT = false;
+	/**#@-*/
+	
+	
 	/**
 	 * Message to display to the user
 	 */
@@ -23,17 +31,25 @@ class FrameworkException extends Exception
 	/**
 	 * Handles what to do when an exception is catched.
 	 * @param Exception
+	 * @param boolean Whether to show an error message, default is true
 	 */
-	static function handle(Exception $e)
+	static function handle(Exception $e, 
+		$showErrorMessage=self::HANDLE_SHOW_ERRORS)
 	{
 		if($e instanceof FrameworkException)
 		{
-			ErrorHandling::showErrorDialog($e->getUserMessage());
+			if($showErrorMessage)
+			{
+				ErrorHandling::showErrorDialog($e->getUserMessage());
+			}
 		}
 		else
 		{
 			$ie = new FrameworkImportedException($e);
-			ErrorHandling::showErrorDialog();
+			if($showErrorMessage)
+			{
+				ErrorHandling::showErrorDialog();
+			}
 		}
 	}
 	
