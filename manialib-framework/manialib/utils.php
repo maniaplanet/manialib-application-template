@@ -140,7 +140,7 @@ function stripWideFonts($string)
 function stripLinks($string)
 {
 	return preg_replace(
-		'/\\$[hlp](.*?)(?:\\[.*?\\](.*?))*(?:\\$[hlp]|$)/ixu', '$1$2', 
+		'/\\$[hlp](.*?)(?:\\[.*?\\](.*?))?(?:\\$[hlp]|$)/ixu', '$1$2', 
 		$string);
 }
 
