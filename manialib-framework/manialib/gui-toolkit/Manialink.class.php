@@ -119,6 +119,17 @@ abstract class Manialink
 		array_pop(self::$parentNodes);
 		array_pop(self::$parentLayouts);
 	}
+	
+	/**
+	 * Add the given XML code to the document
+	 */
+	static function appendXML($XML)
+	{
+		$doc = new DOMDocument();
+		$doc->loadXML($XML);
+		$node = self::$domDocument->importNode($doc->firstChild, true);
+		end(self::$parentNodes)->appendChild($node);
+	}
 }
 
 ?>
