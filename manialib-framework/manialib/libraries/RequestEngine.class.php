@@ -320,22 +320,11 @@ final class RequestEngine
 			}
 		}
 		
-		// Modify parameters array
-		foreach($params as $name=>$value)
-		{
-			$params[$name] = $name.'='.$value;
-		}
-		
-		// Check if SID needs to be added
-		if(defined('SID') && SID)
-		{
-			$params[] = SID;
-		}
 		
 		// Create parameter string
 		if(count($params))
 		{
-			$params = '?'.implode('&', $params); 
+			$params = '?'.(defined('SID') && SID ? SID.'&' : '').http_build_query($params, '', '&'); 
 		}
 		else
 		{
