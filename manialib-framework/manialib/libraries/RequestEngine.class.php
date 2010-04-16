@@ -220,6 +220,7 @@ final class RequestEngine
 	 */
 	function registerReferer()
 	{
+		// TODO Le register referer est buggé
 		$session = SessionEngine::getInstance();
 		$link = $this->createLink();
 		$this->registerRefererAtDestruct = $link;

@@ -13,18 +13,19 @@
 class MultipageList
 {
 	protected $size;
-	protected $urlParamName = "page";
+	protected $urlParamName = 'page';
 	protected $urlPageName = null;
 	protected $currentPage;
 	protected $defaultPage=1;
-	protected $perPage = 8;
+	protected $perPage;
 	protected $pageNumber;
 	protected $hasMorePages;
 	public $pageNavigator;
 
-	function __construct()
+	function __construct($perPage = 8)
 	{
 		$this->pageNavigator = new PageNavigator;
+		$this->perPage = $perPage;
 	}
 
 	function setSize($size)
@@ -92,6 +93,17 @@ class MultipageList
 	function setHasMorePages($hasMorePages)
 	{
 		$this->hasMorePages = $hasMorePages;
+	}
+	
+	function checkArrayForMorePages(&$array)
+	{
+		list($offset, $length) = $this->getLimit();
+		$hasMorePages = (count($array) == $length + 1);
+		if($hasMorePages)
+		{
+			array_pop($array);
+		} 
+		$this->hasMorePages = $hasMorePages;	
 	}
 	
 	 function addPlayerId()

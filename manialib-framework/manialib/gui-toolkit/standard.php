@@ -8,10 +8,17 @@ require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'GuiTools.class.php' );
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'styles.php' );
 
 /**
+ * Base GUI class for type hierarchy
+ * @package Manialib
+ */
+abstract class GuiBase {}
+
+/**
  * The GuiComponent is a generic and abstract element that only contains
  * position, size and scale info.
+ * @package Manialib
  */
-abstract class GuiComponent
+abstract class GuiComponent extends GuiBase
 {
 	protected $posX = 0;
 	protected $posY = 0;
@@ -637,10 +644,10 @@ class Quad extends GuiElement
 }
 
 /**
- * Manialink <b>sub styles</b> for the <b>Bgs1</b> style
+ * Manialink <b>sub styles</b>
  * @package ManiaLib 
  */
-abstract class Bgs1
+abstract class Bgs1 extends GuiBase
 {
 	const BgButtonBig      = 'BgButtonBig';
 	const BgButtonSmall    = 'BgButtonSmall';
@@ -677,7 +684,90 @@ abstract class Bgs1
 	const ProgressBar      = 'ProgressBar';
 }
 
-// TODO Write the other classes
+/**
+ * Manialink <b>sub styles</b>
+ * @package ManiaLib 
+ */	
+abstract class BgRaceScore2 extends GuiBase
+{
+	// TODO Fill the class
+}
+
+/**
+ * Manialink <b>sub styles</b>
+ * @package ManiaLib 
+ */	
+abstract class Bgs1InRace extends Bgs1
+{
+}
+
+/**
+ * Manialink <b>sub styles</b>
+ * @package ManiaLib 
+ */	
+abstract class BgsChallengeMedals extends GuiBase
+{
+	// TODO Fill the class
+}
+
+/**
+ * Manialink <b>sub styles</b>
+ * @package ManiaLib 
+ */	
+abstract class BgsPlayerCard extends GuiBase
+{
+	const BgActivePlayerCard    = 'BgActivePlayerCard';
+	const BgActivePlayerName    = 'BgActivePlayerName';
+	const BgActivePlayerScore   = 'BgActivePlayerScore';
+	const BgCard                = 'BgCard';
+	const BgCardSystem          = 'BgCardSystem';
+	const BgMediaTracker        = 'BgMediaTracker';
+	const BgPlayerCardBig       = 'BgPlayerCardBig';
+	const BgPlayerCardSmall     = 'BgPlayerCardSmall';
+	const BgPlayerCard          = 'BgPlayerCard';
+	const BgPlayerName          = 'BgPlayerName';
+	const BgPlayerScore         = 'BgPlayerScore';
+	const BgRacePlayerLine      = 'BgRacePlayerLine';
+	const BgRacePlayerName      = 'BgRacePlayerName';
+	const ProgressBar           = 'ProgressBar';
+}
+
+/**
+ * Manialink <b>sub styles</b>
+ * @package ManiaLib 
+ */	
+abstract class Icons128x128_1 extends GuiBase
+{
+	// TODO Fill the class
+}
+
+/**
+ * Manialink <b>sub styles</b>
+ * @package ManiaLib 
+ */	
+abstract class Icons128x32_1 extends GuiBase
+{
+	// TODO Fill the class
+}
+
+/**
+ * Manialink <b>sub styles</b>
+ * @package ManiaLib 
+ */	
+abstract class Icons64x64_1 extends GuiBase
+{
+	// TODO Fill the class
+}
+
+/**
+ * Manialink <b>sub styles</b>
+ * @package ManiaLib 
+ */	
+abstract class MedalsBig extends GuiBase
+{
+	// TODO Fill the class
+}
+
 
 /**
  * Icon with the "Icons128x128_1" style
@@ -753,7 +843,45 @@ class Format extends GuiElement
 	/**#@+
 	 * Manialink <b>styles</b> for the <b>Format</b> element and its children 
 	 */
-	const TextStaticMedium = 'TextStaticMedium';
+	const TextButtonBig               = 'TextButtonBig';
+	const TextButtonMedium            = 'TextButtonMedium';
+	const TextButtonNav               = 'TextButtonNav';
+	const TextButtonSmall             = 'TextButtonSmall';
+	const TextCardInfoSmall           = 'TextCardInfoSmall';
+	const TextCardMedium              = 'TextCardMedium';
+	const TextCardRaceRank            = 'TextCardRaceRank';
+	const TextCardScores2             = 'TextCardScores2';
+	const TextCardSmallScores2        = 'TextCardSmallScores2';
+	const TextCardSmallScores2Rank    = 'TextCardSmallScores2Rank';
+	const TextChallengeNameMedal      = 'TextChallengeNameMedal';
+	const TextChallengeNameMedalNone  = 'TextChallengeNameMedalNone';
+	const TextChallengeNameMedium     = 'TextChallengeNameMedium';
+	const TextChallengeNameSmall      = 'TextChallengeNameSmall';
+	const TextCongratsBig             = 'TextCongratsBig';
+	const TextCredits                 = 'TextCredits';
+	const TextCreditsTitle            = 'TextCreditsTitle';
+	const TextInfoMedium              = 'TextInfoMedium';
+	const TextInfoSmall               = 'TextInfoSmall';
+	const TextPlayerCardName          = 'TextPlayerCardName';
+	const TextRaceChat                = 'TextRaceChat';
+	const TextRaceChrono              = 'TextRaceChrono';
+	const TextRaceChronoError         = 'TextRaceChronoError';
+	const TextRaceChronoWarning       = 'TextRaceChronoWarning';
+	const TextRaceMessage             = 'TextRaceMessage';
+	const TextRaceStaticSmall         = 'TextRaceStaticSmall';
+	const TextRaceValueSmall          = 'TextRaceValueSmall';
+	const TextRankingsBig             = 'TextRankingsBig';
+	const TextStaticMedium            = 'TextStaticMedium';
+	const TextStaticSmall             = 'TextStaticSmall';
+	const TextSubTitle1               = 'TextSubTitle1';
+	const TextSubTitle2               = 'TextSubTitle2';
+	const TextTips                    = 'TextTips';
+	const TextTitle1                  = 'TextTitle1';
+	const TextTitle2                  = 'TextTitle2';
+	const TextTitle2Blink             = 'TextTitle2Blink';
+	const TextTitleError              = 'TextTitleError';
+	const TextValueBig                = 'TextValueBig';
+	const TextValueMedium             = 'TextValueMedium';
 	/**#@-*/
 	
 	protected $xmlTagName = 'format';
