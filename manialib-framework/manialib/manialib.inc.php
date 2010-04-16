@@ -33,12 +33,5 @@ require_once( APP_FRAMEWORK_LIBRARIES_PATH.'RequestEngine.class.php' );
 require_once( APP_FRAMEWORK_LIBRARIES_PATH.'SessionEngine.class.php' );
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'Manialink.class.php' );
 
-// Date config
-date_APP_DEFAULT_TIMEZONE_set(APP_DEFAULT_TIMEZONE);
-
-// Error handler
-error_reporting(E_ALL);
-set_error_handler(array('ErrorHandling', 'exceptionErrorHandler'));
-set_exception_handler(array('ErrorHandling', 'exceptionHandler'));
 
 ?>

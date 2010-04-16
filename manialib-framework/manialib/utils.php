@@ -55,25 +55,10 @@ function println($string)
  * @param boolean Whether to add the date to the message
  * @param string The log filename
  */
-function debuglog($msg, $addDate = true, $log = APP_DEBUG_LOG)
+function debuglog($message, $addDate = true, $logFilename = APP_DEBUG_LOG)
 {
-	if ($addDate)
-	{
-		$msg = date('d/m/y H:i:s') . " $msg\n";
-	}
-	file_put_contents($log, $msg, FILE_APPEND);
-}
-
-/**
- * Writes a pair name/value in the debug log, the value beeing print_r-ed
- * @param string The message
- * @param boolean Whether to add the date to the message
- * @param string The log filename
- */
- 
-function debuglogplusplus($name, $value)
-{
-	debuglog($name.'='.print_r($value, true));	
+	$message = ($addDate?date('d/m/y H:i:s'):'').'  '.print_r($message, true)."\n";
+	file_put_contents($logFilename, $message, FILE_APPEND);
 }
 
 /**

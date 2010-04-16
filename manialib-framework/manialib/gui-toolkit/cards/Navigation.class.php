@@ -28,7 +28,7 @@ class Navigation extends Quad
 		$this->setStyle(GUI_NAVIGATION_DEFAULT_STYLE);
 		$this->setSubStyle(GUI_NAVIGATION_DEFAULT_SUBSTYLE);
 		
-		$this->titleBg = new Quad ($this->sizeX-1, 7, 1);
+		$this->titleBg = new Quad ($this->sizeX-1, 7);
 		$this->titleBg->setStyle(GUI_NAVIGATION_TITLE_BG_DEFAULT_STYLE);
 		$this->titleBg->setSubStyle(GUI_NAVIGATION_TITLE_BG_DEFAULT_SUBSTYLE);
 		

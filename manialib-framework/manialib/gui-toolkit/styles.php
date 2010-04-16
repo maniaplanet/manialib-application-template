@@ -4,6 +4,8 @@
  * @author Maxime Raoust
  */
 
+// TODO Turn define into class const
+
 /**#@+
  * Default styles for the standard elements
  */

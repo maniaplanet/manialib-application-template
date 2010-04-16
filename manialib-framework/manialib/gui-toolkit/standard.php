@@ -166,7 +166,7 @@ abstract class GuiElement extends GuiComponent
 	protected $halign = null;
 	protected $manialink;
 	protected $url;
-	protected $maniazones;
+	protected $maniazone;
 	protected $bgcolor;
 	protected $addPlayerId;
 	protected $action;
@@ -265,9 +265,9 @@ abstract class GuiElement extends GuiComponent
 	 * Sets the Maniazones link of the element
 	 * @param string
 	 */
-	function setManiazones($maniazones)
+	function setManiazone($maniazone)
 	{
-		$this->maniazones = $maniazones;
+		$this->maniazone = $maniazone;
 	}
 
 	/**
@@ -401,7 +401,7 @@ abstract class GuiElement extends GuiComponent
 	 */
 	function getManiazones()
 	{
-		return $this->maniazones;
+		return $this->maniazone;
 	}
 	
 	/**
@@ -476,7 +476,7 @@ abstract class GuiElement extends GuiComponent
 	{
 		$this->manialink = $object->getManialink();
 		$this->url = $object->getUrl();
-		$this->maniazones = $object->getManiazones();
+		$this->maniazone = $object->getManiazone();
 		$this->action = $object->getAction();
 		$this->actionKey = $object->getActionKey();
 		if($object->getAddPlayerId())
@@ -492,7 +492,7 @@ abstract class GuiElement extends GuiComponent
 	 */
 	function hasLink()
 	{
-		return $this->manialink || $this->url || $this->action || $this->maniazones;
+		return $this->manialink || $this->url || $this->action || $this->maniazone;
 	}
 
 	/**
@@ -575,8 +575,8 @@ abstract class GuiElement extends GuiComponent
 				$this->xml->setAttribute('manialink', $this->manialink);
 			if($this->url !== null)
 				$this->xml->setAttribute('url', $this->url);
-			if($this->maniazones !== null)
-				$this->xml->setAttribute('maniazones', $this->maniazones);
+			if($this->maniazone !== null)
+				$this->xml->setAttribute('maniazone', $this->maniazone);
 	
 			// Add action
 			if($this->action !== null)
@@ -617,10 +617,67 @@ class Spacer extends GuiElement
  */
 class Quad extends GuiElement
 {
+	/**#@+
+	 * Manialink <b>style</b> for the <b>Quad</b> element 
+	 */
+	const BgRaceScore2        = 'BgRaceScore2';
+	const Bgs1                = 'Bgs1';
+	const Bgs1InRace          = 'Bgs1InRace';
+	const BgsChallengeMedals  = 'BgsChallengeMedals';
+	const BgsPlayerCard       = 'BgsPlayerCard';
+	const Icons128x128_1      = 'Icons128x128_1';
+	const Icons128x32_1       = 'Icons128x32_1';
+	const Icons64x64_1        = 'Icons64x64_1';
+	const MedalsBig           = 'MedalsBig';
+	/**#@-*/
+	
 	protected $xmlTagName = 'quad';
 	protected $style = GUI_QUAD_DEFAULT_STYLE;
 	protected $subStyle = GUI_QUAD_DEFAULT_SUBSTYLE;
 }
+
+/**
+ * Manialink <b>sub styles</b> for the <b>Bgs1</b> style
+ * @package ManiaLib 
+ */
+abstract class Bgs1
+{
+	const BgButtonBig      = 'BgButtonBig';
+	const BgButtonSmall    = 'BgButtonSmall';
+	const BgButton         = 'BgButton';
+	const BgCard           = 'BgCard';
+	const BgCard1          = 'BgCard1';
+	const BgCard2          = 'BgCard2';
+	const BgCard3          = 'BgCard3';
+	const BgCardChallenge  = 'BgCardChallenge';
+	const BgCardFolder     = 'BgCardFolder';
+	const BgCardList       = 'BgCardList';
+	const BgCardPlayer     = 'BgCardPlayer';
+	const BgCardSystem     = 'BgCardSystem';
+	const BgCardZone       = 'BgCardZone';
+	const BgIconBorder     = 'BgIconBorder';
+	const BgList           = 'BgList';
+	const BgListLine       = 'BgListLine';
+	const BgPager          = 'BgPager';
+	const BgProgressBar    = 'BgProgressBar';
+	const BgSlider         = 'BgSlider';
+	const BgTitle2         = 'BgTitle2';
+	const BgTitle3         = 'BgTitle3';
+	const BgTitle3_1       = 'BgTitle3_1';
+	const BgTitle3_2       = 'BgTitle3_2';
+	const BgTitle3_3       = 'BgTitle3_3';
+	const BgTitle3_4       = 'BgTitle3_4';
+	const BgTitlePage      = 'BgTitlePage';
+	const BgWindow1        = 'BgWindow1';
+	const BgWindow2        = 'BgWindow2';
+	const BgWindow3        = 'BgWindow3';
+	const NavButtonBlink   = 'NavButtonBlink';
+	const NavButton        = 'NavButton';
+	const ProgressBarSmall = 'ProgressBarSmall';
+	const ProgressBar      = 'ProgressBar';
+}
+
+// TODO Write the other classes
 
 /**
  * Icon with the "Icons128x128_1" style
@@ -692,6 +749,13 @@ class IncludeManialink extends GuiElement
  */
 class Format extends GuiElement
 {
+	// TODO Write all styles
+	/**#@+
+	 * Manialink <b>styles</b> for the <b>Format</b> element and its children 
+	 */
+	const TextStaticMedium = 'TextStaticMedium';
+	/**#@-*/
+	
 	protected $xmlTagName = 'format';
 	protected $halign = null;
 	protected $valign = null;
@@ -963,6 +1027,11 @@ class Button extends Label
 {
 	protected $subStyle = null;
 	protected $style = GUI_BUTTON_DEFAULT_STLE;
+	
+	function __construct($sizeX = 25, $sizeY = 3)
+	{
+		parent::__construct($sizeX, $sizeY);		
+	}
 }
 
 /**

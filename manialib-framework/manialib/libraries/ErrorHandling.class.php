@@ -58,7 +58,7 @@ abstract class ErrorHandling
     	switch($errno)
     	{
     		case E_USER_WARNING:
-    			debuglog('Warning: '.$errstr.' in '.$errfile.':'.$errline);
+    			new FrameworkException($errstr);
     			break;
     		
     		default:
@@ -76,14 +76,7 @@ abstract class ErrorHandling
 	{
 		if($exception instanceof FrameworkException)
 		{
-			try
-			{
-				throw new FrameworkUncaughtException($exception);
-			}
-			catch(FrameworkException $e)
-			{
-				self::showErrorDialog($e);
-			}
+			FrameworkException::handle($exception);
 		}
 		// Assert
 		else
