@@ -399,7 +399,7 @@ abstract class GuiElement extends GuiComponent
 	 * Returns the Maniazones hyperlink of the element
 	 * @return string
 	 */
-	function getManiazones()
+	function getManiazone()
 	{
 		return $this->maniazone;
 	}
