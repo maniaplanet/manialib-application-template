@@ -26,8 +26,8 @@ class ChallengeCard extends Quad
 	
 	function __construct ()
 	{
-		$this->setStyle("BgsChallengeMedals");
-		$this->setSubStyle("BgNotPlayed");
+		$this->setStyle(Quad::BgsChallengeMedals);
+		$this->setSubStyle(BgsChallengeMedals::BgNotPlayed);
 		
 		$this->bgImage = new Quad(15, 13.5);
 		$this->bgImage->setHalign("center");
@@ -39,24 +39,24 @@ class ChallengeCard extends Quad
 		$this->text = new Label(15);
 		$this->text->setPosition(0, -14, 4);
 		$this->text->setHalign("center");
-		$this->text->setStyle("TextChallengeNameSmall");
+		$this->text->setStyle(Label::TextChallengeNameSmall);
 		
 		$this->lockedMessage = new Label(13);
 		$this->lockedMessage->setPosition(0, -1.5, 2);
 		$this->lockedMessage->setHalign("center");
 		$this->lockedMessage->enableAutonewline();
-		$this->lockedMessage->setStyle("TextRaceChat");
+		$this->lockedMessage->setStyle(Label::TextRaceChat);
 		
 		$this->clickableMask = new Quad($this->sizeX, $this->sizeY);
 		$this->clickableMask->setHalign("center");
 		$this->clickableMask->setPositionZ(1);
-		$this->clickableMask->setStyle("BgsPlayerCard");
-		$this->clickableMask->setSubStyle("BgPlayerName");
+		$this->clickableMask->setStyle(Quad::BgsPlayerCard);
+		$this->clickableMask->setSubStyle(BgsPlayerCard::BgPlayerName);
 		
 		$this->clickableLock = new Icon(7.5);
 		$this->clickableLock->setPosition(8, -14, 2);
 		$this->clickableLock->setAlign("right", "bottom");
-		$this->clickableLock->setSubStyle("Padlock");
+		$this->clickableLock->setSubStyle(Icons128x128_1::Padlock);
 	}
 	
 	/**

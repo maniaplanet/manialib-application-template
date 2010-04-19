@@ -22,13 +22,13 @@ class NavigationButton extends Quad
 		$this->sizeX = $sx;
 		$this->sizeY = $sy;	
 		
-		$this->setStyle(GUI_NAVIGATION_BUTTON_DEFAULT_STYLE);
-		$this->setSubStyle(GUI_NAVIGATION_BUTTON_DEFAULT_SUBSTYLE);
+		$this->setStyle(GuiDefaultStyles::NavigationButton_Style);
+		$this->setSubStyle(GuiDefaultStyles::NavigationButton_Substyle);
 		
 		$this->text = new Label();
 		$this->text->setValign("center");
 		$this->text->setPosition($this->textOffset, 0.25, 1);
-		$this->text->setStyle(GUI_NAVIGATION_BUTTON_TEXT_DEFAULT_STYLE);
+		$this->text->setStyle(GuiDefaultStyles::NavigationButton_Text_Style);
 		
 		$this->icon = new Icon($this->sizeY-$this->iconSizeMinimizer);
 		$this->icon->setValign("center");
@@ -41,8 +41,8 @@ class NavigationButton extends Quad
 	 */
 	function setSelected() 
 	{
-		$this->setSubStyle(GUI_NAVIGATION_BUTTON_SELECTED_DEFAULT_SUBSTYLE);
-		$this->text->setStyle(GUI_NAVIGATION_BUTTON_SELECTED_TEXT_DEFAULT_STYLE);	
+		$this->setSubStyle(GuiDefaultStyles::NavigationButton_Selected_Substyle);
+		$this->text->setStyle(GuiDefaultStyles::NavigationButton_Selected_Text_Style);	
 	}
 	
 	protected function postFilter ()

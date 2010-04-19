@@ -29,6 +29,44 @@ class FrameworkException extends Exception
 	protected $optionalMessageContent;
 	
 	/**
+	 * Shows an error dialog to the user with the specified message
+	 * @param The message to show, default is 'Fatal error'
+	 */
+	static function showErrorDialog($message = 'Fatal error')
+	{
+		$request = RequestEngine::getInstance();
+		$session = SessionEngine::getInstance();
+		$linkstr = $request->getReferer();
+		
+		Manialink::load();
+		{
+			$ui = new Panel(70, 35);
+			$ui->setAlign('center', 'center');
+			$ui->title->setStyle(Label::TextTitleError);
+			$ui->titleBg->setSubStyle(Bgs1::BgTitle2);
+			$ui->title->setText('Error');
+			$ui->save();
+
+			$ui = new Label(68);
+			$ui->enableAutonewline();
+			$ui->setAlign('center', 'center');
+			$ui->setPosition(0, 0, 2);
+			$ui->setText($message);
+			$ui->save();
+
+			$ui = new Button;
+			$ui->setText('Back');
+			
+			$ui->setManialink($linkstr);
+			$ui->setPosition(0, -12, 5);
+			$ui->setHalign('center');
+			$ui->save();
+		}
+		Manialink::render();
+		exit;
+	}
+	
+	/**
 	 * Handles what to do when an exception is catched.
 	 * @param Exception
 	 * @param boolean Whether to show an error message, default is true
@@ -40,7 +78,7 @@ class FrameworkException extends Exception
 		{
 			if($showErrorMessage)
 			{
-				ErrorHandling::showErrorDialog($e->getUserMessage());
+				self::showErrorDialog($e->getUserMessage());
 			}
 		}
 		else
@@ -48,7 +86,7 @@ class FrameworkException extends Exception
 			$ie = new FrameworkImportedException($e);
 			if($showErrorMessage)
 			{
-				ErrorHandling::showErrorDialog();
+				self::showErrorDialog();
 			}
 		}
 	}

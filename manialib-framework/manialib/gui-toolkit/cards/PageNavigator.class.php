@@ -17,13 +17,13 @@ class PageNavigator extends GuiComponent
 	public $arrowFirst;
 	public $text;
 
-	public $arrowNoneStyle = GUI_PAGE_NAVIGATOR_ARROW_NONE_SUBSTYLE;
-	public $arrowNextStyle = GUI_PAGE_NAVIGATOR_ARROW_NEXT_SUBSTYLE;
-	public $arrowPrevStyle = GUI_PAGE_NAVIGATOR_ARROW_PREV_SUBSTYLE;
-	public $arrowFastNextStyle = GUI_PAGE_NAVIGATOR_ARROW_FAST_NEXT_SUBSTYLE;
-	public $arrowFastPrevStyle = GUI_PAGE_NAVIGATOR_ARROW_FAST_PREV_SUBSTYLE;
-	public $arrowFirstStyle = GUI_PAGE_NAVIGATOR_ARROW_FIRST_SUBSTYLE;
-	public $arrowLastStyle = GUI_PAGE_NAVIGATOR_ARROW_LAST_SUBSTYLE;
+	public $arrowNoneStyle = Icons64x64_1::StarGold;
+	public $arrowNextStyle = Icons64x64_1::ArrowNext;
+	public $arrowPrevStyle = Icons64x64_1::ArrowPrev;
+	public $arrowFastNextStyle = Icons64x64_1::ArrowFastNext;
+	public $arrowFastPrevStyle = Icons64x64_1::ArrowFastPrev;
+	public $arrowFirstStyle = Icons64x64_1::ArrowFirst;
+	public $arrowLastStyle = Icons64x64_1::ArrowLast;
 
 	protected $showLast;
 	protected $showFastNext;
@@ -194,27 +194,24 @@ class PageNavigator extends GuiComponent
 
 		// Save the gui
 		Manialink::beginFrame($this->posX, $this->posY, $this->posZ);
-
+		{
 			if ($this->showText)
 			{
 				$this->text->save();
 			}
-			
 			$this->arrowNext->save();
 			$this->arrowPrev->save();
-			
 			if ($this->showLast)
 			{
 				$this->arrowFirst->save();
 				$this->arrowLast->save();
 			}
-			
 			if ($this->showFastNext)
 			{
 				$this->arrowFastNext->save();
 				$this->arrowFastPrev->save();
 			}
-
+		}
 		Manialink::endFrame();
 	}
 }

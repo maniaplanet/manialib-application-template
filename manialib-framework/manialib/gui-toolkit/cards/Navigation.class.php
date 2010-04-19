@@ -25,20 +25,20 @@ class Navigation extends Quad
 
 	function __construct () 
 	{	
-		$this->setStyle(GUI_NAVIGATION_DEFAULT_STYLE);
-		$this->setSubStyle(GUI_NAVIGATION_DEFAULT_SUBSTYLE);
+		$this->setStyle(GuiDefaultStyles::Navigation_Style);
+		$this->setSubStyle(GuiDefaultStyles::Navigation_Substyle);
 		
 		$this->titleBg = new Quad ($this->sizeX-1, 7);
-		$this->titleBg->setStyle(GUI_NAVIGATION_TITLE_BG_DEFAULT_STYLE);
-		$this->titleBg->setSubStyle(GUI_NAVIGATION_TITLE_BG_DEFAULT_SUBSTYLE);
+		$this->titleBg->setStyle(GuiDefaultStyles::Navigation_TitleBg_Style);
+		$this->titleBg->setSubStyle(GuiDefaultStyles::Navigation_TitleBg_Substyle);
 		
 		$this->title = new Label ($this->sizeX-2.5);
 		$this->title->setPosition (1.5, -0.75, 2);
-		$this->title->setStyle(GUI_NAVIGATION_TITLE_DEFAULT_STYLE);
+		$this->title->setStyle(GuiDefaultStyles::Navigation_Title_Style);
 		
 		$this->subTitle = new Label ($this->sizeX-4);
 		$this->subTitle->setPosition (1.5, -4, 3);
-		$this->subTitle->setStyle(GUI_NAVIGATION_SUBTITLE_DEFAULT_STYLE);
+		$this->subTitle->setStyle(GuiDefaultStyles::Navigation_Subtitle_Style);
 		
 		$this->quitButton = new NavigationButton ();
 		$this->quitButton->text->setText("Back");

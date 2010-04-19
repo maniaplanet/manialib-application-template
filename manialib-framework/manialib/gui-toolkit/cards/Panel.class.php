@@ -26,15 +26,15 @@ class Panel extends Quad
 		$titleBgWidth = $sx - 2;
 		$titleWidth = $sx - 4;
 		
-		$this->setStyle(GUI_PANEL_DEFAULT_STYLE);
-		$this->setSubStyle(GUI_PANEL_DEFAULT_SUBSTYLE);
+		$this->setStyle(GuiDefaultStyles::Panel_Style);
+		$this->setSubStyle(GuiDefaultStyles::Panel_Substyle);
 		
 		$this->titleBg = new Quad ($titleBgWidth, 4);
-		$this->titleBg->setStyle(GUI_PANEL_TITLE_BG_DEFAULT_STYLE);
-		$this->titleBg->setSubStyle(GUI_PANEL_TITLE_BG_DEFAULT_SUBSTYLE);
+		$this->titleBg->setStyle(GuiDefaultStyles::Panel_TitleBg_Style);
+		$this->titleBg->setSubStyle(GuiDefaultStyles::Panel_TitleBg_Substyle);
 
 		$this->title = new Label ($titleWidth);
-		$this->title->setStyle(GUI_PANEL_TITLE_DEFAULT_STYLE);
+		$this->title->setStyle(GuiDefaultStyles::Panel_Title_Style);
 		$this->title->setPositionY(-0.75);
 	}
 	

@@ -12,7 +12,7 @@ require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'layouts/AbstractLayout.class.php' 
  * 
  * @package Manialib
  */
-abstract class Manialink
+abstract class Manialink extends GuiBase
 {
 	public static $domDocument;
 	public static $parentNodes;

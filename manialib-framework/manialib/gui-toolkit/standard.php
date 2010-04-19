@@ -5,13 +5,19 @@
  */
 
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'GuiTools.class.php' );
-require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'styles.php' );
+require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'GuiDefaultStyles.class.php' );
 
 /**
  * Base GUI class for type hierarchy
  * @package Manialib
  */
 abstract class GuiBase {}
+
+/**
+ * Base for style classes
+ * @package Manialib
+ */
+abstract class GuiStyles extends GuiBase {}
 
 /**
  * The GuiComponent is a generic and abstract element that only contains
@@ -639,15 +645,15 @@ class Quad extends GuiElement
 	/**#@-*/
 	
 	protected $xmlTagName = 'quad';
-	protected $style = GUI_QUAD_DEFAULT_STYLE;
-	protected $subStyle = GUI_QUAD_DEFAULT_SUBSTYLE;
+	protected $style = GuiDefaultStyles::Quad_Style;
+	protected $subStyle = GuiDefaultStyles::Quad_Substyle;
 }
 
 /**
  * Manialink <b>sub styles</b>
  * @package ManiaLib 
  */
-abstract class Bgs1 extends GuiBase
+abstract class Bgs1 extends GuiStyles
 {
 	const BgButtonBig      = 'BgButtonBig';
 	const BgButtonSmall    = 'BgButtonSmall';
@@ -688,33 +694,56 @@ abstract class Bgs1 extends GuiBase
  * Manialink <b>sub styles</b>
  * @package ManiaLib 
  */	
-abstract class BgRaceScore2 extends GuiBase
+abstract class BgRaceScore2 extends GuiStyles
 {
-	// TODO Fill the class
+	const BgCardServer                = 'BgCardServer';
+	const BgScores                    = 'BgScores';
+	const CupFinisher                 = 'CupFinisher';
+	const CupPotentialFinisher        = 'CupPotentialFinisher';
+	const Fame                        = 'Fame';
+	const Handle                      = 'Handle';
+	const HandleBlue                  = 'HandleBlue';
+	const HandleRed                   = 'HandleRed';
+	const IsLadderDisabled            = 'IsLadderDisabled';
+	const IsLocalPlayer               = 'IsLocalPlayer';
+	const LadderRank                  = 'LadderRank';
+	const Laps                        = 'Laps';
+	const Podium                      = 'Podium';
+	const Points                      = 'Points';
+	const SandTimer                   = 'SandTimer';
+	const ScoreLink                   = 'ScoreLink';
+	const ScoreReplay                 = 'ScoreReplay';
+	const SendScore                   = 'SendScore';
+	const Spectator                   = 'Spectator';
+	const Tv                          = 'Tv';
+	const Warmup                      = 'Warmup';
 }
 
 /**
  * Manialink <b>sub styles</b>
  * @package ManiaLib 
  */	
-abstract class Bgs1InRace extends Bgs1
+abstract class Bgs1InRace extends Bgs1 {}
+
+/**
+ * Manialink <b>sub styles</b>
+ * @package ManiaLib 
+ */	
+abstract class BgsChallengeMedals extends GuiStyles
 {
+	const BgBronze                    = 'BgBronze';
+	const BgGold                      = 'BgGold';
+	const BgNadeo                     = 'BgNadeo';
+	const BgNotPlayed                 = 'BgNotPlayed';
+	const BgPlayed                    = 'BgPlayed';
+	const BgSilver                    = 'BgSilver';
 }
 
 /**
  * Manialink <b>sub styles</b>
  * @package ManiaLib 
  */	
-abstract class BgsChallengeMedals extends GuiBase
-{
-	// TODO Fill the class
-}
-
-/**
- * Manialink <b>sub styles</b>
- * @package ManiaLib 
- */	
-abstract class BgsPlayerCard extends GuiBase
+abstract class BgsPlayerCard extends GuiStyles
 {
 	const BgActivePlayerCard    = 'BgActivePlayerCard';
 	const BgActivePlayerName    = 'BgActivePlayerName';
@@ -736,38 +765,195 @@ abstract class BgsPlayerCard extends GuiBase
  * Manialink <b>sub styles</b>
  * @package ManiaLib 
  */	
-abstract class Icons128x128_1 extends GuiBase
+abstract class Icons128x128_1 extends GuiStyles
 {
-	// TODO Fill the class
+	const Advanced                    = 'Advanced';
+	const Back                        = 'Back';
+	const BackFocusable               = 'BackFocusable';
+	const Beginner                    = 'Beginner';
+	const Browse                      = 'Browse';
+	const Buddies                     = 'Buddies';
+	const Challenge                   = 'Challenge';
+	const ChallengeAuthor             = 'ChallengeAuthor';
+	const Coppers                     = 'Coppers';
+	const Create                      = 'Create';
+	const Credits                     = 'Credits';
+	const Custom                      = 'Custom';
+	const CustomStars                 = 'CustomStars';
+	const DefaultIcon                 = 'Default';
+	const Download                    = 'Download';
+	const Easy                        = 'Easy';
+	const Editor                      = 'Editor';
+	const Extreme                     = 'Extreme';
+	const Forever                     = 'Forever';
+	const GhostEditor                 = 'GhostEditor';
+	const Hard                        = 'Hard';
+	const Hotseat                     = 'Hotseat';
+	const Inputs                      = 'Inputs';
+	const Invite                      = 'Invite';
+	const LadderPoints                = 'LadderPoints';
+	const Lan                         = 'Lan';
+	const Launch                      = 'Launch';
+	const Load                        = 'Load';
+	const LoadTrack                   = 'LoadTrack';
+	const ManiaZones                  = 'ManiaZones';
+	const Manialink                   = 'Manialink';
+	const MedalCount                  = 'MedalCount';
+	const MediaTracker                = 'MediaTracker';
+	const Medium                      = 'Medium';
+	const Multiplayer                 = 'Multiplayer';
+	const Nations                     = 'Nations';
+	const NewTrack                    = 'NewTrack';
+	const Options                     = 'Options';
+	const Padlock                     = 'Padlock';
+	const Paint                       = 'Paint';
+	const Platform                    = 'Platform';
+	const PlayerPage                  = 'PlayerPage';
+	const Profile                     = 'Profile';
+	const ProfileAdvanced             = 'ProfileAdvanced';
+	const ProfileVehicle              = 'ProfileVehicle';
+	const Puzzle                      = 'Puzzle';
+	const Quit                        = 'Quit';
+	const Race                        = 'Race';
+	const Rankings                    = 'Rankings';
+	const Rankinks                    = 'Rankinks';
+	const Replay                      = 'Replay';
+	const Save                        = 'Save';
+	const ServersAll                  = 'ServersAll';
+	const ServersFavorites            = 'ServersFavorites';
+	const ServersSuggested            = 'ServersSuggested';
+	const Share                       = 'Share';
+	const ShareBlink                  = 'ShareBlink';
+	const SkillPoints                 = 'SkillPoints';
+	const Solo                        = 'Solo';
+	const Statistics                  = 'Statistics';
+	const Stunts                      = 'Stunts';
+	const United                      = 'United';
+	const Upload                      = 'Upload';
+	const Vehicles                    = 'Vehicles';
 }
 
 /**
  * Manialink <b>sub styles</b>
  * @package ManiaLib 
  */	
-abstract class Icons128x32_1 extends GuiBase
+abstract class Icons128x32_1 extends GuiStyles
 {
-	// TODO Fill the class
+	const RT_Cup                      = 'RT_Cup';
+	const RT_Laps                     = 'RT_Laps';
+	const RT_Rounds                   = 'RT_Rounds';
+	const RT_Stunts                   = 'RT_Stunts';
+	const RT_Team                     = 'RT_Team';
+	const RT_TimeAttack               = 'RT_TimeAttack';
+	const SliderBar                   = 'SliderBar';
+	const SliderBar2                  = 'SliderBar2';
+	const UrlBg                       = 'UrlBg';
 }
 
 /**
  * Manialink <b>sub styles</b>
  * @package ManiaLib 
  */	
-abstract class Icons64x64_1 extends GuiBase
+abstract class Icons64x64_1 extends GuiStyles
 {
-	// TODO Fill the class
+	const Stereo3D                    = '3DStereo';
+	const ArrowBlue                   = 'ArrowBlue';
+	const ArrowDown                   = 'ArrowDown';
+	const ArrowFastNext               = 'ArrowFastNext';
+	const ArrowFastPrev               = 'ArrowFastPrev';
+	const ArrowFirst                  = 'ArrowFirst';
+	const ArrowGreen                  = 'ArrowGreen';
+	const ArrowLast                   = 'ArrowLast';
+	const ArrowNext                   = 'ArrowNext';
+	const ArrowPrev                   = 'ArrowPrev';
+	const ArrowRed                    = 'ArrowRed';
+	const ArrowUp                     = 'ArrowUp';
+	const Browser                     = 'Browser';
+	const Buddy                       = 'Buddy';
+	const ButtonLeagues               = 'ButtonLeagues';
+	const ButtonPlayers               = 'ButtonPlayers';
+	const ButtonServers               = 'ButtonServers';
+	const Camera                      = 'Camera';
+	const CameraLocal                 = 'CameraLocal';
+	const Check                       = 'Check';
+	const ClipPause                   = 'ClipPause';
+	const ClipPlay                    = 'ClipPlay';
+	const ClipRewind                  = 'ClipRewind';
+	const Close                       = 'Close';
+	const DisplaySettings             = 'DisplaySettings';
+	const EmptyIcon                   = 'Empty';
+	const Finish                      = 'Finish';
+	const FinishGrey                  = 'FinishGrey';
+	const First                       = 'First';
+	const GenericButton               = 'GenericButton';
+	const Green                       = 'Green';
+	const IconLeaguesLadder           = 'IconLeaguesLadder';
+	const IconPlayers                 = 'IconPlayers';
+	const IconPlayersLadder           = 'IconPlayersLadder';
+	const IconServers                 = 'IconServers';
+	const Inbox                       = 'Inbox';
+	const LvlGreen                    = 'LvlGreen';
+	const LvlRed                      = 'LvlRed';
+	const LvlYellow                   = 'LvlYellow';
+	const ManiaLinkHome               = 'ManiaLinkHome';
+	const Maximize                    = 'Maximize';
+	const MediaAudioDownloading       = 'MediaAudioDownloading';
+	const MediaPlay                   = 'MediaPlay';
+	const MediaStop                   = 'MediaStop';
+	const MediaVideoDownloading       = 'MediaVideoDownloading';
+	const Music                       = 'Music';
+	const NewMessage                  = 'NewMessage';
+	const NotBuddy                    = 'NotBuddy';
+	const OfficialRace                = 'OfficialRace';
+	const Opponents                   = 'Opponents';
+	const Outbox                      = 'Outbox';
+	const QuitRace                    = 'QuitRace';
+	const RedHigh                     = 'RedHigh';
+	const RedLow                      = 'RedLow';
+	const Refresh                     = 'Refresh';
+	const RestartRace                 = 'RestartRace';
+	const Second                      = 'Second';
+	const SliderCursor                = 'SliderCursor';
+	const SliderCursor2               = 'SliderCursor2';
+	const Sound                       = 'Sound';
+	const StarGold                    = 'StarGold';
+	const StateFavourite              = 'StateFavourite';
+	const StatePrivate                = 'StatePrivate';
+	const StateSuggested              = 'StateSuggested';
+	const TV                          = 'TV';
+	const TagTypeBronze               = 'TagTypeBronze';
+	const TagTypeGold                 = 'TagTypeGold';
+	const TagTypeNadeo                = 'TagTypeNadeo';
+	const TagTypeNone                 = 'TagTypeNone';
+	const TagTypeSilver               = 'TagTypeSilver';
+	const Third                       = 'Third';
+	const ToolLeague1                 = 'ToolLeague1';
+	const ToolLeague2                 = 'ToolLeague2';
+	const ToolLeague3                 = 'ToolLeague3';
+	const ToolRoot                    = 'ToolRoot';
+	const ToolTree                    = 'ToolTree';
+	const ToolUp                      = 'ToolUp';
+	const TrackInfo                   = 'TrackInfo';
+	const Windowed                    = 'Windowed';
+	const YellowHigh                  = 'YellowHigh';
+	const YellowLow                   = 'YellowLow';
 }
 
 /**
  * Manialink <b>sub styles</b>
  * @package ManiaLib 
  */	
-abstract class MedalsBig extends GuiBase
+abstract class MedalsBig extends GuiStyles
 {
-	// TODO Fill the class
+	const MedalBronze                 = 'MedalBronze';
+	const MedalGold                   = 'MedalGold';
+	const MedalGoldPerspective        = 'MedalGoldPerspective';
+	const MedalNadeo                  = 'MedalNadeo';
+	const MedalNadeoPerspective       = 'MedalNadeoPerspective';
+	const MedalSilver                 = 'MedalSilver';
+	const MedalSlot                   = 'MedalSlot';
 }
-
+GuiDefaultStyles::Icon_Style;
 
 /**
  * Icon with the "Icons128x128_1" style
@@ -775,8 +961,8 @@ abstract class MedalsBig extends GuiBase
  */
 class Icon extends Quad
 {
-	protected $style = GUI_ICON_DEFAULT_STYLE;
-	protected $subStyle = GUI_ICON_DEFAULT_SUBSTYLE;
+	protected $style = GuiDefaultStyles::Icon_Style;
+	protected $subStyle = GuiDefaultStyles::Icon_Substyle;
 
 	function __construct($size = 7)
 	{
@@ -791,8 +977,8 @@ class Icon extends Quad
  */
 class Icon64 extends Icon
 {
-	protected $style = GUI_ICON64_DEFAULT_STYLE;
-	protected $subStyle = GUI_ICON64_DEFAULT_SUBSTYLE;
+	protected $style = GuiDefaultStyles::Icon64_Style;
+	protected $subStyle = GuiDefaultStyles::Icon64_Substyle;
 }
 
 /**
@@ -801,8 +987,8 @@ class Icon64 extends Icon
  */
 class Icon128 extends Icon
 {
-	protected $style = GUI_ICON32_DEFAULT_STYLE;
-	protected $subStyle = GUI_ICON32_DEFAULT_SUBSTYLE;
+	protected $style = GuiDefaultStyles::Icon128_Style;
+	protected $subStyle = GuiDefaultStyles::Icon128_Substyle;
 }
 
 /**
@@ -811,8 +997,8 @@ class Icon128 extends Icon
  */
 class IconMedal extends Icon
 {
-	protected $style = GUI_ICONMEDAL_DEFAULT_STYLE;
-	protected $subStyle = GUI_ICONMEDAL_DEFAULT_SUBSTYLE;
+	protected $style = GuiDefaultStyles::IconMedal_Style;
+	protected $subStyle = GuiDefaultStyles::IconMedal_Substyle;
 }
 
 /**
@@ -839,7 +1025,6 @@ class IncludeManialink extends GuiElement
  */
 class Format extends GuiElement
 {
-	// TODO Write all styles
 	/**#@+
 	 * Manialink <b>styles</b> for the <b>Format</b> element and its children 
 	 */
@@ -878,10 +1063,12 @@ class Format extends GuiElement
 	const TextTips                    = 'TextTips';
 	const TextTitle1                  = 'TextTitle1';
 	const TextTitle2                  = 'TextTitle2';
+	const TextTitle3                  = 'TextTitle3';
 	const TextTitle2Blink             = 'TextTitle2Blink';
 	const TextTitleError              = 'TextTitleError';
 	const TextValueBig                = 'TextValueBig';
 	const TextValueMedium             = 'TextValueMedium';
+	const TextValueSmall              = 'TextValueSmall';
 	/**#@-*/
 	
 	protected $xmlTagName = 'format';
@@ -955,7 +1142,7 @@ class Format extends GuiElement
 class Label extends Format
 {
 	protected $xmlTagName = 'label';
-	protected $style = GUI_LABEL_DEFAULT_STYLE;
+	protected $style = GuiDefaultStyles::Label_Style;
 	protected $posX = 0;
 	protected $posY = 0;
 	protected $posZ = 0;
@@ -1061,7 +1248,7 @@ class Label extends Format
 class Entry extends Label
 {
 	protected $xmlTagName = 'entry';
-	protected $style = GUI_ENTRY_DEFAULT_STYLE;
+	protected $style = GuiDefaultStyles::Entry_Style;
 	protected $name;
 	protected $defaultValue;
 	
@@ -1153,8 +1340,13 @@ class FileEntry extends Entry
  */
 class Button extends Label
 {
+	const CardButttonMedium       = 'CardButtonMedium';
+	const CardButttonMediumWide   = 'CardButtonMediumWide';
+	const CardButtonSmallWide     = 'CardButtonMedium';
+	const CardButtonSmall         = 'CardButonSmall';
+	
 	protected $subStyle = null;
-	protected $style = GUI_BUTTON_DEFAULT_STLE;
+	protected $style = GuiDefaultStyles::Button_Style;
 	
 	function __construct($sizeX = 25, $sizeY = 3)
 	{
