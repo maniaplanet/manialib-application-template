@@ -197,10 +197,10 @@ class PlayTrack extends fileDownload
 }
 
 /**
-  Class Track
+  Class PackageTrack
    Use it only with InstallTrackPack
 */
-class Track extends fileDownload
+class PackageTrack extends fileDownload
 {
 	protected $xmlTagName = 'track';
 	
@@ -236,7 +236,7 @@ class InstallTrackPack extends ManiacodeComponent
 	
 	function addTrack($name = '',  $url = '')
 	{
-		$this->tracks[] = new Track($name, $url);
+		$this->tracks[] = new PackageTrack($name, $url);
 	}
 	
 	function getLastInsert()
