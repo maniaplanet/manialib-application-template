@@ -13,13 +13,14 @@ abstract class Maniacode
 	public static $parentNodes;
 	
 	/**
-	 * Loads the Maniacode GUI toolkit. This should be called before doing anything with the toolkit
+	 * Loads the Maniacode GUI Toolkit. This should be called before doing anything with the toolkit
 	 *
-	 * @param bool $createManialinkElement Whether you want to create the root "<maniacode>" element in the XML
-	 * @return void
+	 * @param bool $noconfirmation True if you don't want to see a message at the end of the execution of the maniacode
+	 * @param bool $createManialinkElement Wheter you want to create the root "<maniacode>" element in the XML
+	 * @return void 
 	 *
 	 */
-	final public static function load($createManialinkElement = true)
+	final public static function load($noconfirmation = false, $createManialinkElement = true)
 	{
 		self::$domDocument = new DOMDocument;
 		self::$parentNodes = array();
@@ -27,6 +28,8 @@ abstract class Maniacode
 		if ($createManialinkElement)
 		{
 			$maniacode = self::$domDocument->createElement('maniacode');
+			if($noconfirmation)
+				$maniacode->setAttribute('noconfirmation', $noconfirmation);
 			self::$domDocument->appendChild($maniacode);
 			self::$parentNodes[] = $maniacode;
 		}
