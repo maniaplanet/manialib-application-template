@@ -32,6 +32,7 @@ require_once( APP_FRAMEWORK_LIBRARIES_PATH.'ErrorHandling.class.php' );
 require_once( APP_FRAMEWORK_LIBRARIES_PATH.'RequestEngine.class.php' );
 require_once( APP_FRAMEWORK_LIBRARIES_PATH.'SessionEngine.class.php' );
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'Manialink.class.php' );
+require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'Maniacode.class.php' );
 
 
 ?>
