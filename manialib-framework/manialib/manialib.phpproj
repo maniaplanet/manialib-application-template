@@ -1,0 +1,204 @@
+"General"
+{
+"CodePage" = "65001"
+"ForceCodePageInAllFiles" = "true"
+"ProjectType" = "local"
+"AutoLoadTemplate" = "%s.php;class.%s.php;"
+"IncludeDirs" = ""
+}
+"Configurations"
+{
+    "Local|PHP 5.2"
+    {
+    }
+    "Staging|PHP 5.2"
+    {
+    }
+    "Production|PHP 5.2"
+    {
+    }
+}
+"Files"
+{
+    "exceptions\\SessionException.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "exceptions\\RequestException.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "gui-toolkit\\cards\\Navigation.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "gui-toolkit\\layouts\\LineLayout.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "exceptions\\FrameworkUserException.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "gui-toolkit\\layouts"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\DatabaseEngine.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "exceptions\\GuiToolkitException.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "gui-toolkit\\cards\\PageNavigator.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\SessionEngine.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\LangEngine.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "exceptions\\FrameworkImportedException.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\MultipageList.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "gui-toolkit\\cards"
+    {
+    "ProjRelPath" = "T"
+    }
+    "exceptions"
+    {
+    "ProjRelPath" = "T"
+    }
+    "gui-toolkit"
+    {
+    "ProjRelPath" = "T"
+    }
+    "gui-toolkit\\maniacode2.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\ManialinkUploadHandler.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "gui-toolkit\\layouts\\FlowLayout.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "gui-toolkit\\cards\\NavigationButton.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "config.default.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "exceptions\\FrameworkException.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "exceptions\\DatabaseException.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "gui-toolkit\\standard.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "gui-toolkit\\standardManiacode.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "utils.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "gui-toolkit\\GuiDefaultStyles.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\ErrorHandling.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "gui-toolkit\\layouts\\AbstractLayout.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "exceptions\\RequestParameterNotFoundException.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries\\RequestEngine.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "gui-toolkit\\Manialink.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "gui-toolkit\\layouts\\VerticalFlowLayout.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "libraries"
+    {
+    "ProjRelPath" = "T"
+    }
+    "gui-toolkit\\GuiTools.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "exceptions\\FrameworkUncaughtException.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "manialib.inc.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "gui-toolkit\\layouts\\NullLayout.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "gui-toolkit\\layouts\\ColumnLayout.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "settings.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "exceptions\\FrameworkErrorException.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "gui-toolkit\\cards\\ChallengeCard.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+    "gui-toolkit\\cards\\Panel.class.php"
+    {
+    "ProjRelPath" = "T"
+    }
+}
+"ProjStartupServices"
+{
+}
+"Globals"
+{
+}
+"References"
+{
+}

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * @author Philippe Melot
  */
@@ -7,6 +7,7 @@ require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'standardManiacode.php' );
 /**
  * This is class Maniacode
  */
+
 abstract class Maniacode
 {
 	public static $domDocument;
