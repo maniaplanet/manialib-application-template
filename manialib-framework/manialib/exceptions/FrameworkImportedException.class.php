@@ -14,9 +14,7 @@ class FrameworkImportedException extends FrameworkException
 		parent::__construct($e->getMessage(), $e->getCode(), null, false);
 		$this->line = $e->getLine();
 		$this->file = $e->getFile();
-		$this->trace = $e->getTrace();
-		$this->optionalMessageLabel = 'Imported';
-		$this->optionalMessageContent = get_class($e);
+		$this->addOptionalInfo('Imorted from', get_class($e));
 		$this->iLog();
 	}
 }

@@ -15,18 +15,10 @@ class FrameworkException extends Exception
 	const HANDLE_SHOW_ERRORS = true;
 	const HANDLE_SILENT = false;
 	/**#@-*/
-	
-	
-	/**
-	 * Message to display to the user
-	 */
+
 	protected $userMessage='An error occured';
-	
 	protected $requestURL;
-	protected $dateThrown;
-	protected $logMessage;
-	protected $optionalMessageLabel;
-	protected $optionalMessageContent;
+	protected $optionalInfo;
 	
 	/**
 	 * Shows an error dialog to the user with the specified message
@@ -67,6 +59,45 @@ class FrameworkException extends Exception
 	}
 	
 	/**
+	 * Error dialog for debug, the panel is bigger to fit the whole exception log
+	 * @param The message to show, default is 'Fatal error'
+	 */
+	static function showDebugDialog($message = 'Fatal error')
+	{
+		$request = RequestEngine::getInstance();
+		$session = SessionEngine::getInstance();
+		$linkstr = $request->getReferer();
+		
+		Manialink::load();
+		{
+			$ui = new Panel(124, 92);
+			$ui->setAlign('center', 'center');
+			$ui->title->setStyle(Label::TextTitleError);
+			$ui->titleBg->setSubStyle(Bgs1::BgTitle2);
+			$ui->title->setText('Error');
+			$ui->save();
+
+			$ui = new Label(122);
+			$ui->setAlign('left', 'top');
+			$ui->setPosition(-60, 38, 2);
+			$ui->enableAutonewline();
+			$ui->setText($message);
+			$ui->save();
+
+			$ui = new Button;
+			$ui->setText('Back');
+			
+			$ui->setManialink($linkstr);
+			$ui->setPosition(0, -40, 5);
+			$ui->setHalign('center');
+			$ui->save();
+		}
+		Manialink::render();
+		exit;
+	}
+	
+	
+	/**
 	 * Handles what to do when an exception is catched.
 	 * @param Exception
 	 * @param boolean Whether to show an error message, default is true
@@ -74,19 +105,26 @@ class FrameworkException extends Exception
 	static function handle(Exception $e, 
 		$showErrorMessage=self::HANDLE_SHOW_ERRORS)
 	{
-		if($e instanceof FrameworkException)
+		if(!($e instanceof FrameworkException))
 		{
-			if($showErrorMessage)
-			{
-				self::showErrorDialog($e->getUserMessage());
-			}
+			$e_old = $e;
+			$e = new FrameworkImportedException($e);
 		}
-		else
+		if($showErrorMessage)
 		{
-			$ie = new FrameworkImportedException($e);
-			if($showErrorMessage)
+			if(APP_DEBUG_LEVEL == DEBUG_ON)
 			{
-				self::showErrorDialog();
+				$message = FrameworkException::getDebugMessage($e, $e->getOptionalInfo());
+				if(isset($e_old))
+				{
+					$message .= FrameworkException::getDebugMessage($e_old);
+				}
+				self::showDebugDialog($message);
+			}
+			else
+			{
+				$message = $e->getUserMessage();
+				self::showErrorDialog($message);
 			}
 		}
 	}
@@ -98,56 +136,96 @@ class FrameworkException extends Exception
 	 */
 	static function logException(Exception $e, $logfile=APP_ERROR_LOG)
 	{
-		file_put_contents($logfile, 
-			self::getExceptionLogMessage($e), FILE_APPEND);
+		$message = self::getLogMessage($e);
+		file_put_contents($logfile, $message, FILE_APPEND);
+	}
+		
+	/**
+	 * Computes the log message of any exception
+	 * @param Exception
+	 * @param array Additional info to log
+	 * @return string
+	 */
+	static function getLogMessage(Exception $e, array $optionalInfo = array())
+	{
+		// Message config
+		$styles = array(
+			'valuePrefix' => '',
+			'valueSuffix' => '',
+			'titleStyle' => '',
+			'optionalInfoLabelStyle' => '',
+			'optionalInfoContentStyle' => '',
+			'spacerPrefix' => '    ',
+			'charPrefix' => '# ',
+			'padLendth' => 15,
+		);
+		return self::computeLogMessage($e,$optionalInfo,$styles);
+	}
+	
+	static function getDebugMessage(Exception $e, array $optionalInfo = array())
+	{
+		// Message config
+		$styles = array(
+			'valuePrefix' => '$<',
+			'valueSuffix' => '$>',
+			'titleStyle' => '$o$ff0',
+			'optionalInfoLabelStyle' => '$ff0',
+			'optionalInfoContentStyle' => '',
+			'spacerPrefix' => '    ',
+			'charPrefix' => '# ',
+			'padLendth' => 25,
+		);
+		return self::computeLogMessage($e,$optionalInfo,$styles);
 	}
 	
 	/**
-	 * Returns the exception log message
-	 * @param Exception 
-	 * @param string The label of the optional message
-	 * @param string An optional message that will be logged with the exception
-	 * (eg: usefull to log Mysql queries in database exceptions)
+	 * Computes the log message 
 	 * @return string
 	 */
-	static function getExceptionLogMessage(Exception $e, $optionalMessageLabel=null,
-		$optionalMessageContent=null)
+	static protected function computeLogMessage(Exception $e, 
+		array $optionalInfo, array $styles)
 	{
 		// Message config
-		$spacerPrefix = '    ';
-		$charPrefix = '# ';
+		$valuePrefix = $styles['valuePrefix'];
+		$valueSuffix = $styles['valueSuffix'];
+		$titleStyle = $styles['titleStyle'];
+		$optionalInfoLabelStyle = $styles['optionalInfoLabelStyle'];
+		$optionalInfoContentStyle = $styles['optionalInfoContentStyle'];
+		$spacerPrefix = $styles['spacerPrefix'];
+		$charPrefix = $styles['charPrefix'];
+		$padLendth = $styles['padLendth'];
+		
 		$prefix = $spacerPrefix.$charPrefix;
-		$padLendth = 15;
 		
-		// Request URL if it exists
-		$requestURL = 
-			method_exists($e, 'getRequestURL') ?
-			$prefix.str_pad('Request:', $padLendth).$e->getRequestURL()."\n" : 
-			'';
-			
-		// optionnal message if it exists	
-		$optionalMessage = 
-			$optionalMessageLabel ?
-			$prefix.str_pad($optionalMessageLabel.':', $padLendth).
-			$optionalMessageContent."\n" 
-			: '';
+		// Computes the info		
+		$LogInfo = array();
 		
-		// The message itself
-		$message = 
-			get_class($e) ."\n".
-			$prefix.str_pad('Date:', $padLendth).date('d/m/y H:i:s') ."\n".
-			$prefix.str_pad('Message:', $padLendth).
-			print_r($e->getMessage(), true).' ('.$e->getCode().')' ."\n".
-			$optionalMessage .
-			$requestURL .
-			$prefix.str_pad('File:', $padLendth).
-			$e->getFile().':'.$e->getLine() ."\n".
-			$prefix.str_pad('Backtrace:', $padLendth)."\n".
-			$spacerPrefix. 
-			str_replace("\n", "\n".$spacerPrefix, $e->getTraceAsString())
-			."\n"."\n";
+		$LogInfo['Date'] = date('d/m/y H:i:s');
+		$LogInfo['Message'] = print_r($e->getMessage(), true).' ('.$e->getCode().')';
+		
+		$optionalInfo = (array) $optionalInfo;
+		foreach($optionalInfo as $Key=>$Value)
+		{
+			$LogInfo[$Key] = $Value;
+		}
+		
+		$LogInfo['File'] = $e->getFile().':'.$e->getLine();
+		$LogInfo['Backtrace'] = 
+			"\n".$spacerPrefix. 
+			str_replace("\n", "\n".$spacerPrefix, $e->getTraceAsString());
+		
+		// Computes the message
+		$Message = $valuePrefix.$titleStyle.get_class($e).$valueSuffix."\n";
+		foreach($LogInfo as $Label=>$Content)
+		{
+			$Message .= 
+				$prefix.str_pad(
+				$valuePrefix.$optionalInfoLabelStyle.$Label.$valueSuffix.':', $padLendth).' '.
+				$valuePrefix.$optionalInfoContentStyle.$Content.$valueSuffix."\n";
+		}
+		$Message .= "\n\n";
 
-		return $message;
+		return $Message;
 	}
 
 	/**
@@ -162,10 +240,10 @@ class FrameworkException extends Exception
 	function __construct($message='', $code=0, Exception $previous=null, $logException=true)
 	{
 		parent::__construct($message, $code);
-
 		$request = RequestEngine::getInstance();
-		$this->dateThrown = time();
 		$this->requestURL = $request->createLink();
+		$this->addOptionalInfo('User message', $this->userMessage);
+		$this->addOptionalInfo('Request URL', $this->requestURL);
 		if($logException)
 		{
 			$this->iLog();			
@@ -191,30 +269,20 @@ class FrameworkException extends Exception
 	}
 	
 	/**
-	 * Returns the UNIX timestamp when the exception was thrown
-	 * @return int
+	 * Adds an optional message to the exception log 
 	 */
-	function getDateThrown()
+	function addOptionalInfo($label, $content)
 	{
-		return $this->dateThrown;
+		$this->optionalInfo[$label] = $content;
 	}
 	
 	/**
-	 * Returns the label of the optional message
-	 * @return string
+	 * Returns the optional info
+	 * @return array
 	 */
-	function getOptionalMessageLabel()
+	function getOptionalInfo()
 	{
-		return $this->optionalMessageLabel;
-	}
-	
-	/**
-	 * Returns the content of the optional message
-	 * @return srting
-	 */
-	function getOptionalMessage()
-	{
-		return $this->optionalMessageContent;
+		return (array) $this->optionalInfo;
 	}
 	
 	/**
@@ -223,12 +291,8 @@ class FrameworkException extends Exception
 	 */
 	function iLog($logfile=APP_ERROR_LOG)
 	{
-		if(!$this->logMessage)
-		{
-			$this->logMessage = self::getExceptionLogMessage($this, 
-				$this->optionalMessageLabel, $this->optionalMessageContent);
-		}
-		file_put_contents($logfile, $this->logMessage, FILE_APPEND);
+		$message = self::getLogMessage($this,$this->optionalInfo);
+		file_put_contents($logfile, $message, FILE_APPEND);
 	}
 }
 

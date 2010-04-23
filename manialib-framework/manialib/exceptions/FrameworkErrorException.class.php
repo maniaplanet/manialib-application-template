@@ -23,8 +23,7 @@ class FrameworkErrorException extends FrameworkException
     	$this->file = $filename;
     	$this->line = $lineno;
     	$this->severity = $severity;
-    	$this->optionalMessageLabel = 'Severity';
-    	$this->optionalMessageContent = $severity;
+    	$this->addOptionalInfo('Severity', $severity);
     	$this->iLog();
     }
     

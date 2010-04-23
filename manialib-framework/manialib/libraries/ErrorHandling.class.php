@@ -34,20 +34,7 @@ abstract class ErrorHandling
 	 */
 	static function exceptionHandler($exception)
 	{
-		if($exception instanceof FrameworkException)
-		{
-			FrameworkException::handle($exception);
-		}
-		// Assert
-		else
-		{
-			Manialink::load();
-			$ui = new Label;
-			$ui->setText('uncaught exception');
-			$ui->save();
-			Manialink::render();
-			exit;
-		}
+		FrameworkException::handle($exception);
 	}
 }
 

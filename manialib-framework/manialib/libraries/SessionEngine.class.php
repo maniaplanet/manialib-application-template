@@ -19,6 +19,7 @@ final class SessionEngine
 
 	/**
 	 * Gets the instance
+	 * @return SessionEngine
 	 */
 	public static function getInstance()
 	{

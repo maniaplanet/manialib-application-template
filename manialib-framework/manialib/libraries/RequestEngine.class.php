@@ -27,6 +27,7 @@ final class RequestEngine
 	
 	/**
 	 * Gets the instance
+	 * @return RequestEngine
 	 */
 	public static function getInstance()
 	{
@@ -57,14 +58,14 @@ final class RequestEngine
 	}
 	
 	/**
-	 * Retrieves a request parameter, or throws an exception if not found
+	 * Retrieves a request parameter, or throws an exception if not found or null
 	 * @param string
 	 * @param string Optional human readable name for error dialog
 	 * @return mixed
 	 */
 	function getStrict($name, $humanReadableName=null)
 	{
-		if(array_key_exists($name, $this->params))
+		if(array_key_exists($name, $this->params) || !$this->params[$name])
 		{
 			return $this->params[$name];
 		}	
@@ -153,13 +154,20 @@ final class RequestEngine
 	 */
 	function redirectManialink($file='index.php')
 	{
-		ob_clean();
 		$arr = func_get_args();
 		array_shift($arr);
 		array_unshift($arr, $file);
 		$link = call_user_func_array(array($this,  'createLinkArgList'), $arr);
+		
+		$document = new DOMDocument;
+		$redirect = $document->createElement('redirect');
+		$value = $document->createTextNode($link);
+		$redirect->appendChild($value);
+		$document->appendChild($redirect);
+		
+		ob_clean();
 		header('Content-Type: text/xml; charset=utf-8');
-		echo('<redirect>'.$link.'</redirect>');
+		echo $document->saveXML();
 		exit;
 	}
 	
@@ -169,8 +177,16 @@ final class RequestEngine
 	 */
 	function redirectManialinkAbsolute($absoluteUri)
 	{
+		$link = $absoluteUri;
+		$document = new DOMDocument;
+		$redirect = $document->createElement('redirect');
+		$value = $document->createTextNode($link);
+		$redirect->appendChild($value);
+		$document->appendChild($redirect);
+		
 		ob_clean();
-		echo('<redirect>'.$absoluteUri.'</redirect>');
+		header('Content-Type: text/xml; charset=utf-8');
+		echo $document->saveXML();
 		exit;
 	}
 	
@@ -220,7 +236,7 @@ final class RequestEngine
 	 */
 	function registerReferer()
 	{
-		// TODO Le register referer est buggÃ©
+		// TODO Le register referer est buggé
 		$session = SessionEngine::getInstance();
 		$link = $this->createLink();
 		$this->registerRefererAtDestruct = $link;
