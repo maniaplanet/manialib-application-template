@@ -8,9 +8,9 @@ require_once ('core.inc.php');
 $request = RequestEngine::getInstance();
 $request->registerReferer();
 
-require_once ('header.php');
+require_once (APP_WWW_PATH.'header.php');
 
-require_once ('navigation.php');
+require_once (APP_WWW_PATH.'navigation.php');
 
 $layout = new FlowLayout(70, 70);
 $layout->setMargin(3, 3);
@@ -182,6 +182,6 @@ Manialink::beginFrame(-33, 45, 1, $layout);
 }
 Manialink::endFrame();
 
-require_once ('footer.php');
+require_once (APP_WWW_PATH.'footer.php');
 
 ?>
