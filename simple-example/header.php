@@ -11,7 +11,7 @@ LangEngine::getInstance();
 
 $ui = new Quad(128, 128);
 $ui->setAlign('center', 'center');
-$ui->setImage('bg_stadium.dds');
+$ui->setImage('bg_coast.dds');
 $ui->save();
 
 $ui = new Icon64;
@@ -23,7 +23,7 @@ $ui->save();
 
 // Debug button to reload the page while hooking to the XDEBUG listenner
 // Useful is you use XDEBUG to debug your application
-if(DEBUG_LEVEL >= DEBUG_ON)
+if(APP_DEBUG_LEVEL >= DEBUG_ON)
 {
 	$request->set('XDEBUG_SESSION_START', 'testID');
 	$link = $request->createLink();

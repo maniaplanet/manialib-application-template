@@ -12,18 +12,18 @@ require_once ('header.php');
 
 require_once ('navigation.php');
 
-
 $layout = new FlowLayout(70, 70);
 $layout->setMargin(3, 3);
 
 Manialink::beginFrame(-33, 45, 1, $layout);
 {
-	// ColumnLayout example
-	////////////////////////////////////////////////////////////////////////////
-	
 	$layout = new NullLayout(30, 30);
 	Manialink::beginFrame(0, 0, 1, $layout);
 	{
+		////////////////////////////////////////////////////////////////////////
+		// ColumnLayout example
+		////////////////////////////////////////////////////////////////////////
+		
 		$ui = new Panel(30, 30);
 		$ui->title->setText('ColumnLayout');
 		$ui->save();
@@ -47,12 +47,13 @@ Manialink::beginFrame(-33, 45, 1, $layout);
 	}
 	Manialink::endFrame();
 	
-	// LineLayout example
-	////////////////////////////////////////////////////////////////////////////
-	
 	$layout = new NullLayout(30, 30);
 	Manialink::beginFrame(0, 0, 1, $layout);
 	{
+		////////////////////////////////////////////////////////////////////////
+		// LineLayout example
+		////////////////////////////////////////////////////////////////////////
+		
 		$ui = new Panel(30, 30);
 		$ui->title->setText('LineLayout');
 		$ui->save();
@@ -76,12 +77,13 @@ Manialink::beginFrame(-33, 45, 1, $layout);
 	}
 	Manialink::endFrame();
 
-	// FlowLayout example
-	////////////////////////////////////////////////////////////////////////////
-	
 	$layout = new NullLayout(30, 30);
 	Manialink::beginFrame(0, 0, 1, $layout);
 	{
+		////////////////////////////////////////////////////////////////////////
+		// FlowLayout example
+		////////////////////////////////////////////////////////////////////////
+		
 		$ui = new Panel(30, 30);
 		$ui->title->setText('FlowLayout');
 		$ui->save();
@@ -123,12 +125,13 @@ Manialink::beginFrame(-33, 45, 1, $layout);
 	}
 	Manialink::endFrame();
 
-	// FlowLayout example 2
-	////////////////////////////////////////////////////////////////////////////
-	
 	$layout = new NullLayout(30, 30);
 	Manialink::beginFrame(0, 0, 1, $layout);
 	{
+		////////////////////////////////////////////////////////////////////////
+		// FlowLayout example 2
+		////////////////////////////////////////////////////////////////////////
+		
 		$ui = new Panel(30, 30);
 		$ui->title->setText('FlowLayout');
 		$ui->save();

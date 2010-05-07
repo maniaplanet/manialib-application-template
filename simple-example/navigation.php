@@ -1,20 +1,18 @@
 <?php
 /**
- * Navigation menu
  * @author Maxime Raoust
  */
 
 $request = RequestEngine::getInstance();
 
 $ui = new Navigation;
+$ui->title->setText('Manialib');
+$ui->subTitle->setText('Lightweight PHP framework');
+$ui->logo->setImage('logo64.dds');
 {
-	$ui->title->setText('ManiaLib');
-	$ui->subTitle->setText('Lightweight PHP framework');
-	$ui->logo->setImage('logo64.dds');
-	
 	$link = $request->createLinkArgList('index.php');
 	$ui->addItem();
-	$ui->lastItem()->text->setText(__('home'));
+	$ui->lastItem()->text->setText('Home');
 	$ui->lastItem()->icon->setSubStyle('United');
 	$ui->lastItem()->setManialink($link);
 	
@@ -23,16 +21,8 @@ $ui = new Navigation;
 	$ui->lastItem()->text->setText('Layouts demo');
 	$ui->lastItem()->icon->setSubStyle('Advanced');
 	$ui->lastItem()->setManialink($link);
-	
-	$link = $request->createLinkArgList('exception_test.php');
-	$ui->addItem();
-	$ui->lastItem()->text->setText('Exception test');
-	$ui->lastItem()->icon->setSubStyle('Advanced');
-	$ui->lastItem()->setManialink($link);
-	
-	$ui->addGap(66);
-	
-	$ui->quitButton->setAction(0);
+		
+	$ui->quitButton->setManialink('Manialink:home');
 	$ui->quitButton->text->setText('Quit');
 }
 $ui->save();
