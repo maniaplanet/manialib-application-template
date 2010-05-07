@@ -43,6 +43,12 @@ abstract class Manialink extends GuiBase
 			$manialink->appendChild($timeout); 
 			$timeout->nodeValue = $timeoutValue;
 		}
+		else
+		{
+			$frame = self::$domDocument->createElement('frame');
+			self::$domDocument->appendChild($frame);
+			self::$parentNodes[] = $frame;
+		}
 	}
 	
 	/**
