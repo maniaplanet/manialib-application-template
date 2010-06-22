@@ -27,7 +27,6 @@ class FrameworkException extends Exception
 	static function showErrorDialog($message = 'Fatal error')
 	{
 		$request = RequestEngine::getInstance();
-		$session = SessionEngine::getInstance();
 		$linkstr = $request->getReferer();
 		
 		Manialink::load();
@@ -65,7 +64,6 @@ class FrameworkException extends Exception
 	static function showDebugDialog($message = 'Fatal error')
 	{
 		$request = RequestEngine::getInstance();
-		$session = SessionEngine::getInstance();
 		$linkstr = $request->getReferer();
 		
 		Manialink::load();
@@ -81,7 +79,7 @@ class FrameworkException extends Exception
 			$ui->setAlign('left', 'top');
 			$ui->setPosition(-60, 38, 2);
 			$ui->enableAutonewline();
-			$ui->setText($message);
+			$ui->setText(utf8_encode($message));
 			$ui->save();
 
 			$ui = new Button;

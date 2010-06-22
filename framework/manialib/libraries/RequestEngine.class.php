@@ -10,9 +10,9 @@
  * <b>Request engine</b>: used to handle GET parameters and to create hyperlink
  * strings and redirections
  */
-final class RequestEngine
+class RequestEngine
 {
-	protected static $instance;
+	static private $instance;
 	
 	protected $requestParams = array();
 	protected $params = array();
@@ -65,7 +65,7 @@ final class RequestEngine
 	 */
 	function getStrict($name, $humanReadableName=null)
 	{
-		if(array_key_exists($name, $this->params) || !$this->params[$name])
+		if(array_key_exists($name, $this->params) && $this->params[$name])
 		{
 			return $this->params[$name];
 		}	
@@ -80,10 +80,6 @@ final class RequestEngine
 	 */
 	function set($name, $value)
 	{
-		if($name=='rp')
-		{
-			throw new RequestException('You cannot use "rp" as a request parameter');
-		}
 		$this->params[$name] = $value;
 	}
 	
@@ -146,6 +142,21 @@ final class RequestEngine
 		return $this->createLinkString($file, true, $args);
 	}
 	
+	function createAbsoluteLinkArgList($absoluteLink)
+	{
+		$arr = func_get_args();
+		array_shift($arr);
+		$args = array();
+		foreach($arr as $elt)
+		{
+			if(array_key_exists($elt, $this->params))
+			{
+				$args[$elt] = $this->params[$elt];
+			}	
+		}
+		return $absoluteLink.($args ? '?'.http_build_query($args) : '');
+	}
+	
 	/**
 	 * Creates a Manialink redirection to the specified file with request
 	 * parameters specified as method arguments (eg. redirectManialink("index.
@@ -159,16 +170,7 @@ final class RequestEngine
 		array_unshift($arr, $file);
 		$link = call_user_func_array(array($this,  'createLinkArgList'), $arr);
 		
-		$document = new DOMDocument;
-		$redirect = $document->createElement('redirect');
-		$value = $document->createTextNode($link);
-		$redirect->appendChild($value);
-		$document->appendChild($redirect);
-		
-		ob_clean();
-		header('Content-Type: text/xml; charset=utf-8');
-		echo $document->saveXML();
-		exit;
+		Manialink::redirect($link);
 	}
 	
 	/**
@@ -177,17 +179,7 @@ final class RequestEngine
 	 */
 	function redirectManialinkAbsolute($absoluteUri)
 	{
-		$link = $absoluteUri;
-		$document = new DOMDocument;
-		$redirect = $document->createElement('redirect');
-		$value = $document->createTextNode($link);
-		$redirect->appendChild($value);
-		$document->appendChild($redirect);
-		
-		ob_clean();
-		header('Content-Type: text/xml; charset=utf-8');
-		echo $document->saveXML();
-		exit;
+		Manialink::redirect($absoluteUri);
 	}
 	
 	/**
@@ -196,10 +188,7 @@ final class RequestEngine
 	 */
 	function redirectToReferer()
 	{
-		ob_clean();
-		$link = $this->getReferer();
-		echo('<redirect>'.$link.'</redirect>');
-		exit;
+		Manialink::redirect($this->getReferer());
 	}
 	
 	/**
@@ -222,12 +211,15 @@ final class RequestEngine
 	 */
 	function registerGlobalParam($name)
 	{
-		$value = array_get($this->requestParams, $name, null);
-		if($value !== null)
+		if(array_key_exists($name,$this->requestParams))
 		{
-			$session = SessionEngine::getInstance();
-			$session->set($name, $value);
-			$this->registerProtectedParam($name);
+			$value = $this->requestParams[$name];
+			if($value !== null)
+			{
+				$session = SessionEngine::getInstance();
+				$session->set($name, $value);
+				$this->registerProtectedParam($name);
+			}
 		}
 	}
 	
@@ -236,7 +228,7 @@ final class RequestEngine
 	 */
 	function registerReferer()
 	{
-		// TODO Le register referer est buggé
+		// TODO Le register referer est buggï¿½
 		$session = SessionEngine::getInstance();
 		$link = $this->createLink();
 		$this->registerRefererAtDestruct = $link;
@@ -281,7 +273,6 @@ final class RequestEngine
 			$this->params = array_map('stripslashes', $this->params);
 		}
 		$this->requestParams = $this->params;
-		$this->registerProtectedParam('rp');
 	}
 	
 	protected function createLinkString($file=null, $relativePath=true, $params)
@@ -349,6 +340,19 @@ final class RequestEngine
 		}
 				
 		return $link.$params;
+	}
+}
+
+class RequestException extends FrameworkException {}
+
+class RequestParameterNotFoundException extends FrameworkUserException 
+{
+	/**
+	 * @param string Human readable name of the parameter that was forgotten
+	 */
+	function __construct($parameterName)
+	{
+		parent::__construct('You must specify $<$o'.$parameterName.'$>');
 	}
 }
 

@@ -40,7 +40,7 @@ abstract class GuiDefaultStyles extends GuiBase
 	const NavigationButton_Substyle = Bgs1::NavButton;
 	const NavigationButton_Text_Style = Label::TextButtonNav;
 	const NavigationButton_Selected_Substyle = Bgs1::NavButtonBlink;
-	const NavigationButton_Selected_Text_Style = Label::TextButtonBig;
+	const NavigationButton_Selected_Text_Style = Label::TextButtonNav;
 	/**#@-*/
 	
 	/**#@+

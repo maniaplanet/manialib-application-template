@@ -173,6 +173,8 @@ abstract class GuiComponent extends GuiBase
  */
 abstract class GuiElement extends GuiComponent
 {
+	const USE_ABSOLUTE_URL = null;
+	
 	protected $style;
 	protected $subStyle;
 	protected $valign = null;
@@ -582,13 +584,13 @@ abstract class GuiElement extends GuiComponent
 				$this->xml->setAttribute('bgcolor', $this->bgcolor);
 	
 			// Add links
-			if($this->addPlayerId !== null)
+			if($this->addPlayerId !== null && Manialink::$linksEnabled)
 				$this->xml->setAttribute('addplayerid', $this->addPlayerId);
-			if($this->manialink !== null)
+			if($this->manialink !== null && Manialink::$linksEnabled)
 				$this->xml->setAttribute('manialink', $this->manialink);
-			if($this->url !== null)
+			if($this->url !== null && Manialink::$linksEnabled)
 				$this->xml->setAttribute('url', $this->url);
-			if($this->maniazone !== null)
+			if($this->maniazone !== null && Manialink::$linksEnabled)
 				$this->xml->setAttribute('maniazone', $this->maniazone);
 	
 			// Add action
@@ -1231,9 +1233,19 @@ class Label extends Format
 	{
 		parent::postFilter();
 		if($this->text !== null)
-			$this->xml->setAttribute('text', $this->text);
+		{
+			if(Manialink::$linksEnabled)
+				$this->xml->setAttribute('text', $this->text);
+			else
+				$this->xml->setAttribute('text', stripLinks($this->text));
+		}	
 		if($this->textid !== null)
-			$this->xml->setAttribute('textid', $this->textid);
+		{
+			if(Manialink::$linksEnabled)
+				$this->xml->setAttribute('textid', $this->textid);
+			else
+				$this->xml->setAttribute('textid', stripLinks($this->textid));
+		}
 		if($this->autonewline !== null)
 			$this->xml->setAttribute('autonewline', $this->autonewline);
 		if($this->maxline !== null)
@@ -1342,8 +1354,8 @@ class Button extends Label
 {
 	const CardButttonMedium       = 'CardButtonMedium';
 	const CardButttonMediumWide   = 'CardButtonMediumWide';
-	const CardButtonSmallWide     = 'CardButtonMedium';
-	const CardButtonSmall         = 'CardButonSmall';
+	const CardButtonSmallWide     = 'CardButtonSmallWide';
+	const CardButtonSmall         = 'CardButtonSmall';
 	
 	protected $subStyle = null;
 	protected $style = GuiDefaultStyles::Button_Style;

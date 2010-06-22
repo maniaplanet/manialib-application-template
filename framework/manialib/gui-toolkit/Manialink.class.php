@@ -17,6 +17,7 @@ abstract class Manialink extends GuiBase
 	public static $domDocument;
 	public static $parentNodes;
 	public static $parentLayouts;
+	public static $linksEnabled = true;
 	
 	/**
 	 * Loads the Manialink GUI toolkit. This should be called before doing
@@ -126,6 +127,30 @@ abstract class Manialink extends GuiBase
 		array_pop(self::$parentLayouts);
 	}
 	
+	final public static function redirect($link, $render = true)
+	{
+		self::$domDocument = new DOMDocument;
+		self::$parentNodes = array();
+		self::$parentLayouts = array();
+		
+		$redirect = self::$domDocument->createElement('redirect');
+		$redirect->appendChild(self::$domDocument->createTextNode($link)); 
+		self::$domDocument->appendChild($redirect);
+		self::$parentNodes[] = $redirect;
+		
+		if($render)
+		{
+			ob_clean();
+			header('Content-Type: text/xml; charset=utf-8');
+			echo self::$domDocument->saveXML();
+			exit;
+		}
+		else
+		{
+			return self::$domDocument->saveXML();
+		}
+	}
+	
 	/**
 	 * Add the given XML code to the document
 	 */
@@ -135,6 +160,23 @@ abstract class Manialink extends GuiBase
 		$doc->loadXML($XML);
 		$node = self::$domDocument->importNode($doc->firstChild, true);
 		end(self::$parentNodes)->appendChild($node);
+	}
+	
+	/**
+	 * Disable all Manialinks, URLs and actions of GUIElement objects as long as
+	 * it is disabled
+	 */
+	static function disableLinks()
+	{
+		self::$linksEnabled = false;
+	}
+	
+	/**
+	 * Enable links
+	 */
+	static function enableLinks()
+	{
+		self::$linksEnabled = true;
 	}
 }
 

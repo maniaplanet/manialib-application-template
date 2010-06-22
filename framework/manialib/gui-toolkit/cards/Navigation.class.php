@@ -11,6 +11,9 @@ require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'cards/NavigationButton.class.php' 
  */
 class Navigation extends Quad
 {
+	const BUTTONS_TOP = true;
+	const BUTTONS_BOTTOM = false;
+	
 	public $title;
 	public $subTitle;
 	public $titleBg;
@@ -18,7 +21,9 @@ class Navigation extends Quad
 	public $logo;
 	protected $showQuitButton = true;
 	protected $items = array();
+	protected $bottomItems = array();
 	protected $marginHeight = 1;
+	protected $lastItem;
 	protected $yIndex = -10;
 	protected $sizeX = 30;
 	protected $sizeY = 96;
@@ -52,10 +57,15 @@ class Navigation extends Quad
 	/**
 	 * Adds a navigation button to the menu
 	 */
-	function addItem() 
+	function addItem($topItem = self::BUTTONS_TOP) 
 	{
 		$item = new NavigationButton($this->sizeX-1);
-		$this->items[] = $item;
+		if($topItem)
+			$this->items[] = $item;
+		else
+			$this->bottomItems[] = $item;
+		
+		$this->lastItem = $item;
 	}
 	
 	/**
@@ -64,7 +74,7 @@ class Navigation extends Quad
 	 */
 	function lastItem() 
 	{
-		return end($this->items);
+		return $this->lastItem;
 	}
 	
 	/**
@@ -102,16 +112,37 @@ class Navigation extends Quad
 				$this->subTitle->save();
 				$this->logo->save();
 				
-				$layout = new ColumnLayout($this->sizeX-1, $this->sizeY-10);
-				$layout->setMarginHeight(1);
-				Manialink::beginFrame(0, -10, 0, $layout);
+				if($this->items)
 				{
-					foreach($this->items as $item) 
+					$layout = new ColumnLayout($this->sizeX-1, $this->sizeY-10);
+					$layout->setMarginHeight(1);
+					Manialink::beginFrame(0, -10, 0, $layout);
 					{
-						$item->save();
+						foreach($this->items as $item) 
+						{
+							$item->save();
+						}
+						Manialink::endFrame();
 					}
-					Manialink::endFrame();
 				}
+				
+				if($this->bottomItems)
+				{
+					$this->bottomItems = array_reverse($this->bottomItems);
+					
+					$layout = new ColumnLayout($this->sizeX-1, $this->sizeY-10);
+					$layout->setDirection(ColumnLayout::DIRECTION_UP);
+					$layout->setMarginHeight(1);
+					Manialink::beginFrame(0, -$this->sizeY+$this->quitButton->getSizeY()+2, 0, $layout);
+					{
+						foreach($this->bottomItems as $item) 
+						{
+							$item->save();
+						}
+						Manialink::endFrame();
+					}
+				}
+				
 				if($this->showQuitButton) 
 				{
 					$this->quitButton->setSizeX($this->sizeX-1);

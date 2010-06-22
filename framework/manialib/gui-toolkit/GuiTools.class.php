@@ -122,4 +122,6 @@ abstract class GuiTools
 	}
 }
 
+class GuiToolkitException extends FrameworkException {}
+
 ?>

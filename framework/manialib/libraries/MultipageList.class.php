@@ -76,13 +76,16 @@ class MultipageList
 		
 	function getPageNumber()
 	{
-		if($this->pageNumber === null && $this->perPage)
+		if(!$this->pageNumber && $this->perPage)
 		{
 			$this->pageNumber = ceil($this->size/$this->perPage);
 		}
 		return $this->pageNumber;
 	}
 	
+	/**
+	 * @return array[int] offset, length
+	 */
 	function getLimit()
 	{
 		$offset = ($this->getCurrentPage()-1)*$this->perPage;

@@ -13,9 +13,10 @@ class NavigationButton extends Quad
 	public $icon;
 	
 	protected $forceLinks = true;
-	protected $iconSizeMinimizer = 1.5;
-	protected $textSizeMinimizer = 3;
-	protected $textOffset = 9;
+	public $iconSizeMinimizer = 1.5;
+	public $textSizeMinimizer = 3;
+	public $textOffset = 9;
+	public $isSelected = false;
 
 	function __construct ($sx=29.5, $sy=8.5) 
 	{
@@ -42,11 +43,17 @@ class NavigationButton extends Quad
 	function setSelected() 
 	{
 		$this->setSubStyle(GuiDefaultStyles::NavigationButton_Selected_Substyle);
-		$this->text->setStyle(GuiDefaultStyles::NavigationButton_Selected_Text_Style);	
+		$this->text->setStyle(GuiDefaultStyles::NavigationButton_Selected_Text_Style);
+		$this->isSelected = true;	
 	}
 	
 	protected function postFilter ()
 	{		
+		if($this->isSelected)
+		{
+			$this->text->setText('$0cf'.$this->text->getText());
+		}
+		
 		$this->text->setSizeX($this->sizeX - $this->text->getPosX() - $this->textSizeMinimizer);
 		$this->text->setSizeY(0);
 		$this->icon->setSize($this->sizeY-$this->iconSizeMinimizer, $this->sizeY-$this->iconSizeMinimizer);

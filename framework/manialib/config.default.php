@@ -135,6 +135,13 @@ if(!defined('APP_ERROR_LOG'))
 	 */
 	define('APP_ERROR_LOG', APP_LOGS_PATH . 'error.log');
 }
+if(!defined('APP_USER_ERROR_LOG'))
+{
+	/**
+	 * Error log
+	 */
+	define('APP_USER_ERROR_LOG', APP_LOGS_PATH . 'user-error.log');
+}
 if(!defined('APP_DEBUG_LOG'))
 {
 	/**

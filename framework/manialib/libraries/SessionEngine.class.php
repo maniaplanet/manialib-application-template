@@ -91,4 +91,6 @@ final class SessionEngine
 	}
 }
 
+class SessionException extends FrameworkException {}
+
 ?>

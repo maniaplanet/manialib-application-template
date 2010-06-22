@@ -153,12 +153,38 @@ class PageNavigator extends GuiComponent
 		}
 		
 		// Arrow styles
-		if($this->arrowNext->hasLink()) $this->arrowNext->setSubStyle($this->arrowNextStyle);
-		if($this->arrowPrev->hasLink()) $this->arrowPrev->setSubStyle($this->arrowPrevStyle);
-		if($this->arrowFastNext->hasLink()) $this->arrowFastNext->setSubStyle($this->arrowFastNextStyle);
-		if($this->arrowFastPrev->hasLink()) $this->arrowFastPrev->setSubStyle($this->arrowFastPrevStyle);
-		if($this->arrowLast->hasLink()) $this->arrowLast->setSubStyle($this->arrowLastStyle);
-		if($this->arrowFirst->hasLink()) $this->arrowFirst->setSubStyle($this->arrowFirstStyle);
+		if($this->arrowNext->hasLink())
+		{
+			$this->arrowNext->setSubStyle($this->arrowNextStyle);
+		} 
+		if($this->arrowPrev->hasLink())
+		{
+			 $this->arrowPrev->setSubStyle($this->arrowPrevStyle);
+		}
+		if($this->arrowNext->hasLink() && $this->arrowFastNext->hasLink())
+		{
+			$this->arrowFastNext->setSubStyle($this->arrowFastNextStyle);
+		}
+		else
+		{
+			$this->arrowFastNext->setManialink(null);
+		} 
+		if($this->arrowPrev->hasLink() && $this->arrowFastPrev->hasLink())
+		{
+			 $this->arrowFastPrev->setSubStyle($this->arrowFastPrevStyle);
+		}
+		else
+		{
+			$this->arrowFastNext->setManialink(null);
+		} 
+		if($this->arrowNext->hasLink() && $this->arrowLast->hasLink())
+		{
+			 $this->arrowLast->setSubStyle($this->arrowLastStyle);
+		}
+		if($this->arrowPrev->hasLink() && $this->arrowFirst->hasLink())
+		{
+			 $this->arrowFirst->setSubStyle($this->arrowFirstStyle);
+		}
 
 		// Text
 		$this->text->setStyle("TextStaticSmall");
