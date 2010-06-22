@@ -4,6 +4,46 @@
  * @author Maxime Raoust
  */
 
+
+/*
+
+Usage example:
+
+<?php
+
+require_once(APP_FRAMEWORK_LIBRARIES_PATH.'Database.php');
+
+try
+{
+
+	$database = DatabaseFactory::getConnection();
+	
+	$result = $database->execute('SELECT * FROM mytable WHERE id < 10');
+	
+	echo $result->recordCount().' results';
+	
+	while($array = $result->fetchAssoc())
+	{
+		print_r($array);
+	}
+	
+	$myvar = 'Some \'text with quotes\' and "double quotes"';
+	$myvarQuoted = $database->quote($myvar);
+	
+	$database->execute( 'INSERT INTO mytable (MyText) VALUES ('.$myvarQuoted.')' );
+	
+	echo $database->insertID.' is a newly inserted ID';
+
+}
+catch(Exception $e)
+{
+	// Error handling...
+}
+
+?>
+ 
+*/
+
 abstract class DatabaseFactory
 {
 	/**
