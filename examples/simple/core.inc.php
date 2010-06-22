@@ -1,25 +1,18 @@
 <?php
 /**
- * Include this file on every page to load the core. Here you can instanciate
+ * Include this file on every page to load the framework. Here you can instanciate
  * your objects and include your libraries.
- * 
  * @author Maxime Raoust
  */
 
 require_once( dirname(__FILE__).'/config.php' );
 require_once( dirname(__FILE__).'/manialib/manialib.inc.php' );
 
-$request = RequestEngine::getInstance();
+// Date config
+date_default_timezone_set(APP_DEFAULT_TIMEZONE);
 
-if($playerLogin = $request->get('playerlogin'))
-{
-	$session->set('login', $playerLogin);
-}
-
-$request->registerProtectedParam('playerlogin');
-$request->registerGlobalParam('login');
-$request->registerGlobalParam('nickname');
-$request->registerGlobalParam('path');
-$request->registerGlobalParam('lang');
+// Error handling
+set_error_handler(array('ErrorHandling', 'exceptionErrorHandler'));
+set_exception_handler(array('ErrorHandling', 'exceptionHandler'));
 
 ?>

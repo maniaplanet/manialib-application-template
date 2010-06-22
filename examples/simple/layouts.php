@@ -1,21 +1,22 @@
 <?php
 /**
+ * Layouts demo
  * @author Maxime Raoust
  */
 
-require_once ('core.inc.php');
+require_once(dirname(__FILE__).'/core.inc.php');
 
 $request = RequestEngine::getInstance();
 $request->registerReferer();
 
-require_once (APP_WWW_PATH.'header.php');
+require_once(APP_WWW_PATH.'header.php');
 
-require_once (APP_WWW_PATH.'navigation.php');
+require_once(APP_WWW_PATH.'navigation.php');
 
 $layout = new FlowLayout(70, 70);
 $layout->setMargin(3, 3);
 
-Manialink::beginFrame(-33, 45, 1, $layout);
+Manialink::beginFrame(-30, 40, 1, $layout);
 {
 	$layout = new NullLayout(30, 30);
 	Manialink::beginFrame(0, 0, 1, $layout);
@@ -182,6 +183,6 @@ Manialink::beginFrame(-33, 45, 1, $layout);
 }
 Manialink::endFrame();
 
-require_once (APP_WWW_PATH.'footer.php');
+require_once(APP_WWW_PATH.'footer.php');
 
 ?>

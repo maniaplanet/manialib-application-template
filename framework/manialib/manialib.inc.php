@@ -1,6 +1,10 @@
 <?php
 /**
- * FRAMEWORK ENTRY POINT
+ * Manialib framework entry point: load all necessary files and statically
+ * requires a few classes to enhance performances. The other classes will
+ * be automatically load through __autoload()
+ * 
+ * ----------
  * 
  * This file is part of ManiaLib.
  *  
@@ -21,10 +25,6 @@
  * @package Manialib
  */
 
-ob_start();
-
-// Framework includes. The classes will be loaded through the __autoload() function
-// However we load a few classes statically to enhance performances
 require_once( dirname(__FILE__).'/config.default.php' );
 require_once( dirname(__FILE__).'/settings.php' );
 require_once( APP_FRAMEWORK_PATH.'utils.php' );
@@ -33,6 +33,5 @@ require_once( APP_FRAMEWORK_LIBRARIES_PATH.'RequestEngine.class.php' );
 require_once( APP_FRAMEWORK_LIBRARIES_PATH.'SessionEngine.class.php' );
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'Manialink.class.php' );
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'Maniacode.class.php' );
-
 
 ?>
