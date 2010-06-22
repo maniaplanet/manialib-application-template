@@ -61,6 +61,11 @@ function debuglog($message, $addDate = true, $logFilename = APP_DEBUG_LOG)
 	file_put_contents($logFilename, $message, FILE_APPEND);
 }
 
+function foobar($message)
+{
+	throw new DebugException(print_r($message, true));
+}
+
 /**
  * Tries to get an element from an array. Returns the default value if not
  * found.

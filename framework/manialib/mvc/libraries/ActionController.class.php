@@ -1,0 +1,205 @@
+<?php
+/**
+ * MVC Framework magic happens here !
+ */
+
+require_once(APP_MVC_FRAMEWORK_EXCEPTIONS_PATH.'MVCException.class.php');
+
+// TODO Implement controller-defined default action
+
+/**
+ * Extends ActionController to create controllers
+ * Naming conventions:
+ * - class mysuperstuffController
+ * - public function mysuperstuffController::mysuperaction()
+ * Note the lowercase names to ensure that URLS are all lowercase
+ */
+class ActionController
+{
+	protected $controllerName;
+	/**
+	 * @var array[Filterable]
+	 */
+	protected $filters = array();
+	/**
+	 * @var array[ReflectionMethod]
+	 */
+	protected $reflectionMethods = array();
+	/**
+	 * @var RequestEngineMVC
+	 */
+	protected $request;
+	/**
+	 * @var SessionEngine
+	 */
+	protected $session;
+	/**
+	 * @var ResponseEngine
+	 */
+	protected $response;
+	
+	final public static function dispatch()
+	{	
+		$request = RequestEngineMVC::getInstance();
+		
+		$controllerName = $request->getController();
+		$controllerClass = $controllerName.'Controller';
+		$controllerFilename = APP_MVC_CONTROLLERS_PATH.$controllerClass.'.class.php';
+		
+		if (!file_exists($controllerFilename))
+		{
+			throw new ControllerNotFoundException($controllerName);
+		}
+				
+		require_once($controllerFilename);
+		$controller = new $controllerClass($controllerName);
+		$controller->launch();
+	}
+	
+	/**
+	 * Call the parent constructor when you override it in your controllers!
+	 */
+	function __construct($controllerName)
+	{
+		$this->controllerName = $controllerName;
+		$this->request = RequestEngineMVC::getInstance();
+		$this->response = ResponseEngine::getInstance();
+		$this->session = SessionEngine::getInstance();
+	}
+	
+	final protected function addFilter(Filterable $filter)
+	{
+		$this->filters[] = $filter;
+	}
+	
+	final protected function chainAction($controllerName=null, $actionName)
+	{
+		if($controllerName==null || $controllerName.'Controller' == get_class($this))
+		{
+			$this->checkActionExists($actionName);
+			$this->executeAction($actionName);
+		}
+		else
+		{
+			// TODO Implement cross-controller action chaining
+			throw new FrameworkException('Cross-controller chaining not supported for now');
+		}
+	}
+	
+	final protected function chainActionAndView($controllerName=null, $actionName)
+	{
+		$this->response->resetViews();
+		if($controllerName==null || $controllerName.'Controller' == get_class($this))
+		{
+			$this->checkActionExists($actionName);
+			$this->response->registerView($this->controllerName, $actionName);
+			$this->executeAction($actionName);
+		}
+		else
+		{
+			// TODO Implement cross-controller action chaining
+			throw new FrameworkException('Cross-controller chaining not supported for now');
+		}
+	}
+	
+	final protected function checkActionExists($actionName)
+	{
+		if(!array_key_exists($actionName, $this->reflectionMethods))
+		{
+			try
+			{
+				$this->reflectionMethods[$actionName] = 
+					new ReflectionMethod(get_class($this),$actionName);
+			}
+			catch(Exception $e)
+			{
+				throw new ActionNotFoundException($actionName);
+			}
+		}
+		if(!$this->reflectionMethods[$actionName]->isPublic())
+		{
+			throw new ActionNotFoundException($actionName.' (Method must be public)');
+		}
+		if($this->reflectionMethods[$actionName]->isFinal())
+		{
+			throw new Exception($actionName.' (Method must not be final)');
+		}	
+	}
+	
+	final protected function executeAction($actionName)
+	{
+		if(!array_key_exists($actionName, $this->reflectionMethods))
+		{
+			try
+			{
+				$this->reflectionMethods[$actionName] = 
+					new ReflectionMethod(get_class($this),$actionName);
+			}
+			catch(Exception $e)
+			{
+				throw new ActionNotFoundException($actionName);
+			}
+		}
+		
+		$callParameters = array();
+		$requiredParameters = $this->reflectionMethods[$actionName]->getParameters();
+		foreach($requiredParameters as $parameter)
+		{
+			if($parameter->isDefaultValueAvailable())
+			{
+				$callParameters[] = $this->request->get($parameter->name, $parameter->getDefaultValue());
+			}
+			else
+			{
+				$callParameters[] = $this->request->getStrict($parameter->name);
+			}
+		}
+		
+		call_user_func_array(array($this, $actionName), $callParameters);
+	}
+	
+	final protected function launch()
+	{
+		$controllerName = $this->request->getController();
+		$actionName = $this->request->getAction();
+		
+		$this->checkActionExists($actionName);
+		
+		$this->response->registerView($controllerName, $actionName);
+		
+		foreach($this->filters as $filter)
+		{
+			$filter->preFilter();
+		}
+		
+		$this->executeAction($actionName);
+		
+		foreach(array_reverse($this->filters) as $filter)
+		{
+			$filter->postFilter();
+		}
+		
+		$this->response->render();
+	}
+	
+	final protected function showDebugMessage($message)
+	{
+		if(APP_DEBUG_LEVEL == DEBUG_OFF)
+		{
+			throw new MVCException('ActionController::showDebugMessage() is only available in debug mode!');
+		}
+		
+		$this->response->dialogTitle = 'Debug message';
+		$this->response->dialogMessage = print_r($message, true);
+		$this->response->dialogButtonLabel = 'Quarante-deux';
+		$this->response->dialogButtonManialink = $this->request->getReferer();
+		
+		$this->response->resetViews();
+		$this->response->registerDialog('dialogs', 'generic_dialog');
+	}
+}
+
+class ControllerNotFoundException extends MVCException {}
+class ActionNotFoundException extends MVCException {}
+
+?>
