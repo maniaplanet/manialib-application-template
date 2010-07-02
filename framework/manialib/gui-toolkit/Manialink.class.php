@@ -9,7 +9,7 @@ require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'layouts/AbstractLayout.class.php' 
 
 /**
  * Manialink GUI toolkit main class
- * 
+ *
  * @package Manialib
  */
 abstract class Manialink extends GuiBase
@@ -18,11 +18,11 @@ abstract class Manialink extends GuiBase
 	public static $parentNodes;
 	public static $parentLayouts;
 	public static $linksEnabled = true;
-	
+
 	/**
 	 * Loads the Manialink GUI toolkit. This should be called before doing
 	 * anything with the toolkit.
-	 * 
+	 *
 	 * @param bool Whether you want to create the root "<manialink>" element in
 	 * the XML
 	 * @param int The timeout value in seconds. Use 0 if you have dynamic pages
@@ -33,15 +33,15 @@ abstract class Manialink extends GuiBase
 		self::$domDocument = new DOMDocument;
 		self::$parentNodes = array();
 		self::$parentLayouts = array();
-		
+
 		if($createManialinkElement)
 		{
 			$manialink = self::$domDocument->createElement('manialink');
 			self::$domDocument->appendChild($manialink);
 			self::$parentNodes[] = $manialink;
-			
+				
 			$timeout = self::$domDocument->createElement('timeout');
-			$manialink->appendChild($timeout); 
+			$manialink->appendChild($timeout);
 			$timeout->nodeValue = $timeoutValue;
 		}
 		else
@@ -51,12 +51,12 @@ abstract class Manialink extends GuiBase
 			self::$parentNodes[] = $frame;
 		}
 	}
-	
+
 	/**
 	 * Renders the Manialink
-	 * 
+	 *
 	 * @param boolean Wehther you want to return the XML instead of printing it
-	 */	
+	 */
 	final public static function render($return = false)
 	{
 		if($return)
@@ -69,10 +69,10 @@ abstract class Manialink extends GuiBase
 			echo self::$domDocument->saveXML();
 		}
 	}
-	
+
 	/**
 	 * Creates a new Manialink frame, with an optionnal associated layout
-	 * 
+	 *
 	 * @param float X position
 	 * @param float Y position
 	 * @param float Z position
@@ -80,8 +80,8 @@ abstract class Manialink extends GuiBase
 	 * you pass a layout object, all the items inside the frame will be
 	 * positionned using constraints defined by the layout
 	 */
-	final public static function beginFrame($x=0, $y=0, $z=0, 
-		AbstractLayout $layout=null)
+	final public static function beginFrame($x=0, $y=0, $z=0,
+	AbstractLayout $layout=null)
 	{
 		// Update parent layout
 		$parentLayout = end(self::$parentLayouts);
@@ -92,7 +92,7 @@ abstract class Manialink extends GuiBase
 			{
 				$ui = new Spacer($layout->getSizeX(), $layout->getSizeY());
 				$ui->setPosition($x, $y, $z);
-				
+
 				$parentLayout->preFilter($ui);
 				$x += $parentLayout->xIndex;
 				$y += $parentLayout->yIndex;
@@ -100,20 +100,20 @@ abstract class Manialink extends GuiBase
 				$parentLayout->postFilter($ui);
 			}
 		}
-		
+
 		// Create DOM element
 		$frame = self::$domDocument->createElement('frame');
 		if($x || $y || $z)
-		{ 
+		{
 			$frame->setAttribute('posn', $x.' '.$y.' '.$z);
 		}
 		end(self::$parentNodes)->appendChild($frame);
-		
+
 		// Update stacks
 		self::$parentNodes[] = $frame;
 		self::$parentLayouts[] = $layout;
 	}
-	
+
 	/**
 	 * Closes the current Manialink frame
 	 */
@@ -126,21 +126,24 @@ abstract class Manialink extends GuiBase
 		array_pop(self::$parentNodes);
 		array_pop(self::$parentLayouts);
 	}
-	
+
 	final public static function redirect($link, $render = true)
 	{
 		self::$domDocument = new DOMDocument;
 		self::$parentNodes = array();
 		self::$parentLayouts = array();
-		
+
 		$redirect = self::$domDocument->createElement('redirect');
-		$redirect->appendChild(self::$domDocument->createTextNode($link)); 
+		$redirect->appendChild(self::$domDocument->createTextNode($link));
 		self::$domDocument->appendChild($redirect);
 		self::$parentNodes[] = $redirect;
-		
+
 		if($render)
 		{
-			ob_clean();
+			if(ob_get_contents())
+			{
+				ob_clean();
+			}
 			header('Content-Type: text/xml; charset=utf-8');
 			echo self::$domDocument->saveXML();
 			exit;
@@ -150,7 +153,7 @@ abstract class Manialink extends GuiBase
 			return self::$domDocument->saveXML();
 		}
 	}
-	
+
 	/**
 	 * Add the given XML code to the document
 	 */
@@ -161,7 +164,7 @@ abstract class Manialink extends GuiBase
 		$node = self::$domDocument->importNode($doc->firstChild, true);
 		end(self::$parentNodes)->appendChild($node);
 	}
-	
+
 	/**
 	 * Disable all Manialinks, URLs and actions of GUIElement objects as long as
 	 * it is disabled
@@ -170,7 +173,7 @@ abstract class Manialink extends GuiBase
 	{
 		self::$linksEnabled = false;
 	}
-	
+
 	/**
 	 * Enable links
 	 */
