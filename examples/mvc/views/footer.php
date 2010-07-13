@@ -1,0 +1,5 @@
+<?php 
+
+Manialink::render();
+
+?>
