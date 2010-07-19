@@ -5,8 +5,6 @@
 
 require_once(APP_MVC_FRAMEWORK_EXCEPTIONS_PATH.'MVCException.class.php'); 
 
-// TODO Implement controller-defined default action
-
 /**
  * Extends ActionController to create controllers
  * Naming conventions:
