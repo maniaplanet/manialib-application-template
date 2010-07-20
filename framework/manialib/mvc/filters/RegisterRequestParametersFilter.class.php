@@ -17,6 +17,7 @@ class RegisterRequestParametersFilter extends AdvancedFilter
 		$this->request->registerGlobalParam('nickname');
 		$this->request->registerGlobalParam('path');
 		$this->request->registerGlobalParam('lang');
+		$this->request->registerGlobalParam('token');
 		$this->request->registerGlobalParam('sess');
 		$this->request->registerGlobalParam('game');
 	}
