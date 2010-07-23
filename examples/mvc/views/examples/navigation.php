@@ -43,16 +43,20 @@ Manialink::beginFrame(-60, 48, 1);
 		Manialink::beginFrame(0, 0, 0, $layout);
 		{
 			$manialink = $request->createLink(Route::CUR, Route::NONE);
+			$selected = $request->getAction('layouts') == 'layouts';
 			
 			$ui = new NavigationButton(35, 8);
+			if($selected) $ui->setSelected();
 			$ui->setManialink($manialink);
 			$ui->icon->setSubStyle(Icons128x128_1::Editor);
 			$ui->text->setText('Layouts');
 			$ui->save();
 			
 			$manialink = $request->createLink(Route::CUR, 'tracks');
+			$selected = $request->getAction() == 'tracks';
 			
 			$ui = new NavigationButton(35, 8);
+			if($selected) $ui->setSelected();
 			$ui->setManialink($manialink);
 			$ui->icon->setSubStyle(Icons128x128_1::Editor);
 			$ui->text->setText('Tracks');

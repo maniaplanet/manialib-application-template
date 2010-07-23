@@ -42,40 +42,50 @@ Manialink::beginFrame(-60, 48, 1);
 		Manialink::beginFrame(0, 0, 0, $layout);
 		{
 			$manialink = $request->createLink(Route::CUR, Route::NONE);
+			$selected = $request->getAction('about') == 'about';
 			
 			$ui = new NavigationButton(35, 8);
+			if($selected) $ui->setSelected();
 			$ui->setManialink($manialink);
 			$ui->icon->setSubStyle(Icons128x128_1::Manialink);
 			$ui->text->setText('About');
 			$ui->save();
 			
 			$manialink = $request->createLink(Route::CUR, 'features');
+			$selected = $request->getAction() == 'features';
 			
 			$ui = new NavigationButton(35, 8);
+			if($selected) $ui->setSelected();
 			$ui->setManialink($manialink);
 			$ui->icon->setSubStyle(Icons128x128_1::Forever);
 			$ui->text->setText('Features');
 			$ui->save();
 			
 			$manialink = $request->createLink(Route::CUR, 'download');
+			$selected = $request->getAction() == 'download';
 			
 			$ui = new NavigationButton(35, 8);
+			if($selected) $ui->setSelected();
 			$ui->setManialink($manialink);
 			$ui->icon->setSubStyle(Icons128x128_1::Load);
 			$ui->text->setText('Download');
 			$ui->save();
 			
 			$manialink = $request->createLink(Route::CUR, 'showcase');
+			$selected = $request->getAction() == 'showcase';
 			
 			$ui = new NavigationButton(35, 8);
+			if($selected) $ui->setSelected();
 			$ui->setManialink($manialink);
 			$ui->icon->setSubStyle(Icons128x128_1::ServersSuggested);
 			$ui->text->setText('Showcase');
 			$ui->save();
 			
 			$manialink = $request->createLink('examples', Route::NONE);
+			$selected = $request->getAction() == 'examples';
 			
 			$ui = new NavigationButton(35, 8);
+			if($selected) $ui->setSelected();
 			$ui->setManialink($manialink);
 			$ui->icon->setSubStyle(Icons128x128_1::Browse);
 			$ui->text->setText('Sample pages');
