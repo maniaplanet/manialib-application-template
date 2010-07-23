@@ -21,22 +21,42 @@ class RequestEngineMVC extends RequestEngine
 		return self::$instance;
 	}
 	
-	public function getAction($defaultAction = URL_PARAM_DEFAULT_ACTION)
+	public function getAction($defaultAction = null)
 	{
 		return strtolower($this->get(URL_PARAM_NAME_ACTION, $defaultAction));		
+	}
+	
+	public function setAction($actionName)
+	{
+		$this->set(URL_PARAM_NAME_ACTION, $actionName);
 	}
 	
 	public function getController()
 	{
 		return strtolower($this->get(URL_PARAM_NAME_CONTROLLER, URL_PARAM_DEFAULT_CONTROLLER));
-	} 
-
-	public function redirectManialink($controller=null, $action=null)
+	}
+	
+	public function setController($controllerName)
+	{
+		$this->set(URL_PARAM_NAME_CONTROLLER, $controllerName);
+	}
+	
+	/**
+	 * Redirects to the specified route with all defined GET vars in the URL
+	 * @var string Can be the name of a controller or a class const of Route
+	 * @var string Can be the name of an action or a class const of Route 
+	 */
+	public function redirectManialink($controller = Route::CUR, $action = Route::CUR)
 	{
 		$manialink = $this->createLink($controller, $action);
 		$this->redirectManialinkAbsolute($manialink);
 	}
 	
+	/**
+	 * Redirects to the specified route with, with names of GET vars as parameters of the method
+	 * @var string Can be the name of a controller or a class const of Route
+	 * @var string Can be the name of an action or a class const of Route 
+	 */
 	public function redirectManialinkArgList($controller, $action)
 	{
 		$arr = func_get_args();
@@ -53,12 +73,22 @@ class RequestEngineMVC extends RequestEngine
 		$this->redirectManialinkAbsolute($manialink);
 	}
 	
-	public function createLink($controller=null, $action=null)
+	/**
+	 * Creates a link to the specified route with all defined GET vars in the URL
+	 * @var string Can be the name of a controller or a class const of Route
+	 * @var string Can be the name of an action or a class const of Route 
+	 */
+	public function createLink($controller = Route::CUR, $action = Route::CUR)
 	{
 		return $this->createLinkString($controller, $action, $this->params);
 	}
 	
-	function createLinkArgList($controller=null, $action=null)
+	/**
+	 * Creates a link to the specified route with, with names of GET vars as parameters of the method
+	 * @var string Can be the name of a controller or a class const of Route
+	 * @var string Can be the name of an action or a class const of Route 
+	 */
+	function createLinkArgList($controller = Route::CUR, $action = Route::CUR)
 	{
 		$arr = func_get_args();
 		array_shift($arr);
@@ -73,10 +103,43 @@ class RequestEngineMVC extends RequestEngine
 		return $this->createLinkString($controller, $action, $args);
 	}
 	
-	protected function createLinkString($controller=null, $action=null, $params)
+	protected function createLinkString($controller = Route::CUR, $action = Route::CUR, $params)
 	{
-		$controller = $controller ? $controller : $this->getController();
-		$action = $action ? $action : $this->getAction(null);
+		switch($controller)
+		{
+			case Route::CUR:
+			case null:
+				$controller = $this->getController();
+				break;
+				
+			case Route::DEF:
+				$controller = URL_PARAM_DEFAULT_CONTROLLER;
+				break;
+				
+			case Route::NONE:
+				$controller = null;
+				break;
+				
+			default:
+				// Nothing here
+		}
+		
+		switch($action)
+		{
+			case Route::CUR:
+			case null:
+				 $action = $this->getAction(null);
+				 break;
+				 
+			case Route::DEF:
+			case Route::NONE:
+				$action = null;
+				break;
+				
+			default:
+				// Nothing here
+		}
+		
 		unset($params[URL_PARAM_NAME_CONTROLLER]);
 		unset($params[URL_PARAM_NAME_ACTION]);
 		
@@ -91,11 +154,21 @@ class RequestEngineMVC extends RequestEngine
 		else
 		{
 			$url = APP_URL;
-			$params = array_merge(
-				array(
-					URL_PARAM_NAME_CONTROLLER => $controller,
-					URL_PARAM_NAME_ACTION => $action),
-				$params);
+			if($action)
+			{
+				$params = array_merge(
+					array(
+						URL_PARAM_NAME_CONTROLLER => $controller,
+						URL_PARAM_NAME_ACTION => $action),
+					$params);
+			}
+			else
+			{
+				$params = array_merge(
+					array(
+						URL_PARAM_NAME_CONTROLLER => $controller),
+					$params);
+			}
 		}
 		
 		// Create parameter string

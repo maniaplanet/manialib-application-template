@@ -41,7 +41,7 @@ Manialink::beginFrame(-60, 48, 1);
 		
 		Manialink::beginFrame(0, 0, 0, $layout);
 		{
-			$manialink = $request->createLink(null, 'about');
+			$manialink = $request->createLink(Route::CUR, Route::NONE);
 			
 			$ui = new NavigationButton(35, 8);
 			$ui->setManialink($manialink);
@@ -49,7 +49,7 @@ Manialink::beginFrame(-60, 48, 1);
 			$ui->text->setText('About');
 			$ui->save();
 			
-			$manialink = $request->createLink(null, 'features');
+			$manialink = $request->createLink(Route::CUR, 'features');
 			
 			$ui = new NavigationButton(35, 8);
 			$ui->setManialink($manialink);
@@ -57,7 +57,7 @@ Manialink::beginFrame(-60, 48, 1);
 			$ui->text->setText('Features');
 			$ui->save();
 			
-			$manialink = $request->createLink(null, 'download');
+			$manialink = $request->createLink(Route::CUR, 'download');
 			
 			$ui = new NavigationButton(35, 8);
 			$ui->setManialink($manialink);
@@ -65,7 +65,7 @@ Manialink::beginFrame(-60, 48, 1);
 			$ui->text->setText('Download');
 			$ui->save();
 			
-			$manialink = $request->createLink(null, 'showcase');
+			$manialink = $request->createLink(Route::CUR, 'showcase');
 			
 			$ui = new NavigationButton(35, 8);
 			$ui->setManialink($manialink);
@@ -73,7 +73,7 @@ Manialink::beginFrame(-60, 48, 1);
 			$ui->text->setText('Showcase');
 			$ui->save();
 			
-			$manialink = $request->createLink('examples', 'index');
+			$manialink = $request->createLink('examples', Route::NONE);
 			
 			$ui = new NavigationButton(35, 8);
 			$ui->setManialink($manialink);

@@ -15,7 +15,7 @@ Manialink::beginFrame(-16, 40, 1, $layout);
 	// We loop to create 16 "dummy" ChallengeCard
 	for($i=0; $i < 16; $i++)
 	{
-		$manialink = $request->createLink('example1.php');
+		$manialink = $request->createLink(Route::CUR, Route::CUR);
 		
 		$ui = new ChallengeCard;
 		$ui->bgImage->setStyle(null);
