@@ -7,9 +7,9 @@ $response = ResponseEngine::getInstance();
 Manialink::load();
 
 // Background
-$ui = new Quad(128, 128);
+$ui = new Quad(128, 96);
 $ui->setAlign('center', 'center');
-$ui->setImage('bg_stadium.dds');
+$ui->setImage('qm-clouds.jpg');
 $ui->save();
 
 // Refresh button
