@@ -26,7 +26,7 @@ class FrameworkException extends Exception
 	 */
 	static function showErrorDialog($message = 'Fatal error')
 	{
-		$request = RequestEngine::getInstance();
+		$request = call_user_func(array(APP_FRAMEWORK_REQUEST_ENGINE_CLASS, 'getInstance'));
 		$linkstr = $request->getReferer();
 		
 		Manialink::load();
@@ -63,7 +63,7 @@ class FrameworkException extends Exception
 	 */
 	static function showDebugDialog($message = 'Fatal error')
 	{
-		$request = RequestEngine::getInstance();
+		$request = call_user_func(array(APP_FRAMEWORK_REQUEST_ENGINE_CLASS, 'getInstance'));
 		$linkstr = $request->getReferer();
 		
 		Manialink::load();
@@ -238,7 +238,7 @@ class FrameworkException extends Exception
 	function __construct($message='', $code=0, Exception $previous=null, $logException=true)
 	{
 		parent::__construct($message, $code);
-		$request = RequestEngine::getInstance();
+		$request = call_user_func(array(APP_FRAMEWORK_REQUEST_ENGINE_CLASS, 'getInstance'));
 		$this->requestURL = $request->createLink();
 		$this->addOptionalInfo('User message', $this->userMessage);
 		$this->addOptionalInfo('Request URL', $this->requestURL);

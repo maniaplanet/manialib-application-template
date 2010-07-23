@@ -4,8 +4,6 @@
  * @package Manialib
  */
 
-// TODO RequestEngine debug: short manialinks
-
 /**
  * <b>Request engine</b>: used to handle GET parameters and to create hyperlink
  * strings and redirections

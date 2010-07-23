@@ -19,7 +19,10 @@ if(!defined('APP_MVC_FRAMEWORK_FILTERS_PATH'))
 {
 	define('APP_MVC_FRAMEWORK_FILTERS_PATH', APP_MVC_FRAMEWORK_PATH.'filters/');
 }
-
+if(!defined('APP_FRAMEWORK_REQUEST_ENGINE_CLASS'))
+{
+	define('APP_FRAMEWORK_REQUEST_ENGINE_CLASS', 'RequestEngineMVC');
+}
 if(!defined('APP_MVC_CONTROLLERS_PATH'))   	 define('APP_MVC_CONTROLLERS_PATH', APP_PATH.'controllers/');
 if(!defined('APP_MVC_VIEWS_PATH'))           define('APP_MVC_VIEWS_PATH', APP_PATH.'views/');
 if(!defined('APP_MVC_FILTERS_PATH'))         define('APP_MVC_FILTERS_PATH', APP_PATH.'filters/');

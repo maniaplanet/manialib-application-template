@@ -64,7 +64,8 @@ class MultipageList
 	{
 		if($this->currentPage === null)
 		{
-			$this->currentPage = (int) RequestEngine::getInstance()->get($this->urlParamName, $this->defaultPage);
+			$request = call_user_func(array(APP_FRAMEWORK_REQUEST_ENGINE_CLASS, 'getInstance'));
+			$this->currentPage = (int) $request->get($this->urlParamName, $this->defaultPage);
 		}
 		if( $this->currentPage < 1)
 		{
@@ -121,7 +122,7 @@ class MultipageList
 	
 	function savePageNavigator()
 	{
-		$request = RequestEngine::getInstance();
+		$request = call_user_func(array(APP_FRAMEWORK_REQUEST_ENGINE_CLASS, 'getInstance'));
 		
 		if($this->hasMorePages !== null)
 		{
