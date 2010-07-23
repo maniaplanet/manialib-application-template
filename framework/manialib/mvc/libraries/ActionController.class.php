@@ -14,6 +14,14 @@ require_once(APP_MVC_FRAMEWORK_EXCEPTIONS_PATH.'MVCException.class.php');
  */
 class ActionController
 {
+	/**
+	 * Overrride this to define the controller's default action name
+	 * @var string
+	 */
+	protected $defaultAction = URL_PARAM_DEFAULT_ACTION;
+	/**
+	 * Current controller name 
+	 */	
 	protected $controllerName;
 	/**
 	 * @var array[Filterable]
@@ -200,7 +208,8 @@ class ActionController
 	final protected function launch()
 	{
 		$controllerName = $this->request->getController();
-		$actionName = $this->request->getAction();
+		$actionName = $this->request->getAction($this->defaultAction);
+		if(!$actionName) $actionName = $this->defaultAction;
 
 		$this->checkActionExists($actionName);
 

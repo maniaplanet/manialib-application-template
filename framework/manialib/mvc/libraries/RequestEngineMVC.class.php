@@ -21,9 +21,9 @@ class RequestEngineMVC extends RequestEngine
 		return self::$instance;
 	}
 	
-	public function getAction()
+	public function getAction($defaultAction = URL_PARAM_DEFAULT_ACTION)
 	{
-		return strtolower($this->get(URL_PARAM_NAME_ACTION, URL_PARAM_DEFAULT_ACTION));		
+		return strtolower($this->get(URL_PARAM_NAME_ACTION, $defaultAction));		
 	}
 	
 	public function getController()
@@ -76,11 +76,9 @@ class RequestEngineMVC extends RequestEngine
 	protected function createLinkString($controller=null, $action=null, $params)
 	{
 		$controller = $controller ? $controller : $this->getController();
-		$action = $action ? $action : $this->getAction();
+		$action = $action ? $action : $this->getAction(null);
 		unset($params[URL_PARAM_NAME_CONTROLLER]);
 		unset($params[URL_PARAM_NAME_ACTION]);
-		
-		
 		
 		if(APP_MVC_USE_URL_REWRITE)
 		{

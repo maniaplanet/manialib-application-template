@@ -2,10 +2,7 @@
 
 class homeController extends ActionController
 {
-	function index() 
-	{
-		$this->request->redirectManialink(null, 'about');
-	}
+	protected $defaultAction = 'about';
 	
 	function about() {}
 	
