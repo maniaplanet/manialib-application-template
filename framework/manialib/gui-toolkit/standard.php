@@ -668,6 +668,7 @@ abstract class Bgs1 extends GuiStyles
 	const BgCardFolder     = 'BgCardFolder';
 	const BgCardList       = 'BgCardList';
 	const BgCardPlayer     = 'BgCardPlayer';
+	const BgCardBuddy	   = 'BgCardBuddy';
 	const BgCardSystem     = 'BgCardSystem';
 	const BgCardZone       = 'BgCardZone';
 	const BgIconBorder     = 'BgIconBorder';
