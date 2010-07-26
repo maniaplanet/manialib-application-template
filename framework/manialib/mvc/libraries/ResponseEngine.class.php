@@ -1,5 +1,11 @@
 <?php
+/**
+ * @author Maxime Raoust
+ */
 
+/**
+ * Response engine is responsible for passing values between entities
+ */
 class ResponseEngine
 {
 	private static $instance;

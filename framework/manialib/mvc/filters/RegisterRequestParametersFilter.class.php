@@ -1,4 +1,7 @@
 <?php
+/**
+ * @author Maxime Raoust
+ */
 
 /**
  * Register usual paramaters such as login, nickname etc. 

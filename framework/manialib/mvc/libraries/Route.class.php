@@ -1,5 +1,11 @@
 <?php
+/**
+ * @author Maxime Raoust
+ */
 
+/**
+ * Route class, only contains const used by the RequestEngineMVC
+ */
 abstract class Route
 {
 	/**

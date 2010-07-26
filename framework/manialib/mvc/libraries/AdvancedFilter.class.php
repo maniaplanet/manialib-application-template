@@ -1,5 +1,11 @@
 <?php 
+/**
+ * @author Maxime Raoust
+ */
 
+/**
+ * Filter with easy access to Session, Request and Response
+ */
 abstract class AdvancedFilter implements Filterable
 {
 	/**

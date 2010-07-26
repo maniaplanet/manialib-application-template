@@ -1,7 +1,7 @@
 <?php 
 /**
  * @author Maxime Raoust
- * @copyright Nadeo
+ * @copyright NADEO
  */
 
 $request = RequestEngineMVC::getInstance();

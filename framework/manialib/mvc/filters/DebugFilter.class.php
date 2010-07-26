@@ -1,4 +1,11 @@
 <?php
+/**
+ * @author Phillipe Melot
+ */
+
+/**
+ * Allows only authorized users, for debugging purpose
+ */
 class DebugFilter extends AdvancedFilter
 {
 	function preFilter()
@@ -14,3 +21,5 @@ class DebugFilter extends AdvancedFilter
 		}
 	}
 }
+
+?>

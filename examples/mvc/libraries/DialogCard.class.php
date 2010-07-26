@@ -1,8 +1,7 @@
 <?php
 /**
- * 
- * @author Philippe Melot
- * @copyright Nadeo
+ * @author Maxime Raoust
+ * @copyright NADEO
  */
 
 class DialogCard extends Panel

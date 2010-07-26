@@ -1,6 +1,7 @@
 <?php
 /**
  * MVC Framework magic happens here !
+ * @author Maxime Raoust
  */
 
 require_once(APP_MVC_FRAMEWORK_EXCEPTIONS_PATH.'MVCException.class.php'); 

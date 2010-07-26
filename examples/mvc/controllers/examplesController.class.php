@@ -1,6 +1,12 @@
 <?php
-require_once(APP_MVC_FILTERS_PATH.'MoodSelectorFilter.class.php');
+/**
+ * @author Maxime Raoust
+ * @copyright NADEO
+ */
 
+/**
+ * A controller that hosts some example pages
+ */
 class examplesController extends ActionController
 {
 	protected $defaultAction = 'layouts';

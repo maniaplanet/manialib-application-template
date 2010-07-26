@@ -1,5 +1,11 @@
 <?php
- 
+/**
+ * @author Maxime Raoust
+ */
+
+/**
+ * Forces GameBox user agent
+ */
 class UserAgentCheckFilter extends AdvancedFilter
 {
 	function preFilter()

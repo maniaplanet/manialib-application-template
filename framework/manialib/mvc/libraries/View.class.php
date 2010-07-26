@@ -1,5 +1,11 @@
 <?php
+/**
+ * @author Maxime Raoust
+ */
 
+/**
+ * View rendering stuff
+ */
 abstract class View
 {
 	public static function render($controllerName, $actionName=null)

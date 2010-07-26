@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Maxime Raoust
+ * @copyright NADEO
+ */
 
 class MoodSelectorFilter extends AdvancedFilter
 {

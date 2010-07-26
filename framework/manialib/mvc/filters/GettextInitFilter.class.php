@@ -1,4 +1,7 @@
 <?php
+/**
+ * @author Maxime Raoust
+ */
 
 if(class_exists('GettextInitFilterConfig', false))
 {

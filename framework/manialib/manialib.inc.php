@@ -1,11 +1,5 @@
 <?php
 /**
- * Manialib framework entry point: load all necessary files and statically
- * requires a few classes to enhance performances. The other classes will
- * be automatically load through __autoload()
- * 
- * ----------
- * 
  * This file is part of ManiaLib.
  *  
  * ManiaLib  is free software: you can redistribute it and/or modify it under
@@ -22,6 +16,7 @@
  * along with ManiaLib.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Maxime Raoust
+ * @copyright NADEO
  * @package Manialib
  */
 

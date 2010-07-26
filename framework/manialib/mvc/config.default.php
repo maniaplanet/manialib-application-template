@@ -1,6 +1,7 @@
 <?php
 /**
  * Default MVC framework config
+ * @author Maxime Raoust
  */
 
 if(!defined('APP_MVC_FRAMEWORK_PATH'))

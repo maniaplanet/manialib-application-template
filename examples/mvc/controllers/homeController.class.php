@@ -1,6 +1,12 @@
 <?php
-require_once(APP_MVC_FILTERS_PATH.'MoodSelectorFilter.class.php');
-// TODO Autoload filters
+/**
+ * @author Maxime Raoust
+ * @copyright NADEO
+ */
+
+/**
+ * Main controller of our ManiaLib demo 
+ */
 class homeController extends ActionController
 {
 	protected $defaultAction = 'about';

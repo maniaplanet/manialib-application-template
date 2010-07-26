@@ -1,4 +1,8 @@
 <?php 
+/**
+ * @author Maxime Raoust
+ * @copyright NADEO
+ */
 
 $request = RequestEngineMVC::getInstance();
 $response = ResponseEngine::getInstance();

@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Maxime Raoust
+ * @copyright NADEO
+ */
 
 // All errors are catched to the error handler
 error_reporting(E_ALL);

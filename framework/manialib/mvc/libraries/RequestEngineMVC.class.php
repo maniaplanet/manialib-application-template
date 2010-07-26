@@ -1,8 +1,11 @@
 <?php
 /**
- * RequestEngine designed for MVC framework
+ * @author Maxime Raoust
  */
 
+/**
+ * RequestEngine designed for MVC framework
+ */
 class RequestEngineMVC extends RequestEngine
 {
 	static private $instance;
