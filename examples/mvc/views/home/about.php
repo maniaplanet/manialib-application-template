@@ -17,7 +17,8 @@ Manialink::beginFrame(-15, 35, 1);
 	Manialink::beginFrame(2, -3, 1);
 	{
 		$ui = new Quad(8, 8);
-		$ui->setImage('logo64.dds');
+		$ui->setStyle(Quad::Icons128x128_1);
+		$ui->setSubStyle(Icons128x128_1::Custom);
 		$ui->save();
 		
 		$ui = new Label(50);
