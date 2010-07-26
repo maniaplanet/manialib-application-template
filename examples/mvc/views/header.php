@@ -9,13 +9,13 @@ Manialink::load();
 // Background
 $ui = new Quad(128, 96);
 $ui->setAlign('center', 'center');
-$ui->setImage('qm-clouds.jpg');
+$ui->setImage($response->backgroundImage);
 $ui->save();
 
 // Mood selector
 $request->set('show_mood_selector', true);
 $manialink = $request->createLink();
-$request->restore('show_mood_selector');
+$request->delete('show_mood_selector');
 
 $ui = new Icon(5);
 $ui->setAlign('right', 'bottom');

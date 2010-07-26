@@ -19,12 +19,14 @@ $ui->save();
 
 Manialink::beginFrame(0, 0, 15);
 {
-	$ui = new TwoButtonsDialogCard;
+	$ui = new TwoButtonsDialogCard(
+		$response->get('dialogWidth', 65),
+		$response->get('dialogHeight', 50));
 	$ui->setAlign('center','center');
 	$ui->title->setText($response->dialogTitle);
-	$ui->button->setText($response->dialogButtonLabel);
+	$ui->button->setText($response->get('dialogButtonLabel', 'Ok'));
 	$ui->button->setManialink($response->dialogButtonManialink);
-	$ui->button2->setText($response->dialogButton2Label);
+	$ui->button2->setText($response->get('dialogButton2Label', 'Cancel'));
 	$ui->button2->setManialink($response->dialogButton2Manialink);
 	$ui->save();	
 }

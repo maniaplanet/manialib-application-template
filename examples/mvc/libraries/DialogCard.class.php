@@ -19,11 +19,7 @@ class DialogCard extends Panel
 		
 		$this->button = new Button;
 		$this->button->setAlign('center', 'bottom');
-		$this->button->setText('Close');
-	}
-	
-	protected function preFilter()
-	{
+		
 		$this->elementsToShow[] = $this->button;
 	}
 	
@@ -31,7 +27,7 @@ class DialogCard extends Panel
 	{
 		parent::postFilter();
 		
-		$arr = GuiTools::getAlignedPos ($this, 'center', 'bottom');
+		$arr = GuiTools::getAlignedPos($this, 'center', 'bottom');
 		$x = $arr['x'];
 		$y = $arr['y'];
 		
