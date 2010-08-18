@@ -44,12 +44,19 @@ class ActionController
 	 * @var ResponseEngine
 	 */
 	protected $response;
-
+	
 	final public static function dispatch()
 	{
 		$request = RequestEngineMVC::getInstance();
-
-		$controllerName = $request->getController();
+		self::getController($request->getController())->launch();
+		ResponseEngine::getInstance()->render();
+	}
+	
+	/**
+	 * @return ActionController
+	 */
+	final static public function getController($controllerName)
+	{
 		$controllerClass = $controllerName.'Controller';
 		$controllerFilename = APP_MVC_CONTROLLERS_PATH.$controllerClass.'.class.php';
 
@@ -59,8 +66,7 @@ class ActionController
 		}
 
 		require_once($controllerFilename);
-		$controller = new $controllerClass($controllerName);
-		$controller->launch();
+		return new $controllerClass($controllerName);
 	}
 
 	/**
@@ -145,16 +151,7 @@ class ActionController
 
 	final protected function executeActionCrossController($controllerName, $actionName)
 	{
-		$controllerClass = $controllerName.'Controller';
-		$controllerFilename = APP_MVC_CONTROLLERS_PATH.$controllerClass.'.class.php';
-
-		if (!file_exists($controllerFilename))
-		{
-			throw new ControllerNotFoundException($controllerName);
-		}
-
-		require_once($controllerFilename);
-		$controller = new $controllerClass($controllerName);
+		$controller = self::getController($controllerName);
 		$controller->checkActionExists($actionName);
 		$controllerFilters = $controller->getFilters();
 		foreach($controllerFilters as $controllerFilter)
@@ -227,8 +224,6 @@ class ActionController
 		{
 			$filter->postFilter();
 		}
-
-		$this->response->render();
 	}
 
 	final protected function showDebugMessage($message)
