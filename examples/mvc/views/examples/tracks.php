@@ -7,7 +7,7 @@
 $request = RequestEngineMVC::getInstance();
 $response = ResponseEngine::getInstance();
 
-View::render('examples', 'navigation');
+View::render('examples', '_navigation');
 
 // We create a FlowLayout to place elements in a grid
 $layout = new FlowLayout(80, 80);

@@ -7,7 +7,7 @@
 $request = RequestEngineMVC::getInstance();
 $response = ResponseEngine::getInstance();
 
-View::render('home', 'navigation');
+View::render('home', '_navigation');
 
 ////////////////////////////////////////////////////////////////////////////////
 // "Showcase" panel
