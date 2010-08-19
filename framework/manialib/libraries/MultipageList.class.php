@@ -1,10 +1,9 @@
 <?php
 /**
- * Multipage helper
- * 
  * @author Maxime Raoust
- * @package Manialib
- */ 
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
+ */
 
 /**
  * This class helps to create multipage lists. Maybe difficult to use at

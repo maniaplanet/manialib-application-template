@@ -1,11 +1,14 @@
 <?php
 /**
  * @author Maxime Raoust
- * @package Manialib
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
  */
  
 /**
- * <b>Session engine</b>: helps handling PHP sessions
+ * Session engine
+ * 
+ * Helps handling PHP sessions
  */
 final class SessionEngine
 {

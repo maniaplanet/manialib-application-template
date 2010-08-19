@@ -1,10 +1,13 @@
 <?php
 /**
- * @author Maxime Raoust
+ * @author Maxime Raoust 
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLibMvc
+ * @subpackage DefaultFilter
  */
 
 /**
- * Forces GameBox user agent
+ * Forces GameBox user agent, redirects to trackmania.com otherwise
  */
 class UserAgentCheckFilter extends AdvancedFilter
 {

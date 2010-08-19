@@ -1,13 +1,19 @@
 <?php
 /**
  * @author Philippe Melot
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
+ * @subpackage ManiacodeToolkit
  */
 
-require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'standardManiacode.php' );
 /**
- * This is class Maniacode
+ * @ignore
  */
+require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'standardManiacode.php' );
 
+/**
+ * Maniacode Toolkit main class
+ */
 abstract class Maniacode
 {
 	public static $domDocument;

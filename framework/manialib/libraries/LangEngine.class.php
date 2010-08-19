@@ -1,12 +1,15 @@
 <?php
 /**
- * @package Manialib
  * @author Maxime Raoust
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
+ * @subpackage LangToolkit
  */
 
 /**
- * i18n core class. You shouldn't have to do anything with it. Use "__()" &
- * "__date()" instead
+ * i18n core class
+ * 
+ * You shouldn't have to do anything with it. Use "__()" & "__date()" instead
  */
 class LangEngine
 {

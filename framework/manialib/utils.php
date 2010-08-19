@@ -1,9 +1,12 @@
 <?php
 /**
- * Misc functions
+ * Functions
+ * 
+ * Misc. function declarations
  * 
  * @author Maxime Raoust
- * @package Manialib
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
  */
 
 /**
@@ -41,7 +44,7 @@ function __autoload($className)
 }
 
 /**
- * Prints a line with a break at the end
+ * Prints a line with a line break at the end
  * @param string
  */
 function println($string)
@@ -61,14 +64,17 @@ function debuglog($message, $addDate = true, $logFilename = APP_DEBUG_LOG)
 	file_put_contents($logFilename, $message, FILE_APPEND);
 }
 
+/**
+ * FOOBAR!
+ * Dump the message in the Manialink explorer, only available when DEBUG_LEVEL is 1
+ */
 function foobar($message)
 {
 	throw new DebugException(print_r($message, true));
 }
 
 /**
- * Tries to get an element from an array. Returns the default value if not
- * found.
+ * Tries to get an element from an array, returns the default value if not found
  * @param array Source array
  * @param string Array key
  * @param mixed Default value
@@ -154,7 +160,8 @@ function require_once_dir($path)
 }
 
 /**
- * Safe division. Returns 0 if the denominator is 0
+ * Safe division
+ * Returns 0 if the denominator is 0
  * @param float Numerator
  * @param float Denominator
  * @return float Numerator/Denominator
@@ -188,15 +195,15 @@ function formatLongDate($timestamp)
 	return date('l jS \of F Y @ h:i A ', $timestamp).APP_TIMEZONE_NAME;
 }
 
-
-if(APP_LANG_ENGINE_MODE == APP_LANG_ENGINE_MODE_DYNAMIC):
-	
+if(APP_LANG_ENGINE_MODE == APP_LANG_ENGINE_MODE_DYNAMIC)
+{
 	/**
 	 * i18n message. Examples: 
 	 * echo __("hello_world"); 
 	 * echo __("hello_login", $yetAnotherLogin);
 	 * @param string
 	 * @return string
+	 * @subpackage LangToolkit
 	 */
 	function __($textId)
 	{
@@ -226,6 +233,7 @@ if(APP_LANG_ENGINE_MODE == APP_LANG_ENGINE_MODE_DYNAMIC):
 	 * i18n date
 	 * @param int Unix timestamp
 	 * @return string
+	 * @subpackage LangToolkit
 	 */
 	function __date($timestamp)
 	{
@@ -251,19 +259,23 @@ if(APP_LANG_ENGINE_MODE == APP_LANG_ENGINE_MODE_DYNAMIC):
 			return $return;
 		}
 	}
-	
-else:
-	
+}
+else
+{
+	/**
+	 * @ignore
+	 */
 	function __($message)
 	{
 		return $message;
 	}
-	
+	/**
+	 * @ignore
+	 */
 	function __date($timestamp)
 	{
 		return date("Y/M/j", $timestamp);
 	}
-
-endif;
+}	
 
 ?>

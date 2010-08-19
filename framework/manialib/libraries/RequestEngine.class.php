@@ -1,12 +1,14 @@
 <?php
 /**
  * @author Maxime Raoust
- * @package Manialib
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
  */
 
 /**
- * <b>Request engine</b>: used to handle GET parameters and to create hyperlink
- * strings and redirections
+ * Request engine
+ * 
+ * Used to handle GET parameters and to create hyperlink strings and redirections
  */
 class RequestEngine
 {

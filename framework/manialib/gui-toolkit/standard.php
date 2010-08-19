@@ -1,28 +1,33 @@
 <?php
 /**
- * @package Manialib
  * @author Maxime Raoust
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
+ * @subpackage ManialinkGuiToolkit
  */
 
+/**
+ * @ignore
+ */
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'GuiTools.class.php' );
+/**
+ * @ignore
+ */
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'GuiDefaultStyles.class.php' );
 
 /**
  * Base GUI class for type hierarchy
- * @package Manialib
  */
 abstract class GuiBase {}
 
 /**
  * Base for style classes
- * @package Manialib
  */
 abstract class GuiStyles extends GuiBase {}
 
 /**
  * The GuiComponent is a generic and abstract element that only contains
  * position, size and scale info.
- * @package Manialib
  */
 abstract class GuiComponent extends GuiBase
 {
@@ -169,7 +174,6 @@ abstract class GuiComponent extends GuiBase
 
 /**
  * Base class for creating GUI elements
- * @package Manialib
  */
 abstract class GuiElement extends GuiComponent
 {
@@ -619,7 +623,6 @@ abstract class GuiElement extends GuiComponent
 
 /**
  * A blank element, useful to place gaps between elements when using layouts
- * @package Manialib
  */
 class Spacer extends GuiElement
 {
@@ -628,7 +631,6 @@ class Spacer extends GuiElement
 
 /**
  * Quad
- * @package Manialib
  */
 class Quad extends GuiElement
 {
@@ -653,7 +655,6 @@ class Quad extends GuiElement
 
 /**
  * Manialink <b>sub styles</b>
- * @package ManiaLib 
  */
 abstract class Bgs1 extends GuiStyles
 {
@@ -695,7 +696,6 @@ abstract class Bgs1 extends GuiStyles
 
 /**
  * Manialink <b>sub styles</b>
- * @package ManiaLib 
  */	
 abstract class BgRaceScore2 extends GuiStyles
 {
@@ -724,13 +724,11 @@ abstract class BgRaceScore2 extends GuiStyles
 
 /**
  * Manialink <b>sub styles</b>
- * @package ManiaLib 
  */	
 abstract class Bgs1InRace extends Bgs1 {}
 
 /**
  * Manialink <b>sub styles</b>
- * @package ManiaLib 
  */	
 abstract class BgsChallengeMedals extends GuiStyles
 {
@@ -744,7 +742,6 @@ abstract class BgsChallengeMedals extends GuiStyles
 
 /**
  * Manialink <b>sub styles</b>
- * @package ManiaLib 
  */	
 abstract class BgsPlayerCard extends GuiStyles
 {
@@ -766,7 +763,6 @@ abstract class BgsPlayerCard extends GuiStyles
 
 /**
  * Manialink <b>sub styles</b>
- * @package ManiaLib 
  */	
 abstract class Icons128x128_1 extends GuiStyles
 {
@@ -838,7 +834,6 @@ abstract class Icons128x128_1 extends GuiStyles
 
 /**
  * Manialink <b>sub styles</b>
- * @package ManiaLib 
  */	
 abstract class Icons128x32_1 extends GuiStyles
 {
@@ -855,7 +850,6 @@ abstract class Icons128x32_1 extends GuiStyles
 
 /**
  * Manialink <b>sub styles</b>
- * @package ManiaLib 
  */	
 abstract class Icons64x64_1 extends GuiStyles
 {
@@ -944,7 +938,6 @@ abstract class Icons64x64_1 extends GuiStyles
 
 /**
  * Manialink <b>sub styles</b>
- * @package ManiaLib 
  */	
 abstract class MedalsBig extends GuiStyles
 {
@@ -956,11 +949,9 @@ abstract class MedalsBig extends GuiStyles
 	const MedalSilver                 = 'MedalSilver';
 	const MedalSlot                   = 'MedalSlot';
 }
-GuiDefaultStyles::Icon_Style;
 
 /**
  * Icon with the "Icons128x128_1" style
- * @package Manialib
  */
 class Icon extends Quad
 {
@@ -976,7 +967,6 @@ class Icon extends Quad
 
 /**
  * Icon with the "Icons64x64_1" style
- * @package Manialib
  */
 class Icon64 extends Icon
 {
@@ -986,7 +976,6 @@ class Icon64 extends Icon
 
 /**
  * Icon with the "Icons128x32_1" style
- * @package Manialib
  */
 class Icon128 extends Icon
 {
@@ -996,7 +985,6 @@ class Icon128 extends Icon
 
 /**
  * Icon with the "MedalsBig" style
- * @package Manialib
  */
 class IconMedal extends Icon
 {
@@ -1005,8 +993,7 @@ class IconMedal extends Icon
 }
 
 /**
- * Include
- * @package Manialib
+ * Include tag
  */
 class IncludeManialink extends GuiElement
 {
@@ -1024,7 +1011,6 @@ class IncludeManialink extends GuiElement
 
 /**
  * Format
- * @package Manialib
  */
 class Format extends GuiElement
 {
@@ -1140,7 +1126,6 @@ class Format extends GuiElement
 
 /**
  * Label
- * @package Manialib
  */
 class Label extends Format
 {
@@ -1256,7 +1241,6 @@ class Label extends Format
 
 /**
  * Entry (input field)
- * @package Manialib
  */
 class Entry extends Label
 {
@@ -1314,7 +1298,6 @@ class Entry extends Label
 
 /**
  * FileEntry
- * @package Manialib
  */
 class FileEntry extends Entry
 {
@@ -1349,7 +1332,6 @@ class FileEntry extends Entry
 
 /**
  * Button
- * @package Manialib
  */
 class Button extends Label
 {
@@ -1369,7 +1351,6 @@ class Button extends Label
 
 /**
  * Music
- * @package Manialib
  */
 class Music extends GuiElement
 {
@@ -1422,7 +1403,6 @@ class Music extends GuiElement
 
 /**
  * Audio player
- * @package Manialib
  */
 class Audio extends Music
 {
@@ -1479,7 +1459,6 @@ class Audio extends Music
 
 /**
  * Video
- * @package Manialib
  */
 class Video extends Audio
 {

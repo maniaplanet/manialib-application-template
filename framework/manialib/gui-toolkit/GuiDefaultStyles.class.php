@@ -1,11 +1,14 @@
 <?php
 /**
  * @author Maxime Raoust
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
+ * @subpackage ManialinkGuiToolkit
  */
 
 /**
  * Default element styles 
- * @package Manialib
+ * @package ManiaLib
  */
 abstract class GuiDefaultStyles extends GuiBase
 {

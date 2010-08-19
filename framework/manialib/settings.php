@@ -1,9 +1,10 @@
 <?php
 /**
- * App settings
+ * Framework misc. settings
  * 
  * @author Maxime Raoust
- * @package Manialib
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
  */
 
 /**@#+

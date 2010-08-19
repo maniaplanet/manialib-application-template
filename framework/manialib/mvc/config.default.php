@@ -1,7 +1,13 @@
 <?php
 /**
- * Default MVC framework config
+ * MVC framework default config
+ * 
+ * This is the default configuration file. You shouldn't modify anything in this
+ * file. Instead, override the constants you want in your "config.php" file.
+ * 
  * @author Maxime Raoust
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLibMvc
  */
 
 if(!defined('APP_MVC_FRAMEWORK_PATH'))

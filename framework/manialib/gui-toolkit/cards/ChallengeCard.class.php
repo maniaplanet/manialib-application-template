@@ -1,12 +1,15 @@
 <?php
 /**
  * @author Maxime Raoust
- * @package Manialib
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
+ * @subpackage ManialinkGuiToolkit
  */
 
 /**
- * <b>Challenge card</b>: just like challenge cards that can be found when you
- * browse TrackMania's campaigns
+ * Challenge card
+ * 
+ * Just like challenge cards that can be found when you browse TrackMania's campaigns
  */ 
 class ChallengeCard extends Quad
 {

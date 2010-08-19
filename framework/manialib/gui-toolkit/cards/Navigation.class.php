@@ -1,9 +1,14 @@
 <?php
 /**
  * @author Maxime Raoust
- * @package Manialib
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
+ * @subpackage ManialinkGuiToolkit
  */
 
+/**
+ * @ignore
+ */
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'cards/NavigationButton.class.php' );
 
 /**

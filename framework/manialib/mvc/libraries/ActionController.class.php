@@ -1,17 +1,45 @@
 <?php
 /**
- * MVC Framework magic happens here !
+ * MVC framwork magic happens here!
+ * 
  * @author Maxime Raoust
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLibMvc
  */
 
+/**
+ * @ignore
+ */
 require_once(APP_MVC_FRAMEWORK_EXCEPTIONS_PATH.'MVCException.class.php'); 
 
 /**
- * Extends ActionController to create controllers
+ * Action controller
+ * 
+ * This is the base class for all controllers. Extend ActionController to create
+ * a new controller for your application.
+ * 
  * Naming conventions:
- * - class mysuperstuffController
- * - public function mysuperstuffController::mysuperaction()
+ * <ul>
+ * <li>class mysuperstuffController</li>
+ * <li>public function mysuperstuffController::mysuperaction()</li>
+ * </ul>
  * Note the lowercase names to ensure that URLS are all lowercase
+ * 
+ * Example:
+ * <code>
+ * class homeController extends ActionController
+ * {
+ *    function __construct()
+ *    {
+ *        parent::__construct();
+ *        $this->addFilter(new RegisterRequestParametersFilter());
+ *    }
+ *    
+ *    function index() {}
+ *    
+ *    function another_action() {}
+ * }
+ * </code>
  */
 class ActionController
 {

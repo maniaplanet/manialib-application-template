@@ -1,11 +1,12 @@
 <?php
 /**
  * @author Maxime Raoust
- * @package Manialib
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
  */
 
 /**
- * The framework's default exception
+ * Framework default exception
  */
 class FrameworkException extends Exception 
 {
@@ -96,7 +97,9 @@ class FrameworkException extends Exception
 	
 	
 	/**
-	 * Handles what to do when an exception is catched.
+	 * Default exception handler
+	 * 
+	 * Handles what to do when an exception is catched
 	 * @param Exception
 	 * @param boolean Whether to show an error message, default is true
 	 */

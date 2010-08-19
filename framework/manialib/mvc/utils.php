@@ -1,9 +1,17 @@
 <?php 
 /**
- * MVC framework utilities
+ * MVC framework functions
+ * 
  * @author Maxime Raoust
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLibMvc
  */
 
+/**
+ * Class autoloader for the MVC framework
+ * 
+ * Use spl_autload_register() to register it as a class autoloader in PHP
+ */
 function autoload_mvc_framework($className)
 {
 	if(file_exists($path = APP_MVC_FILTERS_PATH.$className.'.class.php'))

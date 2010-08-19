@@ -1,10 +1,14 @@
 <?php
 /**
  * @author Maxime Raoust
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLibMvc
  */
 
 /**
- * Response engine is responsible for passing values between entities
+ * Response engine
+ * 
+ * Allows to pass values between filters, controllers and views
  */
 class ResponseEngine
 {

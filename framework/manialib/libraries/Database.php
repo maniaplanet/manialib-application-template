@@ -1,49 +1,44 @@
 <?php
 /**
- * MySQL object-oriented abstraction layer 
+ * MySQL abstraction layer
+ * 
+ * Usage example:
+ * <code>
+ * <?php
+ * 
+ * require_once(APP_FRAMEWORK_LIBRARIES_PATH.'Database.php');
+ * 
+ * try
+ * {
+ *     $database = DatabaseFactory::getConnection();
+ *     $result = $database->execute('SELECT * FROM mytable WHERE id < 10');
+ *     while($array = $result->fetchAssoc())
+ *     {
+ *         print_r($array);
+ *     }
+ *     $myvar = 'Some \'text with quotes\' and "double quotes"';
+ *     $myvarQuoted = $database->quote($myvar);
+ *     $database->execute( 'INSERT INTO mytable (MyText) VALUES ('.$myvarQuoted.')' );
+ *     echo $database->insertID.' is a newly inserted ID';
+ * }
+ * catch(Exception $e)
+ * {
+ *     // Error handling...
+ * }
+ * ?>
+ * </code>
+ * 
  * @author Maxime Raoust
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
+ * @subpackage DatabaseAbstraction
  */
 
-
-/*
-
-Usage example:
-
-<?php
-
-require_once(APP_FRAMEWORK_LIBRARIES_PATH.'Database.php');
-
-try
-{
-
-	$database = DatabaseFactory::getConnection();
-	
-	$result = $database->execute('SELECT * FROM mytable WHERE id < 10');
-	
-	echo $result->recordCount().' results';
-	
-	while($array = $result->fetchAssoc())
-	{
-		print_r($array);
-	}
-	
-	$myvar = 'Some \'text with quotes\' and "double quotes"';
-	$myvarQuoted = $database->quote($myvar);
-	
-	$database->execute( 'INSERT INTO mytable (MyText) VALUES ('.$myvarQuoted.')' );
-	
-	echo $database->insertID.' is a newly inserted ID';
-
-}
-catch(Exception $e)
-{
-	// Error handling...
-}
-
-?>
- 
-*/
-
+/**
+ * Database connection factory
+ * 
+ * Helps retrieving DB connection instances from anywhere in the code
+ */
 abstract class DatabaseFactory
 {
 	/**
@@ -92,6 +87,9 @@ abstract class DatabaseFactory
 	}
 }
 
+/**
+ * Database connection instance
+ */
 class DatabaseConnection
 {
 	protected $connection;
@@ -230,6 +228,9 @@ class DatabaseConnection
 	}
 }
 
+/**
+ * Database query result
+ */
 class DatabaseRecordSet
 {
 	const FETCH_ASSOC = MYSQL_ASSOC;
@@ -282,7 +283,7 @@ class DatabaseRecordSet
 }
 
 /**
- * Misc tools for the database
+ * Misc database tools
  */
 abstract class DatabaseTools
 {

@@ -1,45 +1,49 @@
 <?php
 /**
- * Default config file
- *
- * You shouldn't modify anything here. Use config.php to override
- * constants instead.
- *
+ * Framework default config
+ * 
+ * This is the default configuration file. You shouldn't modify anything in this
+ * file. Instead, override the constants you want in your "config.php" file.
+ * 
  * @author Maxime Raoust
- * @package Manialib
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
  */
 
-//This doesn't work well with USE_SHORT_MANIALINK set to true
 if(!defined('APP_PATH'))
 {
 	/**
-	 * Path to the root of your application
+	 * Path to your application on the hard drive
 	 */
 	define('APP_PATH', dirname(__FILE__) . '/../');
 }
 if(!defined('APP_URL_BASE'))
 {
-	/**
-	 * Base URL of your application. If your manialink is hosted at
-	 * "http//yourhost. com/mymanialink/", you should put here "http://yourhost.
-	 * com/". Don't forget the trailing slash.
-	 */
-	if(isset($_SERVER['SERVER_PROTOCOL']) && isset($_SERVER['HTTP_HOST']))
+	if(isset($_SERVER) && isset($_SERVER['SERVER_PROTOCOL']) && isset($_SERVER['HTTP_HOST']))
 	{
-		$protocol = preg_replace('/([^\/]*).*/i','$1',$_SERVER['SERVER_PROTOCOL']);
-		define('APP_URL_BASE', strtolower($protocol).'://'.$_SERVER['HTTP_HOST'].'/');
+		/**
+		 * Base URL of your application
+		 * 
+		 * If your manialink is hosted at "http//yourhost. com/mymanialink/", you 
+		 * should put here "http://yourhost.com/". Don't forget the trailing slash.
+		 */
+		define('APP_URL_BASE', strtolower(preg_replace('/([^\/]*).*/i','$1',$_SERVER['SERVER_PROTOCOL'])).'://'.$_SERVER['HTTP_HOST'].'/');
 	}
 	else
 	{
+		/**
+		 * @ignore
+		 */
 		define('APP_URL_BASE', '');
 	}
 }
 if(!defined('APP_URL_PATH'))
 {
 	/**
-	 * URL Path of your application. If your manialink is hosted at "http:
-	 * //yourhost. com/mymanialink/", you should put here "mymanialink/". Don't
-	 * forget the trailing slash.
+	 * URL path of your application
+	 * 
+	 * If your manialink is hosted at "http://yourhost. com/mymanialink/", you 
+	 * should put here "mymanialink/". Don't forget the trailing slash.
 	 */
 	$str = '';
 	if(isset($_SERVER['REQUEST_URI']))
@@ -55,92 +59,117 @@ if(!defined('APP_URL_PATH'))
 if(!defined('APP_URL'))
 {
 	/**
-	 * Complete URL of your application. You shouldn't have to change this
-	 * value.
+	 * Complete URL of your application. 
+	 * 
+	 * You shouldn't have to change this value.
 	 */
 	define('APP_URL', APP_URL_BASE . APP_URL_PATH);
 }
 if(!defined('APP_FRAMEWORK_PATH'))
 {
 	/**
-	 * Path to the framework (ie. the manialib/ directory)
+	 * Framework path
+	 * 
+	 * This is the path to the "manialib/" directory
 	 */
 	define('APP_FRAMEWORK_PATH', APP_PATH . 'manialib/');
 }
 if(!defined('APP_FRAMEWORK_LIBRARIES_PATH'))
 {
 	/**
-	 * Path to the framework libraries
+	 * Framework libraries path
+	 * 
+	 * Path to the "libraries" directory of the framework
 	 */
 	define('APP_FRAMEWORK_LIBRARIES_PATH', APP_FRAMEWORK_PATH . 'libraries/');
 }
 if(!defined('APP_FRAMEWORK_EXCEPTIONS_PATH'))
 {
 	/**
-	 * Path to the framework exceptions
+	 * Framework exceptions path
+	 * 
+	 * Path to the "exceptions" directory of the framework
 	 */
 	define('APP_FRAMEWORK_EXCEPTIONS_PATH', APP_FRAMEWORK_PATH . 'exceptions/');
 }
 if(!defined('APP_FRAMEWORK_GUI_TOOLKIT_PATH'))
 {
 	/**
-	 * Path to the GUI toolkit
+	 * GUI Toolkit path
+	 * 
+	 * Path to the GUI Toolkit of the framework
 	 */
 	define('APP_FRAMEWORK_GUI_TOOLKIT_PATH', APP_FRAMEWORK_PATH . 'gui-toolkit/');
 }
 if(!defined('APP_LIBRARIES_PATH'))
 {
 	/**
-	 * Path to the user libraries
+	 * Libraries path
+	 * 
+	 * Path to the user libraries directory
 	 */
 	define('APP_LIBRARIES_PATH', APP_PATH . 'libraries/');
 }
 if(!defined('APP_LANGS_PATH'))
 {
 	/**
-	 * Path to the langs
+	 * Lang path
+	 * 
+	 * Path to the lang directory
 	 */
 	define('APP_LANGS_PATH', APP_PATH . 'langs/');
 }
 if(!defined('APP_LOGS_PATH'))
 {
 	/**
-	 * Path to the logs
+	 * Logs path
+	 * 
+	 * Path to the logs directory
 	 */
 	define('APP_LOGS_PATH', APP_PATH . 'logs/');
 }
 if(!defined('APP_INCLUDE_PATH'))
 {
 	/**
-	 * Misc include path, to put views anything that is not a class
+	 * Include path
+	 * 
+	 * Misc include path, to put anything that is not a class
 	 */
 	define('APP_INCLUDE_PATH', APP_PATH . 'include/');
 }
 if(!defined('APP_CONFIG_PATH'))
 {
 	/**
-	 * Path to the config
+	 * Config path
+	 * 
+	 * Path to the directory containing the config files of your application
 	 */
 	define('APP_CONFIG_PATH', APP_PATH . 'config/');
 }
 if(!defined('APP_WWW_PATH'))
 {
 	/**
-	 * Path to the webroot
+	 * Webroot path
+	 * 
+	 * Path to the webroot of your application.
 	 */
 	define('APP_WWW_PATH', APP_PATH);
 }
 if(!defined('APP_IMAGE_DIR_URL'))
 {
 	/**
-	 * URL of the images directory
+	 * Images directory URL
+	 * 
+	 * URL of the directory when you store the images of your application
 	 */
 	define('APP_IMAGE_DIR_URL', APP_URL . 'images/');
 }
 if(!defined('APP_DATA_DIR_URL'))
 {
 	/**
-	 * URL of the data directory
+	 * Data directory URL
+	 * 
+	 * URL of the directory when your store misc data of your application
 	 */
 	define('APP_DATA_DIR_URL', APP_URL . 'data/');
 }
@@ -148,13 +177,18 @@ if(!defined('APP_ERROR_LOG'))
 {
 	/**
 	 * Error log
+	 * 
+	 * All the runtime errors will be logged in this file
 	 */
 	define('APP_ERROR_LOG', APP_LOGS_PATH . 'error.log');
 }
 if(!defined('APP_USER_ERROR_LOG'))
 {
 	/**
-	 * Error log
+	 * User error log
+	 * 
+	 * All the user errors (eg.someone enterded a bad parameter in a form) will
+	 * be logged in this file
 	 */
 	define('APP_USER_ERROR_LOG', APP_LOGS_PATH . 'user-error.log');
 }
@@ -162,31 +196,38 @@ if(!defined('APP_DEBUG_LOG'))
 {
 	/**
 	 * Debug log
+	 * 
+	 * All the debug messages will be logged in this file
 	 */
 	define('APP_DEBUG_LOG', APP_LOGS_PATH . 'debug.log');
 }
 if(!defined('APP_MANIALINK'))
 {
 	/**
-	 * Name of your short Manialink. Note that the short Manialink <b>"
-	 * manialibdev" </b> redirects to <b>"http://localhost/manialib/"</b> for
-	 * easy access to your local developement version
+	 * Short Manialink
+	 * 
+	 * Short Manialink of your application. You can define Short Manialinks on
+	 * the Player Page at http://player.trackmania.com
+	 * 
+	 * Note that the Short Manialink <b>"manialibdev" </b> redirects to 
+	 * <b>"http://localhost/manialib/"</b> for easy access to your local 
+	 * developement version
 	 */
 	define('APP_MANIALINK', 'manialib');
 }
 if(!defined('APP_USE_SHORT_MANIALINKS'))
 {
 	/**
-	 * <b>THIS IS EXPERIMENTAL! If you don't really need to use short
-	 * manialinks, you should leave this as "false"</b>. If you use the short
-	 * manialinks option, rename "use_short_manialinks .htaccess" to .htaccess
-	 * and check that Apache mod rewrite is enabled on your server.
+	 * Deprecated, please don't use it
+	 * @deprecated
 	 */
 	define('APP_USE_SHORT_MANIALINKS', false);
 }
 if(!defined('APP_DEFAULT_TIMEZONE'))
 {
 	/**
+	 * Time zone
+	 * 
 	 * Default time zone of the server
 	 */
 	define('APP_DEFAULT_TIMEZONE', 'Europe/Paris');
@@ -194,6 +235,8 @@ if(!defined('APP_DEFAULT_TIMEZONE'))
 if(!defined('APP_TIMEZONE_NAME'))
 {
 	/**
+	 * Time zone name
+	 * 
 	 * Human readable name of the time zone in case you need to print it
 	 */
 	define('APP_TIMEZONE_NAME', 'GMT+1');
@@ -201,50 +244,66 @@ if(!defined('APP_TIMEZONE_NAME'))
 if(!defined('APP_LANG_ENGINE_MODE'))
 {
 	/**
-	 * Lang engine mode: if 0, the lang files will be included to be used as
-	 * normal Manialink dictionary files. If 1, the dynamic lang engine will be
-	 * loaded and translation strings will be obtained with the __() function
+	 * Lang engine mode
+	 * 
+	 * If <b>0</b>, the lang files will be included to be used as normal 
+	 * Manialink dictionary files. 
+	 * 
+	 * If <b>1</b>, the dynamic lang engine will be loaded and translation 
+	 * strings will be obtained with the __() function
+	 * 
+	 * @see LangEngine
 	 */
 	define('APP_LANG_ENGINE_MODE', 1);
 }
 if(!defined('APP_DEBUG_LEVEL'))
 {
 	/**
-	 * Debug level can be either 0 or 1. Put 1 for your developement version to
-	 * get verbose error messages etc. Don't forget to use 0 for your production
-	 * version
+	 * Debug level
+	 * 
+	 * <b>USE "0" FOR PRODUCTION ENVIRONEMENT !</b>
+	 * 
+	 * If <b>1</b>, all the debug messages and the errors will be outputed
+	 * to the screen.
+	 * 
+	 * If <b>0</b>, only the user messages are shown in case of error
 	 */
-	define('APP_DEBUG_LEVEL', 0); // 0 or 1
+	define('APP_DEBUG_LEVEL', 0);
 }
 if(!defined('APP_DATABASE_HOST'))
 {
 	/**
-	 * Database host
+	 * MySQL database hostname
 	 */
 	define('APP_DATABASE_HOST', 'localhost');
 }
 if(!defined('APP_DATABASE_USER'))
 {
+	/**
+	 * MySQL database username
+	 */
 	define('APP_DATABASE_USER', 'root');
 }
 if(!defined('APP_DATABASE_PASSWORD'))
 {
 	/**
-	 * Database user
+	 * MySQL database password
 	 */
 	define('APP_DATABASE_PASSWORD', '');
 }
 if(!defined('APP_DATABASE_NAME'))
 {
 	/**
-	 * Database name
+	 * MySQL database name
 	 */
 	define('APP_DATABASE_NAME', 'manialib');
 }
 if(!defined('APP_DATABASE_PREFIX'))
 {
 	/**
-	 * Table names prefix in the database
+	 * MySQL database prefix
+	 * 
+	 * All the tables will be prefixed by this string
 	 */
 	define('APP_DATABASE_PREFIX', 'manialib_');
 }

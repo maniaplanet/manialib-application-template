@@ -1,11 +1,18 @@
 <?php
 /**
- * 
- * @author Philippe Melot
- * @copyright Nadeo (c) 2010
- *
+ * @author Philippe Melot 
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLibMvc
+ * @subpackage DefaultFilter
  */
 
+/**
+ * Authentication filter
+ * 
+ * Register this filter in your controller, and all the actions will require 
+ * authentication using the Manialink Authentication System developped by NADEO
+ * @see AuthenticationToken 
+ */
 class AuthenticationTokenFilter extends AdvancedFilter
 {
 	function preFilter()

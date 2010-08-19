@@ -1,10 +1,13 @@
 <?php
 /**
  * @author Maxime Raoust
- * @package Manialib
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
  */
 
 /**
+ * Exception importer
+ * 
  * Helps converting any exception into a FrameworkException
  */
 class FrameworkImportedException extends FrameworkException

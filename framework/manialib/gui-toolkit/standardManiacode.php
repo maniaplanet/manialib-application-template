@@ -1,11 +1,14 @@
 <?php
 /**
  * @author Philippe Melot
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
+ * @subpackage ManiacodeToolkit
  */
 
 /**
-  Class ManiacodeComponent
-*/
+ * Maniacode Toolkit base component
+ */
 abstract class ManiacodeComponent
 {
 	protected $xmlTagName;

@@ -1,10 +1,13 @@
 <?php
 /**
- * @author Phillipe Melot
+ * @author Philippe Melot 
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLibMvc
+ * @subpackage DefaultFilter
  */
 
 /**
- * Allows only authorized users, for debugging purpose
+ * Restrict users that can access the Manialink (for debugging purpose only)
  */
 class DebugFilter extends AdvancedFilter
 {

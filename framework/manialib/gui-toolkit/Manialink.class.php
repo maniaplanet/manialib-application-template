@@ -1,7 +1,9 @@
 <?php
 /**
- * @package Manialib
  * @author Maxime Raoust
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
+ * @subpackage ManialinkGuiToolkit
  */
 
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'standard.php' );
@@ -10,7 +12,7 @@ require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'layouts/AbstractLayout.class.php' 
 /**
  * Manialink GUI toolkit main class
  *
- * @package Manialib
+ * @package ManiaLib
  */
 abstract class Manialink extends GuiBase
 {

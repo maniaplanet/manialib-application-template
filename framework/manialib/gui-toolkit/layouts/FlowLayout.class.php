@@ -1,12 +1,13 @@
 <?php
 /**
- * @package Manialib
  * @author Maxime Raoust
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
+ * @subpackage ManialinkGuiToolkit
  */
 
 /**
  * Flow layout: text-like, items fill the current line then next line etc.
- * @package Manialib
  */
 class FlowLayout extends AbstractLayout
 {

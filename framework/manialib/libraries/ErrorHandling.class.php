@@ -1,17 +1,21 @@
 <?php
 /**
+ * Error handling features
+ * 
  * @author Maxime Raoust
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
  */
 
 /**
- * Error handling
- * @package Manialib
+ * Error handling features
  */
 abstract class ErrorHandling
 {
 	/**
-	 * Exception handler: transforms standard PHP errors into
-	 * FrameworkErrorException
+	 * Exception handler
+	 * 
+	 * Converts standard PHP errors into FrameworkErrorException
 	 */
 	static function exceptionErrorHandler($errno, $errstr, $errfile, $errline) 
 	{

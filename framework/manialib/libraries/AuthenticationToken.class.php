@@ -1,15 +1,13 @@
 <?php
 /**
- *
- * Abstraction class for the Authentication system
- * made by Nadeo. This Authentication works only with
- * United account
- * 
  * @author Philippe Melot
- * @copyright Nadeo (c) 2010
- *
+ * @copyright 2009-2010 NADEO
+ * @package ManiaLib
  */
 
+/**
+ * Helps using the Manialink Authentication System developped by NADEO. Note that it only works with United Forever accounts.
+ */
 final class AuthenticationToken
 {
 	const scriptUrl = 'http://scripts.trackmaniaforever.com/checkAuthenticationToken.php?login=%s&token=%s';

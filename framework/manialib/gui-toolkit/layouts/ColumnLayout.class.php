@@ -1,12 +1,13 @@
 <?php
 /**
- * @package Manialib
  * @author Maxime Raoust
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
+ * @subpackage ManialinkGuiToolkit
  */
 
 /**
  * Column layout: elements are added below their predecessor
- * @package Manialib
  */
 class ColumnLayout extends AbstractLayout
 {

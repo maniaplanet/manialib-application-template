@@ -1,11 +1,13 @@
 <?php
 /**
- * @author Maxime Raoust
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLibMvc
+ * @subpackage DefaultFilter
  */
 
 /**
- * Register usual paramaters such as login, nickname etc. 
- * so that you only need to access them through the SessionEngine 
+ * Register usual paramaters such as login, nickname etc. so that you only need to access them through the SessionEngine 
  */
 class RegisterRequestParametersFilter extends AdvancedFilter
 {

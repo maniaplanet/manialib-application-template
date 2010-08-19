@@ -1,11 +1,15 @@
 <?php
 /**
  * @author Maxime Raoust
- * @package Manialib
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
  */
 
 /**
  * Exception to handle generic user error
+ * 
+ * Eg. when a user enter a bad pararmeter in a form. The log of this type of 
+ * exception is less verbose, and they are logged sepparately in APP_USER_ERROR_LOG
  */
 class FrameworkUserException extends FrameworkException 
 {

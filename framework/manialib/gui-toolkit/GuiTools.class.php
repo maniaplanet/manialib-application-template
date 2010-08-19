@@ -1,13 +1,15 @@
 <?php
 /**
- * @package Manialib
  * @author Maxime Raoust
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
+ * @subpackage ManialinkGuiToolkit
  */
 
 /**
  * Static class that provides tools for Manialink handling
  * 
- * @package Manialib
+ * @package ManiaLib
  */
 abstract class GuiTools
 {

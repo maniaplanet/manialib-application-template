@@ -1,6 +1,9 @@
 <?php
 /**
  * @author Maxime Raoust
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLibMvc
+ * @subpackage DefaultFilter
  */
 
 if(class_exists('GettextInitFilterConfig', false))
@@ -20,6 +23,9 @@ if(class_exists('GettextInitFilterConfig', false))
 	}
 }
 
+/**
+ * Init the "gettext" extension if you want to used it. For advanced users...
+ */
 class GettextInitFilter extends AdvancedFilter
 {
 	function preFilter()

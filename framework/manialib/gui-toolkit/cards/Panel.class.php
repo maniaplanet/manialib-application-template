@@ -1,11 +1,15 @@
 <?php
 /**
  * @author Maxime Raoust
- * @package Manialib
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
+ * @subpackage ManialinkGuiToolkit
  */
 
 /**
- * <b>Panel:</b> A quad with a title and a title background
+ * Panel
+ * 
+ * Very useful! A quad with a title and a title background
  */
 class Panel extends Quad
 {
