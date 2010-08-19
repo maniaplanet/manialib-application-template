@@ -1,10 +1,10 @@
 <?php
 /**
  * Default config file
- * 
- * You shouldn't modify anything here. Use config.php to override 
+ *
+ * You shouldn't modify anything here. Use config.php to override
  * constants instead.
- * 
+ *
  * @author Maxime Raoust
  * @package Manialib
  */
@@ -24,7 +24,15 @@ if(!defined('APP_URL_BASE'))
 	 * "http//yourhost. com/mymanialink/", you should put here "http://yourhost.
 	 * com/". Don't forget the trailing slash.
 	 */
-	define('APP_URL_BASE', 'http://localhost/');
+	if(isset($_SERVER['SERVER_PROTOCOL']) && isset($_SERVER['HTTP_HOST']))
+	{
+		$protocol = preg_replace('/([^\/]*).*/i','$1',$_SERVER['SERVER_PROTOCOL']);
+		define('APP_URL_BASE', strtolower($protocol).'://'.$_SERVER['HTTP_HOST'].'/');
+	}
+	else
+	{
+		define('APP_URL_BASE', '');
+	}
 }
 if(!defined('APP_URL_PATH'))
 {
@@ -33,7 +41,16 @@ if(!defined('APP_URL_PATH'))
 	 * //yourhost. com/mymanialink/", you should put here "mymanialink/". Don't
 	 * forget the trailing slash.
 	 */
-	define('APP_URL_PATH', 'manialib/');
+	$str = '';
+	if(isset($_SERVER['REQUEST_URI']))
+	{
+		$path = explode('/',$_SERVER['REQUEST_URI']);
+		for($i = 1; $i < count($path) - 1; $i++)
+		{
+			$str .= $path[$i].'/';
+		}
+	}
+	define('APP_URL_PATH', $str);
 }
 if(!defined('APP_URL'))
 {
