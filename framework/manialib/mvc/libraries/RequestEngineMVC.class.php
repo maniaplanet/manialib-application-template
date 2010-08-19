@@ -48,8 +48,8 @@ class RequestEngineMVC extends RequestEngine
 	
 	/**
 	 * Redirects to the specified route with all defined GET vars in the URL
-	 * @var string Can be the name of a controller or a class const of Route
-	 * @var string Can be the name of an action or a class const of Route 
+	 * @param string Can be the name of a controller or a class const of Route
+	 * @param string Can be the name of an action or a class const of Route 
 	 */
 	public function redirectManialink($controller = Route::CUR, $action = Route::CUR)
 	{
@@ -59,8 +59,8 @@ class RequestEngineMVC extends RequestEngine
 	
 	/**
 	 * Redirects to the specified route with, with names of GET vars as parameters of the method
-	 * @var string Can be the name of a controller or a class const of Route
-	 * @var string Can be the name of an action or a class const of Route 
+	 * @param string Can be the name of a controller or a class const of Route
+	 * @param string Can be the name of an action or a class const of Route 
 	 */
 	public function redirectManialinkArgList($controller, $action)
 	{
@@ -80,8 +80,8 @@ class RequestEngineMVC extends RequestEngine
 	
 	/**
 	 * Creates a link to the specified route with all defined GET vars in the URL
-	 * @var string Can be the name of a controller or a class const of Route
-	 * @var string Can be the name of an action or a class const of Route 
+	 * @param string Can be the name of a controller or a class const of Route
+	 * @param string Can be the name of an action or a class const of Route 
 	 */
 	public function createLink($controller = Route::CUR, $action = Route::CUR)
 	{
@@ -90,8 +90,8 @@ class RequestEngineMVC extends RequestEngine
 	
 	/**
 	 * Creates a link to the specified route with, with names of GET vars as parameters of the method
-	 * @var string Can be the name of a controller or a class const of Route
-	 * @var string Can be the name of an action or a class const of Route 
+	 * @param string Can be the name of a controller or a class const of Route
+	 * @param string Can be the name of an action or a class const of Route 
 	 */
 	function createLinkArgList($controller = Route::CUR, $action = Route::CUR)
 	{
