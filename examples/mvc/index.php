@@ -25,7 +25,7 @@ date_default_timezone_set(APP_DEFAULT_TIMEZONE);
 // Set error handling
 set_error_handler(array('ErrorHandling', 'exceptionErrorHandler'));
 set_exception_handler(array('ErrorHandling', 'exceptionHandler'));
-
+ 
 try
 {
 	ActionController::dispatch();
