@@ -687,7 +687,7 @@ class Icon extends Quad
  * @package ManiaLib
  * @subpackage GUIToolkit
  */
-abstract class Bgs1 extends Quad
+class Bgs1 extends Quad
 {
 	protected $style = Quad::Bgs1;
 	protected $subStyle = self::BgWindow1;
@@ -733,7 +733,7 @@ abstract class Bgs1 extends Quad
  * @package ManiaLib
  * @subpackage GUIToolkit
  */	
-abstract class Bgs1InRace extends Bgs1 
+class Bgs1InRace extends Bgs1 
 {
 	protected $style = Quad::Bgs1InRace;
 }
@@ -743,7 +743,7 @@ abstract class Bgs1InRace extends Bgs1
  * @package ManiaLib
  * @subpackage GUIToolkit
  */	
-abstract class BgRaceScore2 extends Quad
+class BgRaceScore2 extends Quad
 {
 	protected $style = Quad::BgRaceScore2;
 	protected $subStyle = self::BgCardServer;
@@ -776,7 +776,7 @@ abstract class BgRaceScore2 extends Quad
  * @package ManiaLib
  * @subpackage GUIToolkit
  */	
-abstract class BgsChallengeMedals extends Quad
+class BgsChallengeMedals extends Quad
 {
 	protected $style = Quad::BgsChallengeMedals;
 	protected $subStyle = self::BgBronze;
@@ -794,7 +794,7 @@ abstract class BgsChallengeMedals extends Quad
  * @package ManiaLib
  * @subpackage GUIToolkit
  */	
-abstract class BgsPlayerCard extends Quad
+class BgsPlayerCard extends Quad
 {
 	protected $style = Quad::BgsPlayerCard;
 	protected $subStyle = self::BgActivePlayerCard;
@@ -820,7 +820,7 @@ abstract class BgsPlayerCard extends Quad
  * @package ManiaLib
  * @subpackage GUIToolkit
  */	
-abstract class Icons128x128_1 extends Icon
+class Icons128x128_1 extends Icon
 {
 	protected $style = Quad::Icons128x128_1;
 	protected $subStyle = self::Forever;
@@ -896,7 +896,7 @@ abstract class Icons128x128_1 extends Icon
  * @package ManiaLib
  * @subpackage GUIToolkit
  */	
-abstract class Icons128x32_1 extends Icon
+class Icons128x32_1 extends Icon
 {
 	protected $style = Quad::Icons128x32_1;
 	protected $subStyle = self::RT_Cup;
@@ -917,7 +917,7 @@ abstract class Icons128x32_1 extends Icon
  * @package ManiaLib
  * @subpackage GUIToolkit
  */	
-abstract class Icons64x64_1 extends Icon
+class Icons64x64_1 extends Icon
 {
 	protected $style = Quad::Icons64x64_1;
 	protected $subStyle = self::GenericButton;
@@ -1010,7 +1010,7 @@ abstract class Icons64x64_1 extends Icon
  * @package ManiaLib
  * @subpackage GUIToolkit
  */	
-abstract class MedalsBig extends Icon
+class MedalsBig extends Icon
 {
 	protected $style = Quad::MedalsBig;
 	protected $subStyle = self::MedalBronze;
