@@ -20,29 +20,93 @@ if(!defined('APP_MVC_FRAMEWORK_PATH'))
 }	
 if(!defined('APP_MVC_FRAMEWORK_LIBRARIES_PATH'))
 {
+	/**
+	 * Path to the MVC framework libraries directory
+	 */
 	define('APP_MVC_FRAMEWORK_LIBRARIES_PATH', APP_MVC_FRAMEWORK_PATH.'libraries/');
 }	
 if(!defined('APP_MVC_FRAMEWORK_EXCEPTIONS_PATH'))
 {
+	/**
+	 * Path to the MVC framework exceptions directory
+	 */
 	define('APP_MVC_FRAMEWORK_EXCEPTIONS_PATH', APP_MVC_FRAMEWORK_PATH.'exceptions/');
 }
 if(!defined('APP_MVC_FRAMEWORK_FILTERS_PATH'))
 {
+	/**
+	 * Path to the MVC framework filters directory
+	 */
 	define('APP_MVC_FRAMEWORK_FILTERS_PATH', APP_MVC_FRAMEWORK_PATH.'filters/');
 }
 if(!defined('APP_FRAMEWORK_REQUEST_ENGINE_CLASS'))
 {
+	/**
+	 * Request Engine used  by the MVC framework.
+	 * You actually have to declare this BEFORE MANIALIB IS LOADED, ie. in index.php
+	 */
 	define('APP_FRAMEWORK_REQUEST_ENGINE_CLASS', 'RequestEngineMVC');
 }
-if(!defined('APP_MVC_CONTROLLERS_PATH'))   	 define('APP_MVC_CONTROLLERS_PATH', APP_PATH.'controllers/');
-if(!defined('APP_MVC_VIEWS_PATH'))           define('APP_MVC_VIEWS_PATH', APP_PATH.'views/');
-if(!defined('APP_MVC_FILTERS_PATH'))         define('APP_MVC_FILTERS_PATH', APP_PATH.'filters/');
-
-if(!defined('URL_PARAM_NAME_CONTROLLER'))    define('URL_PARAM_NAME_CONTROLLER', 'c');
-if(!defined('URL_PARAM_DEFAULT_CONTROLLER')) define('URL_PARAM_DEFAULT_CONTROLLER', 'home');
-if(!defined('URL_PARAM_NAME_ACTION'))        define('URL_PARAM_NAME_ACTION', 'a');
-if(!defined('URL_PARAM_DEFAULT_ACTION'))     define('URL_PARAM_DEFAULT_ACTION', 'index');
-
-if(!defined('APP_MVC_USE_URL_REWRITE'))      define('APP_MVC_USE_URL_REWRITE', false);
+if(!defined('APP_MVC_CONTROLLERS_PATH')) 
+{
+	/**
+	 * Path to the controllers directory of your application
+	 */
+	define('APP_MVC_CONTROLLERS_PATH', APP_PATH.'controllers/');
+}
+if(!defined('APP_MVC_VIEWS_PATH'))
+{
+	/**
+	 * Path to the views directory of your application
+	 */
+	define('APP_MVC_VIEWS_PATH', APP_PATH.'views/');
+}
+if(!defined('APP_MVC_FILTERS_PATH'))
+{
+	/**
+	 * Path to the filters directory of your application
+	 */
+	define('APP_MVC_FILTERS_PATH', APP_PATH.'filters/');
+}
+if(!defined('URL_PARAM_NAME_CONTROLLER'))
+{
+	/**
+	 * Name of the URL parameter for the controller name
+	 */
+	define('URL_PARAM_NAME_CONTROLLER', 'c');
+}
+if(!defined('URL_PARAM_DEFAULT_CONTROLLER'))
+{
+	/**
+	 * Default controller of your application
+	 */
+	define('URL_PARAM_DEFAULT_CONTROLLER', 'home');
+}
+if(!defined('URL_PARAM_NAME_ACTION'))
+{
+	/**
+	 * Name of the URL parameter for the action name
+	 */
+	define('URL_PARAM_NAME_ACTION', 'a');
+}
+if(!defined('URL_PARAM_DEFAULT_ACTION'))
+{
+	/**
+	 * Default action when a controller hasn't defined its own default action.
+	 * You shouldn't have to change this.
+	 */
+	define('URL_PARAM_DEFAULT_ACTION', 'index');
+}
+if(!defined('APP_MVC_USE_URL_REWRITE'))
+{
+	/**
+	 * Does your application use Apache Mod Rewrite ?
+	 * <ul>
+	 * <li>Without mod rewrite: /index.php?c=some_controller&a=some_action</li>
+	 * <li>With mod rewrite: /some_controller/some_action/</li>
+	 * </ul>
+	 */
+	define('APP_MVC_USE_URL_REWRITE', false);
+}
 
 ?>
