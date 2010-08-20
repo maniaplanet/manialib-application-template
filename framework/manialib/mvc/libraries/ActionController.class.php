@@ -42,6 +42,7 @@ require_once(APP_MVC_FRAMEWORK_EXCEPTIONS_PATH.'MVCException.class.php');
  * </code>
  * 
  * @package ManiaLib_MVC
+ * @todo Think about "plugins" eg. you want to do a shoutbox plugin, how everything works?
  */
 class ActionController
 {

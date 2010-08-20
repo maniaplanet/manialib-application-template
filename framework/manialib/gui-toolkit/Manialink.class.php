@@ -87,6 +87,7 @@ abstract class Manialink extends GuiBase
 	 * @param AbstractLayout The optionnal layout associated with the frame. If
 	 * you pass a layout object, all the items inside the frame will be
 	 * positionned using constraints defined by the layout
+	 * @todo Be able to use the scale attribute
 	 */
 	final public static function beginFrame($x=0, $y=0, $z=0,
 	AbstractLayout $layout=null)

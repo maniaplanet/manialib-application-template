@@ -19,6 +19,11 @@ function autoload_mvc_framework($className)
 		require_once($path);
 		return true;
 	}
+	if(file_exists($path = APP_MVC_MODELS_PATH.$className.'.class.php'))
+	{
+		require_once($path);
+		return true;
+	}
 	if(file_exists($path = APP_MVC_FRAMEWORK_FILTERS_PATH.$className.'.class.php'))
 	{
 		require_once($path);
