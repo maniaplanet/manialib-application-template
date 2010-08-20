@@ -115,11 +115,10 @@ abstract class ManiacodeComponent
 
 /**
  * File download
- * @todo Put an uppercase L and remove abstract?
  * @package ManiaLib
  * @subpackage ManiacodeToolkit
  */
-abstract class fileDownload extends ManiacodeComponent
+abstract class FileDownload extends ManiacodeComponent
 {
 	protected $name;
 	protected $url;
@@ -182,7 +181,7 @@ abstract class fileDownload extends ManiacodeComponent
  * @package ManiaLib
  * @subpackage ManiacodeToolkit 
  */
-class InstallTrack extends fileDownload
+class InstallTrack extends FileDownload
 {
 	protected $xmlTagName = 'install_track';
 	
@@ -197,7 +196,7 @@ class InstallTrack extends fileDownload
  * @package ManiaLib
  * @subpackage ManiacodeToolkit 
  */
-class PlayTrack extends fileDownload
+class PlayTrack extends FileDownload
 {
 	protected $xmlTagName = 'play_track';
 	
@@ -213,7 +212,7 @@ class PlayTrack extends fileDownload
  * @package ManiaLib
  * @subpackage ManiacodeToolkit 
  */
-class PackageTrack extends fileDownload
+class PackageTrack extends FileDownload
 {
 	protected $xmlTagName = 'track';
 	
@@ -265,7 +264,7 @@ class InstallTrackPack extends ManiacodeComponent
  * @package ManiaLib
  * @subpackage ManiacodeToolkit 
  */
-class InstallReplay extends fileDownload
+class InstallReplay extends FileDownload
 {
 	protected $xmlTagName = 'install_replay';
 	
@@ -280,7 +279,7 @@ class InstallReplay extends fileDownload
  * @package ManiaLib
  * @subpackage ManiacodeToolkit 
  */
-class ViewReplay extends fileDownload
+class ViewReplay extends FileDownload
 {
 	protected $xmlTagName = 'view_replay';
 	
@@ -295,7 +294,7 @@ class ViewReplay extends fileDownload
  * @package ManiaLib
  * @subpackage ManiacodeToolkit 
  */
-class PlayReplay extends fileDownload
+class PlayReplay extends FileDownload
 {
 	protected $xmlTagName = 'play_replay';
 	
@@ -310,7 +309,7 @@ class PlayReplay extends fileDownload
  * @package ManiaLib
  * @subpackage ManiacodeToolkit 
  */
-class InstallSkin extends fileDownload
+class InstallSkin extends FileDownload
 {
 	protected $xmlTagName = 'install_skin';
 	protected $file;
