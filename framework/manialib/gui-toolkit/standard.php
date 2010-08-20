@@ -9,6 +9,7 @@
  * @ignore
  */
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'GuiTools.class.php' );
+
 /**
  * @ignore
  */
