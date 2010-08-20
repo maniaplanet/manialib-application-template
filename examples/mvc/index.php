@@ -4,6 +4,8 @@
  * @copyright NADEO
  */
 
+// TODO Create an "app" directory which contains exclusively the app logic (controllers,libraries,models,filters,views)
+
 // All errors are catched to the error handler
 error_reporting(E_ALL);
 

@@ -19,6 +19,7 @@ class homeController extends ActionController
 	
 	function about() 
 	{
+		$this->request->registerReferer();
 	}
 	
 	function features() 

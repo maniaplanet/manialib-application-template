@@ -86,13 +86,19 @@ Manialink::beginFrame(-60, 48, 1);
 			$ui->save();
 			
 			$manialink = $request->createLink('examples', Route::NONE);
-			$selected = $request->getAction() == 'examples';
 			
 			$ui = new NavigationButton(35, 8);
-			if($selected) $ui->setSelected();
 			$ui->setManialink($manialink);
 			$ui->icon->setSubStyle(Icons128x128_1::Browse);
 			$ui->text->setText('Sample pages');
+			$ui->save();
+			
+			$manialink = $request->createLink('shoutbox', Route::NONE);
+			
+			$ui = new NavigationButton(35, 8);
+			$ui->setManialink($manialink);
+			$ui->icon->setSubStyle(Icons128x128_1::Share);
+			$ui->text->setText('Shoutbox');
 			$ui->save();
 			
 			$ui = new Quad(35, 45);
