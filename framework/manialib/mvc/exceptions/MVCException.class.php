@@ -2,11 +2,14 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLibMvc
+ * @package ManiaLib_MVC
  */
 
 /**
- * Default MVC exception
+ * Default exception for the MVC framework
+ * 
+ * @package ManiaLib_MVC
+ * @subpackage ErrorHandling
  */
 class MVCException extends FrameworkException {}
 

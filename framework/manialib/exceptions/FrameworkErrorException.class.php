@@ -3,7 +3,6 @@
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
- * @subpackage ErrorHandling
  */
 
 /**  			 
@@ -20,6 +19,9 @@ require_once(APP_FRAMEWORK_EXCEPTIONS_PATH.'FrameworkException.class.php');
  * 
  * A bit more pratical to use than ErrorException since it extends the 
  * framework's base exception class
+ * 
+ * @package ManiaLib
+ * @subpackage ErrorHandling
  */
 class FrameworkErrorException extends FrameworkException 
 {

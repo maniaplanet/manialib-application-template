@@ -2,13 +2,15 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLibMvc
+ * @package ManiaLib_MVC
  */
 
 /**
  * Response engine
  * 
  * Allows to pass values between filters, controllers and views
+ * 
+ * @package ManiaLib_MVC
  */
 class ResponseEngine
 {
@@ -105,7 +107,14 @@ class ResponseEngine
 	}
 }
 
+/**
+ * @package ManiaLib_MVC
+ */
 class ResponseEngineException extends MVCException {}
+
+/**
+ * @package ManiaLib_MVC
+ */
 class DialogAlreadyRegistered extends ResponseEngineException {}
 
 ?>

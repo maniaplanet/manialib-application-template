@@ -2,8 +2,7 @@
 /**
  * @author Philippe Melot 
  * @copyright 2009-2010 NADEO 
- * @package ManiaLibMvc
- * @subpackage DefaultFilter
+ * @package ManiaLib_MVC
  */
 
 /**
@@ -11,7 +10,10 @@
  * 
  * Register this filter in your controller, and all the actions will require 
  * authentication using the Manialink Authentication System developped by NADEO
+ * 
  * @see AuthenticationToken 
+ * @package ManiaLib_MVC
+ * @subpackage DefaultFilters
  */
 class AuthenticationTokenFilter extends AdvancedFilter
 {

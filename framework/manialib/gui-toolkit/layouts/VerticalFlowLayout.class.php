@@ -3,12 +3,13 @@
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
- * @subpackage ManialinkGuiToolkit
  */
 
 /**
- * Flow layout: column-like, items fill vertically the current column then 
- * the next one on the right etc.
+ * Flow layout
+ * Column-like, items fill vertically the current column then the next one on the right etc.
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Layouts
  */
 class VerticalFlowLayout extends AbstractLayout
 {

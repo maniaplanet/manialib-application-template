@@ -3,13 +3,13 @@
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
- * @subpackage ManialinkGuiToolkit
  */
 
 /**
  * Challenge card
- * 
  * Just like challenge cards that can be found when you browse TrackMania's campaigns
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Cards
  */ 
 class ChallengeCard extends Quad
 {

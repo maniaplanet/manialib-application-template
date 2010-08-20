@@ -3,11 +3,13 @@
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
- * @subpackage ManialinkGuiToolkit
  */
 
 /**
+ * Abstract layout
  * Abstract class used for building layouts
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Layouts
  */
 abstract class AbstractLayout extends GuiComponent
 {

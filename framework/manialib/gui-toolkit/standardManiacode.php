@@ -3,11 +3,12 @@
  * @author Philippe Melot
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
- * @subpackage ManiacodeToolkit
  */
 
 /**
  * Maniacode Toolkit base component
+ * @package ManiaLib
+ * @subpackage ManiacodeToolkit
  */
 abstract class ManiacodeComponent
 {
@@ -113,8 +114,11 @@ abstract class ManiacodeComponent
 }
 
 /**
-  Class fileDownload
-*/
+ * File download
+ * @todo Put an uppercase L and remove abstract?
+ * @package ManiaLib
+ * @subpackage ManiacodeToolkit_Elements
+ */
 abstract class fileDownload extends ManiacodeComponent
 {
 	protected $name;
@@ -174,8 +178,10 @@ abstract class fileDownload extends ManiacodeComponent
 }
 
 /**
-  Class InstallTrack
-*/
+ * Install track
+ * @package ManiaLib
+ * @subpackage ManiacodeToolkit_Elements 
+ */
 class InstallTrack extends fileDownload
 {
 	protected $xmlTagName = 'install_track';
@@ -187,8 +193,10 @@ class InstallTrack extends fileDownload
 }
 
 /**
-  Class PlayTrack
-*/
+ * Play track
+ * @package ManiaLib
+ * @subpackage ManiacodeToolkit_Elements 
+ */
 class PlayTrack extends fileDownload
 {
 	protected $xmlTagName = 'play_track';
@@ -200,9 +208,11 @@ class PlayTrack extends fileDownload
 }
 
 /**
-  Class PackageTrack
-   Use it only with InstallTrackPack
-*/
+ * Package track
+ * Use it only with InstallTrackPack
+ * @package ManiaLib
+ * @subpackage ManiacodeToolkit_Elements 
+ */
 class PackageTrack extends fileDownload
 {
 	protected $xmlTagName = 'track';
@@ -214,8 +224,10 @@ class PackageTrack extends fileDownload
 }
 
 /**
-  Class InstallTrackPack
-*/
+ * Install track pack
+ * @package ManiaLib
+ * @subpackage ManiacodeToolkit_Elements 
+ */
 class InstallTrackPack extends ManiacodeComponent
 {
 	protected $xmlTagName = 'install_track_pack';
@@ -249,8 +261,10 @@ class InstallTrackPack extends ManiacodeComponent
 }
 
 /**
-  Class InstallReplay
-*/
+ * Install replay
+ * @package ManiaLib
+ * @subpackage ManiacodeToolkit_Elements 
+ */
 class InstallReplay extends fileDownload
 {
 	protected $xmlTagName = 'install_replay';
@@ -262,8 +276,10 @@ class InstallReplay extends fileDownload
 }
 
 /**
-  Class ViewReplay
-*/
+ * View replay
+ * @package ManiaLib
+ * @subpackage ManiacodeToolkit_Elements 
+ */
 class ViewReplay extends fileDownload
 {
 	protected $xmlTagName = 'view_replay';
@@ -275,8 +291,10 @@ class ViewReplay extends fileDownload
 }
 
 /**
-  Class PlayReplay
-*/
+ * Play replay
+ * @package ManiaLib
+ * @subpackage ManiacodeToolkit_Elements 
+ */
 class PlayReplay extends fileDownload
 {
 	protected $xmlTagName = 'play_replay';
@@ -288,8 +306,10 @@ class PlayReplay extends fileDownload
 }
 
 /**
-  Class InstallSkin
-*/
+ * Install skin
+ * @package ManiaLib
+ * @subpackage ManiacodeToolkit_Elements 
+ */
 class InstallSkin extends fileDownload
 {
 	protected $xmlTagName = 'install_skin';
@@ -326,8 +346,10 @@ class InstallSkin extends fileDownload
 }
 
 /**
-  Class GetSkin
-*/
+ * Get skin
+ * @package ManiaLib
+ * @subpackage ManiacodeToolkit_Elements 
+ */
 class GetSkin extends InstallSkin
 {
 	protected $xmlTagName = 'get_skin';
@@ -339,8 +361,10 @@ class GetSkin extends InstallSkin
 }
 
 /**
-  Class ShowMessage
-*/
+ * Show message
+ * @package ManiaLib
+ * @subpackage ManiacodeToolkit_Elements 
+ */
 class ShowMessage extends ManiacodeComponent
 {
 	protected $xmlTagName = 'show_message';
@@ -363,8 +387,10 @@ class ShowMessage extends ManiacodeComponent
 }
 
 /**
-  Class GotoLink
-*/
+ * Goto link
+ * @package ManiaLib
+ * @subpackage ManiacodeToolkit_Elements 
+ */
 class GotoLink extends ManiacodeComponent
 {
 	protected $xmlTagName = 'goto';
@@ -387,9 +413,10 @@ class GotoLink extends ManiacodeComponent
 }
 
 /**
-  Class JoinServer
-   Join 
-*/
+ * Join server
+ * @package ManiaLib
+ * @subpackage ManiacodeToolkit_Elements 
+ */
 class JoinServer extends ManiacodeComponent
 {
 	/**
@@ -443,8 +470,10 @@ class JoinServer extends ManiacodeComponent
 }
 
 /**
-  Class AddBuddy
-*/
+ * Add buddy
+ * @package ManiaLib
+ * @subpackage ManiacodeToolkit_Elements 
+ */
 class AddBuddy extends ManiacodeComponent
 {
 	protected $xmlTagName = 'add_buddy';
@@ -467,8 +496,10 @@ class AddBuddy extends ManiacodeComponent
 }
 
 /**
-  Class InviteBuddy
-*/
+ * Invite buddy
+ * @package ManiaLib
+ * @subpackage ManiacodeToolkit_Elements 
+ */
 class InviteBuddy
 {
 	protected $xmlTagName = 'invite_buddy';
@@ -491,8 +522,10 @@ class InviteBuddy
 }
 
 /**
-  Class AddFavorite
-*/
+ * Add favorite
+ * @package ManiaLib
+ * @subpackage ManiacodeToolkit_Elements 
+ */
 class AddFavorite extends AddBuddy
 {
 	protected $xmlTagName = 'add_favorite';
@@ -502,4 +535,5 @@ class AddFavorite extends AddBuddy
 		parent::__construct($login);
 	}
 }
+
 ?>

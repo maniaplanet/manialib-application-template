@@ -2,14 +2,18 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLibMvc
- * @subpackage DefaultFilter
+ * @package ManiaLib_MVC
  */
 
 if(class_exists('GettextInitFilterConfig', false))
 {
 	/**
+	 * Gettext init config
+	 * 
 	 * Redeclare this class in your config in you want to override values
+	 * 
+	 * @package ManiaLib_MVC
+ 	 * @subpackage DefaultFilters
 	 */
 	abstract class GettextInitFilterConfig
 	{
@@ -24,7 +28,12 @@ if(class_exists('GettextInitFilterConfig', false))
 }
 
 /**
- * Init the "gettext" extension if you want to used it. For advanced users...
+ * Gettext init
+ * 
+ * Init the "gettext" extension if you want to used it. For advanced users only.
+ * 
+ * @package ManiaLib_MVC
+ * @subpackage DefaultFilters
  */
 class GettextInitFilter extends AdvancedFilter
 {

@@ -3,11 +3,14 @@
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
- * @subpackage ManialinkGuiToolkit
  */
 
 /**
  * Navigation button
+ * For the Navigation card
+ * @see Navigation
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Cards
  */ 
 class NavigationButton extends Quad
 {

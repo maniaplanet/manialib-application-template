@@ -31,13 +31,13 @@
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
- * @subpackage Database
  */
 
 /**
  * Database connection factory
- * 
  * Helps retrieving DB connection instances from anywhere in the code
+ * @package ManiaLib
+ * @subpackage Database
  */
 abstract class DatabaseFactory
 {
@@ -89,6 +89,8 @@ abstract class DatabaseFactory
 
 /**
  * Database connection instance
+ * @package ManiaLib
+ * @subpackage Database
  */
 class DatabaseConnection
 {
@@ -230,6 +232,8 @@ class DatabaseConnection
 
 /**
  * Database query result
+ * @package ManiaLib
+ * @subpackage Database
  */
 class DatabaseRecordSet
 {
@@ -284,6 +288,8 @@ class DatabaseRecordSet
 
 /**
  * Misc database tools
+ * @package ManiaLib
+ * @subpackage Database
  */
 abstract class DatabaseTools
 {
@@ -307,9 +313,28 @@ abstract class DatabaseTools
 	}	
 }
 
+/**
+ * @package ManiaLib
+ * @subpackage Database
+ */
 class DatabaseException extends FrameworkException {}
+
+/**
+ * @package ManiaLib
+ * @subpackage Database
+ */
 class DatabaseConnectionException extends DatabaseException {}
+
+/**
+ * @package ManiaLib
+ * @subpackage Database
+ */
 class DatabaseDisconnectionException extends DatabaseException {}
+
+/**
+ * @package ManiaLib
+ * @subpackage Database
+ */
 class DatabaseSelectionException extends DatabaseException
 {
 	function __construct($dummy=null, $dummy2=null, Exception $previous=null, $logException=true)
@@ -317,6 +342,11 @@ class DatabaseSelectionException extends DatabaseException
 		parent::__construct(mysql_error(), mysql_errno(), $previous, $logException);
 	}
 }
+
+/**
+ * @package ManiaLib
+ * @subpackage Database
+ */
 class DatabaseQueryException extends DatabaseException
 {
 	function __construct($query, $dummy2=null, Exception $previous=null, $logException=true)

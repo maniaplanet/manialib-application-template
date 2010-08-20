@@ -2,12 +2,16 @@
 /**
  * @author Maxime Raoust 
  * @copyright 2009-2010 NADEO 
- * @package ManiaLibMvc
- * @subpackage DefaultFilter
+ * @package ManiaLib_MVC
  */
 
 /**
+ * User agent checker
+ * 
  * Forces GameBox user agent, redirects to trackmania.com otherwise
+ * 
+ * @package ManiaLib_MVC
+ * @subpackage DefaultFilters
  */
 class UserAgentCheckFilter extends AdvancedFilter
 {

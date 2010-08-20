@@ -3,13 +3,15 @@
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
- * @subpackage ErrorHandling
  */
 
 /**
  * Exception importer
  * 
  * Helps converting any exception into a FrameworkException
+ * 
+ * @package ManiaLib
+ * @subpackage ErrorHandling
  */
 class FrameworkImportedException extends FrameworkException
 {

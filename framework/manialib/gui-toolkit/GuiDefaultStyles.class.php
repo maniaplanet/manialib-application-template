@@ -3,12 +3,13 @@
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
- * @subpackage ManialinkGuiToolkit
  */
 
 /**
- * Default element styles 
+ * Default element styles
+ * 
  * @package ManiaLib
+ * @subpackage GUIToolkit_Styles
  */
 abstract class GuiDefaultStyles extends GuiBase
 {

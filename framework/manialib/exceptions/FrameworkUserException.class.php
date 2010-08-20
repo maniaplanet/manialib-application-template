@@ -3,7 +3,6 @@
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
- * @subpackage ErrorHandling
  */
 
 /**
@@ -11,6 +10,9 @@
  * 
  * Eg. when a user enter a bad pararmeter in a form. The log of this type of 
  * exception is less verbose, and they are logged sepparately in APP_USER_ERROR_LOG
+ * 
+ * @package ManiaLib
+ * @subpackage ErrorHandling
  */
 class FrameworkUserException extends FrameworkException 
 {

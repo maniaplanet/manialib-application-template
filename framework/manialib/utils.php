@@ -5,7 +5,8 @@
  * Misc. function declarations
  * 
  * @author Maxime Raoust
- * @copyright 2009-2010 NADEO 
+ * @copyright 2009-2010 NADEO
+ * @package ManiaLib 
  */
 
 /**
@@ -202,8 +203,7 @@ if(APP_LANG_ENGINE_MODE == APP_LANG_ENGINE_MODE_DYNAMIC)
 	 * echo __("hello_login", $yetAnotherLogin);
 	 * @param string
 	 * @return string
-	 * @package ManiaLib
-	 * @subpackage LangToolkit
+	 * @todo Put in the LangTookit package
 	 */
 	function __($textId)
 	{
@@ -233,8 +233,7 @@ if(APP_LANG_ENGINE_MODE == APP_LANG_ENGINE_MODE_DYNAMIC)
 	 * i18n date
 	 * @param int Unix timestamp
 	 * @return string
-	 * @package ManiaLib
-	 * @subpackage LangToolkit
+	 * @todo Put in the LangTookit package
 	 */
 	function __date($timestamp)
 	{

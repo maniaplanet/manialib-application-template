@@ -8,6 +8,8 @@
 /**
  * This class helps to create multipage lists. Maybe difficult to use at
  * first... Doc should be written about it
+ * @package ManiaLib
+ * @subpackage Helpers
  */
 class MultipageList
 {

@@ -7,11 +7,15 @@
  * 
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLibMvc
+ * @package ManiaLib_MVC
+ * @todo document the MVC constants
  */
 
 if(!defined('APP_MVC_FRAMEWORK_PATH'))
 {
+	/**
+	 * Path to the MVC framework directory
+	 */
 	define('APP_MVC_FRAMEWORK_PATH', dirname(__FILE__).'/');
 }	
 if(!defined('APP_MVC_FRAMEWORK_LIBRARIES_PATH'))

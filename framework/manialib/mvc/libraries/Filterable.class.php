@@ -2,11 +2,12 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLibMvc
+ * @package ManiaLib_MVC
  */
 
 /**
  * Filter interface
+ * @package ManiaLib_MVC
  */
 interface Filterable 
 {

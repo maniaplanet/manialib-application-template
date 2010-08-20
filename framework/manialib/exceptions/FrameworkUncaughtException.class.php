@@ -3,11 +3,13 @@
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
- * @subpackage ErrorHandling
  */
 
 /**
  * Exception for uncaught exceptions
+ * 
+ * @package ManiaLib
+ * @subpackage ErrorHandling
  */
 class FrameworkUncaughtException extends FrameworkException
 {

@@ -7,8 +7,8 @@
 
 /**
  * Request engine
- * 
  * Used to handle GET parameters and to create hyperlink strings and redirections
+ * @package ManiaLib
  */
 class RequestEngine
 {
@@ -343,8 +343,13 @@ class RequestEngine
 	}
 }
 
+/**
+ * @package ManiaLib
+ */
 class RequestException extends FrameworkException {}
-
+/**
+ * @package ManiaLib
+ */
 class RequestParameterNotFoundException extends FrameworkUserException 
 {
 	/**

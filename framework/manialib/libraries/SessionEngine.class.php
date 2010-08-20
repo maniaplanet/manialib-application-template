@@ -7,8 +7,8 @@
  
 /**
  * Session engine
- * 
  * Helps handling PHP sessions
+ * @package ManiaLib
  */
 final class SessionEngine
 {
@@ -94,6 +94,9 @@ final class SessionEngine
 	}
 }
 
+/**
+ * @package ManiaLib
+ */
 class SessionException extends FrameworkException {}
 
 ?>

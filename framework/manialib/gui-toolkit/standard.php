@@ -3,7 +3,6 @@
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
- * @subpackage ManialinkGuiToolkit
  */
 
 /**
@@ -17,17 +16,23 @@ require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'GuiDefaultStyles.class.php' );
 
 /**
  * Base GUI class for type hierarchy
+ * @package ManiaLib
+ * @subpackage GUIToolkit
  */
 abstract class GuiBase {}
 
 /**
  * Base for style classes
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Styles
  */
 abstract class GuiStyles extends GuiBase {}
 
 /**
  * The GuiComponent is a generic and abstract element that only contains
  * position, size and scale info.
+ * @package ManiaLib
+ * @subpackage GUIToolkit
  */
 abstract class GuiComponent extends GuiBase
 {
@@ -174,6 +179,8 @@ abstract class GuiComponent extends GuiBase
 
 /**
  * Base class for creating GUI elements
+ * @package ManiaLib
+ * @subpackage GUIToolkit
  */
 abstract class GuiElement extends GuiComponent
 {
@@ -623,6 +630,8 @@ abstract class GuiElement extends GuiComponent
 
 /**
  * A blank element, useful to place gaps between elements when using layouts
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Elements
  */
 class Spacer extends GuiElement
 {
@@ -631,6 +640,8 @@ class Spacer extends GuiElement
 
 /**
  * Quad
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Elements
  */
 class Quad extends GuiElement
 {
@@ -654,7 +665,9 @@ class Quad extends GuiElement
 }
 
 /**
- * Manialink <b>sub styles</b>
+ * Manialink substyles for the Bgs1 quads
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Styles
  */
 abstract class Bgs1 extends GuiStyles
 {
@@ -695,7 +708,16 @@ abstract class Bgs1 extends GuiStyles
 }
 
 /**
- * Manialink <b>sub styles</b>
+ * Manialink substyles for the Bgs1InRace quads
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Styles
+ */	
+abstract class Bgs1InRace extends Bgs1 {}
+
+/**
+ * Manialink substyles for the BgRaceScore2 quads
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Styles
  */	
 abstract class BgRaceScore2 extends GuiStyles
 {
@@ -723,12 +745,9 @@ abstract class BgRaceScore2 extends GuiStyles
 }
 
 /**
- * Manialink <b>sub styles</b>
- */	
-abstract class Bgs1InRace extends Bgs1 {}
-
-/**
- * Manialink <b>sub styles</b>
+ * Manialink substyles for the BgsChallengeMedals quads
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Styles
  */	
 abstract class BgsChallengeMedals extends GuiStyles
 {
@@ -741,7 +760,9 @@ abstract class BgsChallengeMedals extends GuiStyles
 }
 
 /**
- * Manialink <b>sub styles</b>
+ * Manialink substyles for the BgsPlayerCard quads
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Styles
  */	
 abstract class BgsPlayerCard extends GuiStyles
 {
@@ -762,7 +783,9 @@ abstract class BgsPlayerCard extends GuiStyles
 }
 
 /**
- * Manialink <b>sub styles</b>
+ * Manialink substyles for the Icons128x128_1 quads
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Styles
  */	
 abstract class Icons128x128_1 extends GuiStyles
 {
@@ -833,7 +856,9 @@ abstract class Icons128x128_1 extends GuiStyles
 }
 
 /**
- * Manialink <b>sub styles</b>
+ * Manialink substyles for the Icons128x32_1 quads
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Styles
  */	
 abstract class Icons128x32_1 extends GuiStyles
 {
@@ -849,7 +874,9 @@ abstract class Icons128x32_1 extends GuiStyles
 }
 
 /**
- * Manialink <b>sub styles</b>
+ * Manialink substyles for the Icons64x64_1 quads
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Styles
  */	
 abstract class Icons64x64_1 extends GuiStyles
 {
@@ -937,7 +964,9 @@ abstract class Icons64x64_1 extends GuiStyles
 }
 
 /**
- * Manialink <b>sub styles</b>
+ * Manialink substyles for the MedalsBig quads
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Styles
  */	
 abstract class MedalsBig extends GuiStyles
 {
@@ -951,7 +980,10 @@ abstract class MedalsBig extends GuiStyles
 }
 
 /**
- * Icon with the "Icons128x128_1" style
+ * Icons128x128_1
+ * Square quad with the "Icons128x128_1" style
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Elements
  */
 class Icon extends Quad
 {
@@ -966,7 +998,10 @@ class Icon extends Quad
 }
 
 /**
+ * Icons64x64_1
  * Icon with the "Icons64x64_1" style
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Elements
  */
 class Icon64 extends Icon
 {
@@ -975,7 +1010,10 @@ class Icon64 extends Icon
 }
 
 /**
+ * Icons128x32_1
  * Icon with the "Icons128x32_1" style
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Elements
  */
 class Icon128 extends Icon
 {
@@ -984,7 +1022,10 @@ class Icon128 extends Icon
 }
 
 /**
+ * MedalsBig
  * Icon with the "MedalsBig" style
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Elements
  */
 class IconMedal extends Icon
 {
@@ -993,7 +1034,10 @@ class IconMedal extends Icon
 }
 
 /**
- * Include tag
+ * Include
+ * Manialink include tag, used to include another Manialink file inside a Manialink
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Elements
  */
 class IncludeManialink extends GuiElement
 {
@@ -1011,6 +1055,8 @@ class IncludeManialink extends GuiElement
 
 /**
  * Format
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Elements
  */
 class Format extends GuiElement
 {
@@ -1126,6 +1172,8 @@ class Format extends GuiElement
 
 /**
  * Label
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Elements
  */
 class Label extends Format
 {
@@ -1240,7 +1288,10 @@ class Label extends Format
 }
 
 /**
- * Entry (input field)
+ * Entry
+ * Input field for Manialinks
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Elements
  */
 class Entry extends Label
 {
@@ -1298,6 +1349,9 @@ class Entry extends Label
 
 /**
  * FileEntry
+ * File input field for Manialinks
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Elements
  */
 class FileEntry extends Entry
 {
@@ -1332,6 +1386,8 @@ class FileEntry extends Entry
 
 /**
  * Button
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Elements
  */
 class Button extends Label
 {
@@ -1351,6 +1407,8 @@ class Button extends Label
 
 /**
  * Music
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Elements
  */
 class Music extends GuiElement
 {
@@ -1403,6 +1461,8 @@ class Music extends GuiElement
 
 /**
  * Audio player
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Elements
  */
 class Audio extends Music
 {
@@ -1459,6 +1519,8 @@ class Audio extends Music
 
 /**
  * Video
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Elements
  */
 class Video extends Audio
 {

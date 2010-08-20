@@ -7,6 +7,8 @@
 
 /** 
  * Helps dealing with uploads from Manialinks
+ * @package ManiaLib
+ * @subpackage Helpers
  */ 
 final class ManialinkUploadHandler
 {
@@ -110,16 +112,20 @@ final class ManialinkUploadHandler
 	}
 }
 
-class ManialinkUploadException extends FrameworkException
-{	
-}
-
-class ManialinkUploadFileTooLargeException extends ManialinkUploadException
-{
-}
-
-class ManialinkUploadInternalException extends ManialinkUploadException
-{
-}
+/**
+ * @package ManiaLib
+ * @subpackage Helpers
+ */
+class ManialinkUploadException extends FrameworkException {}
+/**
+ * @package ManiaLib
+ * @subpackage Helpers
+ */
+class ManialinkUploadFileTooLargeException extends ManialinkUploadException {}
+/**
+ * @package ManiaLib
+ * @subpackage Helpers
+ */
+class ManialinkUploadInternalException extends ManialinkUploadException {}
  
 ?>

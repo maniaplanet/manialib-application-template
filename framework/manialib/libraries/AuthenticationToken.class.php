@@ -3,11 +3,13 @@
  * @author Philippe Melot
  * @copyright 2009-2010 NADEO
  * @package ManiaLib
- * @subpackage Authentication
  */
 
 /**
+ * Manialink Authentication System
  * Helps using the Manialink Authentication System developped by NADEO. Note that it only works with United Forever accounts.
+ * @package ManiaLib
+ * @subpackage Authentication
  */
 final class AuthenticationToken
 {
@@ -61,33 +63,35 @@ final class AuthenticationToken
 	}
 }
 
-class AuthenticationTokenFailedException
-	extends FrameworkException
-{
-}
+/**
+ * @package ManiaLib
+ * @subpackage Authentication
+ */
+class AuthenticationTokenFailedException extends FrameworkException {}
+/**
+ * @package ManiaLib
+ * @subpackage Authentication
+ */
+class AuthenticationTokenInvalidLoginException extends AuthenticationTokenFailedException {}
+/**
+ * @package ManiaLib
+ * @subpackage Authentication
+ */
+class AuthenticationTokenNoLoginException extends AuthenticationTokenFailedException {}
+/**
+ * @package ManiaLib
+ * @subpackage Authentication
+ */
+class AuthenticationTokenBadTokenException extends AuthenticationTokenFailedException {}
+/**
+ * @package ManiaLib
+ * @subpackage Authentication
+ */
+class AuthenticationTokenInvalidTokenException extends AuthenticationTokenFailedException {}
+/**
+ * @package ManiaLib
+ * @subpackage Authentication
+ */
+class AuthenticationNationsTokenUnknownPlayerException extends AuthenticationTokenFailedException {}
 
-class AuthenticationTokenInvalidLoginException
-	extends AuthenticationTokenFailedException
-{
-}
-
-class AuthenticationTokenNoLoginException
-	extends AuthenticationTokenFailedException
-{
-}
-
-class AuthenticationTokenBadTokenException
-	extends AuthenticationTokenFailedException
-{
-}
-
-class AuthenticationTokenInvalidTokenException
-	extends AuthenticationTokenFailedException
-{
-}
-
-class AuthenticationNationsTokenUnknownPlayerException
-	extends AuthenticationTokenFailedException
-{
-}
 ?>

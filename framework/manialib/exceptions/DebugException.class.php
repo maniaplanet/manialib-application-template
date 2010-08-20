@@ -1,13 +1,15 @@
 <?php
 /**
  * @author Maxime Raoust
- * @copyright 2009-2010 NADEO 
+ * @copyright 2009-2010 NADEO
  * @package ManiaLib
- * @subpackage ErrorHandling
  */
 
 /**
  * Exception for debugging purpose
+ * 
+ * @package ManiaLib
+ * @subpackage ErrorHandling
  */
 class DebugException extends FrameworkException {}
 

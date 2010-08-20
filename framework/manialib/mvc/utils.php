@@ -4,13 +4,13 @@
  * 
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLibMvc
+ * @package ManiaLib_MVC
  */
 
 /**
  * Class autoloader for the MVC framework
  * 
- * Use spl_autload_register() to register it as a class autoloader in PHP
+ * To use with spl_autload_register() to register it as a class autoloader in PHP
  */
 function autoload_mvc_framework($className)
 {

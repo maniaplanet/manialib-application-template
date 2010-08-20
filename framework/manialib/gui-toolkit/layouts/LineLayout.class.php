@@ -3,11 +3,13 @@
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
- * @subpackage ManialinkGuiToolkit
  */
  
 /**
- * Line layout: elements are added at the right of their predecessor
+ * Line layout
+ * Elements are added at the right of their predecessor
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Layouts
  */
 class LineLayout extends AbstractLayout
 {

@@ -3,13 +3,13 @@
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
- * @subpackage ManialinkGuiToolkit
  */
 
 /**
  * Panel
- * 
  * Very useful! A quad with a title and a title background
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Cards
  */
 class Panel extends Quad
 {

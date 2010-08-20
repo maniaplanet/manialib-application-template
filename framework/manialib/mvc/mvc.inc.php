@@ -4,7 +4,7 @@
  * 
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLibMvc
+ * @package ManiaLib_MVC
  */
 
 /**#@+
@@ -19,5 +19,6 @@ require_once(APP_MVC_FRAMEWORK_LIBRARIES_PATH.'ResponseEngine.class.php');
 require_once(APP_MVC_FRAMEWORK_LIBRARIES_PATH.'View.class.php');
 require_once(APP_MVC_FRAMEWORK_LIBRARIES_PATH.'Route.class.php');
 require_once(APP_MVC_FRAMEWORK_LIBRARIES_PATH.'RequestEngineMVC.class.php');
+/**#@-*/
 
 ?>

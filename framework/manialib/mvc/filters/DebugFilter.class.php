@@ -2,12 +2,16 @@
 /**
  * @author Philippe Melot 
  * @copyright 2009-2010 NADEO 
- * @package ManiaLibMvc
- * @subpackage DefaultFilter
+ * @package ManiaLib_MVC
  */
 
 /**
- * Restrict users that can access the Manialink (for debugging purpose only)
+ * Debug filter
+ * 
+ * Restricts users that can access the Manialink (for debugging purpose only)
+ * 
+ * @package ManiaLib_MVC
+ * @subpackage DefaultFilters
  */
 class DebugFilter extends AdvancedFilter
 {

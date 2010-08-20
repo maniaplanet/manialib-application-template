@@ -3,13 +3,15 @@
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
- * @subpackage ManialinkGuiToolkit
  */
 
 /**
- * Static class that provides tools for Manialink handling
+ * GUI Tools
+ * 
+ * Provides a set of static methods usefull for the GUI toolkit
  * 
  * @package ManiaLib
+ * @subpackage GUIToolkit
  */
 abstract class GuiTools
 {
@@ -124,6 +126,10 @@ abstract class GuiTools
 	}
 }
 
+/**
+ * @package ManiaLib
+ * @subpackage GUIToolkit
+ */
 class GuiToolkitException extends FrameworkException {}
 
 ?>

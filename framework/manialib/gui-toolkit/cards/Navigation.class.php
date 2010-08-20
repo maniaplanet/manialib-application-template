@@ -3,7 +3,6 @@
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
- * @subpackage ManialinkGuiToolkit
  */
 
 /**
@@ -13,6 +12,9 @@ require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'cards/NavigationButton.class.php' 
 
 /**
  * Navigation menu
+ * Looks like the navigation menu on the left in the game menus
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Cards
  */
 class Navigation extends Quad
 {

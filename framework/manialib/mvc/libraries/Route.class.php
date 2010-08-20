@@ -2,11 +2,15 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLibMvc
+ * @package ManiaLib_MVC
  */
 
 /**
- * Route class, only contains const used by the RequestEngineMVC
+ * Route class
+ * 
+ * Only contains const used by the RequestEngineMVC
+ * 
+ * @package ManiaLib_MVC
  */
 abstract class Route
 {

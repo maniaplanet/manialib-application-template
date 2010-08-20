@@ -3,11 +3,13 @@
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
- * @subpackage ManialinkGuiToolkit
  */
 
 /**
  * Page Navigator
+ * Page navigation arrows at the bottom of the lists
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Cards
  */
 class PageNavigator extends GuiComponent
 {

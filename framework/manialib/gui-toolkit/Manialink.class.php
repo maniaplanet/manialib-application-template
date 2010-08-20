@@ -3,16 +3,22 @@
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
- * @subpackage ManialinkGuiToolkit
  */
 
+/**#@+
+ * @ignore
+ */
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'standard.php' );
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'layouts/AbstractLayout.class.php' );
+/**#@-*/
 
 /**
- * Manialink GUI toolkit main class
+ * GUI Toolkit
+ * 
+ * Manialink GUI Toolkit main class
  *
  * @package ManiaLib
+ * @subpackage GUIToolkit
  */
 abstract class Manialink extends GuiBase
 {

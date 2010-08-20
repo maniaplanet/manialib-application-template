@@ -4,7 +4,7 @@
  * 
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLibMvc
+ * @package ManiaLib_MVC
  */
 
 /**
@@ -40,6 +40,8 @@ require_once(APP_MVC_FRAMEWORK_EXCEPTIONS_PATH.'MVCException.class.php');
  *    function another_action() {}
  * }
  * </code>
+ * 
+ * @package ManiaLib_MVC
  */
 class ActionController
 {
@@ -271,7 +273,14 @@ class ActionController
 	}
 }
 
+/**
+ * @package ManiaLib_MVC
+ */
 class ControllerNotFoundException extends MVCException {}
+
+/**
+ * @package ManiaLib_MVC
+ */
 class ActionNotFoundException extends MVCException {}
 
 ?>

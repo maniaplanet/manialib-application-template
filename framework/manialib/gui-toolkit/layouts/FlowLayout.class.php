@@ -3,11 +3,13 @@
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
- * @subpackage ManialinkGuiToolkit
  */
 
 /**
- * Flow layout: text-like, items fill the current line then next line etc.
+ * Flow layout
+ * Text-like, items fill the current line then next line etc.
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Layouts
  */
 class FlowLayout extends AbstractLayout
 {

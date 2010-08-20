@@ -3,7 +3,6 @@
  * @author Philippe Melot
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
- * @subpackage ManiacodeToolkit
  */
 
 /**
@@ -12,7 +11,12 @@
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'standardManiacode.php' );
 
 /**
+ * Maniacode Toolkit
+ * 
  * Maniacode Toolkit main class
+ * 
+ * @package ManiaLib
+ * @subpackage ManiacodeToolkit
  */
 abstract class Maniacode
 {

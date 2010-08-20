@@ -3,11 +3,13 @@
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
- * @subpackage ErrorHandling
  */
 
 /**
  * Framework default exception
+ * 
+ * @package ManiaLib
+ * @subpackage ErrorHandling
  */
 class FrameworkException extends Exception 
 {
