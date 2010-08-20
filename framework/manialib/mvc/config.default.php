@@ -68,6 +68,13 @@ if(!defined('APP_MVC_FILTERS_PATH'))
 	 */
 	define('APP_MVC_FILTERS_PATH', APP_PATH.'filters/');
 }
+if(!defined('APP_MVC_MODELS_PATH')) 
+{
+	/**
+	 * Path to the models directory of your application
+	 */
+	define('APP_MVC_MODELS_PATH', APP_PATH.'models/');
+}
 if(!defined('URL_PARAM_NAME_CONTROLLER'))
 {
 	/**
