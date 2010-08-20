@@ -117,7 +117,7 @@ abstract class ManiacodeComponent
  * File download
  * @todo Put an uppercase L and remove abstract?
  * @package ManiaLib
- * @subpackage ManiacodeToolkit_Elements
+ * @subpackage ManiacodeToolkit
  */
 abstract class fileDownload extends ManiacodeComponent
 {
@@ -180,7 +180,7 @@ abstract class fileDownload extends ManiacodeComponent
 /**
  * Install track
  * @package ManiaLib
- * @subpackage ManiacodeToolkit_Elements 
+ * @subpackage ManiacodeToolkit 
  */
 class InstallTrack extends fileDownload
 {
@@ -195,7 +195,7 @@ class InstallTrack extends fileDownload
 /**
  * Play track
  * @package ManiaLib
- * @subpackage ManiacodeToolkit_Elements 
+ * @subpackage ManiacodeToolkit 
  */
 class PlayTrack extends fileDownload
 {
@@ -211,7 +211,7 @@ class PlayTrack extends fileDownload
  * Package track
  * Use it only with InstallTrackPack
  * @package ManiaLib
- * @subpackage ManiacodeToolkit_Elements 
+ * @subpackage ManiacodeToolkit 
  */
 class PackageTrack extends fileDownload
 {
@@ -226,7 +226,7 @@ class PackageTrack extends fileDownload
 /**
  * Install track pack
  * @package ManiaLib
- * @subpackage ManiacodeToolkit_Elements 
+ * @subpackage ManiacodeToolkit 
  */
 class InstallTrackPack extends ManiacodeComponent
 {
@@ -263,7 +263,7 @@ class InstallTrackPack extends ManiacodeComponent
 /**
  * Install replay
  * @package ManiaLib
- * @subpackage ManiacodeToolkit_Elements 
+ * @subpackage ManiacodeToolkit 
  */
 class InstallReplay extends fileDownload
 {
@@ -278,7 +278,7 @@ class InstallReplay extends fileDownload
 /**
  * View replay
  * @package ManiaLib
- * @subpackage ManiacodeToolkit_Elements 
+ * @subpackage ManiacodeToolkit 
  */
 class ViewReplay extends fileDownload
 {
@@ -293,7 +293,7 @@ class ViewReplay extends fileDownload
 /**
  * Play replay
  * @package ManiaLib
- * @subpackage ManiacodeToolkit_Elements 
+ * @subpackage ManiacodeToolkit 
  */
 class PlayReplay extends fileDownload
 {
@@ -308,7 +308,7 @@ class PlayReplay extends fileDownload
 /**
  * Install skin
  * @package ManiaLib
- * @subpackage ManiacodeToolkit_Elements 
+ * @subpackage ManiacodeToolkit 
  */
 class InstallSkin extends fileDownload
 {
@@ -348,7 +348,7 @@ class InstallSkin extends fileDownload
 /**
  * Get skin
  * @package ManiaLib
- * @subpackage ManiacodeToolkit_Elements 
+ * @subpackage ManiacodeToolkit 
  */
 class GetSkin extends InstallSkin
 {
@@ -363,7 +363,7 @@ class GetSkin extends InstallSkin
 /**
  * Show message
  * @package ManiaLib
- * @subpackage ManiacodeToolkit_Elements 
+ * @subpackage ManiacodeToolkit 
  */
 class ShowMessage extends ManiacodeComponent
 {
@@ -389,7 +389,7 @@ class ShowMessage extends ManiacodeComponent
 /**
  * Goto link
  * @package ManiaLib
- * @subpackage ManiacodeToolkit_Elements 
+ * @subpackage ManiacodeToolkit 
  */
 class GotoLink extends ManiacodeComponent
 {
@@ -415,7 +415,7 @@ class GotoLink extends ManiacodeComponent
 /**
  * Join server
  * @package ManiaLib
- * @subpackage ManiacodeToolkit_Elements 
+ * @subpackage ManiacodeToolkit 
  */
 class JoinServer extends ManiacodeComponent
 {
@@ -472,7 +472,7 @@ class JoinServer extends ManiacodeComponent
 /**
  * Add buddy
  * @package ManiaLib
- * @subpackage ManiacodeToolkit_Elements 
+ * @subpackage ManiacodeToolkit 
  */
 class AddBuddy extends ManiacodeComponent
 {
@@ -498,7 +498,7 @@ class AddBuddy extends ManiacodeComponent
 /**
  * Invite buddy
  * @package ManiaLib
- * @subpackage ManiacodeToolkit_Elements 
+ * @subpackage ManiacodeToolkit 
  */
 class InviteBuddy
 {
@@ -524,7 +524,7 @@ class InviteBuddy
 /**
  * Add favorite
  * @package ManiaLib
- * @subpackage ManiacodeToolkit_Elements 
+ * @subpackage ManiacodeToolkit 
  */
 class AddFavorite extends AddBuddy
 {

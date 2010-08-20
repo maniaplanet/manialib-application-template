@@ -24,7 +24,7 @@ abstract class GuiBase {}
 /**
  * Base for style classes
  * @package ManiaLib
- * @subpackage GUIToolkit_Styles
+ * @subpackage GUIToolkit
  */
 abstract class GuiStyles extends GuiBase {}
 
@@ -631,7 +631,7 @@ abstract class GuiElement extends GuiComponent
 /**
  * A blank element, useful to place gaps between elements when using layouts
  * @package ManiaLib
- * @subpackage GUIToolkit_Elements
+ * @subpackage GUIToolkit
  */
 class Spacer extends GuiElement
 {
@@ -641,7 +641,7 @@ class Spacer extends GuiElement
 /**
  * Quad
  * @package ManiaLib
- * @subpackage GUIToolkit_Elements
+ * @subpackage GUIToolkit
  */
 class Quad extends GuiElement
 {
@@ -665,12 +665,33 @@ class Quad extends GuiElement
 }
 
 /**
- * Manialink substyles for the Bgs1 quads
+ * Icon
+ * Should be abstract some day, use classes like "Icons128x128_1" instead
  * @package ManiaLib
- * @subpackage GUIToolkit_Styles
+ * @subpackage GUIToolkit
  */
-abstract class Bgs1 extends GuiStyles
+class Icon extends Quad
 {
+	protected $style = GuiDefaultStyles::Icon_Style;
+	protected $subStyle = GuiDefaultStyles::Icon_Substyle;
+
+	function __construct($size = 7)
+	{
+		$this->sizeX = $size;
+		$this->sizeY = $size;
+	}
+}
+
+/**
+ * Bgs1 quad
+ * @package ManiaLib
+ * @subpackage GUIToolkit
+ */
+abstract class Bgs1 extends Quad
+{
+	protected $style = Quad::Bgs1;
+	protected $subStyle = self::BgWindow1;
+	
 	const BgButtonBig      = 'BgButtonBig';
 	const BgButtonSmall    = 'BgButtonSmall';
 	const BgButton         = 'BgButton';
@@ -708,19 +729,25 @@ abstract class Bgs1 extends GuiStyles
 }
 
 /**
- * Manialink substyles for the Bgs1InRace quads
+ * Bgs1InRace quad
  * @package ManiaLib
- * @subpackage GUIToolkit_Styles
+ * @subpackage GUIToolkit
  */	
-abstract class Bgs1InRace extends Bgs1 {}
+abstract class Bgs1InRace extends Bgs1 
+{
+	protected $style = Quad::Bgs1InRace;
+}
 
 /**
- * Manialink substyles for the BgRaceScore2 quads
+ * BgRaceScore2 quad
  * @package ManiaLib
- * @subpackage GUIToolkit_Styles
+ * @subpackage GUIToolkit
  */	
-abstract class BgRaceScore2 extends GuiStyles
+abstract class BgRaceScore2 extends Quad
 {
+	protected $style = Quad::BgRaceScore2;
+	protected $subStyle = self::BgCardServer;
+	
 	const BgCardServer                = 'BgCardServer';
 	const BgScores                    = 'BgScores';
 	const CupFinisher                 = 'CupFinisher';
@@ -745,12 +772,15 @@ abstract class BgRaceScore2 extends GuiStyles
 }
 
 /**
- * Manialink substyles for the BgsChallengeMedals quads
+ * BgsChallengeMedals quad
  * @package ManiaLib
- * @subpackage GUIToolkit_Styles
+ * @subpackage GUIToolkit
  */	
-abstract class BgsChallengeMedals extends GuiStyles
+abstract class BgsChallengeMedals extends Quad
 {
+	protected $style = Quad::BgsChallengeMedals;
+	protected $subStyle = self::BgBronze;
+	
 	const BgBronze                    = 'BgBronze';
 	const BgGold                      = 'BgGold';
 	const BgNadeo                     = 'BgNadeo';
@@ -760,12 +790,15 @@ abstract class BgsChallengeMedals extends GuiStyles
 }
 
 /**
- * Manialink substyles for the BgsPlayerCard quads
+ * BgsPlayerCard quad
  * @package ManiaLib
- * @subpackage GUIToolkit_Styles
+ * @subpackage GUIToolkit
  */	
-abstract class BgsPlayerCard extends GuiStyles
+abstract class BgsPlayerCard extends Quad
 {
+	protected $style = Quad::BgsPlayerCard;
+	protected $subStyle = self::BgActivePlayerCard;
+	
 	const BgActivePlayerCard    = 'BgActivePlayerCard';
 	const BgActivePlayerName    = 'BgActivePlayerName';
 	const BgActivePlayerScore   = 'BgActivePlayerScore';
@@ -783,12 +816,15 @@ abstract class BgsPlayerCard extends GuiStyles
 }
 
 /**
- * Manialink substyles for the Icons128x128_1 quads
+ * Icons128x128_1 quad
  * @package ManiaLib
- * @subpackage GUIToolkit_Styles
+ * @subpackage GUIToolkit
  */	
-abstract class Icons128x128_1 extends GuiStyles
+abstract class Icons128x128_1 extends Icon
 {
+	protected $style = Quad::Icons128x128_1;
+	protected $subStyle = self::Forever;
+	
 	const Advanced                    = 'Advanced';
 	const Back                        = 'Back';
 	const BackFocusable               = 'BackFocusable';
@@ -856,12 +892,15 @@ abstract class Icons128x128_1 extends GuiStyles
 }
 
 /**
- * Manialink substyles for the Icons128x32_1 quads
+ * Icons128x32_1 quad
  * @package ManiaLib
- * @subpackage GUIToolkit_Styles
+ * @subpackage GUIToolkit
  */	
-abstract class Icons128x32_1 extends GuiStyles
+abstract class Icons128x32_1 extends Icon
 {
+	protected $style = Quad::Icons128x32_1;
+	protected $subStyle = self::RT_Cup;
+	
 	const RT_Cup                      = 'RT_Cup';
 	const RT_Laps                     = 'RT_Laps';
 	const RT_Rounds                   = 'RT_Rounds';
@@ -874,12 +913,15 @@ abstract class Icons128x32_1 extends GuiStyles
 }
 
 /**
- * Manialink substyles for the Icons64x64_1 quads
+ * Icons64x64_1 quad
  * @package ManiaLib
- * @subpackage GUIToolkit_Styles
+ * @subpackage GUIToolkit
  */	
-abstract class Icons64x64_1 extends GuiStyles
+abstract class Icons64x64_1 extends Icon
 {
+	protected $style = Quad::Icons64x64_1;
+	protected $subStyle = self::GenericButton;
+	
 	const Stereo3D                    = '3DStereo';
 	const ArrowBlue                   = 'ArrowBlue';
 	const ArrowDown                   = 'ArrowDown';
@@ -964,12 +1006,15 @@ abstract class Icons64x64_1 extends GuiStyles
 }
 
 /**
- * Manialink substyles for the MedalsBig quads
+ * MedalsBig quad
  * @package ManiaLib
- * @subpackage GUIToolkit_Styles
+ * @subpackage GUIToolkit
  */	
-abstract class MedalsBig extends GuiStyles
+abstract class MedalsBig extends Icon
 {
+	protected $style = Quad::MedalsBig;
+	protected $subStyle = self::MedalBronze;
+	
 	const MedalBronze                 = 'MedalBronze';
 	const MedalGold                   = 'MedalGold';
 	const MedalGoldPerspective        = 'MedalGoldPerspective';
@@ -980,28 +1025,10 @@ abstract class MedalsBig extends GuiStyles
 }
 
 /**
- * Icons128x128_1
- * Square quad with the "Icons128x128_1" style
- * @package ManiaLib
- * @subpackage GUIToolkit_Elements
- */
-class Icon extends Quad
-{
-	protected $style = GuiDefaultStyles::Icon_Style;
-	protected $subStyle = GuiDefaultStyles::Icon_Substyle;
-
-	function __construct($size = 7)
-	{
-		$this->sizeX = $size;
-		$this->sizeY = $size;
-	}
-}
-
-/**
  * Icons64x64_1
- * Icon with the "Icons64x64_1" style
+ * @deprecated Use Icons64x64_1 instead
  * @package ManiaLib
- * @subpackage GUIToolkit_Elements
+ * @subpackage GUIToolkit
  */
 class Icon64 extends Icon
 {
@@ -1011,9 +1038,9 @@ class Icon64 extends Icon
 
 /**
  * Icons128x32_1
- * Icon with the "Icons128x32_1" style
+ * @deprecated Use Icons128x32_1 instead
  * @package ManiaLib
- * @subpackage GUIToolkit_Elements
+ * @subpackage GUIToolkit
  */
 class Icon128 extends Icon
 {
@@ -1023,9 +1050,9 @@ class Icon128 extends Icon
 
 /**
  * MedalsBig
- * Icon with the "MedalsBig" style
+ * @deprecated Use MedalsBig instead
  * @package ManiaLib
- * @subpackage GUIToolkit_Elements
+ * @subpackage GUIToolkit
  */
 class IconMedal extends Icon
 {
@@ -1037,7 +1064,7 @@ class IconMedal extends Icon
  * Include
  * Manialink include tag, used to include another Manialink file inside a Manialink
  * @package ManiaLib
- * @subpackage GUIToolkit_Elements
+ * @subpackage GUIToolkit
  */
 class IncludeManialink extends GuiElement
 {
@@ -1056,7 +1083,7 @@ class IncludeManialink extends GuiElement
 /**
  * Format
  * @package ManiaLib
- * @subpackage GUIToolkit_Elements
+ * @subpackage GUIToolkit
  */
 class Format extends GuiElement
 {
@@ -1173,7 +1200,7 @@ class Format extends GuiElement
 /**
  * Label
  * @package ManiaLib
- * @subpackage GUIToolkit_Elements
+ * @subpackage GUIToolkit
  */
 class Label extends Format
 {
@@ -1291,7 +1318,7 @@ class Label extends Format
  * Entry
  * Input field for Manialinks
  * @package ManiaLib
- * @subpackage GUIToolkit_Elements
+ * @subpackage GUIToolkit
  */
 class Entry extends Label
 {
@@ -1351,7 +1378,7 @@ class Entry extends Label
  * FileEntry
  * File input field for Manialinks
  * @package ManiaLib
- * @subpackage GUIToolkit_Elements
+ * @subpackage GUIToolkit
  */
 class FileEntry extends Entry
 {
@@ -1387,7 +1414,7 @@ class FileEntry extends Entry
 /**
  * Button
  * @package ManiaLib
- * @subpackage GUIToolkit_Elements
+ * @subpackage GUIToolkit
  */
 class Button extends Label
 {
@@ -1408,7 +1435,7 @@ class Button extends Label
 /**
  * Music
  * @package ManiaLib
- * @subpackage GUIToolkit_Elements
+ * @subpackage GUIToolkit
  */
 class Music extends GuiElement
 {
@@ -1462,7 +1489,7 @@ class Music extends GuiElement
 /**
  * Audio player
  * @package ManiaLib
- * @subpackage GUIToolkit_Elements
+ * @subpackage GUIToolkit
  */
 class Audio extends Music
 {
@@ -1520,7 +1547,7 @@ class Audio extends Music
 /**
  * Video
  * @package ManiaLib
- * @subpackage GUIToolkit_Elements
+ * @subpackage GUIToolkit
  */
 class Video extends Audio
 {

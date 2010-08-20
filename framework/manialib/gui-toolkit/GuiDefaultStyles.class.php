@@ -9,7 +9,7 @@
  * Default element styles
  * 
  * @package ManiaLib
- * @subpackage GUIToolkit_Styles
+ * @subpackage GUIToolkit
  */
 abstract class GuiDefaultStyles extends GuiBase
 {
