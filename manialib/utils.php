@@ -201,6 +201,7 @@ if(APP_LANG_ENGINE_MODE == APP_LANG_ENGINE_MODE_DYNAMIC)
 	 * i18n message. Examples: 
 	 * echo __("hello_world"); 
 	 * echo __("hello_login", $yetAnotherLogin);
+	 * @see LangEngine
 	 * @param string
 	 * @return string
 	 * @todo Put in the LangTookit package

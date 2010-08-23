@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!-- Default english dictionary -->
+<!-- You can override the text ids in your dictionaries -->
+<dico>
+	<language id="fr">
+	
+		<!-- General -->
+		<manialib>ManiaLib</manialib>
+		<powered_by_manialib>Propulsé by ManiaLib</powered_by_manialib>
+		<cancel>Annuler</cancel>
+		
+		<!-- Dates -->
+		<monday>Lundi</monday>
+		<tuesday>Mardi</tuesday>
+		<wednesday>Mercredi</wednesday>
+		<thursday>Jeudi</thursday>
+		<friday>Vendredi</friday>
+		<saturday>Samedi</saturday>
+		<sunday>Dimanche</sunday>
+		<january>Janvier</january>
+		<february>Février</february>
+		<march>Mars</march>
+		<april>Avril</april>
+		<may>Mai</may>
+		<june>Juin</june>
+		<july>Juillet</july>
+		<august>Août</august>
+		<september>Septembre</september>
+		<october>Octobre</october>
+		<november>Novembre</november>
+		<december>Décembre</december>
+		<date_long>[1] [3][4] [2] [5]</date_long>
+		<date_ordinal_suffix> </date_ordinal_suffix>
+		
+	</language>
+</dico>

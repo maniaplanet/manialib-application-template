@@ -1,15 +1,64 @@
 <?php
 /**
+ * Internationalization
+ * 
+ * ManiaLib provides a simple way to internationalize your application. The good
+ * news is it uses the same dictionary format as the dictionary feature implemented
+ * in ManiaLinks. The advantage of using the internationalization features of 
+ * ManiaLib over classic Manialink dictionaries is the ability of making dynamic
+ * sentences (eg. "Hello 'login'!" where login is from a variable).
+ * 
+ * How to use it?
+ * 
+ * First, make sure that the parameter "lang" is in the session. To achieve that,
+ * you need to use a link with "addplayerid" and then save the parameter in the 
+ * session. If you use the MVC framework, you can add the RegisterRequestParametersFilter
+ * to your controller (it will look for the lang parameter in the URL and save
+ * it automatically in the session).
+ * 
+ * Then, put your dictionary files in the APP_LANGS_PATH directory. You must use
+ * same structure as classic Manialink dictionary, but you can add placeholders
+ * for variables using '[1]', '[2]', etc. (without the quotes).
+ * 
+ *  <code>
+ *  <?xml version="1.0"?>
+ *  <dico>
+ *      <language id="en">
+ *          <hello_world>Hello World!</hello_world>
+ *          <hello_login>Hello [1] !</hello_login>
+ *          <the_xx_is_yy>The [1] is [2].</the_xx_is_yy>
+ *      </language>
+ *  </dico>
+ *  </code>
+ *  
+ *  Then you can use the translations in your views using the __() function:
+ *  
+ *  <code>
+ *  __("hello_world"); // returns "Hello world!"
+ *  __("hello_login", "gou1"); // Returns "Hello gou1!"
+ *  __("the_xx_is_yy", "car", "blue"); // Returns "The car is blue."
+ *  __("Bla bla bla"); // Returns "Bla bla bla", ie. the word ID itself when it is not found.
+ *  </code>
+ *  
+ *  You can also internationalize dates:
+ *  
+ *  <code>
+ *  $timestamp = time();
+ *  __date($timestamp); // Returns, for example: "Friday, July 3rd 2009"
+ *  </code>
+ * 
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
+ * @subpackage Internationalization
  */
 
 /**
  * i18n core class
  * You shouldn't have to do anything with it. Use "__()" & "__date()" instead
+ * @see __()
  * @package ManiaLib
- * @subpackage LangToolkit
+ * @subpackage Internationalization
  */
 class LangEngine
 {
@@ -38,30 +87,28 @@ class LangEngine
 
 	protected function __construct($langEngineMode = APP_LANG_ENGINE_MODE)
 	{
-		$session = SessionEngine::getInstance();
-		if($langEngineMode == APP_LANG_ENGINE_MODE_DYNAMIC)
+		if($langEngineMode == APP_LANG_ENGINE_MODE_STATIC)
 		{
-			$this->currentLang = $session->get("lang", "en");
-			if($dico = $session->get(__CLASS__))
-			{
-				$this->dico = unserialize(rawurldecode($dico));
-			}
-			else
-			{
-				$this->loadDicoRecursive(APP_LANGS_PATH, $langEngineMode);
-				$session->set(__CLASS__, rawurlencode(serialize($this->dico)));
-			}
+			throw new FrameworkException('LANG_ENGINE_MODE_STATIC is not supported anymore');
+		}
+		$session = SessionEngine::getInstance();
+		$this->currentLang = $session->get("lang", "en");
+		if(!APP_DEBUG_LEVEL && $dico = $session->get(__CLASS__))
+		{
+			$this->dico = unserialize(($dico));
 		}
 		else
 		{
-			$this->loadDicoRecursive(APP_LANGS_PATH, $langEngineMode);
+			$this->loadDicoRecursive(APP_FRAMEWORK_LANGS_PATH);
+			$this->loadDicoRecursive(APP_LANGS_PATH);
+			$session->set(__CLASS__, (serialize($this->dico)));
 		}
 	}
 	
 	/**
 	 * Recursive loading method
 	 */
-	protected function loadDicoRecursive($directoryPath, $langEngineMode = APP_LANG_ENGINE_MODE)
+	protected function loadDicoRecursive($directoryPath)
 	{
 		if ($handle = opendir($directoryPath))
 		{
@@ -77,20 +124,7 @@ class LangEngine
 				}
 				elseif(substr($file, -4)==".xml")
 				{
-					if($langEngineMode == APP_LANG_ENGINE_MODE_DYNAMIC)
-					{
-						$this->parseLangFile($directoryPath."/".$file);
-					}
-					else
-					{
-						$url = $directoryPath."/".$file;
-						$url = str_replace(APP_PATH, "", $url);
-						$url = APP_URL . $url;
-						
-						$ui = new IncludeManialink;
-						$ui->setUrl($url);
-						$ui->save();
-					}
+					$this->parseLangFile($directoryPath."/".$file);
 				}
 			}
 			closedir($handle);
@@ -98,19 +132,10 @@ class LangEngine
 	}
 	
 	/**
-	 * XML parsing file. DOM is used here
+	 * Parse an XML dictonary
 	 */
 	protected function parseLangFile($file)
-	{
-		/**
-		 * Dico structure :
-		 * <dico>
-		 *    <language id="en">
-		 *       <word>My word</word>
-		 *    </language>
-		 * </dico>
-		 */
-	
+	{	
 		$dom = new DomDocument;
 		$dom->load($file);
 		$languages = $dom->getElementsByTagName("language");
@@ -132,6 +157,7 @@ class LangEngine
 	
 	/**
 	 * Get the transaltion of the given text ID
+	 * @return string
 	 */
 	protected function getTranslationPrivate($textId, $lang="en")
 	{

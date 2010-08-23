@@ -74,6 +74,15 @@ if(!defined('APP_FRAMEWORK_PATH'))
 	 */
 	define('APP_FRAMEWORK_PATH', APP_PATH . 'manialib/');
 }
+if(!defined('APP_FRAMEWORK_LANGS_PATH'))
+{
+	/**
+	 * Framework lang path
+	 * 
+	 * Default dictionaries of the framework
+	 */
+	define('APP_FRAMEWORK_LANGS_PATH', APP_FRAMEWORK_PATH . 'langs/');
+}
 if(!defined('APP_FRAMEWORK_LIBRARIES_PATH'))
 {
 	/**
@@ -115,7 +124,7 @@ if(!defined('APP_LANGS_PATH'))
 	/**
 	 * Lang path
 	 * 
-	 * Path to the lang directory
+	 * Directory containing the XML dictionaries for internationalizing your application
 	 */
 	define('APP_LANGS_PATH', APP_PATH . 'langs/');
 }
@@ -245,13 +254,7 @@ if(!defined('APP_LANG_ENGINE_MODE'))
 {
 	/**
 	 * Lang engine mode
-	 * 
-	 * If <b>0</b>, the lang files will be included to be used as normal 
-	 * Manialink dictionary files. 
-	 * 
-	 * If <b>1</b>, the dynamic lang engine will be loaded and translation 
-	 * strings will be obtained with the __() function
-	 * 
+	 * @deprecated Always 1 now, it doesn't support static mode anymore
 	 * @see LangEngine
 	 */
 	define('APP_LANG_ENGINE_MODE', 1);
