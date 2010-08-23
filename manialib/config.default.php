@@ -307,5 +307,14 @@ if(!defined('APP_DATABASE_PREFIX'))
 	 */
 	define('APP_DATABASE_PREFIX', 'manialib_');
 }
+if(!defined('APP_MVC_FRAMEWORK') && !defined('APP_FRAMEWORK_REQUEST_ENGINE_CLASS'))
+{
+	/**
+	 * Request engine class
+	 * 
+	 * Define the right request engine class depending on the mvc framework usage
+	 */
+	define('APP_FRAMEWORK_REQUEST_ENGINE_CLASS', 'RequestEngine');
+}
 
 ?>

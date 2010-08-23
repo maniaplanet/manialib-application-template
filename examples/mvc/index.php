@@ -1,40 +1,22 @@
 <?php
 /**
+ * Application entry point
+ * 
+ * It should only require the config, the frameworks and the bootstrapp 
+ * to allow easy updates of the bootstrapper
+ * 
  * @author Maxime Raoust
- * @copyright NADEO
+ * @copyright 2009-2010 NADEO
  */
 
-// TODO Create an "app" directory which contains exclusively the app logic (controllers,libraries,models,filters,views)
-
-// All errors are catched to the error handler
-error_reporting(E_ALL);
-
-// Forces ManiaLib to use the right request engine
-define('APP_FRAMEWORK_REQUEST_ENGINE_CLASS', 'RequestEngineMVC');
-
-// Load configs
+// Load config
 require_once(dirname(__FILE__).'/config/config.php');
+
+// Load framework
 require_once(dirname(__FILE__).'/manialib/manialib.inc.php');
 require_once(dirname(__FILE__).'/manialib/mvc/mvc.inc.php');
 
-// Register different autoload functions
-spl_autoload_register('__autoload');
-spl_autoload_register('autoload_mvc_framework');
-
-// Date config
-date_default_timezone_set(APP_DEFAULT_TIMEZONE);
-
-// Set error handling
-set_error_handler(array('ErrorHandling', 'exceptionErrorHandler'));
-set_exception_handler(array('ErrorHandling', 'exceptionHandler'));
- 
-try
-{
-	ActionController::dispatch();
-}
-catch(Exception $e)
-{
-	FrameworkException::handle($e);
-}
+// Bootstrapper: actually do the MVC magic
+require_once(APP_MVC_FRAMEWORK_PATH.'bootstrapper.inc.php');
 
 ?>

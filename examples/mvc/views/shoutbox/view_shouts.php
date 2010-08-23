@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Maxime Raoust
- * @copyright NADEO
+ * @copyright 2009-2010 NADEO
  */
  
 $request = RequestEngineMVC::getInstance();
@@ -77,6 +77,7 @@ Manialink::beginFrame(-12, 35, 1);
 		$ui = new Button();
 		$ui->setPosition(0, 0, 0);
 		$ui->setScale(0.575);
+		$ui->addPlayerId();
 		$ui->setManialink($manialink);
 		$ui->setText('$wSHOUT!');
 		$ui->save();
@@ -90,9 +91,5 @@ Manialink::beginFrame(-12, 35, 1);
 	Manialink::endFrame();
 }
 Manialink::endFrame();
-
-
-
-
 
 ?>

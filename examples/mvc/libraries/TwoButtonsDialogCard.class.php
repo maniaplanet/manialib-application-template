@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Maxime Raoust
- * @copyright NADEO
+ * @copyright 2009-2010 NADEO
  */
 
 class TwoButtonsDialogCard extends DialogCard

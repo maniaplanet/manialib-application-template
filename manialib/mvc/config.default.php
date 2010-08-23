@@ -42,8 +42,7 @@ if(!defined('APP_MVC_FRAMEWORK_FILTERS_PATH'))
 if(!defined('APP_FRAMEWORK_REQUEST_ENGINE_CLASS'))
 {
 	/**
-	 * Request Engine used  by the MVC framework.
-	 * You actually have to declare this BEFORE MANIALIB IS LOADED, ie. in index.php
+	 * @ignore
 	 */
 	define('APP_FRAMEWORK_REQUEST_ENGINE_CLASS', 'RequestEngineMVC');
 }
