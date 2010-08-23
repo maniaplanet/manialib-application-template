@@ -15,6 +15,7 @@ class examplesController extends ActionController
 	{
 		parent::__construct($controllerName);
 		$this->addFilter(new MoodSelectorFilter());
+		$this->addFilter(new ForceSplashScreenFilter());
 	}
 	
 	function layouts() 

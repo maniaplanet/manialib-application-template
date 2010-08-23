@@ -16,6 +16,7 @@ class shoutboxController extends ActionController
 		parent::__construct($controllerName);
 		$this->addFilter(new MoodSelectorFilter());
 		$this->addFilter(new RegisterRequestParametersFilter());
+		$this->addFilter(new ForceSplashScreenFilter());
 	}
 	
 	protected function checkLogin()

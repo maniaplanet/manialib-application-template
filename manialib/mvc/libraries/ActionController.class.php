@@ -236,13 +236,12 @@ class ActionController
 
 	final protected function launch()
 	{
-		$controllerName = $this->request->getController();
 		$actionName = $this->request->getAction($this->defaultAction);
 		if(!$actionName) $actionName = $this->defaultAction;
 
 		$this->checkActionExists($actionName);
 
-		$this->response->registerView($controllerName, $actionName);
+		$this->response->registerView($this->controllerName, $actionName);
 
 		foreach($this->filters as $filter)
 		{

@@ -9,7 +9,7 @@
 // Put 1 to get verbose for error messages (for developement only !)
 define('APP_DEBUG_LEVEL', 1);
 
-// Default controller. You can try 'splash' and 'home'
+// Default controller.
 define('URL_PARAM_DEFAULT_CONTROLLER', 'home');
 
 // URL of your manialink
