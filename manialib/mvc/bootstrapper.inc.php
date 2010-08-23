@@ -4,6 +4,7 @@
  * 
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO
+ * @package ManiaLib_MVC
  */
 
 // All errors are catched by the error handler

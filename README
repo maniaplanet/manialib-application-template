@@ -24,7 +24,7 @@ time as possible before merging into the mainline branch.
 /tags/1.0.1, 1.0.2, 1.1.3a, etc. Used for tagging a packaged & shipped release. 
 NEVER EVER CHANGES. Make as many tags as you want, but they're immutable.
 
-
+source: http://stackoverflow.com/questions/34975/branching-strategies
 
 2. SVN Workflow
 --------------------------------------------------------------------------------
@@ -33,4 +33,8 @@ NEVER EVER CHANGES. Make as many tags as you want, but they're immutable.
 - Create a virtual host or alias on your Web server (eg. for trunk/examples/mvc)
 - Create a symbolic link to put trunk/manialib in your working set, or specify 
 the path to /manialib in the config)
+
+Note: Windows supports symbolic links since Vista. Free and usefull shell
+extension is available here: 
+http://schinagl.priv.at/nt/hardlinkshellext/hardlinkshellext.html
 
