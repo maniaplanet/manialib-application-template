@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<dico>
+	<language id="en">
+		<empower_your_manialinks>Empower your Manialinks!</empower_your_manialinks>
+		<about>About</about>
+		<features>Features</features>
+		<download>Download</download>
+		<showcase>Showcase</showcase>
+		<sample_pages>Sample pages</sample_pages>
+		<shoutbox>Shoutbox</shoutbox>
+		<what_is_manialib>What is ManiaLib?</what_is_manialib>
+		<manialib_helps_php_programmers>ManiaLib helps PHP programmers create dynamic Manialinks faster</manialib_helps_php_programmers>
+		<manialib_explanation>In more technical terms, ManiaLib is a $olightweight PHP framework$o for the development of Manialinks. It provides a set of object-oriented libraries to help you save time on classic ManiaLink tasks.</manialib_explanation>
+		<howto_get_manialib>How to get ManiaLib?</howto_get_manialib>
+		<goto_project_website_explanation>Visit the project's page on Google Code to download the latest version of ManiaLib. You will also find examples and documentation.</goto_project_website_explanation>
+		<goto_project_website>Go to the project's website</goto_project_website>
+		<whats_in_manialib>What's in ManiaLib?</whats_in_manialib>
+		<whos_using_manialib>Who is using ManiaLib?</whos_using_manialib>
+		<shoutbox_example>Shoutbox example</shoutbox_example>
+		<view_shouts>View shouts</view_shouts>
+		<SHOUT>SHOUT!</SHOUT>
+		<select_mood>Select a mood</select_mood>
+	</language>
+</dico>

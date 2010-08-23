@@ -26,13 +26,13 @@ Manialink::beginFrame(-60, 48, 1);
 			$ui = new Label(50);
 			$ui->setPosition(9, -1.75, 0);
 			$ui->setStyle(Label::TextRankingsBig);
-			$ui->setText('Shoutbox');
+			$ui->setText(__('shoutbox'));
 			$ui->save();
 			
 			$ui = new Label(50);
 			$ui->setPosition(9, -5.25, 0);
 			$ui->setStyle(Label::TextInfoSmall);
-			$ui->setText('Shoutbox example');
+			$ui->setText(__('shoutbox_example'));
 			$ui->save();
 		}
 		Manialink::endFrame();
@@ -53,7 +53,7 @@ Manialink::beginFrame(-60, 48, 1);
 			if($selected) $ui->setSelected();
 			$ui->setManialink($manialink);
 			$ui->icon->setSubStyle(Icons128x128_1::Share);
-			$ui->text->setText('View shouts');
+			$ui->text->setText(__('view_shouts'));
 			$ui->save();
 			
 			$manialink = $request->createLink(Route::DEF, Route::NONE);

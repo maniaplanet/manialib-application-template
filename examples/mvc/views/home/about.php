@@ -28,13 +28,13 @@ Manialink::beginFrame(-15, 35, 1);
 		$ui = new Label(50);
 		$ui->setPosition(9, -0.5, 0);
 		$ui->setStyle(Label::TextRankingsBig);
-		$ui->setText('About');
+		$ui->setText(__('about'));
 		$ui->save();
 		
 		$ui = new Label(50);
 		$ui->setPosition(9, -4, 0);
 		$ui->setStyle(Label::TextInfoSmall);
-		$ui->setText('What is ManiaLib?');
+		$ui->setText(__('what_is_manialib'));
 		$ui->save();
 	}
 	Manialink::endFrame();
@@ -47,19 +47,14 @@ Manialink::beginFrame(-15, 35, 1);
 		$ui->enableAutonewline();
 		$ui->setTextColor('ff0');
 		$ui->setTextSize(4);
-		$ui->setText(
-			'$o$iManiaLib helps PHP programmers create dynamic Manialinks faster$z');
+		$ui->setText('$o$i'.__('manialib_helps_php_programmers').'$z');
 		$ui->save();
 		
 		$ui = new Label(62);
 		$ui->setPosition(3, -12, 0);
 		$ui->enableAutonewline();
 		$ui->setStyle(Label::TextValueMedium);
-		$ui->setText(
-			'In more technical terms, ManiaLib is a $olightweight '.
-			'PHP framework$o for the development of Manialinks. '.
-			'It provides a set of object-oriented libraries to help  '.
-			'you save time on classic ManiaLink tasks.');
+		$ui->setText(__('manialib_explanation'));
 		$ui->save();
 	}
 	Manialink::endFrame();

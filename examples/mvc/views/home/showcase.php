@@ -28,13 +28,13 @@ Manialink::beginFrame(-15, 35, 1);
 		$ui = new Label(50);
 		$ui->setPosition(9, -0.5, 0);
 		$ui->setStyle(Label::TextRankingsBig);
-		$ui->setText('Showcase');
+		$ui->setText(__('showcase'));
 		$ui->save();
 		
 		$ui = new Label(50);
 		$ui->setPosition(9, -4, 0);
 		$ui->setStyle(Label::TextInfoSmall);
-		$ui->setText('Who is using ManiaLib?');
+		$ui->setText(__('whos_using_manialib'));
 		$ui->save();
 	}
 	Manialink::endFrame();

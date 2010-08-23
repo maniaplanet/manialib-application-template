@@ -4,6 +4,8 @@
  * @copyright 2009-2010 NADEO
  */
 
+// TODO Put the dialog card inside manialib and simplify its usage (with a datastructure like DialogData)
+
 class DialogCard extends Panel
 {
 	public $button;

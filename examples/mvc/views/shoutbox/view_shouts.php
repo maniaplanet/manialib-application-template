@@ -26,13 +26,13 @@ Manialink::beginFrame(-12, 35, 1);
 		$ui = new Label(50);
 		$ui->setPosition(9, -0.5, 0);
 		$ui->setStyle(Label::TextRankingsBig);
-		$ui->setText('Shoutbox');
+		$ui->setText(__('shoutbox'));
 		$ui->save();
 		
 		$ui = new Label(50);
 		$ui->setPosition(9, -4, 0);
 		$ui->setStyle(Label::TextInfoSmall);
-		$ui->setText('Shoutbox example');
+		$ui->setText(__('shoutbox_example'));
 		$ui->save();
 	}
 	Manialink::endFrame();
@@ -79,7 +79,7 @@ Manialink::beginFrame(-12, 35, 1);
 		$ui->setScale(0.575);
 		$ui->addPlayerId();
 		$ui->setManialink($manialink);
-		$ui->setText('$wSHOUT!');
+		$ui->setText('$w'.__('SHOUT'));
 		$ui->save();
 		
 		$ui = new Entry(40, 3);

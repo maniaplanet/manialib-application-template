@@ -25,13 +25,13 @@ Manialink::beginFrame(-60, 48, 1);
 			$ui = new Label(50);
 			$ui->setPosition(9, -1.75, 0);
 			$ui->setStyle(Label::TextRankingsBig);
-			$ui->setText('ManiaLib');
+			$ui->setText(__('ManiaLib'));
 			$ui->save();
 			
 			$ui = new Label(50);
 			$ui->setPosition(9, -5.25, 0);
 			$ui->setStyle(Label::TextInfoSmall);
-			$ui->setText('Empower your Manialinks!');
+			$ui->setText(__('empower_your_manialinks'));
 			$ui->save();
 		}
 		Manialink::endFrame();
@@ -52,7 +52,7 @@ Manialink::beginFrame(-60, 48, 1);
 			if($selected) $ui->setSelected();
 			$ui->setManialink($manialink);
 			$ui->icon->setSubStyle(Icons128x128_1::Manialink);
-			$ui->text->setText('About');
+			$ui->text->setText(__('about'));
 			$ui->save();
 			
 			$manialink = $request->createLink(Route::CUR, 'features');
@@ -62,7 +62,7 @@ Manialink::beginFrame(-60, 48, 1);
 			if($selected) $ui->setSelected();
 			$ui->setManialink($manialink);
 			$ui->icon->setSubStyle(Icons128x128_1::Forever);
-			$ui->text->setText('Features');
+			$ui->text->setText(__('features'));
 			$ui->save();
 			
 			$manialink = $request->createLink(Route::CUR, 'download');
@@ -72,7 +72,7 @@ Manialink::beginFrame(-60, 48, 1);
 			if($selected) $ui->setSelected();
 			$ui->setManialink($manialink);
 			$ui->icon->setSubStyle(Icons128x128_1::Load);
-			$ui->text->setText('Download');
+			$ui->text->setText(__('download'));
 			$ui->save();
 			
 			$manialink = $request->createLink(Route::CUR, 'showcase');
@@ -82,7 +82,7 @@ Manialink::beginFrame(-60, 48, 1);
 			if($selected) $ui->setSelected();
 			$ui->setManialink($manialink);
 			$ui->icon->setSubStyle(Icons128x128_1::ServersSuggested);
-			$ui->text->setText('Showcase');
+			$ui->text->setText(__('showcase'));
 			$ui->save();
 			
 			$manialink = $request->createLink('examples', Route::NONE);
@@ -90,7 +90,7 @@ Manialink::beginFrame(-60, 48, 1);
 			$ui = new NavigationButton(35, 8);
 			$ui->setManialink($manialink);
 			$ui->icon->setSubStyle(Icons128x128_1::Browse);
-			$ui->text->setText('Sample pages');
+			$ui->text->setText(__('sample_pages'));
 			$ui->save();
 			
 			$manialink = $request->createLink('shoutbox', Route::NONE);
@@ -98,7 +98,7 @@ Manialink::beginFrame(-60, 48, 1);
 			$ui = new NavigationButton(35, 8);
 			$ui->setManialink($manialink);
 			$ui->icon->setSubStyle(Icons128x128_1::Share);
-			$ui->text->setText('Shoutbox');
+			$ui->text->setText(__('shoutbox'));
 			$ui->save();
 			
 			$ui = new Quad(35, 45);

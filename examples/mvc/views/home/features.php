@@ -28,13 +28,13 @@ Manialink::beginFrame(-15, 35, 1);
 		$ui = new Label(50);
 		$ui->setPosition(9, -0.5, 0);
 		$ui->setStyle(Label::TextRankingsBig);
-		$ui->setText('Features');
+		$ui->setText(__('features'));
 		$ui->save();
 		
 		$ui = new Label(50);
 		$ui->setPosition(9, -4, 0);
 		$ui->setStyle(Label::TextInfoSmall);
-		$ui->setText('What\'s in ManiaLib?');
+		$ui->setText(__('whats_in_manialib'));
 		$ui->save();
 	}
 	Manialink::endFrame();
