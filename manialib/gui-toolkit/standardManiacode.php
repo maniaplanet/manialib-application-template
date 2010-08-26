@@ -525,9 +525,9 @@ class InviteBuddy
  * @package ManiaLib
  * @subpackage ManiacodeToolkit 
  */
-class AddFavorite extends AddBuddy
+class AddFavourite extends AddBuddy
 {
-	protected $xmlTagName = 'add_favorite';
+	protected $xmlTagName = 'add_favourite';
 	
 	function __construct($login)
 	{
