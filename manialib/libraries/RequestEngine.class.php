@@ -7,26 +7,32 @@
 
 /**
  * Request engine
- * Used to handle GET parameters and to create hyperlink strings and redirections
+ * 
+ * The Request Engine helps handling GET variables and referers as well as 
+ * creating links and redirection. It also handles session ID propagation when 
+ * the client doesn't accept cookies.
+ * 
  * @package ManiaLib
  */
 class RequestEngine
 {
+	/**#@+
+	 * @internal
+	 */
 	static private $instance;
-	
 	protected $requestParams = array();
 	protected $params = array();
 	protected $protectedParams = array();
 	protected $globalParams = array();
-	
 	protected $URLBase;
 	protected $URLPath;
 	protected $URLFile;
-	
 	protected $registerRefererAtDestruct;
+	/**#@-*/
 	
 	/**
-	 * Gets the instance
+	 * Use this methode to retrieve a reference on the request object from anywhere in the code
+	 * 
 	 * @return RequestEngine
 	 */
 	public static function getInstance()
@@ -40,7 +46,21 @@ class RequestEngine
 	}
 	
 	/**
-	 * Retrieves a request parameter, or the default value if not found
+	 * @internal
+	 */
+	protected function __construct()
+	{
+		$this->params = $_GET;
+		if(get_magic_quotes_gpc())
+		{
+			$this->params = array_map('stripslashes', $this->params);
+		}
+		$this->requestParams = $this->params;
+	}
+	
+	/**
+	 * Retrieves a GET parameter, or the default value if not found
+	 * 
 	 * @param string
 	 * @param mixed
 	 * @return mixed
@@ -58,7 +78,9 @@ class RequestEngine
 	}
 	
 	/**
-	 * Retrieves a request parameter, or throws an exception if not found or null
+	 * Retrieves a GET parameter, or throws an exception if not found or null
+	 * 
+	 * @throws RequestParameterNotFoundException
 	 * @param string
 	 * @param string Optional human readable name for error dialog
 	 * @return mixed
@@ -74,7 +96,8 @@ class RequestEngine
 	}
 		
 	/**
-	 * Sets a request parameter. Note that you cannot use "rp" as parameter name
+	 * Sets a GET parameter
+	 * 
 	 * @param string
 	 * @param mixed
 	 */
@@ -84,8 +107,9 @@ class RequestEngine
 	}
 	
 	/**
-	 * Deletes a request parameter
-	 * @param mixed
+	 * Deletes a GET parameter
+	 * 
+	 * @param string
 	 */
 	function delete($name)
 	{
@@ -93,7 +117,8 @@ class RequestEngine
 	}
 	
 	/**
-	 * Restores a request parameter to the value it had when the page was loaded
+	 * Restores a GET parameter to the value it had when the page was loaded
+	 * 
 	 * @param string
 	 */
 	function restore($name)
@@ -109,8 +134,16 @@ class RequestEngine
 	}
 	
 	/**
-	 * Returns an url with all the currently defined request parameters
-	 * @param string The filename (eg: "index.php" or "admin/login.php")
+	 * Returns an URL containing all the currently defined GET parameters
+	 * 
+	 * Example:
+	 * <code>
+	 * // Current page: http://url/index.php?toto=a&foo=bar
+	 * $request = RequestEngine::getInstance();
+	 * $request->createLink('page.php'); // Returns http://url/page.php?toto=a&foo=bar
+	 * </code>
+	 * 
+	 * @param string The filename
 	 * @param boolean Whether the first parameter is a relative URL (default:
 	 * true). Set this parameter to false if you want to create and external
 	 * link.
@@ -123,9 +156,18 @@ class RequestEngine
 	}
 	
 	/**
-	 * Returns an url with the request parameters specified as method arguments
-	 * (eg. createLinkArgList("index.php", "id", "page") )
+	 * Returns an URL with the request parameters specified as method arguments
+	 * (eg.  )
+	 * 
+	 * Example:
+	 * <code>
+	 * // Current page: http://url/index.php?toto=a&foo=bar&bla=bla
+	 * $request = RequestEngine::getInstance();
+	 * $request->createLinkArgList("page.php", "toto", "bla"); // Returns http://url/page.php?toto=a&bla=bla
+	 * </code>
+	 * 
 	 * @param string The filename (eg: "index.php" or "admin/login.php")
+	 * @return string
 	 */
 	function createLinkArgList($file=null)
 	{
@@ -141,7 +183,12 @@ class RequestEngine
 		}
 		return $this->createLinkString($file, true, $args);
 	}
-	
+	/**
+	 * Returns an URL with the request parameters specified as method arguments
+	 * 
+	 * @param string The absolute URL
+	 * @return string
+	 */
 	function createAbsoluteLinkArgList($absoluteLink)
 	{
 		$arr = func_get_args();
@@ -158,10 +205,15 @@ class RequestEngine
 	}
 	
 	/**
-	 * Creates a Manialink redirection to the specified file with request
-	 * parameters specified as method arguments (eg. redirectManialink("index.
-	 * php", "id", "page") )
-	 * @param string The filename (eg: "index.php" or "admin/login.php")
+	 * Creates a Manialink redirection to the specified file with GET
+	 * parameters specified as method arguments.
+	 * 
+	 * Example:
+	 * <code>
+	 * $request->redirectManialink("index.php", "param1", "param2");
+	 * </code>
+	 * 
+	 * @param string The filename of the link target
 	 */
 	function redirectManialink($file='index.php')
 	{
@@ -175,6 +227,7 @@ class RequestEngine
 	
 	/**
 	 * Creates a Manialink redirection to the specified absolute URI
+	 * 
 	 * @param string
 	 */
 	function redirectManialinkAbsolute($absoluteUri)
@@ -184,7 +237,7 @@ class RequestEngine
 	
 	/**
 	 * Creates a Manialink redirection to the previously registered referer, or
-	 * the index if no referer was previously registedred
+	 * the index if no referer was previously registered
 	 */
 	function redirectToReferer()
 	{
@@ -256,6 +309,9 @@ class RequestEngine
 		}
 	}
 	
+	/**
+	 * @internal 
+	 */
 	function __destruct()
 	{
 		if($this->registerRefererAtDestruct)
@@ -264,17 +320,10 @@ class RequestEngine
 			$session->set('referer', rawurlencode($this->registerRefererAtDestruct));
 		}
 	}
-
-	protected function __construct()
-	{
-		$this->params = $_GET;
-		if(get_magic_quotes_gpc())
-		{
-			$this->params = array_map('stripslashes', $this->params);
-		}
-		$this->requestParams = $this->params;
-	}
 	
+	/**
+	 * @internal 
+	 */
 	protected function createLinkString($file=null, $relativePath=true, $params)
 	{
 		// Check for context
