@@ -6,7 +6,7 @@
 	
 		<!-- General -->
 		<manialib>ManiaLib</manialib>
-		<powered_by_manialib>Propulsé by ManiaLib</powered_by_manialib>
+		<powered_by_manialib>Propulsé par $&lt;$oManiaLib$&gt;</powered_by_manialib>
 		<cancel>Annuler</cancel>
 		
 		<!-- Dates -->

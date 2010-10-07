@@ -281,7 +281,6 @@ class RequestEngine
 	 */
 	function registerReferer()
 	{
-		// TODO Le register referer est bugg�
 		$session = SessionEngine::getInstance();
 		$link = $this->createLink();
 		$this->registerRefererAtDestruct = $link;

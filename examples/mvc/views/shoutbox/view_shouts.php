@@ -10,7 +10,7 @@ $response = ResponseEngine::getInstance();
 View::render('shoutbox', '_navigation');
 
 
-Manialink::beginFrame(-12, 35, 1);
+Manialink::beginFrame(-15, 35, 1);
 {
 	$ui = new Quad(60, 60);
 	$ui->setSubStyle(Bgs1::BgWindow2);

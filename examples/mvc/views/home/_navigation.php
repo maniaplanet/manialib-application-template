@@ -62,6 +62,7 @@ $ui->lastItem->setManialink($manialink);
 $ui->lastItem->icon->setSubStyle(Icons128x128_1::Share);
 $ui->lastItem->text->setText(__('shoutbox'));
 
+$ui->quitButton->setManialink('Manialink:home');
 $ui->save();
 
 ?>

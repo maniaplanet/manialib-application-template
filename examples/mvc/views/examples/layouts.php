@@ -12,7 +12,7 @@ View::render('examples', '_navigation');
 $layout = new FlowLayout(70, 70);
 $layout->setMargin(3, 3);
 
-Manialink::beginFrame(-12, 35, 1, $layout);
+Manialink::beginFrame(-18, 35, 1, $layout);
 {
 	$layout = new NullLayout(30, 30);
 	Manialink::beginFrame(0, 0, 1, $layout);

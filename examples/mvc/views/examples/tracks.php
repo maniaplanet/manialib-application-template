@@ -14,7 +14,7 @@ $layout = new FlowLayout(80, 80);
 $layout->setMargin(2,2);
 
 // Then we apply this layout to a new Frame.
-Manialink::beginFrame(-16, 40, 1, $layout);
+Manialink::beginFrame(-20, 40, 1, $layout);
 {
 	// We loop to create 16 "dummy" ChallengeCard
 	for($i=0; $i < 16; $i++)

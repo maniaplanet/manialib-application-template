@@ -16,6 +16,16 @@ $ui->setAlign('center', 'center');
 $ui->setImage($response->backgroundImage);
 $ui->save();
 
+// Watermark. Would be nice to leave it :)
+$ui = new Label(20, 0);
+$ui->setAlign('center', 'bottom');
+$ui->setPosition(0, -48, 15);
+$ui->setScale(0.75);
+$ui->setStyle(Label::TextCardSmallScores2Rank);
+$ui->setText(__('powered_by_manialib'));
+$ui->setManialink('manialib');
+$ui->save();
+
 // Mood selector
 $request->set('show_mood_selector', true);
 $manialink = $request->createLink();
