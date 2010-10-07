@@ -11,9 +11,9 @@ class examplesController extends ActionController
 {
 	protected $defaultAction = 'layouts';
 	
-	function __construct($controllerName)
+	function onConstruct()
 	{
-		parent::__construct($controllerName);
+		$this->addFilter(new RegisterRequestParametersFilter());
 		$this->addFilter(new MoodSelectorFilter());
 		$this->addFilter(new ForceSplashScreenFilter());
 	}

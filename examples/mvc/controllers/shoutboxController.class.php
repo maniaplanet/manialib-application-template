@@ -11,11 +11,10 @@ class shoutboxController extends ActionController
 {
 	protected $defaultAction = 'view_shouts';
 	
-	function __construct($controllerName)
+	function onConstruct()
 	{
-		parent::__construct($controllerName);
-		$this->addFilter(new MoodSelectorFilter());
 		$this->addFilter(new RegisterRequestParametersFilter());
+		$this->addFilter(new MoodSelectorFilter());
 		$this->addFilter(new ForceSplashScreenFilter());
 	}
 	

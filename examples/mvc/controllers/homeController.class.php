@@ -11,9 +11,9 @@ class homeController extends ActionController
 {
 	protected $defaultAction = 'about';
 	
-	function __construct($controllerName)
+	function onConstruct()
 	{
-		parent::__construct($controllerName);
+		$this->addFilter(new RegisterRequestParametersFilter());
 		$this->addFilter(new MoodSelectorFilter());
 		$this->addFilter(new ForceSplashScreenFilter());
 	}

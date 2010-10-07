@@ -9,9 +9,9 @@
  */
  class splashController extends ActionController
  {
- 	function __construct($controllerName)
+ 	function onConstruct()
 	{
-		parent::__construct($controllerName);
+		$this->addFilter(new RegisterRequestParametersFilter());
 		$this->addFilter(new MoodSelectorFilter());
 	}
 	

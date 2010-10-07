@@ -101,7 +101,7 @@ class ActionController
 	}
 
 	/**
-	 * Call the parent constructor when you override it in your controllers!
+	 * If you want to do stuff at instanciation, override self::onConstruct()
 	 */
 	function __construct($controllerName)
 	{
@@ -109,7 +109,13 @@ class ActionController
 		$this->request = RequestEngineMVC::getInstance();
 		$this->response = ResponseEngine::getInstance();
 		$this->session = SessionEngine::getInstance();
+		$this->onConstruct();
 	}
+	
+	/**
+	 * Stuff to be executed when the controller is instanciated; override this in your controllers 
+	 */
+	function onConstruct(){}
 
 	final protected function addFilter(Filterable $filter)
 	{
