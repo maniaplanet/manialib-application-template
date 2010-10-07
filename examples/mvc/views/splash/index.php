@@ -7,24 +7,41 @@
 $request = RequestEngineMVC::getInstance();
 $response = ResponseEngine::getInstance();
 
-Manialink::beginFrame(0, 20, 1);
+Manialink::beginFrame(0, 35, 1);
 {
 	$manialink = $request->createLink(Route::CUR, 'enter');
 	
-	$ui = new Bgs1(50, 10);
+	$ui = new Bgs1(150, 57);
 	$ui->setHalign('center');
-	$ui->setSubStyle(Bgs1::NavButton);
-	$ui->addPlayerId();
+	$ui->setSubStyle(Bgs1::BgCard3);
 	$ui->setManialink($manialink);
+	$ui->addPlayerId();
 	$ui->save();
 	
-	$ui = new Label;
+	$ui = new Label(60);
+	$ui->setPosition(0, -10, 1);
 	$ui->setHalign('center');
-	$ui->setPosition(0, -3, 1);
-	$ui->setScale(1.25);
-	$ui->setStyle(Label::TextRankingsBig);
-	$ui->setText('Enter');
+	$ui->setTextSize(9);
+	$ui->setTextColor('fff');
+	$ui->setText('$oManiaLib');
 	$ui->save();
+	
+	$ui = new Label(60);
+	$ui->setPosition(0, -17, 1);
+	$ui->setHalign('center');
+	$ui->setTextSize(2);
+	$ui->setTextColor('ff0');
+	$ui->setText('$oLightweight PHP framework for Manialinks');
+	$ui->save();
+	
+	$ui = new Quad(30, 30);
+	$ui->setPosition(0, -20, 0);
+	$ui->setHalign('center');
+	$ui->setImage('logo.dds');
+	$ui->save();
+	
+	
+
 }
 Manialink::endFrame();
 
