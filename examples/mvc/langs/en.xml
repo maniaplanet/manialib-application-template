@@ -20,5 +20,8 @@
 		<view_shouts>View shouts</view_shouts>
 		<SHOUT>SHOUT!</SHOUT>
 		<select_mood>Select a mood</select_mood>
+		<a_few_examples>A few examples</a_few_examples>
+		<layouts>Layouts</layouts>
+		<tracks>Tracks</tracks>
 	</language>
 </dico>
