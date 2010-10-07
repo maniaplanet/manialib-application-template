@@ -21,16 +21,35 @@ class Navigation extends Quad
 	const BUTTONS_TOP = true;
 	const BUTTONS_BOTTOM = false;
 	
+	/**
+	 * @var Label
+	 */
 	public $title;
+	/**
+	 * @var Label
+	 */
 	public $subTitle;
+	/**
+	 * @var Quad
+	 */
 	public $titleBg;
-	public $quitButton;
+	/**
+	 * @var Quad
+	 */
 	public $logo;
+	/**
+	 * @var NavigationButton
+	 */
+	public $quitButton;
+	/**
+	 * @var NavigationButton
+	 */
+	public $lastItem;
+	
 	protected $showQuitButton = true;
 	protected $items = array();
 	protected $bottomItems = array();
 	protected $marginHeight = 1;
-	protected $lastItem;
 	protected $yIndex = -10;
 	protected $sizeX = 30;
 	protected $sizeY = 96;
@@ -77,6 +96,7 @@ class Navigation extends Quad
 	
 	/**
 	 * Return a reference of the last added item
+	 * @deprecated use self::$lastItem instead (better performance)
 	 * @return NavigationButton Reference on a NavigationButton object
 	 */
 	function lastItem() 
