@@ -14,7 +14,7 @@ View::render('home', '_navigation');
 ////////////////////////////////////////////////////////////////////////////////
 Manialink::beginFrame(-15, 35, 1);
 {
-	$ui = new Quad(70, 50);
+	$ui = new Quad(70, 70);
 	$ui->setSubStyle(Bgs1::BgWindow2);
 	$ui->save();
 	
@@ -36,6 +36,21 @@ Manialink::beginFrame(-15, 35, 1);
 		$ui->setStyle(Label::TextInfoSmall);
 		$ui->setText(__('whats_in_manialib'));
 		$ui->save();
+	}
+	Manialink::endFrame();
+	
+	$layout = new ColumnLayout();
+	$layout->setMarginHeight(2);
+	
+	Manialink::beginFrame(4, -15, 1, $layout);
+	{
+		for($i=1; $i<=7; $i++)
+		{
+			$ui = new BulletCard(62);
+			$ui->bullet->setSubStyle(Icons128x128_1::Advanced);
+			$ui->title->setText(__('features_bullet'.$i));
+			$ui->save();
+		}
 	}
 	Manialink::endFrame();
 }

@@ -23,5 +23,12 @@
 		<a_few_examples>A few examples</a_few_examples>
 		<layouts>Layouts</layouts>
 		<tracks>Tracks</tracks>
+		<features_bullet1>GUI Toolkit for easily creating Manialink interfaces</features_bullet1>
+		<features_bullet2>Maniacode Toolkit for easily writing Maniacodes</features_bullet2>
+		<features_bullet3>Request and session handling</features_bullet3>
+		<features_bullet4>Lightweight MySQL abstraction library</features_bullet4>
+		<features_bullet5>Localization features</features_bullet5>
+		<features_bullet6>Lightweight MVC framework for rapid app development</features_bullet6>
+		<features_bullet7>And more...</features_bullet7>
 	</language>
 </dico>
