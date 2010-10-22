@@ -103,6 +103,8 @@ class ResponseEngine
 			View::render($view[0], $view[1]);
 		}
 		View::render('footer');
+		
+		header('Content-Type: text/xml; charset=utf-8');
 		echo $this->body;
 	}
 }

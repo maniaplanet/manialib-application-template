@@ -9,36 +9,30 @@
  * @package ManiaLib 
  */
 
+class AutoloadHelper
+{
+	static $paths = array();
+}
+
+AutoloadHelper::$paths[] = APP_LIBRARIES_PATH;
+AutoloadHelper::$paths[] = APP_FRAMEWORK_LIBRARIES_PATH;
+AutoloadHelper::$paths[] = APP_FRAMEWORK_GUI_TOOLKIT_PATH.'cards/';
+AutoloadHelper::$paths[] = APP_FRAMEWORK_GUI_TOOLKIT_PATH.'layouts/';
+AutoloadHelper::$paths[] = APP_FRAMEWORK_EXCEPTIONS_PATH;
+
 /**
  * Class autoloader
  * @param string Class to load
  */
 function __autoload($className)
 {
-	if(file_exists($path = APP_LIBRARIES_PATH.$className.'.class.php'))
+	foreach(AutoloadHelper::$paths as $path)
 	{
-		require_once($path);
-		return true;
-	}
-	if(file_exists($path = APP_FRAMEWORK_LIBRARIES_PATH.$className.'.class.php'))
-	{
-		require_once($path);
-		return true;
-	}
-	if(file_exists($path = APP_FRAMEWORK_GUI_TOOLKIT_PATH.'cards/'.$className.'.class.php'))
-	{
-		require_once($path);
-		return true;
-	}
-	if(file_exists($path = APP_FRAMEWORK_GUI_TOOLKIT_PATH.'layouts/'.$className.'.class.php'))
-	{
-		require_once($path);
-		return true;
-	}
-	if(file_exists($path = APP_FRAMEWORK_EXCEPTIONS_PATH.$className.'.class.php'))
-	{
-		require_once($path);
-		return true;
+		if(file_exists($path = $path.$className.'.class.php'))
+		{
+			require_once($path);
+			return true;
+		}
 	}
 	return false;
 }
@@ -195,88 +189,70 @@ function formatLongDate($timestamp)
 	return date('l jS \of F Y @ h:i A ', $timestamp).APP_TIMEZONE_NAME;
 }
 
-if(APP_LANG_ENGINE_MODE == APP_LANG_ENGINE_MODE_DYNAMIC)
+/**
+ * i18n message. Examples: 
+ * echo __("hello_world"); 
+ * echo __("hello_login", $yetAnotherLogin);
+ * @see LangEngine
+ * @param string
+ * @return string
+ * @todo Put in the LangTookit package
+ */
+function __($textId)
 {
-	/**
-	 * i18n message. Examples: 
-	 * echo __("hello_world"); 
-	 * echo __("hello_login", $yetAnotherLogin);
-	 * @see LangEngine
-	 * @param string
-	 * @return string
-	 * @todo Put in the LangTookit package
-	 */
-	function __($textId)
+	$str = LangEngine::getTranslation($textId);
+	$i=1;
+	$args = func_get_args();
+	$search = array();
+	$replace = array();
+	while(strpos($str, "[$i]")!==false)
 	{
-		$str = LangEngine::getTranslation($textId);
-		$i=1;
-		$args = func_get_args();
-		$search = array();
-		$replace = array();
-		while(strpos($str, "[$i]")!==false)
+		$search[] = "[$i]";
+		if(isset($args[$i]))
 		{
-			$search[] = "[$i]";
-			if(isset($args[$i]))
-			{
-				$replace[] = $args[$i];
-			}
-			else
-			{
-				$replace[] = "";
-			}
-			$i++;
-		}
-		$str = str_replace($search, $replace, $str);
-		return $str;
-	}
-	
-	/**
-	 * i18n date
-	 * @param int Unix timestamp
-	 * @return string
-	 * @todo Put in the LangTookit package
-	 */
-	function __date($timestamp)
-	{
-		if(!$timestamp)
-		{
-			return "-";
-		}
-		
-		$return=__("date_long", 
-					__( strtolower(date("l", $timestamp)) ),             // Day name
-					__( strtolower(date("F", $timestamp)) ),             // Month name
-					    date("j", $timestamp),                           // Day number
-					__( "date_ordinal_suffix", date("S", $timestamp) ),  // Suffix
-					    date("Y", $timestamp)                            // Year
-					);					
-		
-		if($return=="date_long")
-		{
-			return date("Y/M/j", $timestamp);
+			$replace[] = $args[$i];
 		}
 		else
 		{
-			return $return;
+			$replace[] = "";
 		}
+		$i++;
 	}
+	$str = str_replace($search, $replace, $str);
+	return $str;
 }
-else
+
+/**
+ * i18n date
+ * @param int Unix timestamp
+ * @return string
+ * @todo Put in the LangTookit package
+ */
+function __date($timestamp)
 {
-	/**
-	 * @ignore
-	 */
-	function __($message)
+	if(!$timestamp)
 	{
-		return $message;
+		return "-";
 	}
-	/**
-	 * @ignore
-	 */
-	function __date($timestamp)
+	
+	$return=__("date_long", 
+				__( strtolower(date("l", $timestamp)) ),             // Day name
+				__( strtolower(date("F", $timestamp)) ),             // Month name
+				    date("j", $timestamp),                           // Day number
+				__( "date_ordinal_suffix", date("S", $timestamp) ),  // Suffix
+				    date("Y", $timestamp)                            // Year
+				);					
+	
+	if($return=="date_long")
 	{
 		return date("Y/M/j", $timestamp);
 	}
-}	
+	else
+	{
+		return $return;
+	}
+}
+
+
 
 ?>

@@ -38,7 +38,7 @@ abstract class Manialink extends GuiBase
 	 */
 	final public static function load($createManialinkElement = true, $timeoutValue=0)
 	{
-		self::$domDocument = new DOMDocument;
+		self::$domDocument = new DOMDocument('1.0', 'utf8');
 		self::$parentNodes = array();
 		self::$parentLayouts = array();
 
@@ -138,7 +138,7 @@ abstract class Manialink extends GuiBase
 
 	final public static function redirect($link, $render = true)
 	{
-		self::$domDocument = new DOMDocument;
+		self::$domDocument = new DOMDocument('1.0', 'utf8');
 		self::$parentNodes = array();
 		self::$parentLayouts = array();
 
@@ -168,7 +168,7 @@ abstract class Manialink extends GuiBase
 	 */
 	static function appendXML($XML)
 	{
-		$doc = new DOMDocument();
+		$doc = new DOMDocument('1.0', 'utf8');
 		$doc->loadXML($XML);
 		$node = self::$domDocument->importNode($doc->firstChild, true);
 		end(self::$parentNodes)->appendChild($node);

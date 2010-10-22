@@ -180,7 +180,15 @@ class RequestEngineMVC extends RequestEngine
 		// Create parameter string
 		if(count($params))
 		{
-			$params = '?'.(defined('SID') && SID ? SID.'&' : '').http_build_query($params, '', '&'); 
+			if(!APP_HPHP_COMPILE)
+			{
+				$params = '?'.(defined('SID') && SID ? SID.'&' : '').http_build_query($params, '', '&');
+			}
+			else
+			{
+				// TODO Fix this when HPHP supports "defined('SID')"
+				$params = '?'.http_build_query($params, '', '&');  
+			}
 		}
 		else
 		{

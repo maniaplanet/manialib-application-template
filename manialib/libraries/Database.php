@@ -145,17 +145,9 @@ class DatabaseConnection
 	
 	function setCharset($charset)
 	{
-		if(function_exists('mysql_set_charset'))
+		if(!mysql_set_charset($charset, $this->connection))
 		{
-			if(!mysql_set_charset($charset, $this->connection))
-			{
-				throw new DatabaseException;
-			}
-		}
-		else
-		{
-			$charset = $this->quote($charset);
-			$this->execute('SET NAMES '.$charset);
+			throw new DatabaseException;
 		}
 	}
 	

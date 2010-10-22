@@ -21,7 +21,7 @@ define('APP_MANIALINK', 'manialib');
 // Mysql config
 define('APP_DATABASE_HOST', '127.0.0.1');
 define('APP_DATABASE_USER', 'root');
-define('APP_DATABASE_PASS', '');
+define('APP_DATABASE_PASSWORD', '');
 define('APP_DATABASE_NAME', 'manialib');
 
 // Misc

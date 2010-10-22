@@ -229,11 +229,11 @@ class ActionController
 		{
 			if($parameter->isDefaultValueAvailable())
 			{
-				$callParameters[] = $this->request->get($parameter->name, $parameter->getDefaultValue());
+				$callParameters[] = $this->request->get($parameter->getName(), $parameter->getDefaultValue());
 			}
 			else
 			{
-				$callParameters[] = $this->request->getStrict($parameter->name);
+				$callParameters[] = $this->request->getStrict($parameter->getName());
 			}
 		}
 
