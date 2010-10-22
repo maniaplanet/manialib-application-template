@@ -7,6 +7,8 @@
  * @package ManiaLib_MVC
  */
 
+// FIXME actionName / controlerName are not robust because of the URL<->camelCase conversion. It should be done by Route?
+
 /**
  * @ignore
  */
@@ -37,9 +39,9 @@ require_once(APP_MVC_FRAMEWORK_EXCEPTIONS_PATH.'MVCException.class.php');
  *        $this->addFilter(new RegisterRequestParametersFilter());
  *    }
  *    
- *    function index() {}
+ *    function index() {} // mapped by /home/index/
  *    
- *    function another_action() {}
+ *    function anotherAction() {} // mapped by /home/another_action/
  * }
  * </code>
  * 
@@ -90,7 +92,7 @@ class ActionController
 	 */
 	final static public function getController($controllerName)
 	{
-		$controllerClass = implode('', array_map('ucfirst', explode(APP_MVC_CONTROLLER_NAME_SEPARATOR, $controllerName))).'Controller';
+		$controllerClass = self::separatorToCamelCase($controllerName).'Controller';
 		$controllerFilename = APP_MVC_CONTROLLERS_PATH.$controllerClass.'.class.php';
 
 		if (!file_exists($controllerFilename))
@@ -100,6 +102,11 @@ class ActionController
 
 		require_once($controllerFilename);
 		return new $controllerClass($controllerName);
+	}
+	
+	final static protected function separatorToCamelCase($string)
+	{
+		return implode('', array_map('ucfirst', explode(APP_MVC_CONTROLLER_NAME_SEPARATOR, $string)));
 	}
 
 	/**
@@ -151,7 +158,7 @@ class ActionController
 		{
 			$this->response->resetViews();
 		}
-		if($controllerName==null || $controllerName.'Controller' == get_class($this))
+		if($controllerName==null || $controllerName == $this->controllerName)
 		{
 			$this->checkActionExists($actionName);
 			$this->response->registerView($this->controllerName, $actionName);
@@ -166,25 +173,25 @@ class ActionController
 
 	final public function checkActionExists($actionName)
 	{
-		if(!array_key_exists($actionName, $this->reflectionMethods))
+		$methodName = lcfirst(self::separatorToCamelCase($actionName));
+		if(!array_key_exists($methodName, $this->reflectionMethods))
 		{
 			try
 			{
-				$this->reflectionMethods[$actionName] =
-				new ReflectionMethod(get_class($this),$actionName);
+				$this->reflectionMethods[$methodName] = new ReflectionMethod(get_class($this),$methodName);
 			}
 			catch(Exception $e)
 			{
 				throw new ActionNotFoundException($actionName);
 			}
 		}
-		if(!$this->reflectionMethods[$actionName]->isPublic())
+		if(!$this->reflectionMethods[$methodName]->isPublic())
 		{
-			throw new ActionNotFoundException($actionName.' (Method must be public)');
+			throw new ActionNotFoundException($actionName.' (Method "'.$methodName.'()" must be public)');
 		}
-		if($this->reflectionMethods[$actionName]->isFinal())
+		if($this->reflectionMethods[$methodName]->isFinal())
 		{
-			throw new Exception($actionName.' (Method must not be final)');
+			throw new Exception($actionName.' (Method "'.$methodName.'()" must not be final)');
 		}
 	}
 
@@ -212,12 +219,13 @@ class ActionController
 
 	final public function executeAction($actionName)
 	{
-		if(!array_key_exists($actionName, $this->reflectionMethods))
+		$methodName = lcfirst(self::separatorToCamelCase($actionName));
+		if(!array_key_exists($methodName, $this->reflectionMethods))
 		{
 			try
 			{
-				$this->reflectionMethods[$actionName] =
-				new ReflectionMethod(get_class($this),$actionName);
+				$this->reflectionMethods[$methodName] =
+				new ReflectionMethod(get_class($this),$methodName);
 			}
 			catch(Exception $e)
 			{
@@ -226,7 +234,7 @@ class ActionController
 		}
 
 		$callParameters = array();
-		$requiredParameters = $this->reflectionMethods[$actionName]->getParameters();
+		$requiredParameters = $this->reflectionMethods[$methodName]->getParameters();
 		foreach($requiredParameters as $parameter)
 		{
 			if($parameter->isDefaultValueAvailable())
@@ -239,7 +247,7 @@ class ActionController
 			}
 		}
 
-		call_user_func_array(array($this, $actionName), $callParameters);
+		call_user_func_array(array($this, $methodName), $callParameters);
 	}
 
 	final protected function launch()

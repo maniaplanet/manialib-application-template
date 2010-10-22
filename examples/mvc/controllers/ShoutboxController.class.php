@@ -28,7 +28,7 @@ class ShoutboxController extends ActionController
 		}
 	}
 	
-	function view_shouts($start = 0)
+	function viewShouts($start = 0)
 	{
 		$this->request->registerReferer();
 		
@@ -37,7 +37,7 @@ class ShoutboxController extends ActionController
 		$this->response->shouts = $shouts;
 	}
 	
-	function post_shout($message)
+	function postShout($message)
 	{
 		$this->checkLogin();
 		
