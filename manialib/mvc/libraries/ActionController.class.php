@@ -18,16 +18,18 @@ require_once(APP_MVC_FRAMEWORK_EXCEPTIONS_PATH.'MVCException.class.php');
  * This is the base class for all controllers. Extend ActionController to create
  * a new controller for your application.
  * 
- * Naming conventions:
+ * Naming conventions: URLs should always be lowercase.
+ * Controller names in the request will be mapped to CamelCase class names.
+ * eg. /some_request/ will be mapped to SomeRequestController
+ * You can change the default separator ("_") in the config using the APP_MVC_CONTROLLER_SEPARATOR constant.
  * <ul>
- * <li>class mysuperstuffController</li>
- * <li>public function mysuperstuffController::mysuperaction()</li>
+ * <li>class MySuperStuffController</li>
+ * <li>public function MySuperStuffController::mysuperaction()</li>
  * </ul>
- * Note the lowercase names to ensure that URLS are all lowercase
  * 
  * Example:
  * <code>
- * class homeController extends ActionController
+ * class HomeController extends ActionController
  * {
  *    function __construct()
  *    {
@@ -88,7 +90,7 @@ class ActionController
 	 */
 	final static public function getController($controllerName)
 	{
-		$controllerClass = $controllerName.'Controller';
+		$controllerClass = implode('', array_map('ucfirst', explode(APP_MVC_CONTROLLER_NAME_SEPARATOR, $controllerName))).'Controller';
 		$controllerFilename = APP_MVC_CONTROLLERS_PATH.$controllerClass.'.class.php';
 
 		if (!file_exists($controllerFilename))

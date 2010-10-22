@@ -114,5 +114,13 @@ if(!defined('APP_MVC_USE_URL_REWRITE'))
 	 */
 	define('APP_MVC_USE_URL_REWRITE', false);
 }
+if(!defined('APP_MVC_CONTROLLER_NAME_SEPARATOR'))
+{
+	/**
+	 *  Controller name separator
+	 *  eg. /some_request/ will be mapped to SomeRequestController
+	 */
+	define('APP_MVC_CONTROLLER_NAME_SEPARATOR', '_');
+}
 
 ?>
