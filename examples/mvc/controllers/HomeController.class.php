@@ -7,7 +7,7 @@
 /**
  * Main controller of our ManiaLib demo 
  */
-class homeController extends ActionController
+class HomeController extends ActionController
 {
 	protected $defaultAction = 'about';
 	

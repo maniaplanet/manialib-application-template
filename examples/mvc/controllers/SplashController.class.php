@@ -7,7 +7,7 @@
 /**
  * Splash screen with "enter" button controller of our ManiaLib demo 
  */
- class splashController extends ActionController
+ class SplashController extends ActionController
  {
  	function onConstruct()
 	{

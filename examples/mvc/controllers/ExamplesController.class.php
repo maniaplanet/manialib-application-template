@@ -7,7 +7,7 @@
 /**
  * A controller that hosts some example pages
  */
-class examplesController extends ActionController
+class ExamplesController extends ActionController
 {
 	protected $defaultAction = 'layouts';
 	

@@ -7,7 +7,7 @@
 /**
  * Shoutbox controller
  */
-class shoutboxController extends ActionController
+class ShoutboxController extends ActionController
 {
 	protected $defaultAction = 'view_shouts';
 	
