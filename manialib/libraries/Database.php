@@ -10,7 +10,7 @@
  * 
  * try
  * {
- *     $database = DatabaseFactory::getConnection();
+ *     $database = DatabaseConnection::getInstance();
  *     $result = $database->execute('SELECT * FROM mytable WHERE id < 10');
  *     while($array = $result->fetchAssoc())
  *     {
@@ -33,57 +33,20 @@
  * @package ManiaLib
  */
 
-/**
- * Database connection factory
- * Helps retrieving DB connection instances from anywhere in the code
- * @package ManiaLib
- * @subpackage Database
- */
 abstract class DatabaseFactory
 {
 	/**
-	 * @var array[DatabaseConnection]
-	 */
-	static protected $connections = array();
-	
-	/**
-	 * @return DatabaseConnection
+	 * @deprecated Use DatabaseConnection::getInstance() instead
 	 */
 	static function getConnection(
-		$host=APP_DATABASE_HOST, 
-		$user=APP_DATABASE_USER, 
-		$password=APP_DATABASE_PASSWORD,
-		$database=APP_DATABASE_NAME,
-		$useSSL = false,
-		$forceNewConnection=false)
+		$host = APP_DATABASE_HOST, 
+		$user = APP_DATABASE_USER, 
+		$password = APP_DATABASE_PASSWORD, 
+		$database = APP_DATABASE_NAME, 
+		$useSSL = false, 
+		$forceNewConnection = false)
 	{
-		$identifier = $user.'@'.$host;
-		
-		if(!array_key_exists($identifier, self::$connections) 
-			|| self::$connections[$identifier]===null)
-		{
-			self::$connections[$identifier] = new DatabaseConnection(
-				$host, $user, $password, $database, $useSSL, $forceNewConnection);				
-		}
-		elseif($database)
-		{
-			self::$connections[$identifier]->select($database);
-		}
-		self::$connections[$identifier]->incrementReferenceCount();
-		return self::$connections[$identifier];
-	}
-	
-	/**
-	 * DO NOT USE THIS DIRECTLY !
-	 * Use DatabaseConnection::disconnect() instead
-	 */
-	static function deleteConnection($user, $host)
-	{
-		$identifier = $user.'@'.$host;
-		if(array_key_exists($identifier, self::$connections))
-		{
-			unset(self::$connections[$identifier]);
-		}
+		return DatabaseConnection::getInstance($host, $user, $password, $database, $useSSL, $forceNewConnection);
 	}
 }
 
@@ -94,16 +57,36 @@ abstract class DatabaseFactory
  */
 class DatabaseConnection
 {
+	static protected $instance;
+	
 	protected $connection;
 	protected $host;
 	protected $user;
 	protected $password;
 	protected $database;
 	protected $clientFlags;
-	protected $referenceCount;
 	
-	function __construct($host, $user, $password, $database=null, 
-		$useSSL=false, $forceNewConnection=false)
+	/**
+	 * 
+	 * @return DatabaseConnection
+	 */
+	public static function getInstance(
+		$host = APP_DATABASE_HOST, 
+		$user = APP_DATABASE_USER, 
+		$password = APP_DATABASE_PASSWORD, 
+		$database = APP_DATABASE_NAME, 
+		$useSSL = false, 
+		$forceNewConnection = false)
+	{
+		if (!self::$instance)
+		{
+			$class = __CLASS__;
+			self::$instance = new $class($host, $user, $password, $database, $useSSL, $forceNewConnection);
+		}
+		return self::$instance;
+	}
+	
+	protected function __construct($host, $user, $password, $database, $useSSL, $forceNewConnection)
 	{
 		// Init
 		$this->host = $host;
