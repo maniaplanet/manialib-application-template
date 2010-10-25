@@ -70,24 +70,13 @@ class ResponseEngine
 		}
 	}
 	
-	/**
-	 * Takes a DialogHelper object as parameter. For backwar compat, you can
-	 * also use the $controllerName, $actionName format but it is deprecated
-	 */
-	public function registerDialog($dialog, $actionNameCompat = null)
+	public function registerDialog(DialogHelper $dialog)
 	{
 		if($this->dialog)
 		{
 			throw new DialogAlreadyRegistered;
 		}
-		if($dialog instanceof DialogHelper)
-		{
-			$this->dialog = $dialog;
-		}
-		else
-		{
-			$this->dialog = new DialogHelper($dialog, $actionNameCompat);
-		}
+		$this->dialog = $dialog;
 	}
 	
 	public function registerView($controllerName, $actionName)

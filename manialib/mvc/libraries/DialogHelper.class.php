@@ -8,6 +8,7 @@ class DialogHelper
 	public $title = 'Dialog';
 	public $height = 65;
 	public $width = 50;
+	// TODO add position
 	public $buttonLabel = 'Ok';
 	public $buttonManialink;
 	public $button2Label = 'Cancel';
