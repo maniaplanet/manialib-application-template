@@ -7,7 +7,7 @@
 $request = RequestEngineMVC::getInstance();
 $response = ResponseEngine::getInstance();
 
-View::render('examples', '_navigation');
+View::render('Examples', '_navigation');
 
 $layout = new FlowLayout(70, 70);
 $layout->setMargin(3, 3);

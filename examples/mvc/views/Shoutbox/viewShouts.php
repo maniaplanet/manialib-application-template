@@ -7,7 +7,7 @@
 $request = RequestEngineMVC::getInstance();
 $response = ResponseEngine::getInstance();
 
-View::render('shoutbox', '_navigation');
+View::render('Shoutbox', '_navigation');
 
 
 Manialink::beginFrame(-15, 35, 1);
