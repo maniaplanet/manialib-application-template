@@ -18,7 +18,7 @@ abstract class ShoutDAO
 	 */
 	static function getAll($offset=0, $length=10)
 	{
-		$db = DatabaseFactory::getConnection();
+		$db = DatabaseConnection::getInstance();
 		$result = $db->execute(
 			'SELECT * '.
 			'FROM '.APP_DATABASE_PREFIX.'shouts '.
@@ -37,7 +37,7 @@ abstract class ShoutDAO
 	static function save(Shout $shout)
 	{
 		$newShout = $shout->id==null;
-		$db = DatabaseFactory::getConnection();
+		$db = DatabaseConnection::getInstance();
 		
 		$values = array(
 			'login' => $db->quote($shout->login), 
