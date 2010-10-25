@@ -13,6 +13,9 @@ class RequestEngineMVC extends RequestEngine
 {
 	static private $instance;
 	
+	protected $action;
+	protected $controller;
+	
 	/**
 	 * Gets the instance
 	 * @return RequestEngineMVC
@@ -27,11 +30,27 @@ class RequestEngineMVC extends RequestEngine
 		return self::$instance;
 	}
 	
-	public function getAction($defaultAction = null)
+	protected function __construct()
 	{
-		return strtolower($this->get(URL_PARAM_NAME_ACTION, $defaultAction));		
+		parent::__construct();
+		$this->controller = strtolower($this->get(URL_PARAM_NAME_CONTROLLER, URL_PARAM_DEFAULT_CONTROLLER));
+		$this->controller = Route::separatorToUpperCamelCase($this->controller);
+		$this->action = strtolower($this->get(URL_PARAM_NAME_ACTION));
+		if($this->action)
+		{
+			$this->action = Route::separatorToCamelCase($this->action);
+		}
 	}
 	
+	public function getAction($defaultAction = null)
+	{
+		return $this->action ? $this->action : $defaultAction;
+	}
+	
+	/**
+	 * FIXME Remove RequestEngineMVC::setAction()
+	 * @deprecated No reason to use this
+	 */
 	public function setAction($actionName)
 	{
 		$this->set(URL_PARAM_NAME_ACTION, $actionName);
@@ -39,9 +58,13 @@ class RequestEngineMVC extends RequestEngine
 	
 	public function getController()
 	{
-		return strtolower($this->get(URL_PARAM_NAME_CONTROLLER, URL_PARAM_DEFAULT_CONTROLLER));
+		return $this->controller;
 	}
 	
+	/**
+	 * FIXME Remove RequestEngineMVC::setController()
+	 * @deprecated No reason to use this
+	 */
 	public function setController($controllerName)
 	{
 		$this->set(URL_PARAM_NAME_CONTROLLER, $controllerName);
@@ -148,6 +171,9 @@ class RequestEngineMVC extends RequestEngine
 		
 		unset($params[URL_PARAM_NAME_CONTROLLER]);
 		unset($params[URL_PARAM_NAME_ACTION]);
+		
+		$controller = Route::camelCaseToSeparator($controller);
+		$action = Route::camelCaseToSeparator($action);
 		
 		if(APP_MVC_USE_URL_REWRITE)
 		{

@@ -13,7 +13,7 @@ $ui->title->setText(__('shoutbox'));
 $ui->subTitle->setText(__('shoutbox_example'));
 
 $manialink = $request->createLink(Route::CUR, Route::NONE);
-$selected = $request->getAction('view_shouts') == 'view_shouts';
+$selected = $request->getAction('viewShouts') == 'viewShouts';
 
 $ui->addItem();
 $ui->lastItem->setManialink($manialink);

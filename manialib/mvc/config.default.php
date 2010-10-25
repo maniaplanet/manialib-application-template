@@ -120,7 +120,7 @@ if(!defined('APP_MVC_CONTROLLER_NAME_SEPARATOR'))
 	 *  Controller name separator
 	 *  eg. /some_request/ will be mapped to SomeRequestController
 	 */
-	define('APP_MVC_CONTROLLER_NAME_SEPARATOR', '_');
+	define('APP_MVC_URL_SEPARATOR', '_');
 }
 
 ?>

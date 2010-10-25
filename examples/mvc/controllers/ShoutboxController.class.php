@@ -9,7 +9,7 @@
  */
 class ShoutboxController extends ActionController
 {
-	protected $defaultAction = 'view_shouts';
+	protected $defaultAction = 'viewShouts';
 	
 	function onConstruct()
 	{

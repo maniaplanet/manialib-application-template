@@ -20,16 +20,17 @@ require_once(APP_MVC_FRAMEWORK_EXCEPTIONS_PATH.'MVCException.class.php');
  * This is the base class for all controllers. Extend ActionController to create
  * a new controller for your application.
  * 
- * Naming conventions: URLs should always be lowercase.
- * Controller names in the request will be mapped to CamelCase class names.
- * eg. /some_request/ will be mapped to SomeRequestController
- * You can change the default separator ("_") in the config using the APP_MVC_CONTROLLER_SEPARATOR constant.
+ * <b>Naming conventions</b>
  * <ul>
- * <li>class MySuperStuffController</li>
- * <li>public function MySuperStuffController::mysuperaction()</li>
+ * <li>Controller classes are suffixed by "Controller", naming is regular CamelCase class convention</li>
+ * <li>Actions are regular camelCase convention</li>
+ * <li>When creating links with the Request engine, use class and method names eg. createLink('SomeController', 'someAction')</li>
+ * <li>Views folders and files use the same naming conventions as the classes/methods (eg. view/SomeController/someAction.php)</li>
+ * <li>The URLs will be lowercase (camelCase is mapped to underscore-separated names)</li>
+ * <li>You can change the default separator ("_") in the config using the APP_MVC_URL_SEPARATOR constant</li>
  * </ul>
  * 
- * Example:
+ * <b>Example</b>
  * <code>
  * class HomeController extends ActionController
  * {
@@ -92,7 +93,7 @@ class ActionController
 	 */
 	final static public function getController($controllerName)
 	{
-		$controllerClass = self::separatorToCamelCase($controllerName).'Controller';
+		$controllerClass = $controllerName.'Controller';
 		$controllerFilename = APP_MVC_CONTROLLERS_PATH.$controllerClass.'.class.php';
 
 		if (!file_exists($controllerFilename))
@@ -102,11 +103,6 @@ class ActionController
 
 		require_once($controllerFilename);
 		return new $controllerClass($controllerName);
-	}
-	
-	final static protected function separatorToCamelCase($string)
-	{
-		return implode('', array_map('ucfirst', explode(APP_MVC_CONTROLLER_NAME_SEPARATOR, $string)));
 	}
 
 	/**
@@ -141,7 +137,7 @@ class ActionController
 
 	final protected function chainAction($controllerName=null, $actionName)
 	{
-		if($controllerName==null || $controllerName.'Controller' == get_class($this))
+		if($controllerName==null ||  $controllerName == $this->controllerName)
 		{
 			$this->checkActionExists($actionName);
 			$this->executeAction($actionName);
@@ -173,25 +169,24 @@ class ActionController
 
 	final public function checkActionExists($actionName)
 	{
-		$methodName = lcfirst(self::separatorToCamelCase($actionName));
-		if(!array_key_exists($methodName, $this->reflectionMethods))
+		if(!array_key_exists($actionName, $this->reflectionMethods))
 		{
 			try
 			{
-				$this->reflectionMethods[$methodName] = new ReflectionMethod(get_class($this),$methodName);
+				$this->reflectionMethods[$actionName] = new ReflectionMethod(get_class($this),$actionName);
 			}
 			catch(Exception $e)
 			{
 				throw new ActionNotFoundException($actionName);
 			}
 		}
-		if(!$this->reflectionMethods[$methodName]->isPublic())
+		if(!$this->reflectionMethods[$actionName]->isPublic())
 		{
-			throw new ActionNotFoundException($actionName.' (Method "'.$methodName.'()" must be public)');
+			throw new ActionNotFoundException($actionName.' (Method "'.$actionName.'()" must be public)');
 		}
-		if($this->reflectionMethods[$methodName]->isFinal())
+		if($this->reflectionMethods[$actionName]->isFinal())
 		{
-			throw new Exception($actionName.' (Method "'.$methodName.'()" must not be final)');
+			throw new Exception($actionName.' (Method "'.$actionName.'()" must not be final)');
 		}
 	}
 
@@ -219,13 +214,12 @@ class ActionController
 
 	final public function executeAction($actionName)
 	{
-		$methodName = lcfirst(self::separatorToCamelCase($actionName));
-		if(!array_key_exists($methodName, $this->reflectionMethods))
+		if(!array_key_exists($actionName, $this->reflectionMethods))
 		{
 			try
 			{
-				$this->reflectionMethods[$methodName] =
-				new ReflectionMethod(get_class($this),$methodName);
+				$this->reflectionMethods[$actionName] =
+				new ReflectionMethod(get_class($this),$actionName);
 			}
 			catch(Exception $e)
 			{
@@ -234,7 +228,7 @@ class ActionController
 		}
 
 		$callParameters = array();
-		$requiredParameters = $this->reflectionMethods[$methodName]->getParameters();
+		$requiredParameters = $this->reflectionMethods[$actionName]->getParameters();
 		foreach($requiredParameters as $parameter)
 		{
 			if($parameter->isDefaultValueAvailable())
@@ -247,7 +241,7 @@ class ActionController
 			}
 		}
 
-		call_user_func_array(array($this, $methodName), $callParameters);
+		call_user_func_array(array($this, $actionName), $callParameters);
 	}
 
 	final protected function launch()
