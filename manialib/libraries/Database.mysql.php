@@ -1,32 +1,6 @@
 <?php
 /**
- * MySQL abstraction layer, based on PHP's MySQLi extension
- * 
- * Usage example:
- * <code>
- * <?php
- * 
- * require_once(APP_FRAMEWORK_LIBRARIES_PATH.'Database.php');
- * 
- * try
- * {
- *     $database = DatabaseConnection::getInstance();
- *     $result = $database->execute('SELECT * FROM mytable WHERE id < 10');
- *     while($array = $result->fetchAssoc())
- *     {
- *         print_r($array);
- *     }
- *     $myvar = 'Some \'text with quotes\' and "double quotes"';
- *     $myvarQuoted = $database->quote($myvar);
- *     $database->execute( 'INSERT INTO mytable (MyText) VALUES ('.$myvarQuoted.')' );
- *     echo $database->insertID.' is a newly inserted ID';
- * }
- * catch(Exception $e)
- * {
- *     // Error handling...
- * }
- * ?>
- * </code>
+ * Same as Database.php but use the "old" mysql extension instead of mysqli
  * 
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
@@ -64,6 +38,7 @@ class DatabaseConnection
 	protected $user;
 	protected $password;
 	protected $database;
+	protected $clientFlags;
 	
 	/**
 	 * 
@@ -80,48 +55,56 @@ class DatabaseConnection
 		if (!self::$instance)
 		{
 			$class = __CLASS__;
-			self::$instance = new $class($host, $user, $password, $database);
+			self::$instance = new $class($host, $user, $password, $database, $useSSL, $forceNewConnection);
 		}
 		return self::$instance;
 	}
 	
-	protected function __construct($host, $user, $password, $database)
+	protected function __construct($host, $user, $password, $database, $useSSL, $forceNewConnection)
 	{
 		// Init
 		$this->host = $host;
 		$this->user = $user;
 		$this->password = $password;
-		$this->database = $database;
+		$this->clientFlags = 0;
+		$this->referenceCount = 0;
+		
+		// Flags
+		if($useSSL)
+		{
+			$this->clientFlags = MYSQL_CLIENT_SSL;
+		}
 		
 		// Connection
-		$this->connection = new mysqli(
+		$this->connection = mysql_connect(
 			$this->host,
 			$this->user,
 			$this->password,
-			$this->database
+			$forceNewConnection,
+			$this->clientFlags
 		);
 				
 		// Success ?
-		if($this->connection->connect_error)
+		if(!$this->connection)
 		{
-			throw new DatabaseException($this->connection->connect_error, 
-				$this->connection->connect_errno);
+			throw new DatabaseConnectionException;
+		}
+		
+		// Select
+		if($database)
+		{
+			$this->select($database);	
 		}
 		
 		// Default Charset : UTF8
-		$this->setCharset('utf8');
-	}
-	
-	function __destruct()
-	{
-		$this->connection->close();
+		self::setCharset('utf8');
 	}
 	
 	function setCharset($charset)
 	{
-		if(!$this->connection->set_charset($charset))
+		if(!mysql_set_charset($charset, $this->connection))
 		{
-			throw new DatabaseException($this->connection->error, $this->connection->errno);
+			throw new DatabaseException;
 		}
 	}
 	
@@ -130,16 +113,16 @@ class DatabaseConnection
 		if($database != $this->database)
 		{
 			$this->database = $database;
-			if(!$this->connection->select_db($this->database))
+			if(!mysql_select_db($this->database, $this->connection))
 			{
-				throw new DatabaseException($this->connection->error, $this->connection->errno);
+				throw new DatabaseSelectionException($this->connection);
 			}
 		}
 	}
 		
 	function quote($string)
 	{
-		return '\''.$this->connection->escape_string($string).'\'';
+		return '\''.mysql_real_escape_string($string, $this->connection).'\'';
 	}
 	
 	/**
@@ -148,7 +131,7 @@ class DatabaseConnection
 	 */
 	function execute($query)
 	{
-		$result = $this->connection->query($query);
+		$result = mysql_query($query, $this->connection);
 		if(!$result)
 		{
 			throw new DatabaseQueryException($query);
@@ -158,22 +141,41 @@ class DatabaseConnection
 	
 	function affectedRows()
 	{
-		return $this->connection->affected_rows;
+		return mysql_affected_rows($this->connection);
 	}
 	
 	function insertID()
 	{
-		return $this->connection->insert_id;
+		return mysql_insert_id($this->connection);
 	}
 	
 	function isConnected()
 	{
 		return (!$this->connection); 
 	}
-		
+	
+	function disconnect()
+	{
+		$this->referenceCount--;
+		if($this->referenceCount == 0)
+		{
+			if(!mysql_close($this->connection))
+			{
+				throw new DatabaseDisconnectionException;
+			}
+			$this->connection = null;
+			DatabaseFactory::deleteConnection($this->user, $this->host);
+		}
+	}
+	
 	function getDatabase()
 	{
 		return $this->database;
+	}
+		
+	function incrementReferenceCount()
+	{
+		$this->referenceCount++;
 	}
 }
 
@@ -184,13 +186,10 @@ class DatabaseConnection
  */
 class DatabaseRecordSet
 {
-	const FETCH_ASSOC = MYSQLI_ASSOC;
-	const FETCH_NUM = MYSQLI_NUM;
-	const FETCH_BOTH = MYSQLI_BOTH;
+	const FETCH_ASSOC = MYSQL_ASSOC;
+	const FETCH_NUM = MYSQL_NUM;
+	const FETCH_BOTH = MYSQL_BOTH;
 
-	/**
-	 * @var MySQLi_RESULT
-	 */
 	protected $result;
 	
 	function __construct($result)
@@ -198,44 +197,41 @@ class DatabaseRecordSet
 		$this->result = $result;
 	}
 	
-	function __destruct()
-	{
-		if($this->result instanceof MySQLi_RESULT)
-		{
-			$this->result->close();
-		}
-	}
-	
 	function fetchRow()
 	{
-		return $this->result->fetch_row();
+		return mysql_fetch_row($this->result);
 	}
 	
 	function fetchAssoc()
 	{
-		return $this->result->fetch_assoc();
+		return mysql_fetch_assoc($this->result);
 	}
 	
 	function fetchArray($resultType = self::FETCH_ASSOC)
 	{
-		return $this->result->fetch_array($resultType);
+		return mysql_fetch_array($this->result, $resultType);
+	}
+	
+	function fetchStdObject()
+	{
+		return mysql_fetch_object($this->result);
 	}
 	
 	function fetchObject($className, array $params=array() )
 	{
-		if($className)
+		if($params)
 		{
-			return $this->result->fetch_object($className, $params);
+			return mysql_fetch_object($this->result, $className, $params);
 		}	
 		else
 		{
-			return $this->fetchObject();
+			return mysql_fetch_object($this->result, $className);
 		}	
 	}
 	
 	function recordCount()
 	{
-		return $this->result->num_rows;
+		return mysql_num_rows($this->result);
 	}
 }
 
@@ -300,11 +296,35 @@ class DatabaseException extends FrameworkException {}
  * @package ManiaLib
  * @subpackage Database
  */
+class DatabaseConnectionException extends DatabaseException {}
+
+/**
+ * @package ManiaLib
+ * @subpackage Database
+ */
+class DatabaseDisconnectionException extends DatabaseException {}
+
+/**
+ * @package ManiaLib
+ * @subpackage Database
+ */
+class DatabaseSelectionException extends DatabaseException
+{
+	function __construct($dummy=null, $dummy2=null, Exception $previous=null, $logException=true)
+	{
+		parent::__construct(mysql_error(), mysql_errno(), $previous, $logException);
+	}
+}
+
+/**
+ * @package ManiaLib
+ * @subpackage Database
+ */
 class DatabaseQueryException extends DatabaseException
 {
 	function __construct($query, $dummy2=null, Exception $previous=null, $logException=true)
 	{
-		parent::__construct(mysqli_error(), mysqli_errno(), false);
+		parent::__construct(mysql_error(), mysql_errno(), $previous, false);
 		$this->addOptionalInfo('Query', $query);
 		if($logException)
 		{
