@@ -46,28 +46,10 @@ class RequestEngineMVC extends RequestEngine
 	{
 		return $this->action ? $this->action : $defaultAction;
 	}
-	
-	/**
-	 * FIXME Remove RequestEngineMVC::setAction()
-	 * @deprecated No reason to use this
-	 */
-	public function setAction($actionName)
-	{
-		$this->set(URL_PARAM_NAME_ACTION, $actionName);
-	}
-	
+		
 	public function getController()
 	{
 		return $this->controller;
-	}
-	
-	/**
-	 * FIXME Remove RequestEngineMVC::setController()
-	 * @deprecated No reason to use this
-	 */
-	public function setController($controllerName)
-	{
-		$this->set(URL_PARAM_NAME_CONTROLLER, $controllerName);
 	}
 	
 	/**
@@ -206,15 +188,7 @@ class RequestEngineMVC extends RequestEngine
 		// Create parameter string
 		if(count($params))
 		{
-			if(!APP_HPHP_COMPILE)
-			{
-				$params = '?'.(defined('SID') && SID ? SID.'&' : '').http_build_query($params, '', '&');
-			}
-			else
-			{
-				// TODO Fix this when HPHP supports "defined('SID')"
-				$params = '?'.http_build_query($params, '', '&');  
-			}
+			$params = '?'.(defined('SID') && SID ? SID.'&' : '').http_build_query($params, '', '&');
 		}
 		else
 		{

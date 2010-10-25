@@ -7,8 +7,6 @@
  * @package ManiaLib_MVC
  */
 
-// FIXME actionName / controlerName are not robust because of the URL<->camelCase conversion. It should be done by Route?
-
 /**
  * @ignore
  */

@@ -319,12 +319,5 @@ if(!defined('APP_MVC_FRAMEWORK') && !defined('APP_FRAMEWORK_REQUEST_ENGINE_CLASS
 	 */
 	define('APP_FRAMEWORK_REQUEST_ENGINE_CLASS', 'RequestEngine');
 }
-if(!defined('APP_HPHP_COMPILE'))
-{
-	/**
-	 * Set this to true if your want to use HipHop for PHP to compile your project 
-	 */
-	define('APP_HPHP_COMPILE', false);
-}
 
 ?>
