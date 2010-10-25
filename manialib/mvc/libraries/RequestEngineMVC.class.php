@@ -188,7 +188,7 @@ class RequestEngineMVC extends RequestEngine
 		// Create parameter string
 		if(count($params))
 		{
-			$params = '?'.(defined('SID') && SID ? SID.'&' : '').http_build_query($params, '', '&');
+			$params = '?'.http_build_query($params, '', '&');
 		}
 		else
 		{
