@@ -33,23 +33,6 @@
  * @package ManiaLib
  */
 
-abstract class DatabaseFactory
-{
-	/**
-	 * @deprecated Use DatabaseConnection::getInstance() instead
-	 */
-	static function getConnection(
-		$host = APP_DATABASE_HOST, 
-		$user = APP_DATABASE_USER, 
-		$password = APP_DATABASE_PASSWORD, 
-		$database = APP_DATABASE_NAME, 
-		$useSSL = false, 
-		$forceNewConnection = false)
-	{
-		return DatabaseConnection::getInstance($host, $user, $password, $database, $useSSL, $forceNewConnection);
-	}
-}
-
 /**
  * Database connection instance
  * @package ManiaLib

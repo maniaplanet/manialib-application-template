@@ -7,23 +7,6 @@
  * @package ManiaLib
  */
 
-abstract class DatabaseFactory
-{
-	/**
-	 * @deprecated Use DatabaseConnection::getInstance() instead
-	 */
-	static function getConnection(
-		$host = APP_DATABASE_HOST, 
-		$user = APP_DATABASE_USER, 
-		$password = APP_DATABASE_PASSWORD, 
-		$database = APP_DATABASE_NAME, 
-		$useSSL = false, 
-		$forceNewConnection = false)
-	{
-		return DatabaseConnection::getInstance($host, $user, $password, $database, $useSSL, $forceNewConnection);
-	}
-}
-
 /**
  * Database connection instance
  * @package ManiaLib
@@ -47,7 +30,7 @@ class DatabaseConnection
 	public static function getInstance(
 		$host = APP_DATABASE_HOST, 
 		$user = APP_DATABASE_USER, 
-		$password = APP_DATABASE_PASSWORD, 
+		$password = APP_DATABASE_PASSWORD,
 		$database = APP_DATABASE_NAME, 
 		$useSSL = false, 
 		$forceNewConnection = false)
@@ -153,29 +136,10 @@ class DatabaseConnection
 	{
 		return (!$this->connection); 
 	}
-	
-	function disconnect()
-	{
-		$this->referenceCount--;
-		if($this->referenceCount == 0)
-		{
-			if(!mysql_close($this->connection))
-			{
-				throw new DatabaseDisconnectionException;
-			}
-			$this->connection = null;
-			DatabaseFactory::deleteConnection($this->user, $this->host);
-		}
-	}
-	
+		
 	function getDatabase()
 	{
 		return $this->database;
-	}
-		
-	function incrementReferenceCount()
-	{
-		$this->referenceCount++;
 	}
 }
 
