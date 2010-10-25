@@ -11,7 +11,9 @@ class MoodSelectorFilter extends AdvancedFilter
 		if($this->request->get('show_mood_selector'))
 		{
 			$this->request->delete('show_mood_selector');
-			$this->response->registerDialog('dialogs', 'mood_selector_dialog');
+			
+			$dialog = new DialogHelper('Dialogs', 'moodSelector');
+			$this->response->registerDialog($dialog);
 		}
 		elseif($mood = $this->request->get('select_mood'))
 		{

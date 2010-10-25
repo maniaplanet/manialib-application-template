@@ -10,10 +10,12 @@ $response = ResponseEngine::getInstance();
 ////////////////////////////////////////////////////////////////////////////////
 // Dialog
 ////////////////////////////////////////////////////////////////////////////////
-$response->dialogButtonLabel = __('cancel');
-$response->dialogTitle = __('select_mood');
-$response->dialogButtonManialink = $request->createLink(Route::CUR, Route::CUR);
-View::render('dialogs', 'empty_dialog');
+
+$dialog->buttonLabel= __('cancel');
+$dialog->title = __('select_mood');
+$dialog->buttonManialink = $request->createLink(Route::CUR, Route::CUR);
+
+View::render('Dialogs', 'emptyDialog');
 
 Manialink::beginFrame(-20, 4, 16, new LineLayout());
 {

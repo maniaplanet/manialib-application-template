@@ -19,7 +19,11 @@ class ResponseEngine
 	private $vars = array();
 	private $body = '';
 	private $views = array();
-	private $dialog;
+	
+	/**
+	 * @var DialogHelper
+	 */
+	public $dialog;
 
 	/**
 	 * Gets the instance
@@ -66,13 +70,24 @@ class ResponseEngine
 		}
 	}
 	
-	public function registerDialog($controllerName, $actionName)
+	/**
+	 * Takes a DialogHelper object as parameter. For backwar compat, you can
+	 * also use the $controllerName, $actionName format but it is deprecated
+	 */
+	public function registerDialog($dialog, $actionNameCompat = null)
 	{
 		if($this->dialog)
 		{
 			throw new DialogAlreadyRegistered;
 		}
-		$this->dialog = array($controllerName, $actionName);
+		if($dialog instanceof DialogHelper)
+		{
+			$this->dialog = $dialog;
+		}
+		else
+		{
+			$this->dialog = new DialogHelper($dialog, $actionNameCompat);
+		}
 	}
 	
 	public function registerView($controllerName, $actionName)
@@ -95,7 +110,7 @@ class ResponseEngine
 		View::render('header');
 		if($this->dialog)
 		{
-			View::render($this->dialog[0], $this->dialog[1]);
+			View::render($this->dialog->controller, $this->dialog->action);
 			Manialink::disableLinks();
 		}
 		foreach($this->views as $view)

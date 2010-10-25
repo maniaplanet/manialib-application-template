@@ -16,7 +16,12 @@ abstract class View
 		$viewFilename = self::getFilename($controllerName,$actionName);
 		if(!file_exists($viewFilename))
 		{
-			throw new ViewNotFoundException($viewFilename);
+			$viewFilename = self::getFilename($controllerName, $actionName, 
+				APP_MVC_FRAMEWORK_VIEWS_PATH);
+			if(!file_exists($viewFilename))
+			{
+				throw new ViewNotFoundException($controllerName.'::'.$actionName);
+			}
 		}
 		$response = ResponseEngine::getInstance();
 		$request = RequestEngineMVC::getInstance();
@@ -26,15 +31,15 @@ abstract class View
 		ob_end_clean();
 	}
 	
-	public static function getFilename($controllerName, $actionName=null)
+	public static function getFilename($controllerName, $actionName=null, $path=APP_MVC_VIEWS_PATH)
 	{
 		if($controllerName && $actionName)
 		{
-			return APP_MVC_VIEWS_PATH.$controllerName.'/'.$actionName.'.php';
+			return $path.$controllerName.'/'.$actionName.'.php';
 		}
 		else
 		{
-			return APP_MVC_VIEWS_PATH.$controllerName.'.php';
+			return $path.$controllerName.'.php';
 		}
 	}
 }
