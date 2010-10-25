@@ -11,9 +11,9 @@ $response = ResponseEngine::getInstance();
 // Dialog
 ////////////////////////////////////////////////////////////////////////////////
 
-$reponse->dialog->buttonLabel= __('cancel');
-$reponse->dialog->title = __('select_mood');
-$reponse->dialog->buttonManialink = $request->createLink(Route::CUR, Route::CUR);
+$response->dialog->buttonLabel = __('cancel');
+$response->dialog->title = __('select_mood');
+$response->dialog->buttonManialink = $request->createLink(Route::CUR, Route::CUR);
 
 View::render('Dialogs', 'emptyDialog');
 

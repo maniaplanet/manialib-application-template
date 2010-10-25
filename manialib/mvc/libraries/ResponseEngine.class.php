@@ -19,7 +19,6 @@ class ResponseEngine
 	private $vars = array();
 	private $body = '';
 	private $views = array();
-	
 	/**
 	 * @var DialogHelper
 	 */
