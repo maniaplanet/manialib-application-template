@@ -32,7 +32,10 @@ abstract class Route
 	
 	static function separatorToCamelCase($string)
 	{
-		return lcfirst(implode('', array_map('ucfirst', explode(APP_MVC_URL_SEPARATOR, $string))));
+		$string = implode('', array_map('ucfirst', explode(APP_MVC_URL_SEPARATOR, $string)));
+		// TODO lcfirst($string) is available from 5.3 onwards
+		$string[0] = strtolower($string[0]);
+		return $string;
 	}
 	
 	static function camelCaseToSeparator($string)
