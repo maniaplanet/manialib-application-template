@@ -199,7 +199,9 @@ abstract class GuiElement extends GuiComponent
 	protected $action;
 	protected $actionKey;
 	protected $image;
+	protected $imageid;
 	protected $imageFocus;
+	protected $imageFocusid;
 	protected $xmlTagName = 'xmltag'; // Redeclare this for each child
 	protected $xml;
 	
@@ -357,6 +359,16 @@ abstract class GuiElement extends GuiComponent
 			$this->image = $image;
 		}
 	}
+	
+	/**
+	 * Set the image id of the element, used for internationalization
+	 */
+	function setImageid($imageid)
+	{
+		$this->setStyle(null);
+		$this->setSubStyle(null);
+		$this->imageid = $imageid;
+	}
 
 	/**
 	 * Applies an image to the highlighter state of the element. The second
@@ -375,6 +387,14 @@ abstract class GuiElement extends GuiComponent
 		{
 			$this->imageFocus = $imageFocus;
 		}
+	}
+	
+	/**
+	 * Set the image focus id of the element, used for internationalization
+	 */
+	function setImageFocusid($imageFocusid)
+	{
+		$this->imageFocusid;
 	}
 	
 	/**
@@ -485,6 +505,11 @@ abstract class GuiElement extends GuiComponent
 	{
 		return $this->image;
 	}
+	
+	function getImageid()
+	{
+		return $this->imageid;
+	}
 
 	/**
 	 * Returns the image placed in the element in its highlighted state
@@ -493,6 +518,11 @@ abstract class GuiElement extends GuiComponent
 	function getImageFocus()
 	{
 		return $this->imageFocus;
+	}
+	
+	function getImageFocusid()
+	{
+		return $this->imageFocusid;
 	}
 
 	/**
@@ -614,8 +644,12 @@ abstract class GuiElement extends GuiComponent
 			// Add images
 			if($this->image !== null)
 				$this->xml->setAttribute('image', $this->image);
+			if($this->imageid !== null)
+				$this->xml->setAttribute('imageid', $this->imageid);
 			if($this->imageFocus !== null)
 				$this->xml->setAttribute('imagefocus', $this->imageFocus);
+			if($this->imageFocusid !== null)
+				$this->xml->setAttribute('imagefocusid', $this->imageFocusid);	
 		}
 		
 		// Layout post filtering
