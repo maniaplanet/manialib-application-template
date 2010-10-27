@@ -41,7 +41,9 @@
 class DatabaseConnection
 {
 	static protected $instance;
-	
+	/**
+	 * @var mysqli
+	 */
 	protected $connection;
 	protected $host;
 	protected $user;
@@ -134,7 +136,7 @@ class DatabaseConnection
 		$result = $this->connection->query($query);
 		if(!$result)
 		{
-			throw new DatabaseQueryException($query);
+			throw new DatabaseQueryException($this->connection->error, $this->connection->errno);
 		}
 		return new DatabaseRecordSet($result);
 	}
@@ -283,17 +285,6 @@ class DatabaseException extends FrameworkException {}
  * @package ManiaLib
  * @subpackage Database
  */
-class DatabaseQueryException extends DatabaseException
-{
-	function __construct($query, $dummy2=null, Exception $previous=null, $logException=true)
-	{
-		parent::__construct(mysqli_error(), mysqli_errno(), false);
-		$this->addOptionalInfo('Query', $query);
-		if($logException)
-		{
-			$this->iLog();
-		}
-	}
-}
+class DatabaseQueryException extends DatabaseException {}
 
 ?>
