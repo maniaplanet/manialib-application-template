@@ -56,8 +56,6 @@ class AuthenticationTokenFilter extends AdvancedFilter
 			}
 			catch (AuthenticationTokenFailedException $e)
 			{
-				$this->request->redirectManialinkAbsolute('Manialink:Home');
-				
 				if(self::$onFailureCallback)
 				{
 					$callback = self::$onFailureCallback;
