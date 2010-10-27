@@ -18,6 +18,19 @@
  */
 class AuthenticationTokenFilter extends AdvancedFilter
 {
+	protected static $onFailureCallback;
+	protected static $onFailureCallbackParameters;
+	
+	static function setOnFailureCallback($callback)
+	{
+		self::$onFailureCallback = $callback;
+	}
+	
+	static function setOnFailureCallbackParameters(array $parameters)
+	{
+		self::$onFailureCallbackParameters = $parameters;
+	}
+	
 	function preFilter()
 	{
 		if(!$this->session->exists('isAuthentified'))
@@ -44,6 +57,19 @@ class AuthenticationTokenFilter extends AdvancedFilter
 			catch (AuthenticationTokenFailedException $e)
 			{
 				$this->request->redirectManialinkAbsolute('Manialink:Home');
+				
+				if(self::$onFailureCallback)
+				{
+					$callback = self::$onFailureCallback;
+					$parameters = self::$onFailureCallbackParameters;
+				} 
+				else 
+				{
+					$callback = array($this->request, 'redirectManialinkAbsolute');
+					$parameters = array('Manialink:home');
+				}
+
+				call_user_func_array($callback, $parameters);
 			}
 		}
 	}
