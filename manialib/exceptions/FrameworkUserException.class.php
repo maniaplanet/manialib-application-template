@@ -24,7 +24,7 @@ class FrameworkUserException extends FrameworkException
 		parent::__construct($userMessage, 0, null, false);
 		$this->userMessage = $userMessage;
 		$this->iLog(APP_USER_ERROR_LOG);
-		debuglog('User error: '.$userMessage);
+		Debug::log('User error: '.$userMessage);
 	} 
 }
 

@@ -22,15 +22,47 @@
  * @package ManiaLib
  */
 
+/**
+ * Autoload helper 
+ */
+abstract class AutoloadHelper
+{
+	static $paths = array();
+}
+
+/**
+ * Class autoloader
+ * @param string Class to load
+ */
+function __autoload($className)
+{
+	foreach(AutoloadHelper::$paths as $path)
+	{
+		if(file_exists($path = $path.$className.'.class.php'))
+		{
+			require_once($path);
+			return true;
+		}
+	}
+	return false;
+}
+
 /**#@+
  * @ignore
  */
 require_once( dirname(__FILE__).'/config.default.php' );
 require_once( dirname(__FILE__).'/settings.php' );
-require_once( APP_FRAMEWORK_PATH.'utils.php' );
+
+AutoloadHelper::$paths[] = APP_LIBRARIES_PATH;
+AutoloadHelper::$paths[] = APP_FRAMEWORK_LIBRARIES_PATH;
+AutoloadHelper::$paths[] = APP_FRAMEWORK_GUI_TOOLKIT_PATH.'cards/';
+AutoloadHelper::$paths[] = APP_FRAMEWORK_GUI_TOOLKIT_PATH.'layouts/';
+AutoloadHelper::$paths[] = APP_FRAMEWORK_EXCEPTIONS_PATH;
+
 require_once( APP_FRAMEWORK_LIBRARIES_PATH.'ErrorHandling.class.php' );
 require_once( APP_FRAMEWORK_LIBRARIES_PATH.'RequestEngine.class.php' );
 require_once( APP_FRAMEWORK_LIBRARIES_PATH.'SessionEngine.class.php' );
+require_once( APP_FRAMEWORK_LIBRARIES_PATH.'LangEngine.class.php' );
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'Manialink.class.php' );
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'Maniacode.class.php' );
 /**#@-*/

@@ -177,4 +177,68 @@ class LangEngine
 
 }
 
+/**
+ * i18n message. Examples: 
+ * echo __("hello_world"); 
+ * echo __("hello_login", $yetAnotherLogin);
+ * @see LangEngine
+ * @param string
+ * @return string
+ * @todo Put in the LangTookit package
+ */
+function __($textId)
+{
+	$str = LangEngine::getTranslation($textId);
+	$i=1;
+	$args = func_get_args();
+	$search = array();
+	$replace = array();
+	while(strpos($str, "[$i]")!==false)
+	{
+		$search[] = "[$i]";
+		if(isset($args[$i]))
+		{
+			$replace[] = $args[$i];
+		}
+		else
+		{
+			$replace[] = "";
+		}
+		$i++;
+	}
+	$str = str_replace($search, $replace, $str);
+	return $str;
+}
+
+/**
+ * i18n date
+ * @param int Unix timestamp
+ * @return string
+ * @todo Put in the LangTookit package
+ */
+function __date($timestamp)
+{
+	if(!$timestamp)
+	{
+		return "-";
+	}
+	
+	$return=__("date_long", 
+				__( strtolower(date("l", $timestamp)) ),             // Day name
+				__( strtolower(date("F", $timestamp)) ),             // Month name
+				    date("j", $timestamp),                           // Day number
+				__( "date_ordinal_suffix", date("S", $timestamp) ),  // Suffix
+				    date("Y", $timestamp)                            // Year
+				);					
+	
+	if($return=="date_long")
+	{
+		return date("Y/M/j", $timestamp);
+	}
+	else
+	{
+		return $return;
+	}
+}
+
 ?>
