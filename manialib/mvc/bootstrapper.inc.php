@@ -16,7 +16,13 @@ if(!APP_MVC_FRAMEWORK)
 	trigger_error('APP_MVC_FRAMEWORK must be true', E_USER_ERROR);
 }
 
+/**
+ * @ignore
+ */
 require_once(APP_FRAMEWORK_PATH.'manialib.inc.php');
+/**
+ * @ignore
+ */
 require_once(APP_MVC_FRAMEWORK_PATH.'mvc.inc.php');
 
 date_default_timezone_set(APP_DEFAULT_TIMEZONE);

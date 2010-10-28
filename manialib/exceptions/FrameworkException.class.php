@@ -245,10 +245,8 @@ class FrameworkException extends Exception
 	 * Default constructor
 	 * @param string The Exception message to throw
 	 * @param int The Exception code
-	 * @param Exception The previous exception used for the exception chaining
-	 * (since PHP 5.3, used here for forward compatibility)
-	 * @param boolean Whether you want to log the exception or not (useful to
-	 * modify the log message in subclasses)
+	 * @param Exception The previous exception used for the exception chaining (since PHP 5.3, used here for forward compatibility)
+	 * @param boolean Whether you want to log the exception or not (useful to modify the log message in subclasses)
 	 * @ignore
 	 */	
 	function __construct($message='', $code=0, Exception $previous=null, $logException=true)
