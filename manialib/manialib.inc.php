@@ -25,7 +25,7 @@
 /** 
  * Autoload helper
  * @package ManiaLib
- * @subpackage Helpers
+ * @ignore
  */ 
 abstract class AutoloadHelper
 {
