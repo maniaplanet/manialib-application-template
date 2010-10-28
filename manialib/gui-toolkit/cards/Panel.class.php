@@ -14,13 +14,12 @@
 class Panel extends Quad
 {
 	/**
-	 * Reference on the title object (Label)
-	 * @ignore
+	 * @var Label
 	 */
 	public $title;
 	/**
-	 * Reference on the title background object (Quad)
-	 * @ignore
+	 * Title background
+	 * @var Quad
 	 */
 	public $titleBg;
 	
