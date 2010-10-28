@@ -12,8 +12,12 @@
  */
 abstract class ManiacodeComponent
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected $xmlTagName;
 	protected $xml;
+	/**#@-*/
 	
 	final function save()
 	{	
@@ -120,8 +124,12 @@ abstract class ManiacodeComponent
  */
 abstract class FileDownload extends ManiacodeComponent
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected $name;
 	protected $url;
+	/**#@-*/
 	
 	function __construct($name = '', $url  = '')
 	{
@@ -183,6 +191,9 @@ abstract class FileDownload extends ManiacodeComponent
  */
 class InstallTrack extends FileDownload
 {
+	/**
+	 * @ignore
+	 */
 	protected $xmlTagName = 'install_track';
 	
 	function __construct($name='', $url='')
@@ -198,6 +209,9 @@ class InstallTrack extends FileDownload
  */
 class PlayTrack extends FileDownload
 {
+	/**
+	 * @ignore
+	 */
 	protected $xmlTagName = 'play_track';
 	
 	function __construct($name='', $url='')
@@ -214,6 +228,9 @@ class PlayTrack extends FileDownload
  */
 class PackageTrack extends FileDownload
 {
+	/**
+	 * @ignore
+	 */
 	protected $xmlTagName = 'track';
 	
 	function __construct($name='', $url='')
@@ -229,9 +246,13 @@ class PackageTrack extends FileDownload
  */
 class InstallTrackPack extends ManiacodeComponent
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected $xmlTagName = 'install_track_pack';
 	protected $name;
 	protected $tracks = array();
+	/**#@-*/
 	
 	function __construct($name='')
 	{
@@ -266,6 +287,9 @@ class InstallTrackPack extends ManiacodeComponent
  */
 class InstallReplay extends FileDownload
 {
+	/**
+	 * @ignore
+	 */
 	protected $xmlTagName = 'install_replay';
 	
 	function __construct($name='', $url='')
@@ -281,6 +305,9 @@ class InstallReplay extends FileDownload
  */
 class ViewReplay extends FileDownload
 {
+	/**
+	 * @ignore
+	 */
 	protected $xmlTagName = 'view_replay';
 	
 	function __construct($name='', $url='')
@@ -296,6 +323,9 @@ class ViewReplay extends FileDownload
  */
 class PlayReplay extends FileDownload
 {
+	/**
+	 * @ignore
+	 */
 	protected $xmlTagName = 'play_replay';
 	
 	function __construct($name='', $url='')
@@ -311,8 +341,12 @@ class PlayReplay extends FileDownload
  */
 class InstallSkin extends FileDownload
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected $xmlTagName = 'install_skin';
 	protected $file;
+	/**#@-*/
 	
 	function __construc($name='', $file='', $url='')
 	{
@@ -351,6 +385,9 @@ class InstallSkin extends FileDownload
  */
 class GetSkin extends InstallSkin
 {
+	/**
+	 * @ignore
+	 */
 	protected $xmlTagName = 'get_skin';
 	
 	function __construct($name='', $file='', $url='')
@@ -366,8 +403,12 @@ class GetSkin extends InstallSkin
  */
 class ShowMessage extends ManiacodeComponent
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected $xmlTagName = 'show_message';
 	protected $message;
+	/**#@-*/
 	
 	function __construct($message = 'This is a default message provided by Manialib')
 	{
@@ -392,8 +433,12 @@ class ShowMessage extends ManiacodeComponent
  */
 class GotoLink extends ManiacodeComponent
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected $xmlTagName = 'goto';
 	protected $link;
+	/**#@-*/
 	
 	function __construct($link = 'manialib')
 	{
@@ -418,22 +463,25 @@ class GotoLink extends ManiacodeComponent
  */
 class JoinServer extends ManiacodeComponent
 {
-	/**
-	 * Connection type value
+	/**#@+
+	 * Connection type
 	 */
 	const PLAY = 1;
 	const SPEC = 2;
 	const REFEREE = 3;
+	/**#@-*/
 	
+	/**#@+
+	 * @ignore
+	 */
 	protected $xmlTagName = 'join_server';
 	protected $ip;
 	protected $password;
 	protected $connectionType;
+	/**#@-*/
 	
-	function __construct($ip = '192.168.0.1', $password = '', $connectionType = self::PLAY)
+	function __construct($connectionType = self::PLAY)
 	{
-		$this->ip = $ip;
-		$this->password = $password;
 		$this->connectionType = $connectionType;
 	}
 	
@@ -447,22 +495,22 @@ class JoinServer extends ManiacodeComponent
 		return $this->ip;
 	}
 	
-	protected function setPassword($password)
+	function setPassword($password)
 	{
 		$this->setPassword = $password;
 	}
 	
-	protected function getPassword()
+	function getPassword()
 	{
 		return $this->password;
 	}
 	
-	protected function setConnectionType($connection)
+	function setConnectionType($connection)
 	{
 		$this->connectionType = $connection;
 	}
 	
-	protected function getConnectionType()
+	function getConnectionType()
 	{
 		return $this->connectionType;
 	}
@@ -475,8 +523,12 @@ class JoinServer extends ManiacodeComponent
  */
 class AddBuddy extends ManiacodeComponent
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected $xmlTagName = 'add_buddy';
 	protected $login;
+	/**#@-*/
 	
 	function __construct($login)
 	{
@@ -501,8 +553,12 @@ class AddBuddy extends ManiacodeComponent
  */
 class InviteBuddy
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected $xmlTagName = 'invite_buddy';
 	protected $email;
+	/**#@-*/
 	
 	function __construct($email = '')
 	{
@@ -527,6 +583,9 @@ class InviteBuddy
  */
 class AddFavourite extends AddBuddy
 {
+	/**
+	 * @ignore
+	 */
 	protected $xmlTagName = 'add_favourite';
 	
 	function __construct($login)
