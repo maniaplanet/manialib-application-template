@@ -1,5 +1,14 @@
 <?php 
+/**
+ * @author Maxime Raoust
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib_MVC
+ */
 
+/** 
+ * Helper class for dialogs
+ * @package ManiaLib_MVC
+ */ 
 class DialogHelper
 {
 	public $controller;

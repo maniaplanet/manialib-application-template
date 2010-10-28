@@ -1,9 +1,16 @@
 <?php
 /**
  * @author Maxime Raoust
- * @copyright 2009-2010 NADEO
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
  */
 
+/**
+ * Bullet
+ * Bullet to make nice lists
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Cards
+ */
 class BulletCard extends Quad
 {
 	public $bullet;

@@ -1,9 +1,16 @@
 <?php
 /**
  * @author Maxime Raoust
- * @copyright 2009-2010 NADEO
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
  */
 
+/**
+ * Dialog
+ * Dialog box with 2 buttons
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Cards
+ */
 class TwoButtonsDialogCard extends DialogCard
 {
 	public $button2;

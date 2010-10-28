@@ -1,5 +1,15 @@
 <?php 
+/**
+ * @author Maxime Raoust
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
+ */
 
+/** 
+ * Misc functions for TM styled strings
+ * @package ManiaLib
+ * @subpackage Helpers
+ */ 
 abstract class TMStrings
 {
 	/**

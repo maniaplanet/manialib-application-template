@@ -1,11 +1,16 @@
 <?php
 /**
  * @author Maxime Raoust
- * @copyright 2009-2010 NADEO
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
  */
 
-// TODO Put the dialog card inside manialib and simplify its usage (with a datastructure like DialogData)
-
+/**
+ * Dialog
+ * Dialog box with 1 button
+ * @package ManiaLib
+ * @subpackage GUIToolkit_Cards
+ */
 class DialogCard extends Panel
 {
 	public $button;

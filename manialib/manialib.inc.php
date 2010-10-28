@@ -22,9 +22,11 @@
  * @package ManiaLib
  */
 
-/**
- * Autoload helper 
- */
+/** 
+ * Autoload helper
+ * @package ManiaLib
+ * @subpackage Helpers
+ */ 
 abstract class AutoloadHelper
 {
 	static $paths = array();
@@ -33,6 +35,7 @@ abstract class AutoloadHelper
 /**
  * Class autoloader
  * @param string Class to load
+ * @ignore
  */
 function __autoload($className)
 {
