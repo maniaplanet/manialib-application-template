@@ -118,7 +118,7 @@ class ActionController
 	/**
 	 * Stuff to be executed when the controller is instanciated; override this in your controllers 
 	 */
-	function onConstruct(){}
+	protected function onConstruct(){}
 
 	final protected function addFilter(Filterable $filter)
 	{

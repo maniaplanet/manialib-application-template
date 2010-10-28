@@ -11,7 +11,7 @@ class ExamplesController extends ActionController
 {
 	protected $defaultAction = 'layouts';
 	
-	function onConstruct()
+	protected function onConstruct()
 	{
 		$this->addFilter(new RegisterRequestParametersFilter());
 		$this->addFilter(new MoodSelectorFilter());

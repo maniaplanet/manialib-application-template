@@ -11,7 +11,7 @@ class ShoutboxController extends ActionController
 {
 	protected $defaultAction = 'viewShouts';
 	
-	function onConstruct()
+	protected function onConstruct()
 	{
 		$this->addFilter(new RegisterRequestParametersFilter());
 		$this->addFilter(new MoodSelectorFilter());

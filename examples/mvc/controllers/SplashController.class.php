@@ -9,7 +9,7 @@
  */
  class SplashController extends ActionController
  {
- 	function onConstruct()
+ 	protected function onConstruct()
 	{
 		$this->addFilter(new RegisterRequestParametersFilter());
 		$this->addFilter(new MoodSelectorFilter());

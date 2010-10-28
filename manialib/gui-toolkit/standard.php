@@ -360,6 +360,7 @@ abstract class GuiElement extends GuiComponent
 		}
 	}
 	
+	// FIXME Imageid won't work out of the box with the LangEngine
 	/**
 	 * Set the image id of the element, used for internationalization
 	 */
