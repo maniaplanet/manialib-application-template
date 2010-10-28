@@ -13,6 +13,9 @@
  */
 class LineLayout extends AbstractLayout
 {
+	/**
+	 * @ignore
+	 */
 	function postFilter(GuiElement $item)
 	{
 		$this->xIndex += $item->getSizeX() + $this->marginWidth;

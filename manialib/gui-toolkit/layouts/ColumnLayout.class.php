@@ -16,6 +16,9 @@ class ColumnLayout extends AbstractLayout
 	const DIRECTION_DOWN = -1;
 	const DIRECTION_UP = 1;
 	
+	/**
+	 * @ignore
+	 */
 	protected $direction = -1;
 	
 	function setDirection($direction)
@@ -23,6 +26,9 @@ class ColumnLayout extends AbstractLayout
 		$this->direction = $direction;
 	}
 	
+	/**
+	 * @ignore
+	 */
 	function preFilter(GuiElement $item)
 	{
 		if($this->direction == self::DIRECTION_UP)
@@ -31,6 +37,9 @@ class ColumnLayout extends AbstractLayout
 		}
 	}
 	
+	/**
+	 * @ignore
+	 */
 	function postFilter(GuiElement $item)
 	{
 		if($this->direction == self::DIRECTION_DOWN)

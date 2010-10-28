@@ -25,16 +25,19 @@ abstract class GuiBase {}
  * position, size and scale info.
  * @package ManiaLib
  * @subpackage GUIToolkit
- * @ignore
  */
 abstract class GuiComponent extends GuiBase
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected $posX = 0;
 	protected $posY = 0;
 	protected $posZ = 0;
 	protected $sizeX;
 	protected $sizeY;
 	protected $scale;
+	/**#@-*/
 	
 	/**
 	 * Sets the X position of the element
@@ -179,6 +182,9 @@ abstract class GuiElement extends GuiComponent
 {
 	const USE_ABSOLUTE_URL = null;
 	
+	/**#@+
+	 * @ignore
+	 */
 	protected $style;
 	protected $subStyle;
 	protected $valign = null;
@@ -196,6 +202,7 @@ abstract class GuiElement extends GuiComponent
 	protected $imageFocusid;
 	protected $xmlTagName = 'xmltag'; // Redeclare this for each child
 	protected $xml;
+	/**#@-*/
 	
 	/**
 	 * Manialink element default constructor. It's common to specify the size of
@@ -548,6 +555,7 @@ abstract class GuiElement extends GuiComponent
 	/**
 	 * Override this method in subclasses to perform some action before
 	 * rendering the element
+	 * @ignore
 	 */
 	protected function preFilter()
 	{
@@ -557,6 +565,7 @@ abstract class GuiElement extends GuiComponent
 	/**
 	 * Override this method in subclasses to perform some action after rendering
 	 * the element
+	 * @ignore
 	 */
 	protected function postFilter()
 	{
@@ -663,6 +672,9 @@ abstract class GuiElement extends GuiComponent
  */
 class Spacer extends GuiElement
 {
+	/**
+	 * @ignore
+	 */
 	protected $xmlTagName = null;
 } 
 
@@ -687,9 +699,13 @@ class Quad extends GuiElement
 	const MedalsBig           = 'MedalsBig';
 	/**#@-*/
 	
+	/**#@+
+	 * @ignore
+	 */
 	protected $xmlTagName = 'quad';
 	protected $style = GuiDefaultStyles::Quad_Style;
 	protected $subStyle = GuiDefaultStyles::Quad_Substyle;
+	/**#@-*/
 }
 
 /**
@@ -700,8 +716,12 @@ class Quad extends GuiElement
  */
 class Icon extends Quad
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected $style = GuiDefaultStyles::Icon_Style;
 	protected $subStyle = GuiDefaultStyles::Icon_Substyle;
+	/**#@-*/
 
 	function __construct($size = 7)
 	{
@@ -717,8 +737,12 @@ class Icon extends Quad
  */
 class Bgs1 extends Quad
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected $style = Quad::Bgs1;
 	protected $subStyle = self::BgWindow1;
+	/**#@-*/
 	
 	const BgButtonBig      = 'BgButtonBig';
 	const BgButtonSmall    = 'BgButtonSmall';
@@ -763,6 +787,9 @@ class Bgs1 extends Quad
  */	
 class Bgs1InRace extends Bgs1 
 {
+	/**
+	 * @ignore
+	 */
 	protected $style = Quad::Bgs1InRace;
 }
 
@@ -773,8 +800,12 @@ class Bgs1InRace extends Bgs1
  */	
 class BgRaceScore2 extends Quad
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected $style = Quad::BgRaceScore2;
 	protected $subStyle = self::BgCardServer;
+	/**#@-*/
 	
 	const BgCardServer                = 'BgCardServer';
 	const BgScores                    = 'BgScores';
@@ -806,8 +837,12 @@ class BgRaceScore2 extends Quad
  */	
 class BgsChallengeMedals extends Quad
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected $style = Quad::BgsChallengeMedals;
 	protected $subStyle = self::BgBronze;
+	/**#@-*/
 	
 	const BgBronze                    = 'BgBronze';
 	const BgGold                      = 'BgGold';
@@ -824,8 +859,12 @@ class BgsChallengeMedals extends Quad
  */	
 class BgsPlayerCard extends Quad
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected $style = Quad::BgsPlayerCard;
 	protected $subStyle = self::BgActivePlayerCard;
+	/**#@-*/
 	
 	const BgActivePlayerCard    = 'BgActivePlayerCard';
 	const BgActivePlayerName    = 'BgActivePlayerName';
@@ -850,8 +889,12 @@ class BgsPlayerCard extends Quad
  */	
 class Icons128x128_1 extends Icon
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected $style = Quad::Icons128x128_1;
 	protected $subStyle = self::Forever;
+	/**#@-*/
 	
 	const Advanced                    = 'Advanced';
 	const Back                        = 'Back';
@@ -926,8 +969,12 @@ class Icons128x128_1 extends Icon
  */	
 class Icons128x32_1 extends Icon
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected $style = Quad::Icons128x32_1;
 	protected $subStyle = self::RT_Cup;
+	/**#@-*/
 	
 	const RT_Cup                      = 'RT_Cup';
 	const RT_Laps                     = 'RT_Laps';
@@ -947,8 +994,12 @@ class Icons128x32_1 extends Icon
  */	
 class Icons64x64_1 extends Icon
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected $style = Quad::Icons64x64_1;
 	protected $subStyle = self::GenericButton;
+	/**#@-*/
 	
 	const Stereo3D                    = '3DStereo';
 	const ArrowBlue                   = 'ArrowBlue';
@@ -1040,8 +1091,12 @@ class Icons64x64_1 extends Icon
  */	
 class MedalsBig extends Icon
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected $style = Quad::MedalsBig;
 	protected $subStyle = self::MedalBronze;
+	/**#@-*/
 	
 	const MedalBronze                 = 'MedalBronze';
 	const MedalGold                   = 'MedalGold';
@@ -1094,6 +1149,8 @@ class IconMedal extends Icon
 /**
  * Include
  * Manialink include tag, used to include another Manialink file inside a Manialink
+ * Use the setUrl() method
+ * Manialink::redirectManialink() is a shortcut
  * @package ManiaLib
  * @subpackage GUIToolkit
  */
@@ -1164,6 +1221,9 @@ class Format extends GuiElement
 	const TextValueSmall              = 'TextValueSmall';
 	/**#@-*/
 	
+	/**#@+
+	 * @ignore
+	 */
 	protected $xmlTagName = 'format';
 	protected $halign = null;
 	protected $valign = null;
@@ -1174,10 +1234,9 @@ class Format extends GuiElement
 	protected $subStyle = null;
 	protected $textSize;
 	protected $textColor;
+	/**#@-*/
 
-	function __construct()
-	{
-	}
+	function __construct() {}
 	
 	/**
 	 * Sets the text size
@@ -1219,6 +1278,9 @@ class Format extends GuiElement
 		return $this->textColor;
 	}
 
+	/**
+	 * @ignore
+	 */
 	protected function postFilter()
 	{
 		if($this->textSize !== null)
@@ -1235,6 +1297,9 @@ class Format extends GuiElement
  */
 class Label extends Format
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected $xmlTagName = 'label';
 	protected $style = GuiDefaultStyles::Label_Style;
 	protected $posX = 0;
@@ -1244,7 +1309,8 @@ class Label extends Format
 	protected $textid;
 	protected $autonewline;
 	protected $maxline;
-
+	/**#@-*/
+	
 	function __construct($sizeX = 20, $sizeY = 3)
 	{
 		$this->sizeX = $sizeX;
@@ -1321,6 +1387,9 @@ class Label extends Format
 		return $this->autonewline;
 	}
 
+	/**
+	 * @ignore 
+	 */
 	protected function postFilter()
 	{
 		parent::postFilter();
@@ -1353,10 +1422,14 @@ class Label extends Format
  */
 class Entry extends Label
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected $xmlTagName = 'entry';
 	protected $style = GuiDefaultStyles::Entry_Style;
 	protected $name;
 	protected $defaultValue;
+	/**#@-*/
 	
 	/**
 	 * Sets the name of the entry. Will be used as the parameter name in the URL
@@ -1395,6 +1468,9 @@ class Entry extends Label
 		return $this->defaultValue;
 	}
 
+	/**
+	 * @ignore 
+	 */
 	protected function postFilter()
 	{
 		parent::postFilter();
@@ -1413,8 +1489,12 @@ class Entry extends Label
  */
 class FileEntry extends Entry
 {
+	/**#@+
+	 * @ignore 
+	 */
 	protected $xmlTagName = 'fileentry';
 	protected $folder;
+	/**#@-*/
 	
 	/**
 	 * Sets the default folder
@@ -1434,6 +1514,9 @@ class FileEntry extends Entry
 		return $this->folder;
 	}
 
+	/**
+	 * @ignore 
+	 */
 	protected function postFilter()
 	{
 		parent::postFilter();
@@ -1454,8 +1537,12 @@ class Button extends Label
 	const CardButtonSmallWide     = 'CardButtonSmallWide';
 	const CardButtonSmall         = 'CardButtonSmall';
 	
+	/**#@+
+	 * @ignore 
+	 */
 	protected $subStyle = null;
 	protected $style = GuiDefaultStyles::Button_Style;
+	/**#@-*/
 	
 	function __construct($sizeX = 25, $sizeY = 3)
 	{
@@ -1470,6 +1557,9 @@ class Button extends Label
  */
 class Music extends GuiElement
 {
+	/**#@+
+	 * @ignore 
+	 */
 	protected $xmlTagName = 'music';
 	protected $halign = null;
 	protected $valign = null;
@@ -1477,7 +1567,8 @@ class Music extends GuiElement
 	protected $posY = null;
 	protected $posZ = null;
 	protected $data;
-
+	/**#@-*/
+	
 	function __construct()
 	{
 	}
@@ -1510,6 +1601,9 @@ class Music extends GuiElement
 		return $this->data;
 	}
 
+	/**
+	 * @ignore 
+	 */
 	protected function postFilter()
 	{
 		if($this->data !== null)
@@ -1524,12 +1618,16 @@ class Music extends GuiElement
  */
 class Audio extends Music
 {
+	/**#@+
+	 * @ignore 
+	 */
 	protected $xmlTagName = 'music';
 	protected $posX = 0;
 	protected $posY = 0;
 	protected $posZ = 0;
 	protected $play;
 	protected $looping = 0;
+	/**#@-*/
 
 	/**
 	 * Autoplay the data when it's done loading
@@ -1565,6 +1663,9 @@ class Audio extends Music
 		return $this->looping;
 	}
 
+	/**
+	 * @ignore 
+	 */
 	protected function postFilter()
 	{
 		parent::postFilter();
@@ -1582,6 +1683,9 @@ class Audio extends Music
  */
 class Video extends Audio
 {
+	/**
+	 * @ignore 
+	 */
 	protected $xmlTagName = 'video';
 
 	function __construct($sx = 32, $sy = 24)

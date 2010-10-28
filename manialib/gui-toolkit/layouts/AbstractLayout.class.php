@@ -13,6 +13,9 @@
  */
 abstract class AbstractLayout extends GuiComponent
 {
+	/**#@+
+	 * @ignore
+	 */
 	public $xIndex = 0;
 	public $yIndex = 0;
 	public $zIndex = 0;
@@ -20,6 +23,7 @@ abstract class AbstractLayout extends GuiComponent
 	protected $marginHeight;
 	protected $borderWidth;
 	protected $borderHeight;
+	/**#@-*/
 	
 	/**
 	 * Default constructor is used to set the size of the layout, just like
@@ -134,6 +138,7 @@ abstract class AbstractLayout extends GuiComponent
 	/**
 	 * Override this method to perform an action before rendering an item.
 	 * Typical use: look for overflow
+	 * @ignore
 	 */
 	function preFilter(GuiElement $item) 
 	{	
@@ -141,7 +146,8 @@ abstract class AbstractLayout extends GuiComponent
 
 	/**
 	 * Override this method to perform an action after rendering an an item.
-	 * Typical use: update x,y,z indexes for the next item 
+	 * Typical use: update x,y,z indexes for the next item
+	 * @ignore 
 	 */
 	function postFilter(GuiElement $item)
 	{

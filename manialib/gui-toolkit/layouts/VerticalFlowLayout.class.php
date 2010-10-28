@@ -13,9 +13,16 @@
  */
 class VerticalFlowLayout extends AbstractLayout
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected $maxWidth = 0;
 	protected $currentColumnElementCount = 0;
+	/**#@-*/
 
+	/**
+	 * @ignore
+	 */
 	function preFilter(GuiElement $item)
 	{
 		$availableHeight = $this->sizeY + $this->yIndex - $this->borderHeight;
@@ -31,6 +38,9 @@ class VerticalFlowLayout extends AbstractLayout
 
 	}
 
+	/**
+	 * @ignore
+	 */
 	function postFilter(GuiElement $item)
 	{
 		$this->yIndex -= $item->getSizeY() + $this->marginHeight;
