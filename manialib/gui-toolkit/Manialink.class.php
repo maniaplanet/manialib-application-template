@@ -26,6 +26,7 @@ abstract class Manialink extends GuiBase
 	public static $parentNodes;
 	public static $parentLayouts;
 	public static $linksEnabled = true;
+	protected static $dicos = array();
 
 	/**
 	 * Loads the Manialink GUI toolkit. This should be called before doing
@@ -67,6 +68,10 @@ abstract class Manialink extends GuiBase
 	 */
 	final public static function render($return = false)
 	{
+		if(self::$dicos)
+		{
+			array_map(array(self, 'includeManialink'), self::$dicos);
+		}
 		if($return)
 		{
 			return self::$domDocument->saveXML();
@@ -189,6 +194,24 @@ abstract class Manialink extends GuiBase
 	static function enableLinks()
 	{
 		self::$linksEnabled = true;
+	}
+	
+	/**
+	 * Shortcut for including files in manialinks
+	 */
+	static function includeManialink($url)
+	{
+		$ui = new IncludeManialink();
+		$ui->setUrl($url);
+		$ui->save();
+	}
+	
+	/**
+	 * Add a dictionnary file, will be included when rendering
+	 */
+	static function addDico($url)
+	{
+		self::$dicos[] = $url;
 	}
 }
 
