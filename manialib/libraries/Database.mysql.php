@@ -12,6 +12,7 @@
  * Database connection instance
  * @package ManiaLib
  * @subpackage Database
+ * @ignore
  */
 class DatabaseConnection
 {
@@ -147,6 +148,7 @@ class DatabaseConnection
  * Database query result
  * @package ManiaLib
  * @subpackage Database
+ * @ignore
  */
 class DatabaseRecordSet
 {
@@ -203,6 +205,7 @@ class DatabaseRecordSet
  * Misc database tools
  * @package ManiaLib
  * @subpackage Database
+ * @ignore
  */
 abstract class DatabaseTools
 {
@@ -253,24 +256,28 @@ abstract class DatabaseTools
 /**
  * @package ManiaLib
  * @subpackage Database
+ * @ignore
  */
 class DatabaseException extends FrameworkException {}
 
 /**
  * @package ManiaLib
  * @subpackage Database
+ * @ignore
  */
 class DatabaseConnectionException extends DatabaseException {}
 
 /**
  * @package ManiaLib
  * @subpackage Database
+ * @ignore
  */
 class DatabaseDisconnectionException extends DatabaseException {}
 
 /**
  * @package ManiaLib
  * @subpackage Database
+ * @ignore
  */
 class DatabaseSelectionException extends DatabaseException
 {
@@ -283,6 +290,7 @@ class DatabaseSelectionException extends DatabaseException
 /**
  * @package ManiaLib
  * @subpackage Database
+ * @ignore
  */
 class DatabaseQueryException extends DatabaseException
 {
