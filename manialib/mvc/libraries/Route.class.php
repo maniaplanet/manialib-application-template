@@ -25,11 +25,17 @@ abstract class Route
 	 */
 	const NONE = -3;
 	
+	/**
+	 * @ignore
+	 */
 	static function separatorToUpperCamelCase($string)
 	{
 		return implode('', array_map('ucfirst', explode(APP_MVC_URL_SEPARATOR, $string)));
 	}
 	
+	/**
+	 * @ignore
+	 */
 	static function separatorToCamelCase($string)
 	{
 		$string = implode('', array_map('ucfirst', explode(APP_MVC_URL_SEPARATOR, $string)));
@@ -38,6 +44,9 @@ abstract class Route
 		return $string;
 	}
 	
+	/**
+	 * @ignore
+	 */
 	static function camelCaseToSeparator($string)
 	{
 		return strtolower(preg_replace('/([^A-Z])([A-Z])/', '$1'.APP_MVC_URL_SEPARATOR.'$2', $string)); 

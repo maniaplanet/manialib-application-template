@@ -6,18 +6,11 @@
  * @subpackage DefaultFilters
  */
 
-if(APP_HPHP_COMPILE)
-{
-	throw new Exception('gettext is not supported with HPHP for now');
-}
-
 if(class_exists('GettextInitFilterConfig', false))
 {
 	/**
 	 * Gettext init config
-	 * 
 	 * Redeclare this class in your config in you want to override values
-	 * 
 	 * @package ManiaLib_MVC
  	 * @subpackage DefaultFilters
 	 */
@@ -35,15 +28,16 @@ if(class_exists('GettextInitFilterConfig', false))
 
 /**
  * Gettext init
- * 
  * Init the "gettext" extension if you want to used it. For advanced users only.
  * Not that gettext doesn't work with HipHop for PHP
- * 
  * @package ManiaLib_MVC
  * @subpackage DefaultFilters
  */
 class GettextInitFilter extends AdvancedFilter
 {
+	/**
+	 * @ignore
+	 */
 	function preFilter()
 	{
 		if(ENABLE_GETTEXT_INIT)
@@ -63,6 +57,9 @@ class GettextInitFilter extends AdvancedFilter
 		}
 	}
 	
+	/**
+	 * @ignore
+	 */
 	function postFilter() {}
 }
 

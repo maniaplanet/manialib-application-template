@@ -8,18 +8,20 @@
 
 /**
  * Authentication filter
- * 
  * Register this filter in your controller, and all the actions will require 
  * authentication using the Manialink Authentication System developped by NADEO
- * 
  * @see AuthenticationToken 
  * @package ManiaLib_MVC
  * @subpackage DefaultFilters
  */
 class AuthenticationTokenFilter extends AdvancedFilter
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected static $onFailureCallback;
 	protected static $onFailureCallbackParameters;
+	/**#@-*/
 	
 	static function setOnFailureCallback($callback)
 	{
@@ -31,6 +33,9 @@ class AuthenticationTokenFilter extends AdvancedFilter
 		self::$onFailureCallbackParameters = $parameters;
 	}
 	
+	/**
+	 * @ignore
+	 */
 	function preFilter()
 	{
 		if(!$this->session->exists('isAuthentified'))
@@ -72,6 +77,9 @@ class AuthenticationTokenFilter extends AdvancedFilter
 		}
 	}
 
+	/**
+	 * @ignore
+	 */
 	function postFilter() {}
 }
 ?>

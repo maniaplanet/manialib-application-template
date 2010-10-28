@@ -14,10 +14,8 @@ require_once(APP_MVC_FRAMEWORK_EXCEPTIONS_PATH.'MVCException.class.php');
 
 /**
  * Action controller
- * 
  * This is the base class for all controllers. Extend ActionController to create
  * a new controller for your application.
- * 
  * <b>Naming conventions</b>
  * <ul>
  * <li>Controller classes are suffixed by "Controller", naming is regular CamelCase class convention</li>
@@ -27,7 +25,6 @@ require_once(APP_MVC_FRAMEWORK_EXCEPTIONS_PATH.'MVCException.class.php');
  * <li>The URLs will be lowercase (camelCase is mapped to underscore-separated names)</li>
  * <li>You can change the default separator ("_") in the config using the APP_MVC_URL_SEPARATOR constant</li>
  * </ul>
- * 
  * <b>Example</b>
  * <code>
  * class HomeController extends ActionController
@@ -43,7 +40,6 @@ require_once(APP_MVC_FRAMEWORK_EXCEPTIONS_PATH.'MVCException.class.php');
  *    function anotherAction() {} // mapped by /home/another_action/
  * }
  * </code>
- * 
  * @package ManiaLib_MVC
  * @todo Think about "plugins" eg. you want to do a shoutbox plugin, how everything works?
  */
@@ -55,15 +51,17 @@ class ActionController
 	 */
 	protected $defaultAction = URL_PARAM_DEFAULT_ACTION;
 	/**
-	 * Current controller name 
+	 * Current controller name
 	 */	
 	protected $controllerName;
 	/**
 	 * @var array[Filterable]
+	 * @ignore
 	 */
 	protected $filters = array();
 	/**
 	 * @var array[ReflectionMethod]
+	 * @ignore
 	 */
 	protected $reflectionMethods = array();
 	/**
@@ -78,7 +76,10 @@ class ActionController
 	 * @var ResponseEngine
 	 */
 	protected $response;
-	
+
+	/**
+	 * @ignore
+	 */
 	final public static function dispatch()
 	{
 		$request = RequestEngineMVC::getInstance();
@@ -88,6 +89,7 @@ class ActionController
 	
 	/**
 	 * @return ActionController
+	 * @ignore
 	 */
 	final static public function getController($controllerName)
 	{
@@ -105,6 +107,7 @@ class ActionController
 
 	/**
 	 * If you want to do stuff at instanciation, override self::onConstruct()
+	 * @ignore
 	 */
 	function __construct($controllerName)
 	{
@@ -120,6 +123,9 @@ class ActionController
 	 */
 	protected function onConstruct(){}
 
+	/**
+	 * @todo doc
+	 */
 	final protected function addFilter(Filterable $filter)
 	{
 		$this->filters[] = $filter;
@@ -127,12 +133,16 @@ class ActionController
 
 	/**
 	 * @return array[Filterable]
+	 * @ignore
 	 */
 	final public function getFilters()
 	{
 		return $this->filters;
 	}
 
+	/**
+	 * @todo doc
+	 */
 	final protected function chainAction($controllerName=null, $actionName)
 	{
 		if($controllerName==null ||  $controllerName == $this->controllerName)
@@ -146,6 +156,9 @@ class ActionController
 		}
 	}
 
+	/**
+	 * @todo doc
+	 */
 	final protected function chainActionAndView($controllerName=null, $actionName, $resetViews = true)
 	{
 		if($resetViews)
@@ -165,6 +178,9 @@ class ActionController
 		}
 	}
 
+	/**
+	 * @ignore
+	 */
 	final public function checkActionExists($actionName)
 	{
 		if(!array_key_exists($actionName, $this->reflectionMethods))
@@ -188,6 +204,9 @@ class ActionController
 		}
 	}
 
+	/**
+	 * @ignore
+	 */
 	final protected function executeActionCrossController($controllerName, $actionName)
 	{
 		$controller = self::getController($controllerName);
@@ -210,6 +229,9 @@ class ActionController
 		}
 	}
 
+	/**
+	 * @ignore
+	 */
 	final public function executeAction($actionName)
 	{
 		if(!array_key_exists($actionName, $this->reflectionMethods))
@@ -242,6 +264,9 @@ class ActionController
 		call_user_func_array(array($this, $actionName), $callParameters);
 	}
 
+	/**
+	 * @ignore
+	 */
 	final protected function launch()
 	{
 		$actionName = $this->request->getAction($this->defaultAction);
@@ -264,6 +289,9 @@ class ActionController
 		}
 	}
 
+	/**
+	 * @todo doc
+	 */
 	final protected function showDebugMessage($message)
 	{
 		if(APP_DEBUG_LEVEL == DEBUG_OFF)
@@ -283,11 +311,13 @@ class ActionController
 
 /**
  * @package ManiaLib_MVC
+ * @ignore
  */
 class ControllerNotFoundException extends MVCException {}
 
 /**
  * @package ManiaLib_MVC
+ * @ignore
  */
 class ActionNotFoundException extends MVCException {}
 

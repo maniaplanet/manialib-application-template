@@ -11,10 +11,17 @@
  */
 class RequestEngineMVC extends RequestEngine
 {
+	/**
+	 * @ignore 
+	 */
 	static private $instance;
 	
+	/**#@+
+	 * @ignore 
+	 */
 	protected $action;
 	protected $controller;
+	/**#@-*/
 	
 	/**
 	 * Gets the instance
@@ -30,6 +37,9 @@ class RequestEngineMVC extends RequestEngine
 		return self::$instance;
 	}
 	
+	/**
+	 * @ignore 
+	 */
 	protected function __construct()
 	{
 		parent::__construct();
@@ -114,6 +124,9 @@ class RequestEngineMVC extends RequestEngine
 		return $this->createLinkString($controller, $action, $args);
 	}
 	
+	/**
+	 * @ignore 
+	 */
 	protected function createLinkString($controller = Route::CUR, $action = Route::CUR, $params)
 	{
 		switch($controller)

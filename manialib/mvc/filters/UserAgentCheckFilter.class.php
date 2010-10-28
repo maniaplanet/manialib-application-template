@@ -8,14 +8,16 @@
 
 /**
  * User agent checker
- * 
  * Forces GameBox user agent, redirects to trackmania.com otherwise
- * 
  * @package ManiaLib_MVC
  * @subpackage DefaultFilters
  */
 class UserAgentCheckFilter extends AdvancedFilter
 {
+	/**
+	 * @ignore
+	 * @todo faire une page/vue personalisable
+	 */
 	function preFilter()
 	{
 		if(APP_DEBUG_LEVEL == 0)
@@ -43,6 +45,9 @@ HTML;
 		}
 	}
 	
+	/**
+	 * @ignore
+	 */
 	function postFilter() {}
 }
 

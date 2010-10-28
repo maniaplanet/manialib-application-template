@@ -8,6 +8,7 @@
 /**
  * Filter interface
  * @package ManiaLib_MVC
+ * @todo doc
  */
 interface Filterable 
 {

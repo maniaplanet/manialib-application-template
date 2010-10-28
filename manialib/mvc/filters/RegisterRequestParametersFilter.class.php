@@ -8,10 +8,8 @@
 
 /**
  * Register request parameters
- * 
  * Register usual paramaters such as login, nickname etc. so that you only need 
  * to access them through the SessionEngine
- * 
  * Example:
  * If your enable this extension, to retrieve the login of the current user you
  * only have to do:
@@ -20,12 +18,14 @@
  * //...
  * $session->get('login');
  * </code>
- * 
  * @package ManiaLib_MVC
  * @subpackage DefaultFilters
  */
 class RegisterRequestParametersFilter extends AdvancedFilter
 {
+	/**
+	 * @ignore
+	 */
 	function preFilter()
 	{		
 		if($playerLogin = $this->request->get('playerlogin'))
@@ -42,6 +42,9 @@ class RegisterRequestParametersFilter extends AdvancedFilter
 		$this->request->registerGlobalParam('game');
 	}
 	
+	/**
+	 * @ignore
+	 */
 	function postFilter() {}
 }
 

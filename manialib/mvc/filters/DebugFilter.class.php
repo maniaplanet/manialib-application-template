@@ -8,14 +8,15 @@
 
 /**
  * Debug filter
- * 
  * Restricts users that can access the Manialink (for debugging purpose only)
- * 
  * @package ManiaLib_MVC
  * @subpackage DefaultFilters
  */
 class DebugFilter extends AdvancedFilter
 {
+	/**
+	 * @ignore
+	 */
 	function preFilter()
 	{
 		if(APP_DEBUG_LEVEL && defined('AUTHORIZED_USERS'))

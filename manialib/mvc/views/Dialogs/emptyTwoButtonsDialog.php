@@ -3,11 +3,9 @@
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO
  * @package ManiaLib_MVC
- */
-
-/**#@+
  * @ignore
  */
+
 $request = RequestEngineMVC::getInstance();
 $response = ResponseEngine::getInstance();
 
@@ -32,6 +30,5 @@ Manialink::beginFrame(0, 0, 15);
 	$ui->save();	
 }
 Manialink::endFrame();
-/**#@-*/
 
 ?>

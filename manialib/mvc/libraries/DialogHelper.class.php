@@ -11,16 +11,42 @@
  */ 
 class DialogHelper
 {
+	/**
+	 * @var string 
+	 */
 	public $controller;
+	/**
+	 * @var string 
+	 */
 	public $action;
-	
+	/**
+	 * @var string 
+	 */
 	public $title = 'Dialog';
+	/**
+	 * @var int 
+	 */
 	public $height = 50;
+	/**
+	 * @var int 
+	 */
 	public $width = 65;
 	// TODO add position
+	/**
+	 * @var string 
+	 */
 	public $buttonLabel = 'Ok';
+	/**
+	 * @var string 
+	 */
 	public $buttonManialink;
+	/**
+	 * @var string 
+	 */
 	public $button2Label = 'Cancel';
+	/**
+	 * @var string 
+	 */
 	public $button2Manialink;
 	
 	function __construct($controller = 'Dialog', $action = 'emptyDialog')

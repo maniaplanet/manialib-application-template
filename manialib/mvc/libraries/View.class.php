@@ -8,9 +8,13 @@
 /**
  * View rendering stuff
  * @package ManiaLib_MVC
+ * @todo doc
  */
 abstract class View
 {
+	/**
+	 * @todo doc
+	 */
 	public static function render($controllerName, $actionName=null)
 	{
 		$viewFilename = self::getFilename($controllerName,$actionName);
@@ -31,6 +35,9 @@ abstract class View
 		ob_end_clean();
 	}
 	
+	/**
+	 * @ignore
+	 */
 	public static function getFilename($controllerName, $actionName=null, $path=APP_MVC_VIEWS_PATH)
 	{
 		if($controllerName && $actionName)
@@ -46,6 +53,7 @@ abstract class View
 
 /**
  * @package ManiaLib_MVC
+ * @ignore
  */
 class ViewNotFoundException extends MVCException {}
 

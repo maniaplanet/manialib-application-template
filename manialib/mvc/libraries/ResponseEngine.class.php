@@ -7,20 +7,27 @@
 
 /**
  * Response engine
- * 
  * Allows to pass values between filters, controllers and views
- * 
  * @package ManiaLib_MVC
+ * @todo doc
  */
 class ResponseEngine
 {
+	/**
+	 * @ignore 
+	 */
 	private static $instance;
 
+	/**#@+
+	 * @ignore 
+	 */
 	private $vars = array();
 	private $body = '';
 	private $views = array();
+	/**#@-*/
 	/**
 	 * @var DialogHelper
+	 * @ignore
 	 */
 	public $dialog;
 
@@ -38,13 +45,22 @@ class ResponseEngine
 		return self::$instance;
 	}
 
+	/**
+	 * @ignore 
+	 */
 	private function __construct() {}
 
+	/**
+	 * @ignore 
+	 */
 	public function __set($name, $value)
 	{
 		$this->vars[$name] = $value;
 	}
 	
+	/**
+	 * @ignore 
+	 */
 	public function __get($name)
 	{
 		if(array_key_exists($name, $this->vars))
@@ -57,6 +73,9 @@ class ResponseEngine
 		}
 	}
 	
+	/**
+	 * @todo doc 
+	 */
 	public function get($name, $default=null)
 	{
 		if(array_key_exists($name, $this->vars))
@@ -69,6 +88,9 @@ class ResponseEngine
 		}
 	}
 	
+	/**
+	 * @todo doc 
+	 */
 	public function registerDialog(DialogHelper $dialog)
 	{
 		if($this->dialog)
@@ -78,21 +100,33 @@ class ResponseEngine
 		$this->dialog = $dialog;
 	}
 	
+	/**
+	 * @todo doc 
+	 */
 	public function registerView($controllerName, $actionName)
 	{
 		$this->views[] = array($controllerName, $actionName);
 	}
 	
+	/**
+	 * @todo doc 
+	 */
 	public function resetViews()
 	{
 		$this->views = array();
 	}
 	
+	/**
+	 * @todo doc 
+	 */
 	public function appendBody($content)
 	{
 		$this->body .= $content;
 	}
 	
+	/**
+	 * @ignore
+	 */
 	public function render()
 	{
 		View::render('header');
@@ -114,11 +148,13 @@ class ResponseEngine
 
 /**
  * @package ManiaLib_MVC
+ * @ignore
  */
 class ResponseEngineException extends MVCException {}
 
 /**
  * @package ManiaLib_MVC
+ * @ignore
  */
 class DialogAlreadyRegistered extends ResponseEngineException {}
 
