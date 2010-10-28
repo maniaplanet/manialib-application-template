@@ -6,26 +6,30 @@
  * @copyright 2009-2010 NADEO
  */
 
-// Put 1 to get verbose for error messages (for developement only !)
-define('APP_DEBUG_LEVEL', 1);
-
-// Default controller.
-define('URL_PARAM_DEFAULT_CONTROLLER', 'home');
-
-// URL of your manialink
+// URL of your Manialink
 define('APP_URL', 'http://localhost/manialib/');
 
-// Name of your manialink
+// "Short Manialink" of your Manialink
 define('APP_MANIALINK', 'manialib');
 
-// Mysql config
-define('APP_DATABASE_HOST', '127.0.0.1');
+// Default controller
+define('URL_PARAM_DEFAULT_CONTROLLER', 'Home');
+
+// Debug level
+// 1 for easy development
+// 0 IF YOUR MANIALINK IS PUBLIC !
+define('APP_DEBUG_LEVEL', 1);
+
+// MySQL config
+define('APP_DATABASE_HOST', 'localhost');
 define('APP_DATABASE_USER', 'root');
 define('APP_DATABASE_PASSWORD', '');
 define('APP_DATABASE_NAME', 'manialib');
 
-// Misc
-define('APP_MVC_FRAMEWORK', true);
+// Application base paths.
+// In most cases you shouldn't need to change that
 define('APP_PATH', dirname(__FILE__).'/../');
+define('APP_FRAMEWORK_PATH', APP_PATH.'manialib/');
+define('APP_MVC_FRAMEWORK_PATH', APP_FRAMEWORK_PATH.'mvc/');
 
 ?>

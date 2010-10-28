@@ -9,12 +9,10 @@
  * @copyright 2009-2010 NADEO
  */
 
+define('APP_MVC_FRAMEWORK', true);
+
 // Load config
 require_once(dirname(__FILE__).'/config/config.php');
-
-// Load framework
-require_once(dirname(__FILE__).'/manialib/manialib.inc.php');
-require_once(dirname(__FILE__).'/manialib/mvc/mvc.inc.php');
 
 // Bootstrapper: actually do the MVC magic
 require_once(APP_MVC_FRAMEWORK_PATH.'bootstrapper.inc.php');
