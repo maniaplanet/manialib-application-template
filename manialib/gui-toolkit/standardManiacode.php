@@ -9,6 +9,7 @@
  * Maniacode Toolkit base component
  * @package ManiaLib
  * @subpackage ManiacodeToolkit
+ * @ignore
  */
 abstract class ManiacodeComponent
 {

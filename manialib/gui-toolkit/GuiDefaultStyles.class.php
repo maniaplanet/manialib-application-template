@@ -3,11 +3,12 @@
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
+ * @ignore
  */
 
 /**
  * Default element styles
- * 
+ * @ignore
  * @package ManiaLib
  * @subpackage GUIToolkit
  */

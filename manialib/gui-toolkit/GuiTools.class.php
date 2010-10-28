@@ -7,9 +7,7 @@
 
 /**
  * GUI Tools
- * 
- * Provides a set of static methods usefull for the GUI toolkit
- * 
+ * Misc helpers for the GUI toolkit
  * @package ManiaLib
  * @subpackage GUIToolkit
  */

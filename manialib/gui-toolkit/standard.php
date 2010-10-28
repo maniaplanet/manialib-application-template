@@ -5,35 +5,27 @@
  * @package ManiaLib
  */
 
-/**
+/**#@+
  * @ignore
  */
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'GuiTools.class.php' );
-
-/**
- * @ignore
- */
 require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'GuiDefaultStyles.class.php' );
+/**#@-*/
 
 /**
  * Base GUI class for type hierarchy
  * @package ManiaLib
  * @subpackage GUIToolkit
+ * @ignore
  */
 abstract class GuiBase {}
-
-/**
- * Base for style classes
- * @package ManiaLib
- * @subpackage GUIToolkit
- */
-abstract class GuiStyles extends GuiBase {}
 
 /**
  * The GuiComponent is a generic and abstract element that only contains
  * position, size and scale info.
  * @package ManiaLib
  * @subpackage GUIToolkit
+ * @ignore
  */
 abstract class GuiComponent extends GuiBase
 {
@@ -1065,6 +1057,7 @@ class MedalsBig extends Icon
  * @deprecated Use Icons64x64_1 instead
  * @package ManiaLib
  * @subpackage GUIToolkit
+ * @ignore
  */
 class Icon64 extends Icon
 {
@@ -1077,6 +1070,7 @@ class Icon64 extends Icon
  * @deprecated Use Icons128x32_1 instead
  * @package ManiaLib
  * @subpackage GUIToolkit
+ * @ignore
  */
 class Icon128 extends Icon
 {
@@ -1089,6 +1083,7 @@ class Icon128 extends Icon
  * @deprecated Use MedalsBig instead
  * @package ManiaLib
  * @subpackage GUIToolkit
+ * @ignore
  */
 class IconMedal extends Icon
 {

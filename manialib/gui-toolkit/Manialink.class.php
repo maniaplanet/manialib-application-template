@@ -14,28 +14,27 @@ require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'layouts/AbstractLayout.class.php' 
 
 /**
  * GUI Toolkit
- * 
  * Manialink GUI Toolkit main class
- *
  * @package ManiaLib
  * @subpackage GUIToolkit
  */
 abstract class Manialink extends GuiBase
 {
+	/**#@+
+	 * @ignore
+	 */
 	public static $domDocument;
 	public static $parentNodes;
 	public static $parentLayouts;
 	public static $linksEnabled = true;
 	protected static $dicos = array();
-
+	/**#@-*/
+	
 	/**
 	 * Loads the Manialink GUI toolkit. This should be called before doing
 	 * anything with the toolkit.
-	 *
-	 * @param bool Whether you want to create the root "<manialink>" element in
-	 * the XML
-	 * @param int The timeout value in seconds. Use 0 if you have dynamic pages
-	 * to avoid caching
+	 * @param bool Whether you want to create the root "<manialink>" element in the XML
+	 * @param int The timeout value in seconds. Use 0 if you have dynamic pages to avoid caching
 	 */
 	final public static function load($createManialinkElement = true, $timeoutValue=0)
 	{
@@ -63,7 +62,6 @@ abstract class Manialink extends GuiBase
 
 	/**
 	 * Renders the Manialink
-	 *
 	 * @param boolean Wehther you want to return the XML instead of printing it
 	 */
 	final public static function render($return = false)
@@ -94,8 +92,7 @@ abstract class Manialink extends GuiBase
 	 * positionned using constraints defined by the layout
 	 * @todo Be able to use the scale attribute
 	 */
-	final public static function beginFrame($x=0, $y=0, $z=0,
-	AbstractLayout $layout=null)
+	final public static function beginFrame($x=0, $y=0, $z=0, AbstractLayout $layout=null)
 	{
 		// Update parent layout
 		$parentLayout = end(self::$parentLayouts);
@@ -140,7 +137,10 @@ abstract class Manialink extends GuiBase
 		array_pop(self::$parentNodes);
 		array_pop(self::$parentLayouts);
 	}
-
+	
+	/**
+	 * Redirects the user to the specified Manialink
+	 */
 	final public static function redirect($link, $render = true)
 	{
 		self::$domDocument = new DOMDocument('1.0', 'utf8');
@@ -169,7 +169,8 @@ abstract class Manialink extends GuiBase
 	}
 
 	/**
-	 * Add the given XML code to the document
+	 * Append some XML code to the document
+	 * @param string Some XML code
 	 */
 	static function appendXML($XML)
 	{
@@ -180,8 +181,7 @@ abstract class Manialink extends GuiBase
 	}
 
 	/**
-	 * Disable all Manialinks, URLs and actions of GUIElement objects as long as
-	 * it is disabled
+	 * Disable all Manialinks, URLs and actions of GUIElement objects as long as it is disabled
 	 */
 	static function disableLinks()
 	{
