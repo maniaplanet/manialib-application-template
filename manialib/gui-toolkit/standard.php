@@ -1334,14 +1334,14 @@ class Label extends Format
 			if(Manialink::$linksEnabled)
 				$this->xml->setAttribute('text', $this->text);
 			else
-				$this->xml->setAttribute('text', stripLinks($this->text));
+				$this->xml->setAttribute('text', TMStrings::stripLinks($this->text));
 		}	
 		if($this->textid !== null)
 		{
 			if(Manialink::$linksEnabled)
 				$this->xml->setAttribute('textid', $this->textid);
 			else
-				$this->xml->setAttribute('textid', stripLinks($this->textid));
+				$this->xml->setAttribute('textid', TMStrings::stripLinks($this->textid));
 		}
 		if($this->autonewline !== null)
 			$this->xml->setAttribute('autonewline', $this->autonewline);

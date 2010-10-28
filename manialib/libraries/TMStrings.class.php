@@ -34,7 +34,7 @@ abstract class TMStrings
 	 * @param string
 	 * @return string
 	 */
-	function stripLinks($string)
+	static function stripLinks($string)
 	{
 		return preg_replace(
 			'/\\$[hlp](.*?)(?:\\[.*?\\](.*?))?(?:\\$[hlp]|$)/ixu', '$1$2', 
