@@ -46,6 +46,9 @@ class Navigation extends Quad
 	 */
 	public $lastItem;
 	
+	/**#@+
+	 * @ignore
+	 */
 	protected $showQuitButton = true;
 	protected $items = array();
 	protected $bottomItems = array();
@@ -53,6 +56,7 @@ class Navigation extends Quad
 	protected $yIndex = -10;
 	protected $sizeX = 30;
 	protected $sizeY = 96;
+	/**#@-*/
 
 	function __construct () 
 	{	
@@ -122,11 +126,17 @@ class Navigation extends Quad
 		$this->showQuitButton = false;
 	}
 	
+	/**
+	 * @ignore
+	 */
 	protected function preFilter () 
 	{
 		Manialink::beginFrame(-64, 48, 1);
 	}
 	
+	/**
+	 * @ignore
+	 */
 	protected function postFilter () 
 	{
 		// Frame was created in preFilter

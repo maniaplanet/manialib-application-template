@@ -13,6 +13,9 @@
  */
 class TwoButtonsDialogCard extends DialogCard
 {
+	/**
+	 * @var Button
+	 */
 	public $button2;
 	
 	function __construct($sizeX = 65, $sizeY = 25)

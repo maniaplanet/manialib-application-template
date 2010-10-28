@@ -13,20 +13,12 @@ require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'GuiDefaultStyles.class.php' );
 /**#@-*/
 
 /**
- * Base GUI class for type hierarchy
- * @package ManiaLib
- * @subpackage GUIToolkit
- * @ignore
- */
-abstract class GuiBase {}
-
-/**
  * The GuiComponent is a generic and abstract element that only contains
  * position, size and scale info.
  * @package ManiaLib
  * @subpackage GUIToolkit
  */
-abstract class GuiComponent extends GuiBase
+abstract class GuiComponent
 {
 	/**#@+
 	 * @ignore

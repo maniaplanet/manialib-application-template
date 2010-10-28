@@ -14,14 +14,22 @@
  */ 
 class NavigationButton extends Quad
 {
+	/**
+	 * @var Label
+	 */
 	public $text;
+	/**
+	 * @var Icon
+	 */
 	public $icon;
-	
-	protected $forceLinks = true;
 	public $iconSizeMinimizer = 1.5;
 	public $textSizeMinimizer = 3;
 	public $textOffset = 9;
 	public $isSelected = false;
+	/**
+	 * @ignore
+	 */
+	protected $forceLinks = true;
 
 	function __construct ($sx=29.5, $sy=8.5) 
 	{
@@ -52,6 +60,9 @@ class NavigationButton extends Quad
 		$this->isSelected = true;	
 	}
 	
+	/**
+	 * @ignore
+	 */
 	protected function postFilter ()
 	{		
 		if($this->isSelected)

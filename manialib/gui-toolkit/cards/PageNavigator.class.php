@@ -13,12 +13,33 @@
  */
 class PageNavigator extends GuiComponent
 {
+	/**
+	 * @var Icons64x64_1
+	 */
 	public $arrowNext;
+	/**
+	 * @var Icons64x64_1
+	 */
 	public $arrowPrev;
+	/**
+	 * @var Icons64x64_1
+	 */
 	public $arrowFastNext;
+	/**
+	 * @var Icons64x64_1
+	 */
 	public $arrowFastPrev;
+	/**
+	 * @var Icons64x64_1
+	 */
 	public $arrowLast;
+	/**
+	 * @var Icons64x64_1
+	 */
 	public $arrowFirst;
+	/**
+	 * @var Label
+	 */
 	public $text;
 
 	public $arrowNoneStyle = Icons64x64_1::StarGold;
@@ -29,11 +50,15 @@ class PageNavigator extends GuiComponent
 	public $arrowFirstStyle = Icons64x64_1::ArrowFirst;
 	public $arrowLastStyle = Icons64x64_1::ArrowLast;
 
+	/**#@+
+	 * @ignore
+	 */
 	protected $showLast;
 	protected $showFastNext;
 	protected $showText;
 	protected $pageNumber;
 	protected $currentPage;
+	/**#@-*/
 
 	function __construct($iconSize = 5)
 	{

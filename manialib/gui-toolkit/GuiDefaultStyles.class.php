@@ -12,7 +12,7 @@
  * @package ManiaLib
  * @subpackage GUIToolkit
  */
-abstract class GuiDefaultStyles extends GuiBase
+abstract class GuiDefaultStyles
 {
 	const Quad_Style = Quad::Bgs1;
 	const Quad_Substyle = Bgs1::BgWindow1;

@@ -13,19 +13,34 @@
  */ 
 class ChallengeCard extends Quad
 {
+	/**
+	 * @var Quad
+	 */
 	public $bgImage;
+	/**
+	 * @var Label
+	 */
 	public $text;
+	/**
+	 * @var Label
+	 */
 	public $points;
+	/**
+	 * @var Label
+	 */
 	public $lockedMessage;
-	protected $showArrow = false;
 	
+	/**#@+
+	 * @ignore
+	 */
+	protected $showArrow = false;
 	protected $sizeX = 16;
 	protected $sizeY = 17;
 	protected $medal;
-	
 	protected $clickable = true;
 	protected $clickableMask;
 	protected $clickableLock;
+	/**#@-*/
 	
 	function __construct ()
 	{
@@ -80,6 +95,9 @@ class ChallengeCard extends Quad
 		$this->clickable = false;
 	}
 	
+	/**
+	 * @ignore
+	 */
 	protected function preFilter()
 	{
 		$this->setPositionZ($this->posZ+3);
@@ -90,6 +108,9 @@ class ChallengeCard extends Quad
 		}
 	}
 	
+	/**
+	 * @ignore
+	 */
 	protected function postFilter()
 	{
 		// Algin the title and its bg at the top center of the main quad		

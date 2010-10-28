@@ -13,7 +13,13 @@
  */
 class DialogCard extends Panel
 {
+	/**
+	 * @var Button
+	 */
 	public $button;
+	/**
+	 * @ignore
+	 */
 	protected $elementsToShow = array();
 	
 	function __construct($sizeX = 65, $sizeY = 25)
@@ -29,6 +35,9 @@ class DialogCard extends Panel
 		$this->elementsToShow[] = $this->button;
 	}
 	
+	/**
+	 * @ignore
+	 */
 	protected function postFilter()
 	{
 		parent::postFilter();

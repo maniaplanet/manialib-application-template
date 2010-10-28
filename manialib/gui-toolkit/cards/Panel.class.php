@@ -15,10 +15,12 @@ class Panel extends Quad
 {
 	/**
 	 * Reference on the title object (Label)
+	 * @ignore
 	 */
 	public $title;
 	/**
 	 * Reference on the title background object (Quad)
+	 * @ignore
 	 */
 	public $titleBg;
 	
@@ -49,6 +51,9 @@ class Panel extends Quad
 		$this->title->setSizeX($x-4);
 	}
 	
+	/**
+	 * @ignore
+	 */
 	protected function postFilter()
 	{
 		// Algin the title and its bg at the top center of the main quad		

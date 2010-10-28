@@ -13,7 +13,13 @@
  */
 class BulletCard extends Quad
 {
+	/**
+	 * @var Icon
+	 */
 	public $bullet;
+	/**
+	 * @var Label
+	 */
 	public $title;
 	
 	function __construct($sizeX = 50, $sizeY = 5)
@@ -32,6 +38,9 @@ class BulletCard extends Quad
 		$this->title->setStyle(Label::TextTitle3);
 	}
 	
+	/**
+	 * @ignore
+	 */
 	function postFilter()
 	{
 		$this->title->setPositionX(9.5);

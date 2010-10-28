@@ -18,7 +18,7 @@ require_once( APP_FRAMEWORK_GUI_TOOLKIT_PATH.'layouts/AbstractLayout.class.php' 
  * @package ManiaLib
  * @subpackage GUIToolkit
  */
-abstract class Manialink extends GuiBase
+abstract class Manialink
 {
 	/**#@+
 	 * @ignore
