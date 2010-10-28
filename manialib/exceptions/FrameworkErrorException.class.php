@@ -22,6 +22,7 @@ require_once(APP_FRAMEWORK_EXCEPTIONS_PATH.'FrameworkException.class.php');
  * 
  * @package ManiaLib
  * @subpackage ErrorHandling
+ * @ignore
  */
 class FrameworkErrorException extends FrameworkException 
 {

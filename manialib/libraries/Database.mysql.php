@@ -5,6 +5,7 @@
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
+ * @ignore
  */
 
 /**
@@ -15,7 +16,6 @@
 class DatabaseConnection
 {
 	static protected $instance;
-	
 	protected $connection;
 	protected $host;
 	protected $user;

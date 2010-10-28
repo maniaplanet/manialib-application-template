@@ -59,6 +59,7 @@
  * @see __()
  * @package ManiaLib
  * @subpackage Internationalization
+ * @ignore
  */
 class LangEngine
 {
@@ -178,13 +179,14 @@ class LangEngine
 }
 
 /**
- * i18n message. Examples: 
+ * i18n message
+ * Examples:
+ * <code> 
  * echo __("hello_world"); 
- * echo __("hello_login", $yetAnotherLogin);
- * @see LangEngine
+ * echo __("hello_login", $someLogin);
+ * </code>
  * @param string
  * @return string
- * @todo Put in the LangTookit package
  */
 function __($textId)
 {
@@ -214,7 +216,6 @@ function __($textId)
  * i18n date
  * @param int Unix timestamp
  * @return string
- * @todo Put in the LangTookit package
  */
 function __date($timestamp)
 {

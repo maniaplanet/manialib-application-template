@@ -17,7 +17,7 @@
 class RequestEngine
 {
 	/**#@+
-	 * @internal
+	 * @ignore
 	 */
 	static private $instance;
 	protected $requestParams = array();
@@ -46,7 +46,7 @@ class RequestEngine
 	}
 	
 	/**
-	 * @internal
+	 * @ignore
 	 */
 	protected function __construct()
 	{
@@ -309,7 +309,7 @@ class RequestEngine
 	}
 	
 	/**
-	 * @internal 
+	 * @ignore 
 	 */
 	function __destruct()
 	{
@@ -321,7 +321,7 @@ class RequestEngine
 	}
 	
 	/**
-	 * @internal 
+	 * @ignore 
 	 */
 	protected function createLinkString($file=null, $relativePath=true, $params)
 	{
@@ -394,10 +394,12 @@ class RequestEngine
 
 /**
  * @package ManiaLib
+ * @ignore
  */
 class RequestException extends FrameworkException {}
 /**
  * @package ManiaLib
+ * @ignore
  */
 class RequestParameterNotFoundException extends FrameworkUserException 
 {

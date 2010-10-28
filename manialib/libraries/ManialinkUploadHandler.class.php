@@ -12,13 +12,16 @@
  */ 
 final class ManialinkUploadHandler
 {
+	/**#@+
+	 * @ignore
+	 */
 	const READ_PACKET_SIZE = 8192;
 	const UPLOADED_FILE_RIGHTS = 0770;
-	
 	protected $uploadPath;
 	protected $maxSize;
 	protected $uploadedFilename;
 	protected $inputFile;
+	/**#@-*/
 	
 	/**
 	 * @param string The path where the file will be saved
@@ -115,16 +118,19 @@ final class ManialinkUploadHandler
 /**
  * @package ManiaLib
  * @subpackage Helpers
+ * @ignore
  */
 class ManialinkUploadException extends FrameworkException {}
 /**
  * @package ManiaLib
  * @subpackage Helpers
+ * @ignore
  */
 class ManialinkUploadFileTooLargeException extends ManialinkUploadException {}
 /**
  * @package ManiaLib
  * @subpackage Helpers
+ * @ignore
  */
 class ManialinkUploadInternalException extends ManialinkUploadException {}
  

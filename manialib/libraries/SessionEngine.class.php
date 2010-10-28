@@ -15,10 +15,14 @@ final class SessionEngine
 	/**
 	 * Session identifier name. Used as parameter name for transporting the
 	 * session Id in the URL when the client doesn't support cookies.
+	 * @ignore
+	 * 
 	 */
 	const SIDName = 'maniasid';
+	/**
+	 * @ignore
+	 */
 	protected static $instance;
-	
 
 	/**
 	 * Gets the instance
@@ -34,6 +38,9 @@ final class SessionEngine
 		return self::$instance;
 	}
 	
+	/**
+	 * @ignore
+	 */
 	protected function __construct()
 	{
 		session_name(self::SIDName);
@@ -96,6 +103,7 @@ final class SessionEngine
 
 /**
  * @package ManiaLib
+ * @ignore
  */
 class SessionException extends FrameworkException {}
 

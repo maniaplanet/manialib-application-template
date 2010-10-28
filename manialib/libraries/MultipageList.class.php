@@ -7,12 +7,15 @@
 
 /**
  * This class helps to create multipage lists. Maybe difficult to use at
- * first... Doc should be written about it
+ * first... Doc should be written about it...
  * @package ManiaLib
  * @subpackage Helpers
  */
 class MultipageList
 {
+	/**#@+
+	 * @ignore
+	 */
 	protected $size;
 	protected $urlParamName = 'page';
 	protected $urlPageName = null;
@@ -21,6 +24,11 @@ class MultipageList
 	protected $perPage;
 	protected $pageNumber;
 	protected $hasMorePages;
+	/**#@-*/
+	
+	/**
+	 * @var PageNavigator
+	 */
 	public $pageNavigator;
 
 	function __construct($perPage = 8)

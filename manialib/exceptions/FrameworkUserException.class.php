@@ -18,6 +18,7 @@ class FrameworkUserException extends FrameworkException
 {
 	/**
 	 * @param string The message to display to the user
+	 * @ignore
 	 */
 	function __construct($userMessage)
 	{

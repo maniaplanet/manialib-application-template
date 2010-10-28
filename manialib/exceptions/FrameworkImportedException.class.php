@@ -12,6 +12,7 @@
  * 
  * @package ManiaLib
  * @subpackage ErrorHandling
+ * @ignore
  */
 class FrameworkImportedException extends FrameworkException
 {

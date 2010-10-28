@@ -34,24 +34,31 @@
  */
 
 /**
- * Database connection instance
+ * Database connection
  * @package ManiaLib
  * @subpackage Database
  */
 class DatabaseConnection
 {
+	/**
+	 * @ignore
+	 */
 	static protected $instance;
 	/**
 	 * @var mysqli
+	 * @ignore
+	 */
+	/**#@+
+	 * @ignore
 	 */
 	protected $connection;
 	protected $host;
 	protected $user;
 	protected $password;
 	protected $database;
+	/**#@-*/
 	
 	/**
-	 * 
 	 * @return DatabaseConnection
 	 */
 	public static function getInstance(
@@ -70,6 +77,9 @@ class DatabaseConnection
 		return self::$instance;
 	}
 	
+	/**
+	 * @ignore
+	 */
 	protected function __construct($host, $user, $password, $database)
 	{
 		// Init
@@ -97,11 +107,17 @@ class DatabaseConnection
 		$this->setCharset('utf8');
 	}
 	
+	/**
+	 * @ignore
+	 */
 	function __destruct()
 	{
 		$this->connection->close();
 	}
 	
+	/**
+	 * Sets the charset for the database connection
+	 */
 	function setCharset($charset)
 	{
 		if(!$this->connection->set_charset($charset))
@@ -110,6 +126,9 @@ class DatabaseConnection
 		}
 	}
 	
+	/**
+	 * Selects a database
+	 */
 	function select($database)
 	{
 		if($database != $this->database)
@@ -121,13 +140,17 @@ class DatabaseConnection
 			}
 		}
 	}
-		
+	
+	/**
+	 * Escape and quote variables so you can insert them safely
+	 */
 	function quote($string)
 	{
 		return '\''.$this->connection->escape_string($string).'\'';
 	}
 	
 	/**
+	 * Executes a query
 	 * @param string The query
 	 * @return DatabaseRecordSet
 	 */
@@ -141,21 +164,36 @@ class DatabaseConnection
 		return new DatabaseRecordSet($result);
 	}
 	
+	/**
+	 * Get number of affected rows in previous operation
+	 * @return int
+	 */
 	function affectedRows()
 	{
 		return $this->connection->affected_rows;
 	}
 	
+	/**
+	 * Get the ID generated in the last query
+	 * @return int
+	 */
 	function insertID()
 	{
 		return $this->connection->insert_id;
 	}
 	
+	/**
+	 * @return bool 
+	 */
 	function isConnected()
 	{
 		return (!$this->connection); 
 	}
 		
+	/**
+	 * Currently selected database
+	 * @return string
+	 */
 	function getDatabase()
 	{
 		return $this->database;
@@ -163,7 +201,7 @@ class DatabaseConnection
 }
 
 /**
- * Database query result
+ * Database result
  * @package ManiaLib
  * @subpackage Database
  */
@@ -175,14 +213,21 @@ class DatabaseRecordSet
 
 	/**
 	 * @var MySQLi_RESULT
+	 * @ignore
 	 */
 	protected $result;
 	
+	/**
+	 * @ignore
+	 */
 	function __construct($result)
 	{
 		$this->result = $result;
 	}
 	
+	/**
+	 * @ignore
+	 */
 	function __destruct()
 	{
 		if($this->result instanceof MySQLi_RESULT)
@@ -191,21 +236,39 @@ class DatabaseRecordSet
 		}
 	}
 	
+	/**
+	 * Get a result row as an enumerated array
+	 * @return array
+	 */
 	function fetchRow()
 	{
 		return $this->result->fetch_row();
 	}
 	
+	/**
+	 * Fetch a result row as an associative array
+	 * @return array
+	 */
 	function fetchAssoc()
 	{
 		return $this->result->fetch_assoc();
 	}
 	
+	/**
+	 * Fetch a result row as an associative, a numeric array, or both
+	 * @return array
+	 */
 	function fetchArray($resultType = self::FETCH_ASSOC)
 	{
 		return $this->result->fetch_array($resultType);
 	}
 	
+	/**
+	 * Returns the current row of a result set as an object
+	 * @param string The name of the class to instantiate, set the properties of and return. If not specified, a stdClass object is returned.
+	 * @param array An optional array of parameters to pass to the constructor for class_name objects.
+	 * @return object
+	 */
 	function fetchObject($className, array $params=array() )
 	{
 		if($className)
@@ -218,6 +281,10 @@ class DatabaseRecordSet
 		}	
 	}
 	
+	/**
+	 * Gets the number of rows in a result
+	 * @return int
+	 */
 	function recordCount()
 	{
 		return $this->result->num_rows;
@@ -233,6 +300,7 @@ abstract class DatabaseTools
 {
 	/**
 	 * Returns the "LIMIT x,x" string depending on both values
+	 * @return string
 	 */
 	static function getLimitString($offset, $length)
 	{
@@ -251,7 +319,8 @@ abstract class DatabaseTools
 	}
 	
 	/**
-	 * Returns string like "(name1, name2) VALUES (value1, value2)" 
+	 * Returns string like "(name1, name2) VALUES (value1, value2)"
+	 * @return string 
 	 */
 	static function getValuesString(array $values)
 	{
@@ -263,6 +332,7 @@ abstract class DatabaseTools
 	
 	/**
 	 * Returns string like "name1=VALUES(name1), name2=VALUES(name2)"
+	 * @return string
 	 */
 	static function getOnDuplicateKeyUpdateValuesString(array $valueNames)
 	{
@@ -278,12 +348,14 @@ abstract class DatabaseTools
 /**
  * @package ManiaLib
  * @subpackage Database
+ * @ignore
  */
 class DatabaseException extends FrameworkException {}
 
 /**
  * @package ManiaLib
  * @subpackage Database
+ * @ignore
  */
 class DatabaseQueryException extends DatabaseException {}
 

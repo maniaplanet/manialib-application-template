@@ -6,13 +6,17 @@
  */
 
 /**
- * Manialink Authentication System
- * Helps using the Manialink Authentication System developped by NADEO. Note that it only works with United Forever accounts.
+ * Manialink Authentication
+ * Helps using the Manialink Authentication System developped by NADEO. 
+ * Note that it only works with United Forever accounts.
  * @package ManiaLib
  * @subpackage Authentication
  */
 final class AuthenticationToken
 {
+	/**
+	 * @ignore
+	 */
 	const scriptUrl = 'http://scripts.trackmaniaforever.com/checkAuthenticationToken.php?login=%s&token=%s';
 
 	/**
@@ -66,31 +70,37 @@ final class AuthenticationToken
 /**
  * @package ManiaLib
  * @subpackage Authentication
+ * @ignore
  */
 class AuthenticationTokenFailedException extends FrameworkException {}
 /**
  * @package ManiaLib
  * @subpackage Authentication
+ * @ignore
  */
 class AuthenticationTokenInvalidLoginException extends AuthenticationTokenFailedException {}
 /**
  * @package ManiaLib
  * @subpackage Authentication
+ * @ignore
  */
 class AuthenticationTokenNoLoginException extends AuthenticationTokenFailedException {}
 /**
  * @package ManiaLib
  * @subpackage Authentication
+ * @ignore
  */
 class AuthenticationTokenBadTokenException extends AuthenticationTokenFailedException {}
 /**
  * @package ManiaLib
  * @subpackage Authentication
+ * @ignore
  */
 class AuthenticationTokenInvalidTokenException extends AuthenticationTokenFailedException {}
 /**
  * @package ManiaLib
  * @subpackage Authentication
+ * @ignore
  */
 class AuthenticationNationsTokenUnknownPlayerException extends AuthenticationTokenFailedException {}
 

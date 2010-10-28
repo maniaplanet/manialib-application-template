@@ -20,13 +20,18 @@ class FrameworkException extends Exception
 	const HANDLE_SILENT = false;
 	/**#@-*/
 
+	/**#@+
+	 * @ignore
+	 */
 	protected $userMessage='An error occured';
 	protected $requestURL;
 	protected $optionalInfo;
+	/**#@-*/
 	
 	/**
 	 * Shows an error dialog to the user with the specified message
 	 * @param The message to show, default is 'Fatal error'
+	 * @ignore
 	 */
 	static function showErrorDialog($message = 'Fatal error')
 	{
@@ -64,6 +69,7 @@ class FrameworkException extends Exception
 	/**
 	 * Error dialog for debug, the panel is bigger to fit the whole exception log
 	 * @param The message to show, default is 'Fatal error'
+	 * @ignore
 	 */
 	static function showDebugDialog($message = 'Fatal error')
 	{
@@ -101,13 +107,10 @@ class FrameworkException extends Exception
 	
 	/**
 	 * Default exception handler
-	 * 
 	 * Handles what to do when an exception is catched
-	 * @param Exception
 	 * @param boolean Whether to show an error message, default is true
 	 */
-	static function handle(Exception $e, 
-		$showErrorMessage=self::HANDLE_SHOW_ERRORS)
+	static function handle(Exception $e, $showErrorMessage=self::HANDLE_SHOW_ERRORS)
 	{
 		if(!($e instanceof FrameworkException))
 		{
@@ -149,6 +152,7 @@ class FrameworkException extends Exception
 	 * @param Exception
 	 * @param array Additional info to log
 	 * @return string
+	 * @ignore
 	 */
 	static function getLogMessage(Exception $e, array $optionalInfo = array())
 	{
@@ -166,6 +170,9 @@ class FrameworkException extends Exception
 		return self::computeLogMessage($e,$optionalInfo,$styles);
 	}
 	
+	/**
+	 * @ignore
+	 */
 	static function getDebugMessage(Exception $e, array $optionalInfo = array())
 	{
 		// Message config
@@ -185,6 +192,7 @@ class FrameworkException extends Exception
 	/**
 	 * Computes the log message 
 	 * @return string
+	 * @ignore
 	 */
 	static protected function computeLogMessage(Exception $e, 
 		array $optionalInfo, array $styles)
@@ -240,6 +248,7 @@ class FrameworkException extends Exception
 	 * (since PHP 5.3, used here for forward compatibility)
 	 * @param boolean Whether you want to log the exception or not (useful to
 	 * modify the log message in subclasses)
+	 * @ignore
 	 */	
 	function __construct($message='', $code=0, Exception $previous=null, $logException=true)
 	{
@@ -257,6 +266,7 @@ class FrameworkException extends Exception
 	/**
 	 * Returns the message to display to the user
 	 * @return string
+	 * @ignore
 	 */
 	function getUserMessage()
 	{
@@ -266,6 +276,7 @@ class FrameworkException extends Exception
 	/**
 	 * Returns the URL of the request in which the Exception was thrown
 	 * @return string
+	 * @ignore
 	 */
 	function getRequestURL()
 	{
@@ -283,6 +294,7 @@ class FrameworkException extends Exception
 	/**
 	 * Returns the optional info
 	 * @return array
+	 * @ignore
 	 */
 	function getOptionalInfo()
 	{
@@ -292,6 +304,7 @@ class FrameworkException extends Exception
 	/**
 	 * Logs the exception in the specified log file.
 	 * @param string The log file. Default is APP_ERROR_LOG
+	 * @ignore
 	 */
 	function iLog($logfile=APP_ERROR_LOG)
 	{

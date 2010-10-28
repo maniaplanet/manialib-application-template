@@ -10,6 +10,7 @@
  * 
  * @package ManiaLib
  * @subpackage ErrorHandling
+ * @ignore
  */
 class FrameworkUncaughtException extends FrameworkException
 {

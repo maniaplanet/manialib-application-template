@@ -11,6 +11,7 @@
  * Error handling features
  * @package ManiaLib
  * @subpackage ErrorHandling
+ * @ignore
  */
 abstract class ErrorHandling
 {
