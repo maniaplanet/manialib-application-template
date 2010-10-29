@@ -57,7 +57,7 @@ abstract class GuiTools
 				break;		
 			
 			default:
-				throw new GuiToolkitException('Unsupported positions');
+				throw new Exception('GUITools: Unsupported positions');
 		}
 		return $posX + $factor * $sizeX;
 	}
@@ -123,11 +123,5 @@ abstract class GuiTools
 		return array('x' => $newPosX, 'y' => $newPosY);
 	}
 }
-
-/**
- * @package ManiaLib
- * @subpackage GUIToolkit
- */
-class GuiToolkitException extends Exception {}
 
 ?>

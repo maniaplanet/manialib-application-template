@@ -12,15 +12,18 @@
  */ 
 abstract class Debug
 {
+	const LOG_DATE = true;
+	const LOG_NO_DATE = false;
+	
 	/**
 	 * Writes a message in the debug log
 	 * @param string The message
 	 * @param boolean Whether to add the date to the message
 	 * @param string The log filename
 	 */
-	static function log($message, $addDate = true, $logFilename = APP_DEBUG_LOG)
+	static function log($message, $addDate = self::LOG_DATE, $logFilename = APP_DEBUG_LOG)
 	{
-		$message = ($addDate?date('d/m/y H:i:s'):'').'  '.print_r($message, true)."\n";
+		$message = ($addDate?date('c'):'').'  '.print_r($message, true)."\n";
 		file_put_contents($logFilename, $message, FILE_APPEND);
 	}
 	
