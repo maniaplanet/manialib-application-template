@@ -68,21 +68,21 @@ final class ManialinkUploadHandler
   		// Check for error
   		if($this->inputFile=='')
   		{
-  			throw new ManialinkUploadInternalException(
+  			throw new ManialinkUploadException(
 				'Couldn\'t read input file');
   		}
   		if(!file_put_contents(
 			$this->uploadPath.$this->uploadedFilename, 
 			$this->inputFile))
 		{
-			throw new ManialinkUploadInternalException(
+			throw new ManialinkUploadException(
 				'Couldn\'t save input file to '.
 				$this->uploadPath.$this->uploadedFilename);
 		}
 		if(!chmod($this->uploadPath.$this->uploadedFilename, 
 			self::UPLOADED_FILE_RIGHTS))
 		{
-			throw new ManialinkUploadInternalException(
+			throw new ManialinkUploadException(
 				'Couldn\'t chmod input file at '.
 				$this->uploadPath.$this->uploadedFilename);	
 		}
@@ -127,11 +127,5 @@ class ManialinkUploadException extends Exception {}
  * @ignore
  */
 class ManialinkUploadFileTooLargeException extends ManialinkUploadException {}
-/**
- * @package ManiaLib
- * @subpackage Helpers
- * @ignore
- */
-class ManialinkUploadInternalException extends ManialinkUploadException {}
  
 ?>

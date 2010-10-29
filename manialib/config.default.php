@@ -92,15 +92,6 @@ if(!defined('APP_FRAMEWORK_LIBRARIES_PATH'))
 	 */
 	define('APP_FRAMEWORK_LIBRARIES_PATH', APP_FRAMEWORK_PATH . 'libraries/');
 }
-if(!defined('APP_FRAMEWORK_EXCEPTIONS_PATH'))
-{
-	/**
-	 * Framework exceptions path
-	 * 
-	 * Path to the "exceptions" directory of the framework
-	 */
-	define('APP_FRAMEWORK_EXCEPTIONS_PATH', APP_FRAMEWORK_PATH . 'exceptions/');
-}
 if(!defined('APP_FRAMEWORK_GUI_TOOLKIT_PATH'))
 {
 	/**

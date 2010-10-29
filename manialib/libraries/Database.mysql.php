@@ -71,7 +71,7 @@ class DatabaseConnection
 		// Success ?
 		if(!$this->connection)
 		{
-			throw new DatabaseConnectionException;
+			throw new DatabaseConnectionException();
 		}
 		
 		// Select
@@ -88,7 +88,7 @@ class DatabaseConnection
 	{
 		if(!mysql_set_charset($charset, $this->connection))
 		{
-			throw new DatabaseException;
+			throw new DatabaseException('Couldn\'t set charset: '.$charset);
 		}
 	}
 	
@@ -99,7 +99,7 @@ class DatabaseConnection
 			$this->database = $database;
 			if(!mysql_select_db($this->database, $this->connection))
 			{
-				throw new DatabaseSelectionException($this->connection);
+				throw new DatabaseSelectionException(mysql_error(), mysql_errno());
 			}
 		}
 	}
@@ -118,7 +118,7 @@ class DatabaseConnection
 		$result = mysql_query($query, $this->connection);
 		if(!$result)
 		{
-			throw new DatabaseQueryException($query);
+			throw new DatabaseQueryException(mysql_error(), mysql_errno());
 		}
 		return new DatabaseRecordSet($result);
 	}
@@ -272,32 +272,13 @@ class DatabaseConnectionException extends DatabaseException {}
  * @subpackage Database
  * @ignore
  */
-class DatabaseDisconnectionException extends DatabaseException {}
+class DatabaseSelectionException extends DatabaseException {}
 
 /**
  * @package ManiaLib
  * @subpackage Database
  * @ignore
  */
-class DatabaseSelectionException extends DatabaseException
-{
-	function __construct($dummy=null, $dummy2=null, Exception $previous=null, $logException=true)
-	{
-		parent::__construct(mysql_error(), mysql_errno(), $previous, $logException);
-	}
-}
-
-/**
- * @package ManiaLib
- * @subpackage Database
- * @ignore
- */
-class DatabaseQueryException extends DatabaseException
-{
-	function __construct($query, $dummy2=null, Exception $previous=null, $logException=true)
-	{
-		parent::__construct(mysql_error(), mysql_errno(), $previous, false);
-	}
-}
+class DatabaseQueryException extends DatabaseException {}
 
 ?>

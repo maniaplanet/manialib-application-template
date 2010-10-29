@@ -8,11 +8,6 @@
  */
 
 /**
- * @ignore
- */
-require_once(APP_MVC_FRAMEWORK_EXCEPTIONS_PATH.'MVCException.class.php'); 
-
-/**
  * Action controller
  * This is the base class for all controllers. Extend ActionController to create
  * a new controller for your application.
@@ -257,10 +252,12 @@ class ActionController
 			}
 			else
 			{
-				$callParameters[] = $this->request->getStrict($parameter->getName());
+				$pname = $parameter->getName();
+				$pmessage = 'Undefined parameter: $<$o'.$pname.'$>';
+				$callParameters[] = $this->request->getStrict($pname, $pmessage);
 			}
 		}
-
+		
 		call_user_func_array(array($this, $actionName), $callParameters);
 	}
 

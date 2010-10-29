@@ -17,8 +17,8 @@ AutoloadHelper::$paths[] = APP_MVC_FILTERS_PATH;
 AutoloadHelper::$paths[] = APP_MVC_MODELS_PATH;
 AutoloadHelper::$paths[] = APP_MVC_FRAMEWORK_FILTERS_PATH;
 AutoloadHelper::$paths[] = APP_MVC_FRAMEWORK_LIBRARIES_PATH;
-AutoloadHelper::$paths[] = APP_MVC_FRAMEWORK_EXCEPTIONS_PATH;
 
+require_once(APP_MVC_FRAMEWORK_LIBRARIES_PATH.'MVCException.class.php'); 
 require_once(APP_MVC_FRAMEWORK_LIBRARIES_PATH.'ActionController.class.php');
 require_once(APP_MVC_FRAMEWORK_LIBRARIES_PATH.'Filterable.class.php');
 require_once(APP_MVC_FRAMEWORK_LIBRARIES_PATH.'AdvancedFilter.class.php');

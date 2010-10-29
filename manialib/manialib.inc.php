@@ -60,7 +60,6 @@ AutoloadHelper::$paths[] = APP_LIBRARIES_PATH;
 AutoloadHelper::$paths[] = APP_FRAMEWORK_LIBRARIES_PATH;
 AutoloadHelper::$paths[] = APP_FRAMEWORK_GUI_TOOLKIT_PATH.'cards/';
 AutoloadHelper::$paths[] = APP_FRAMEWORK_GUI_TOOLKIT_PATH.'layouts/';
-AutoloadHelper::$paths[] = APP_FRAMEWORK_EXCEPTIONS_PATH;
 
 require_once( APP_FRAMEWORK_LIBRARIES_PATH.'ErrorHandling.class.php' );
 require_once( APP_FRAMEWORK_LIBRARIES_PATH.'RequestEngine.class.php' );

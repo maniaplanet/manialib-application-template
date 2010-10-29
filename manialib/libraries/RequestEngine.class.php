@@ -45,6 +45,8 @@ class RequestEngine
 		return self::$instance;
 	}
 	
+	// TODO Add request URI to request engine
+	
 	/**
 	 * @ignore
 	 */
@@ -85,14 +87,20 @@ class RequestEngine
 	 * @param string Optional human readable name for error dialog
 	 * @return mixed
 	 */
-	function getStrict($name, $humanReadableName=null)
+	function getStrict($name, $message=null)
 	{
 		if(array_key_exists($name, $this->params) && $this->params[$name])
 		{
 			return $this->params[$name];
-		}	
-		$humanReadableName = $humanReadableName ? $humanReadableName : $name;
-		throw new RequestParameterNotFoundException($humanReadableName);
+		}
+		elseif($message)
+		{
+			throw new UserException($message);
+		}
+		else
+		{
+			throw new InvalidArgumentException($name);	
+		}
 	}
 		
 	/**

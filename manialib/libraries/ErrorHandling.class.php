@@ -46,19 +46,25 @@ abstract class ErrorHandling
 	 */
 	static function exceptionHandler(Exception $exception)
 	{
-		// FIXME exception handling catch some exceptions to show a better message
-		
-		$message = self::computeMessage($exception, self::$messageConfigs['default']);
-		Debug::log($message, Debug::LOG_DATE, APP_ERROR_LOG);
-		
-		if(APP_DEBUG_LEVEL)
+		if($exception instanceof UserException)
 		{
-			$message = self::computeMessage($exception, self::$messageConfigs['debug']);
-			self::showDebugDialog($message);
+			self::showErrorDialog($exception->getMessage());
+			// TODO Small log for user errors
 		}
 		else
 		{
-			self::showErrorDialog();
+			$message = self::computeMessage($exception, self::$messageConfigs['default']);
+			Debug::log($message, Debug::LOG_DATE, APP_ERROR_LOG);
+			
+			if(APP_DEBUG_LEVEL)
+			{
+				$message = self::computeMessage($exception, self::$messageConfigs['debug']);
+				self::showDebugDialog($message);
+			}
+			else
+			{
+				self::showErrorDialog();
+			}
 		}
 	}
 	

@@ -99,8 +99,7 @@ class DatabaseConnection
 		// Success ?
 		if($this->connection->connect_error)
 		{
-			throw new DatabaseException($this->connection->connect_error, 
-				$this->connection->connect_errno);
+			throw new DatabaseException($this->connection->connect_error, $this->connection->connect_errno);
 		}
 		
 		// Default Charset : UTF8

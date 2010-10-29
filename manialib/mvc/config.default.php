@@ -25,13 +25,6 @@ if(!defined('APP_MVC_FRAMEWORK_LIBRARIES_PATH'))
 	 */
 	define('APP_MVC_FRAMEWORK_LIBRARIES_PATH', APP_MVC_FRAMEWORK_PATH.'libraries/');
 }	
-if(!defined('APP_MVC_FRAMEWORK_EXCEPTIONS_PATH'))
-{
-	/**
-	 * Path to the MVC framework exceptions directory
-	 */
-	define('APP_MVC_FRAMEWORK_EXCEPTIONS_PATH', APP_MVC_FRAMEWORK_PATH.'exceptions/');
-}
 if(!defined('APP_MVC_FRAMEWORK_FILTERS_PATH'))
 {
 	/**
