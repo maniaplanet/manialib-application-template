@@ -30,7 +30,7 @@ abstract class Debug
 	 */
 	static function foobar($message)
 	{
-		throw new DebugException(print_r($message, true));
+		// TODO Debug::foobar refaire
 	}
 }
 

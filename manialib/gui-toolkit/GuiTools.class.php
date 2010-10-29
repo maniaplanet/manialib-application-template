@@ -128,6 +128,6 @@ abstract class GuiTools
  * @package ManiaLib
  * @subpackage GUIToolkit
  */
-class GuiToolkitException extends FrameworkException {}
+class GuiToolkitException extends Exception {}
 
 ?>

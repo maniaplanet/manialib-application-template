@@ -120,7 +120,7 @@ final class ManialinkUploadHandler
  * @subpackage Helpers
  * @ignore
  */
-class ManialinkUploadException extends FrameworkException {}
+class ManialinkUploadException extends Exception {}
 /**
  * @package ManiaLib
  * @subpackage Helpers

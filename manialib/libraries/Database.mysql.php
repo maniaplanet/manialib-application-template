@@ -258,7 +258,7 @@ abstract class DatabaseTools
  * @subpackage Database
  * @ignore
  */
-class DatabaseException extends FrameworkException {}
+class DatabaseException extends Exception {}
 
 /**
  * @package ManiaLib
@@ -297,11 +297,6 @@ class DatabaseQueryException extends DatabaseException
 	function __construct($query, $dummy2=null, Exception $previous=null, $logException=true)
 	{
 		parent::__construct(mysql_error(), mysql_errno(), $previous, false);
-		$this->addOptionalInfo('Query', $query);
-		if($logException)
-		{
-			$this->iLog();
-		}
 	}
 }
 

@@ -72,7 +72,7 @@ final class AuthenticationToken
  * @subpackage Authentication
  * @ignore
  */
-class AuthenticationTokenFailedException extends FrameworkException {}
+class AuthenticationTokenFailedException extends Exception {}
 /**
  * @package ManiaLib
  * @subpackage Authentication

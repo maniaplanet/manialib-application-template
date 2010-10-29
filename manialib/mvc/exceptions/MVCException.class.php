@@ -13,6 +13,6 @@
  * @subpackage ErrorHandling
  * @ignore
  */
-class MVCException extends FrameworkException {}
+class MVCException extends Exception {}
 
 ?>

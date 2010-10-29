@@ -90,7 +90,7 @@ class LangEngine
 	{
 		if($langEngineMode == APP_LANG_ENGINE_MODE_STATIC)
 		{
-			throw new FrameworkException('LANG_ENGINE_MODE_STATIC is not supported anymore');
+			throw new Exception('LANG_ENGINE_MODE_STATIC is not supported anymore');
 		}
 		$session = SessionEngine::getInstance();
 		$this->currentLang = $session->get("lang", "en");

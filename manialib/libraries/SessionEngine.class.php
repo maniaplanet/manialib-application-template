@@ -105,6 +105,6 @@ final class SessionEngine
  * @package ManiaLib
  * @ignore
  */
-class SessionException extends FrameworkException {}
+class SessionException extends Exception {}
 
 ?>

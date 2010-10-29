@@ -350,7 +350,7 @@ abstract class DatabaseTools
  * @subpackage Database
  * @ignore
  */
-class DatabaseException extends FrameworkException {}
+class DatabaseException extends Exception {}
 
 /**
  * @package ManiaLib
