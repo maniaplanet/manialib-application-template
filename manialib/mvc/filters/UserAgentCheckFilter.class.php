@@ -2,15 +2,15 @@
 /**
  * @author Maxime Raoust 
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib_MVC
- * @subpackage DefaultFilters
+ * @package ManiaLib
+ * @subpackage MVC_DefaultFilters
  */
 
 /**
  * User agent checker
  * Forces GameBox user agent, redirects to trackmania.com otherwise
- * @package ManiaLib_MVC
- * @subpackage DefaultFilters
+ * @package ManiaLib
+ * @subpackage MVC_DefaultFilters
  */
 class UserAgentCheckFilter extends AdvancedFilter
 {

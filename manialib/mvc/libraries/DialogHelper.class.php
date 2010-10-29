@@ -2,12 +2,14 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib_MVC
+ * @package ManiaLib
+ * @subpackage MVC
  */
 
 /** 
  * Helper class for dialogs
- * @package ManiaLib_MVC
+ * @package ManiaLib
+ * @subpackage MVC
  */ 
 class DialogHelper
 {

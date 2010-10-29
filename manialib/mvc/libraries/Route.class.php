@@ -2,13 +2,15 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib_MVC
+ * @package ManiaLib
+ * @subpackage MVC
  */
 
 /**
  * Route class
  * 
- * @package ManiaLib_MVC
+ * @package ManiaLib
+ * @subpackage MVC
  */
 abstract class Route
 {

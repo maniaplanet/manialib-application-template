@@ -2,7 +2,8 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib_MVC
+ * @package ManiaLib
+ * @subpackage MVC
  */
 
 /**
@@ -10,7 +11,8 @@
  * 
  * Filter with easy access to Session, Request and Response
  * 
- * @package ManiaLib_MVC
+ * @package ManiaLib
+ * @subpackage MVC
  */
 abstract class AdvancedFilter implements Filterable
 {

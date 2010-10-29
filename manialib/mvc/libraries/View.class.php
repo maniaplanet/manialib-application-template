@@ -2,12 +2,14 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib_MVC
+ * @package ManiaLib
+ * @subpackage MVC
  */
 
 /**
  * View rendering stuff
- * @package ManiaLib_MVC
+ * @package ManiaLib
+ * @subpackage MVC
  * @todo doc
  */
 abstract class View
@@ -52,7 +54,8 @@ abstract class View
 }
 
 /**
- * @package ManiaLib_MVC
+ * @package ManiaLib
+ * @subpackage MVC
  * @ignore
  */
 class ViewNotFoundException extends MVCException {}

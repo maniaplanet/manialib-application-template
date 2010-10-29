@@ -2,8 +2,8 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib_MVC
- * @subpackage DefaultFilters
+ * @package ManiaLib
+ * @subpackage MVC_DefaultFilters
  */
 
 if(class_exists('GettextInitFilterConfig', false))
@@ -11,8 +11,8 @@ if(class_exists('GettextInitFilterConfig', false))
 	/**
 	 * Gettext init config
 	 * Redeclare this class in your config in you want to override values
-	 * @package ManiaLib_MVC
- 	 * @subpackage DefaultFilters
+	 * @package ManiaLib
+ 	 * @subpackage MVC_DefaultFilters
 	 */
 	abstract class GettextInitFilterConfig
 	{
@@ -30,8 +30,8 @@ if(class_exists('GettextInitFilterConfig', false))
  * Gettext init
  * Init the "gettext" extension if you want to used it. For advanced users only.
  * Not that gettext doesn't work with HipHop for PHP
- * @package ManiaLib_MVC
- * @subpackage DefaultFilters
+ * @package ManiaLib
+ * @subpackage MVC_DefaultFilters
  */
 class GettextInitFilter extends AdvancedFilter
 {

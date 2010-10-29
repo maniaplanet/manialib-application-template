@@ -4,7 +4,8 @@
  * 
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib_MVC
+ * @package ManiaLib
+ * @subpackage MVC
  */
 
 /**
@@ -35,7 +36,8 @@
  *    function anotherAction() {} // mapped by /home/another_action/
  * }
  * </code>
- * @package ManiaLib_MVC
+ * @package ManiaLib
+ * @subpackage MVC
  * @todo Think about "plugins" eg. you want to do a shoutbox plugin, how everything works?
  */
 class ActionController
@@ -307,13 +309,15 @@ class ActionController
 }
 
 /**
- * @package ManiaLib_MVC
+ * @package ManiaLib
+ * @subpackage MVC
  * @ignore
  */
 class ControllerNotFoundException extends MVCException {}
 
 /**
- * @package ManiaLib_MVC
+ * @package ManiaLib
+ * @subpackage MVC
  * @ignore
  */
 class ActionNotFoundException extends MVCException {}
