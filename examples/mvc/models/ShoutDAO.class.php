@@ -1,12 +1,11 @@
 <?php 
 /**
  * @author Maxime Raoust
+ * @copyright 2009-2010 NADEO 
  */
 
 require_once(APP_FRAMEWORK_LIBRARIES_PATH.'Database.php');
 require_once(APP_MVC_MODELS_PATH.'Shout.class.php');
-
-// TODO Put the SQL shema somewhere else
 
 /**
  * Shout data access
@@ -22,8 +21,8 @@ abstract class ShoutDAO
 		$db = DatabaseConnection::getInstance();
 		$result = $db->execute(
 			'SELECT * '.
-			'FROM '.APP_DATABASE_PREFIX.'shouts '.
-			'ORDER BY DatePosted DESC '.
+			'FROM ManiaLib_Shouts '.
+			'ORDER BY datePosted DESC '.
 			DatabaseTools::getLimitString($offset, $length));
 		$shouts = array();
 		{
@@ -49,7 +48,7 @@ abstract class ShoutDAO
 			$values['id'] = (int)$shout->id;
 		
 		$result = $db->execute(
-			'INSERT INTO '.APP_DATABASE_PREFIX.'shouts '.
+			'INSERT INTO ManiaLib_Shouts '.
 			DatabaseTools::getValuesString($values).' '.
 			'ON DUPLICATE KEY UPDATE '.
 			DatabaseTools::getOnDuplicateKeyUpdateValuesString(array_keys($values)));

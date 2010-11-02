@@ -3,7 +3,7 @@
  * Example config file. Rename to config.php !
  * 
  * @author Maxime Raoust
- * @copyright 2009-2010 NADEO
+ * @copyright 2009-2010 NADEO 
  */
 
 // URL of your Manialink

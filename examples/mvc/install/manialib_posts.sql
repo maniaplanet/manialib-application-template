@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `manialib_shouts` (
+CREATE TABLE IF NOT EXISTS `ManiaLib_Shouts` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `datePosted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `login` varchar(25) NOT NULL,

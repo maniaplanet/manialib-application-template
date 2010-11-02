@@ -292,15 +292,6 @@ if(!defined('APP_DATABASE_NAME'))
 	 */
 	define('APP_DATABASE_NAME', 'manialib');
 }
-if(!defined('APP_DATABASE_PREFIX'))
-{
-	/**
-	 * MySQL database prefix
-	 * 
-	 * All the tables will be prefixed by this string
-	 */
-	define('APP_DATABASE_PREFIX', 'manialib_');
-}
 if(!defined('APP_DATABASE_CHARSET'))
 {
 	/**

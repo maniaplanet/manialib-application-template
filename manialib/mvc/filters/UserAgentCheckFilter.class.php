@@ -14,17 +14,27 @@
  */
 class UserAgentCheckFilter extends AdvancedFilter
 {
-	// TODO Custom view for UserAgentCheckFilter
 	/**
 	 * @ignore
 	 */
-	function preFilter()
+	protected static $callback = array('UserAgentCheckFilter', 'defaultHTMLView');
+	
+	/**
+	 * Sets the callback when someone tries to access the Manialink from outside the game.
+	 * The callback prints some HTML and returns void.  
+	 */
+	static function setCallback($callback)
 	{
-		if(APP_DEBUG_LEVEL == 0)
-		{
-			if(!array_key_exists('HTTP_USER_AGENT', $_SERVER) || $_SERVER['HTTP_USER_AGENT'] != 'GameBox')
-			{
-				$APP_MANIALINK = APP_MANIALINK;
+		self::$callback = $callback;
+	}
+	
+/**
+	 * This is the default HTML view when someone tries to access the Manialink from outside the game.
+	 * You can override this default behaviour by changing the callback with UserAgentCheckFilter::setCallback()
+	 */
+	static function defaultHTMLView() 
+	{
+		$APP_MANIALINK = APP_MANIALINK;
 				echo <<<HTML
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -95,6 +105,18 @@ class UserAgentCheckFilter extends AdvancedFilter
 	</body>
 </html>				
 HTML;
+	}
+	
+	/**
+	 * @ignore
+	 */
+	function preFilter()
+	{
+		if(APP_DEBUG_LEVEL == 0)
+		{
+			if(!array_key_exists('HTTP_USER_AGENT', $_SERVER) || $_SERVER['HTTP_USER_AGENT'] != 'GameBox')
+			{
+				call_user_func(self::$callback);
 				exit;
 			}
 		}
