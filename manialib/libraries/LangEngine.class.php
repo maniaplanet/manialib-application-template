@@ -86,15 +86,16 @@ class LangEngine
 		return self::$instance;
 	}
 
-	protected function __construct($langEngineMode = APP_LANG_ENGINE_MODE)
+	protected function __construct()
 	{
-		if($langEngineMode == APP_LANG_ENGINE_MODE_STATIC)
+		if(APP_LANG_ENGINE_MODE == APP_LANG_ENGINE_MODE_STATIC)
 		{
-			// TODO Support static lang engine mode?
-			throw new Exception('LANG_ENGINE_MODE_STATIC is not supported anymore');
+			throw new Exception('LANG_ENGINE_MODE_STATIC can not be used with the LangEngine');
 		}
+		
 		$session = SessionEngine::getInstance();
 		$this->currentLang = $session->get("lang", "en");
+		
 		if(!APP_DEBUG_LEVEL && $dico = $session->get(__CLASS__))
 		{
 			$this->dico = unserialize(($dico));
@@ -181,7 +182,10 @@ class LangEngine
 
 /**
  * i18n message
- * Examples:
+ * 
+ * To use with APP_LANG_ENGINE_MODE_DYNAMIC
+ * 
+ * Example:
  * <code> 
  * echo __("hello_world"); 
  * echo __("hello_login", $someLogin);
@@ -215,6 +219,9 @@ function __($textId)
 
 /**
  * i18n date
+ * 
+ * To use with APP_LANG_ENGINE_MODE_DYNAMIC
+ * 
  * @param int Unix timestamp
  * @return string
  */

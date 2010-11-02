@@ -355,7 +355,6 @@ class RequestEngine
 			// URL path
 			if($this->URLPath === null)
 			{
-				// TODO realpath() is forbidden on "free.fr" hosting :/
 				$this->URLPath = str_replace('\\', '/',
 					str_ireplace(realpath(APP_WWW_PATH), '',
 						realpath(dirname($_SERVER['SCRIPT_FILENAME']))

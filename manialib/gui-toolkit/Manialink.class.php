@@ -139,6 +139,14 @@ abstract class Manialink
 	}
 	
 	/**
+	 * Sets the scale attribute for the current frame
+	 */
+	final public static function setFrameScale($scale)
+	{
+		end(self::$parentNodes)->setAttribute('scale', $scale);
+	}
+	
+	/**
 	 * Redirects the user to the specified Manialink
 	 */
 	final public static function redirect($link, $render = true)

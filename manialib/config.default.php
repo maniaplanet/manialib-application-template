@@ -245,7 +245,16 @@ if(!defined('APP_LANG_ENGINE_MODE'))
 {
 	/**
 	 * Lang engine mode
-	 * @deprecated Always 1 now, it doesn't support static mode anymore
+	 * 
+	 * If set to "1", it will use the <b>dynamic lang engine mode</b>. 
+	 * The XML dicos will be loaded by LangEngine and you will be able 
+	 * to create dynamic sentances.
+	 * 
+	 * If set to "0", it won't do anything so you can use them as standard
+	 * Manialink dictionaries. Note that you will need to include the XML 
+	 * files in your Manialink for localization to work.
+	 * See Manialink::includeManialink() to do that
+	 * 
 	 * @see LangEngine
 	 */
 	define('APP_LANG_ENGINE_MODE', 1);
