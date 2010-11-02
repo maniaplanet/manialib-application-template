@@ -301,6 +301,14 @@ if(!defined('APP_DATABASE_PREFIX'))
 	 */
 	define('APP_DATABASE_PREFIX', 'manialib_');
 }
+if(!defined('APP_DATABASE_CHARSET'))
+{
+	/**
+	 * MySQL charset
+	 * 
+	 */
+	define('APP_DATABASE_CHARSET', 'utf8');
+}
 if(!defined('APP_MVC_FRAMEWORK') && !defined('APP_FRAMEWORK_REQUEST_ENGINE_CLASS'))
 {
 	/**
