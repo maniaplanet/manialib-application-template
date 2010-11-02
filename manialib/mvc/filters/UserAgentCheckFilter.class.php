@@ -24,21 +24,76 @@ class UserAgentCheckFilter extends AdvancedFilter
 		{
 			if(!array_key_exists('HTTP_USER_AGENT', $_SERVER) || $_SERVER['HTTP_USER_AGENT'] != 'GameBox')
 			{
+				$APP_MANIALINK = APP_MANIALINK;
 				echo <<<HTML
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<meta http-equiv="content-language" content="en" />
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta http-equiv="refresh" content="3; url=http://www.trackmania.com/" />
-		<title>Trackmania redirection</title>
+		<title>$APP_MANIALINK</title>
+		<style type="text/css">
+		
+			body {
+				background: #333333;
+				color: #eeeeee;
+				font-family: Verdana, Arial, Helvetica, sans-serif;
+				font-size: 12px;
+				line-height: 15px;
+			}
+			
+			#frame {
+				width: 500px;
+				margin: 25px auto;
+				padding: 25px;
+				border: 1px #cccccc solid;
+				-moz-border-radius: 10px;
+				-webkit-border-radius: 10px;
+			}
+			
+			h1 {
+				color: #ffff00;
+				text-align: center;
+			}
+			
+			p {
+				text-align: justify;
+			}
+			
+			a, a:visited {
+				color: #ffff00;
+				text-decoration: underline;
+			}
+			
+			a:hover, a:active {
+				color: orange;
+			}
+		</style>
 	</head>
 	<body>
-		You will be redirected to www.trackmania.com in a few seconds. 
-		If it does not work click <a href="http://www.trackmania.com">here</a>
+		<div id="frame">
+			<h1>$APP_MANIALINK</h1>
+			<p>
+			The page your are trying to access is a Manialink for TrackMania. 
+			You can only view it using the in-game browser.
+			<p>
+			
+			<p>
+			To access it, <a href="tmtp:///:$APP_MANIALINK">click here</a> or 
+			launch TrackMania Forever and go to the <b>$APP_MANIALINK</b> Manialink.
+			</p>
+			
+			<p>
+			TrackMania is a series of fast-paced racing video games in which you 
+			drive at mind-blowing speeds on fun and spectacular tracks in solo 
+			and multi player modes. Several in-game editors allow for track 
+			building, car painting or video editing.
+			</p>
+			
+			<p>
+			For more information, please visit <a href="http://www.trackmania.com">www.trackmania.com</a>
+			</p>
+		</div>
 	</body>
-</html>			
+</html>				
 HTML;
 				exit;
 			}

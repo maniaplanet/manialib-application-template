@@ -13,6 +13,7 @@ class ShoutboxController extends ActionController
 	
 	protected function onConstruct()
 	{
+		$this->addFilter(new UserAgentCheckFilter());
 		$this->addFilter(new RegisterRequestParametersFilter());
 		$this->addFilter(new MoodSelectorFilter());
 		$this->addFilter(new ForceSplashScreenFilter());
