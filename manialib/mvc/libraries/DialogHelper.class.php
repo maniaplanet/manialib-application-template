@@ -33,7 +33,18 @@ class DialogHelper
 	 * @var int 
 	 */
 	public $width = 65;
-	// TODO add position
+	/**
+	 * @var int 
+	 */
+	public $posX = 0;
+	/**
+	 * @var int 
+	 */
+	public $posY = 0;
+	/**
+	 * @var int 
+	 */
+	public $posZ = 15;
 	/**
 	 * @var string 
 	 */

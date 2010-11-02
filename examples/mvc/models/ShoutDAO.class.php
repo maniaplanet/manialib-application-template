@@ -6,9 +6,10 @@
 require_once(APP_FRAMEWORK_LIBRARIES_PATH.'Database.mysql.php');
 require_once(APP_MVC_MODELS_PATH.'Shout.class.php');
 
+// TODO Put the SQL shema somewhere else
+
 /**
  * Shout data access
- * @todo put the SQL shema somewhere
  */
 abstract class ShoutDAO
 {

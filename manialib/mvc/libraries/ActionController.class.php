@@ -38,7 +38,6 @@
  * </code>
  * @package ManiaLib
  * @subpackage MVC
- * @todo Think about "plugins" eg. you want to do a shoutbox plugin, how everything works?
  */
 class ActionController
 {

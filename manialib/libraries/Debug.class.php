@@ -33,7 +33,7 @@ abstract class Debug
 	 */
 	static function foobar($message)
 	{
-		// TODO Debug::foobar refaire
+		ErrorHandling::showDebugDialog(print_r($message, true));
 	}
 }
 

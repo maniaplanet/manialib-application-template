@@ -19,7 +19,7 @@ $ui->setPosition(0, 0, 14);
 $ui->setSubStyle(Bgs1::BgWindow2);
 $ui->save();
 
-Manialink::beginFrame(0, 0, 15);
+Manialink::beginFrame($response->dialog->posX, $response->dialog->posY, $response->dialog->posZ);
 {
 	$ui = new DialogCard($response->dialog->width, $response->dialog->height);
 	$ui->setAlign('center','center');

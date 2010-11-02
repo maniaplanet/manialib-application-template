@@ -35,6 +35,6 @@ source: http://stackoverflow.com/questions/34975/branching-strategies
 the path to /manialib in the config)
 
 Note: Windows supports symbolic links since Vista. Free and usefull shell
-extension is available here: 
+extension is available here (For Win XP, you can use junctions to act as symlinks): 
 http://schinagl.priv.at/nt/hardlinkshellext/hardlinkshellext.html
 

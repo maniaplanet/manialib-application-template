@@ -45,8 +45,6 @@ class RequestEngine
 		return self::$instance;
 	}
 	
-	// TODO Add request URI to request engine
-	
 	/**
 	 * @ignore
 	 */

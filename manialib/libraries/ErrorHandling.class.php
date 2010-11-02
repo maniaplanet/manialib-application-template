@@ -9,13 +9,17 @@
  */
 
 /**
- * Error handling features
+ * Error handling
+ * Error handling features and handlers
+ * @todo doc explain error handling strategy
  * @package ManiaLib
  * @subpackage ErrorHandling
- * @ignore
  */
 abstract class ErrorHandling
 {
+	/**
+	 * @ignore
+	 */
 	protected static $messageConfigs = array(
 		'default' => array(
 			'title'      => '%s',
@@ -30,8 +34,12 @@ abstract class ErrorHandling
 	);
 	
 	/**
-	 * Exception handler
+	 * Error handler
 	 * Converts standard PHP errors into ErrorException
+	 * Usage (loaded by default in the MVC framework):
+	 * <code>
+	 * set_error_handler(array('ErrorHandling', 'exceptionErrorHandler'));
+	 * </code>
 	 * @throws ErrorException
 	 */
 	static function exceptionErrorHandler($errno, $errstr, $errfile, $errline) 
@@ -40,25 +48,46 @@ abstract class ErrorHandling
 	}
 	
 	/**
-	 * Default exception handler
-	 * Prints a nice error page and logs the exception
-	 * Also act as the uncaught exception handler
+	 * Exception handler
+	 * Used to cleanly catch exceptions, and is also used as uncaught exception handler.
+	 * Prints a nice error message in manialink
+	 * Usage for catching exceptions:
+	 * <code>
+	 * try
+	 * {
+	 *     //...
+	 * }
+	 * catch(Exception $exception)
+	 * {
+	 *     ErrorHandling::exceptionHandler($exception);
+	 * }
+	 * </code>
+	 * Usage for default exception handling:
+	 * <code>
+	 * set_exception_handler(array('ErrorHandling', 'exceptionHandler'));
+	 * </code>
+	 * Note: the MVC framework uses both by default
 	 */
 	static function exceptionHandler(Exception $exception)
 	{
+		$request = call_user_func(array(APP_FRAMEWORK_REQUEST_ENGINE_CLASS, 'getInstance'));
+		$requestURI = $request->createLink();
+		
 		if($exception instanceof UserException)
 		{
+			Debug::log(self::computeShortMessage($exception).'  '.$requestURI, Debug::LOG_DATE, APP_USER_ERROR_LOG);
 			self::showErrorDialog($exception->getMessage());
-			// TODO Small log for user errors
 		}
 		else
 		{
-			$message = self::computeMessage($exception, self::$messageConfigs['default']);
+			$requestURILine = sprintf(self::$messageConfigs['default']['line'], 'Request URI', $requestURI);			
+			$message = self::computeMessage($exception, self::$messageConfigs['default'], array($requestURILine));
 			Debug::log($message, Debug::LOG_DATE, APP_ERROR_LOG);
 			
 			if(APP_DEBUG_LEVEL)
 			{
-				$message = self::computeMessage($exception, self::$messageConfigs['debug']);
+				$requestURILine = sprintf(self::$messageConfigs['debug']['line'], 'Request URI', $requestURI);
+				$message = self::computeMessage($exception, self::$messageConfigs['debug'], array($requestURILine));
 				self::showDebugDialog($message);
 			}
 			else
@@ -145,30 +174,38 @@ abstract class ErrorHandling
 	}
 				
 	/**
-	 * Computes a human readable message from any exception
-	 * Usefull for logging and displaying when in debug mode
+	 * Computes a human readable log message from any exception
 	 * @return string
 	 * @ignore
 	 */
-	static protected function computeMessage(Exception $e, array $styles)
+	static protected function computeMessage(Exception $e, array $styles, array $additionalLines = array())
 	{
+		$trace = $e->getTraceAsString();
+		$trace = explode("\n", $trace);
+		foreach ($trace as $key=>$value)
+		{
+			$trace[$key] = sprintf($styles['simpleLine'], preg_replace('/#[0-9]*\s*/', '', $value));
+		}
+		$file = sprintf($styles['simpleLine'], $e->getFile().' ('.$e->getLine().')');
+		
 		$lines[] = sprintf($styles['title'], get_class($e));
 		$lines[] = '';
 		$lines[] = sprintf($styles['line'], 'Message', print_r($e->getMessage(), true));
 		$lines[] = sprintf($styles['line'], 'Code', $e->getCode());
-		$lines[] = sprintf($styles['simpleLine'], $e->getFile().' ('.$e->getLine().')');
-		foreach($e->getTrace() as $t)
-		{
-			$lines[] = sprintf($styles['simpleLine'], 
-				$t['file'].
-				' ('.$t['line'].'): '.
-				$t['function']).'('.
-				(array_key_exists('args', $t) ? implode(', ', $t['args']) : '').
-				')';
-		}
+		$lines = array_merge($lines, $additionalLines, array($file), $trace);
 		$lines[] = '';
-		 
 		return implode("\n", $lines);
+	}
+	
+	/**
+	 * Computes a short human readable log message from any exception
+	 * @return string
+	 * @ignore
+	 */
+	static protected function computeShortMessage(Exception $e)
+	{
+		$message = get_class($e).'  '.$e->getMessage().'  ('.$e->getCode().')';
+		return $message;
 	}
 	
 	

@@ -27,8 +27,8 @@ require_once(APP_FRAMEWORK_PATH.'manialib.inc.php');
 require_once(APP_MVC_FRAMEWORK_PATH.'mvc.inc.php');
 
 date_default_timezone_set(APP_DEFAULT_TIMEZONE);
-//set_error_handler(array('ErrorHandling', 'exceptionErrorHandler'));
-set_exception_handler(array('ErrorHandling', 'exceptionHandler'));
+set_error_handler(array('ErrorHandling', 'exceptionErrorHandler'));
+//set_exception_handler(array('ErrorHandling', 'exceptionHandler'));
  
 try
 {

@@ -9,7 +9,6 @@
  * @copyright 2009-2010 NADEO 
  * @package ManiaLib
  * @subpackage MVC
- * @todo document the MVC constants
  */
 
 if(!defined('APP_MVC_FRAMEWORK_PATH'))

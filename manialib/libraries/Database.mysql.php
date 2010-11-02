@@ -8,6 +8,8 @@
  * @ignore
  */
 
+// FIXME Use a factory+driver pattern to handle both mysql and mysqli without weird issues and name conflicts
+
 /**
  * Database connection instance
  * @package ManiaLib
@@ -115,6 +117,7 @@ class DatabaseConnection
 	 */
 	function execute($query)
 	{
+		throw new Exception();
 		$result = mysql_query($query, $this->connection);
 		if(!$result)
 		{

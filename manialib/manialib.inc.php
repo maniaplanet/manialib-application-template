@@ -22,6 +22,12 @@
  * @package ManiaLib
  */
 
+/**
+ * ManiaLib version
+ * @ignore
+ */
+define('MANIALIB_VERSION', '1.0b1');
+
 /** 
  * Autoload helper
  * @package ManiaLib

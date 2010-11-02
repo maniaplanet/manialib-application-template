@@ -14,9 +14,9 @@
  */
 class UserAgentCheckFilter extends AdvancedFilter
 {
+	// TODO Custom view for UserAgentCheckFilter
 	/**
 	 * @ignore
-	 * @todo faire une page/vue personalisable
 	 */
 	function preFilter()
 	{
