@@ -12,10 +12,10 @@ View::render('Examples', '_navigation');
 $layout = new FlowLayout(70, 70);
 $layout->setMargin(3, 3);
 
-Manialink::beginFrame(-18, 35, 1, $layout);
+Manialink::beginFrame(-18, 35, 1, null, $layout);
 {
 	$layout = new NullLayout(30, 30);
-	Manialink::beginFrame(0, 0, 1, $layout);
+	Manialink::beginFrame(0, 0, 1, null, $layout);
 	{
 		////////////////////////////////////////////////////////////////////////
 		// ColumnLayout example
@@ -29,7 +29,7 @@ Manialink::beginFrame(-18, 35, 1, $layout);
 		$layout->setMarginHeight(1);
 		$layout->setBorder(1, 6);
 		
-		Manialink::beginFrame(0, 0, 1, $layout);
+		Manialink::beginFrame(0, 0, 1, null, $layout);
 		{
 			$ui = new Quad(5, 5);
 			$ui->save();
@@ -45,7 +45,7 @@ Manialink::beginFrame(-18, 35, 1, $layout);
 	Manialink::endFrame();
 	
 	$layout = new NullLayout(30, 30);
-	Manialink::beginFrame(0, 0, 1, $layout);
+	Manialink::beginFrame(0, 0, 1, null, $layout);
 	{
 		////////////////////////////////////////////////////////////////////////
 		// LineLayout example
@@ -59,7 +59,7 @@ Manialink::beginFrame(-18, 35, 1, $layout);
 		$layout->setMarginWidth(1);
 		$layout->setBorder(1, 6);
 		
-		Manialink::beginFrame(0, 0, 1, $layout);
+		Manialink::beginFrame(0, 0, 1, null, $layout);
 		{
 			$ui = new Quad(5, 5);
 			$ui->save();
@@ -75,7 +75,7 @@ Manialink::beginFrame(-18, 35, 1, $layout);
 	Manialink::endFrame();
 
 	$layout = new NullLayout(30, 30);
-	Manialink::beginFrame(0, 0, 1, $layout);
+	Manialink::beginFrame(0, 0, 1, null, $layout);
 	{
 		////////////////////////////////////////////////////////////////////////
 		// FlowLayout example
@@ -89,7 +89,7 @@ Manialink::beginFrame(-18, 35, 1, $layout);
 		$layout->setMargin(1, 1);
 		$layout->setBorder(1, 6);
 		
-		Manialink::beginFrame(0, 0, 1, $layout);
+		Manialink::beginFrame(0, 0, 1, null, $layout);
 		{
 			$ui = new Quad(5, 5);
 			$ui->save();
@@ -123,7 +123,7 @@ Manialink::beginFrame(-18, 35, 1, $layout);
 	Manialink::endFrame();
 
 	$layout = new NullLayout(30, 30);
-	Manialink::beginFrame(0, 0, 1, $layout);
+	Manialink::beginFrame(0, 0, 1, null, $layout);
 	{
 		////////////////////////////////////////////////////////////////////////
 		// FlowLayout example 2
@@ -137,7 +137,7 @@ Manialink::beginFrame(-18, 35, 1, $layout);
 		$layout->setMargin(1, 1);
 		$layout->setBorder(1, 6);
 		
-		Manialink::beginFrame(0, 0, 1, $layout);
+		Manialink::beginFrame(0, 0, 1, null, $layout);
 		{
 			$ui = new Quad(5, 1);
 			$ui->save();

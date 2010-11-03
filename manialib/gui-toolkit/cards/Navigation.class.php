@@ -153,7 +153,7 @@ class Navigation extends Quad
 				{
 					$layout = new ColumnLayout($this->sizeX-1, $this->sizeY-10);
 					$layout->setMarginHeight(1);
-					Manialink::beginFrame(0, -10, 0, $layout);
+					Manialink::beginFrame(0, -10, 0, null, $layout);
 					{
 						foreach($this->items as $item) 
 						{
@@ -170,7 +170,7 @@ class Navigation extends Quad
 					$layout = new ColumnLayout($this->sizeX-1, $this->sizeY-10);
 					$layout->setDirection(ColumnLayout::DIRECTION_UP);
 					$layout->setMarginHeight(1);
-					Manialink::beginFrame(0, -$this->sizeY+$this->quitButton->getSizeY()+2, 0, $layout);
+					Manialink::beginFrame(0, -$this->sizeY+$this->quitButton->getSizeY()+2, 0, null, $layout);
 					{
 						foreach($this->bottomItems as $item) 
 						{

@@ -81,18 +81,19 @@ abstract class Manialink
 		}
 	}
 
-	// TODO Implement scale attribute for the frames in Manialinks
+	// FIXME scale as param before layout ?
 	/**
 	 * Creates a new Manialink frame, with an optionnal associated layout
 	 *
 	 * @param float X position
 	 * @param float Y position
 	 * @param float Z position
+	 * @param float Scale (default is null or 1)
 	 * @param AbstractLayout The optionnal layout associated with the frame. If
 	 * you pass a layout object, all the items inside the frame will be
 	 * positionned using constraints defined by the layout
 	 */
-	final public static function beginFrame($x=0, $y=0, $z=0, AbstractLayout $layout=null)
+	final public static function beginFrame($x=0, $y=0, $z=0, $scale=null, AbstractLayout $layout=null)
 	{
 		// Update parent layout
 		$parentLayout = end(self::$parentLayouts);
@@ -119,6 +120,10 @@ abstract class Manialink
 			$frame->setAttribute('posn', $x.' '.$y.' '.$z);
 		}
 		end(self::$parentNodes)->appendChild($frame);
+		if($scale)
+		{
+			$frame->setAttribute('scale', $scale);
+		}
 
 		// Update stacks
 		self::$parentNodes[] = $frame;
@@ -136,14 +141,6 @@ abstract class Manialink
 		}
 		array_pop(self::$parentNodes);
 		array_pop(self::$parentLayouts);
-	}
-	
-	/**
-	 * Sets the scale attribute for the current frame
-	 */
-	final public static function setFrameScale($scale)
-	{
-		end(self::$parentNodes)->setAttribute('scale', $scale);
 	}
 	
 	/**

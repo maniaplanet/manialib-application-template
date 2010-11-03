@@ -37,11 +37,11 @@ Manialink::beginFrame(-15, 35, 1);
 	}
 	Manialink::endFrame();
 	
-	Manialink::beginFrame(2, -15, 0, new ColumnLayout());
+	Manialink::beginFrame(2, -15, 0, null, new ColumnLayout());
 	{
 		foreach((array)$response->shouts as $shout)
 		{
-			Manialink::beginFrame(0, 0, 0, new NullLayout(55, 3.25));
+			Manialink::beginFrame(0, 0, 0, null, new NullLayout(55, 3.25));
 			{
 				$ui = new BgsPlayerCard(15, 3);
 				$ui->setPosition(0, 0, 0);

@@ -17,7 +17,7 @@ $response->dialog->buttonManialink = $request->createLink(Route::CUR, Route::CUR
 
 View::render('Dialogs', 'emptyDialog');
 
-Manialink::beginFrame(-20, 4, 16, new LineLayout());
+Manialink::beginFrame(-20, 4, 16, null, new LineLayout());
 {
 	$request->set('select_mood', 'mp');
 	$manialink = $request->createLink(Route::CUR, Route::CUR); 

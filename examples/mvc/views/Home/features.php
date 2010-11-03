@@ -42,7 +42,7 @@ Manialink::beginFrame(-20, 35, 1);
 	$layout = new ColumnLayout();
 	$layout->setMarginHeight(2);
 	
-	Manialink::beginFrame(4, -15, 1, $layout);
+	Manialink::beginFrame(4, -15, 1, null, $layout);
 	{
 		for($i=1; $i<=7; $i++)
 		{

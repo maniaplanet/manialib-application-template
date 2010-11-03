@@ -37,7 +37,6 @@
  * Database connection instance
  * @package ManiaLib
  * @subpackage Database
- * @ignore
  */
 class DatabaseConnection
 {
