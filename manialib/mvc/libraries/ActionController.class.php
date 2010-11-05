@@ -134,6 +134,7 @@ class ActionController
 	 *     }
 	 *     //...
 	 * }
+	 * </code>
 	 */
 	final protected function addFilter(Filterable $filter)
 	{
