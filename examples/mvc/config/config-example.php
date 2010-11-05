@@ -24,7 +24,7 @@ define('APP_DEBUG_LEVEL', 1);
 define('APP_DATABASE_HOST', 'localhost');
 define('APP_DATABASE_USER', 'root');
 define('APP_DATABASE_PASSWORD', '');
-define('APP_DATABASE_NAME', 'manialib');
+define('APP_DATABASE_NAME', 'ManiaLib');
 
 // Application base paths.
 // In most cases you shouldn't need to change that

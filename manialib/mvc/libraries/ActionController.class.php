@@ -120,7 +120,20 @@ class ActionController
 	protected function onConstruct(){}
 
 	/**
-	 * @todo doc
+	 * Add a filter to the curent controller
+	 * Typically you should call that in your controller's onConstruct() method
+	 * 
+	 * Example:
+	 * <code>
+	 * class SomeStuffController extends ActionController
+	 * {
+	 *     //...
+	 *     function onConstruct()
+	 *     {
+	 *			$this->addFilter(new UserAgentCheckFilter());      
+	 *     }
+	 *     //...
+	 * }
 	 */
 	final protected function addFilter(Filterable $filter)
 	{
@@ -137,7 +150,7 @@ class ActionController
 	}
 
 	/**
-	 * @todo doc
+	 * Executes an action from within another action
 	 */
 	final protected function chainAction($controllerName=null, $actionName)
 	{
@@ -153,7 +166,7 @@ class ActionController
 	}
 
 	/**
-	 * @todo doc
+	 * Executes an action from within another action and override the view from the first action
 	 */
 	final protected function chainActionAndView($controllerName=null, $actionName, $resetViews = true)
 	{
@@ -285,25 +298,6 @@ class ActionController
 		{
 			$filter->postFilter();
 		}
-	}
-
-	/**
-	 * @todo doc
-	 */
-	final protected function showDebugMessage($message)
-	{
-		if(APP_DEBUG_LEVEL == DEBUG_OFF)
-		{
-			throw new MVCException('ActionController::showDebugMessage() is only available in debug mode!');
-		}
-
-		$this->response->dialogTitle = 'Debug message';
-		$this->response->dialogMessage = print_r($message, true);
-		$this->response->dialogButtonLabel = 'Quarante-deux';
-		$this->response->dialogButtonManialink = $this->request->getReferer();
-
-		$this->response->resetViews();
-		$this->response->registerDialog('dialogs', 'generic_dialog');
 	}
 }
 

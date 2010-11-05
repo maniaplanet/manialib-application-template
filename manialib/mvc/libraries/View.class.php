@@ -7,15 +7,22 @@
  */
 
 /**
- * View rendering stuff
+ * View rendering features
  * @package ManiaLib
  * @subpackage MVC
- * @todo doc
  */
 abstract class View
 {
 	/**
-	 * @todo doc
+	 * Renders a view
+	 * You can use this method from within a view to render another view.
+	 * Usefull for things like rendering a navigation menu on every page.
+	 * 
+	 * Examples:
+	 * <code>
+	 * View::render('header'); // Renders /views/header.php
+	 * View::render('Home', '_navigation'); // Renders /views/Home/_navigation.php
+	 * </code>
 	 */
 	public static function render($controllerName, $actionName=null)
 	{

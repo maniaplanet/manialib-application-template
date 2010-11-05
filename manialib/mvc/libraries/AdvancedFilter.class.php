@@ -8,9 +8,8 @@
 
 /**
  * Advanced filter
- * 
- * Filter with easy access to Session, Request and Response
- * 
+ * Filterable implentation with access to Session, Request and Response
+ * @see Filterable
  * @package ManiaLib
  * @subpackage MVC
  */

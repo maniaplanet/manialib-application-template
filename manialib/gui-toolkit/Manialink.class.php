@@ -81,7 +81,6 @@ abstract class Manialink
 		}
 	}
 
-	// FIXME scale as param before layout ?
 	/**
 	 * Creates a new Manialink frame, with an optionnal associated layout
 	 *
