@@ -9,6 +9,8 @@
  */
 class ShoutboxController extends ActionController
 {
+	const ANTIFLOOD_DELAY = 30; // 30 seconds between each shout
+	
 	protected $defaultAction = 'viewShouts';
 	
 	protected function onConstruct()
@@ -42,13 +44,21 @@ class ShoutboxController extends ActionController
 	{
 		$this->checkLogin();
 		
-		// FIXME Implement antiflood
+		if($lastPost = $this->session->get('shoutLastPost'))
+		{
+			if(time() - $lastPost < self::ANTIFLOOD_DELAY)
+			{
+				throw new UserException('You must wait '.self::ANTIFLOOD_DELAY.' seconds between each shout');
+			}			
+		}
 		
 		$shout = new Shout();
 		$shout->login = $this->session->get('login');
 		$shout->nickname = $this->session->get('nickname');
 		$shout->message = $message;
 		ShoutDAO::save($shout);
+		
+		$this->session->set('shoutLastPost', time());		
 		
 		$this->request->redirectManialinkArgList(Route::CUR, Route::NONE);
 	}
