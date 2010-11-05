@@ -74,41 +74,27 @@ if(!defined('APP_MVC_MODELS_PATH'))
 	 */
 	define('APP_MVC_MODELS_PATH', APP_PATH.'models/');
 }
-if(!defined('URL_PARAM_NAME_CONTROLLER'))
-{
-	/**
-	 * Name of the URL parameter for the controller name
-	 */
-	define('URL_PARAM_NAME_CONTROLLER', 'c');
-}
-if(!defined('URL_PARAM_DEFAULT_CONTROLLER'))
+if(!defined('APP_MVC_DEFAULT_CONTROLLER'))
 {
 	/**
 	 * Default controller of your application
 	 */
-	define('URL_PARAM_DEFAULT_CONTROLLER', 'home');
+	define('APP_MVC_DEFAULT_CONTROLLER', 'Home');
 }
-if(!defined('URL_PARAM_NAME_ACTION'))
-{
-	/**
-	 * Name of the URL parameter for the action name
-	 */
-	define('URL_PARAM_NAME_ACTION', 'a');
-}
-if(!defined('URL_PARAM_DEFAULT_ACTION'))
+if(!defined('APP_MVC_DEFAULT_ACTION'))
 {
 	/**
 	 * Default action when a controller hasn't defined its own default action.
 	 * You shouldn't have to change this.
 	 */
-	define('URL_PARAM_DEFAULT_ACTION', 'index');
+	define('APP_MVC_DEFAULT_ACTION', 'index');
 }
 if(!defined('APP_MVC_USE_URL_REWRITE'))
 {
 	/**
 	 * Does your application use Apache Mod Rewrite ?
 	 * <ul>
-	 * <li>Without mod rewrite: /index.php?c=some_controller&a=some_action</li>
+	 * <li>Without mod rewrite: /index.php?/some_controller/some_action/</li>
 	 * <li>With mod rewrite: /some_controller/some_action/</li>
 	 * </ul>
 	 */

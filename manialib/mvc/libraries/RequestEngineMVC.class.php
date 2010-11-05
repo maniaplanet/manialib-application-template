@@ -45,13 +45,22 @@ class RequestEngineMVC extends RequestEngine
 	protected function __construct()
 	{
 		parent::__construct();
-		$this->controller = strtolower($this->get(URL_PARAM_NAME_CONTROLLER, URL_PARAM_DEFAULT_CONTROLLER));
-		$this->controller = Route::separatorToUpperCamelCase($this->controller);
-		$this->action = strtolower($this->get(URL_PARAM_NAME_ACTION));
-		if($this->action)
+		$route = array_keys($this->params);
+		$route = reset($route);
+		if($route && substr($route, 0, 1)=='/')
 		{
-			$this->action = Route::separatorToCamelCase($this->action);
+			array_shift($this->params);
+			$route = explode('/', $route);
 		}
+		else 
+		{
+			$route = array();
+		}
+		// $route[0] is null because of the first '/'
+		$this->controller = array_key_exists(1, $route) && $route[1] ? $route[1] : URL_PARAM_DEFAULT_CONTROLLER;
+		$this->action = array_key_exists(2, $route) && $route[2] ? $route[2] : null;
+		$this->controller = Route::separatorToUpperCamelCase($this->controller);
+		$this->action = $this->action ? Route::separatorToCamelCase($this->action) : null;
 	}
 	
 	public function getAction($defaultAction = null)
@@ -139,7 +148,7 @@ class RequestEngineMVC extends RequestEngine
 				break;
 				
 			case Route::DEF:
-				$controller = URL_PARAM_DEFAULT_CONTROLLER;
+				$controller = APP_MVC_DEFAULT_CONTROLLER;
 				break;
 				
 			case Route::NONE:
@@ -165,13 +174,10 @@ class RequestEngineMVC extends RequestEngine
 			default:
 				// Nothing here
 		}
-		
-		unset($params[URL_PARAM_NAME_CONTROLLER]);
-		unset($params[URL_PARAM_NAME_ACTION]);
-		
 		$controller = Route::camelCaseToSeparator($controller);
 		$action = Route::camelCaseToSeparator($action);
 		
+		// URL string
 		if(APP_MVC_USE_URL_REWRITE)
 		{
 			$url = APP_URL.$controller.'/';
@@ -183,34 +189,38 @@ class RequestEngineMVC extends RequestEngine
 		else
 		{
 			$url = APP_URL;
-			if($action)
+			$route = '';
+			if($controller)
 			{
-				$params = array_merge(
-					array(
-						URL_PARAM_NAME_CONTROLLER => $controller,
-						URL_PARAM_NAME_ACTION => $action),
-					$params);
+				$route = '/'.$controller.'/';
+				if($action)
+				{
+					$route .= $action.'/';
+				}
 			}
-			else
+			if($route)
 			{
-				$params = array_merge(
-					array(
-						URL_PARAM_NAME_CONTROLLER => $controller),
-					$params);
+				$url = $url.'?'.$route;
 			}
 		}
-		
 		// Create parameter string
 		if(count($params))
 		{
-			$params = '?'.http_build_query($params, '', '&');
+			$params = http_build_query($params, '', '&');
 		}
 		else
 		{
 			$params = '';
 		}
-				
-		return $url.$params;
+		if(APP_MVC_USE_URL_REWRITE)
+		{
+			return $url.($params? '?'.$params:'');
+		}	
+		else
+		{
+			return $url.($params? ($route?'&':'?').$params : '');
+		}
+		
 	}
 }
 

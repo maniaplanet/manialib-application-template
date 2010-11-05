@@ -42,6 +42,8 @@ class ShoutboxController extends ActionController
 	{
 		$this->checkLogin();
 		
+		// FIXME Implement antiflood
+		
 		$shout = new Shout();
 		$shout->login = $this->session->get('login');
 		$shout->nickname = $this->session->get('nickname');

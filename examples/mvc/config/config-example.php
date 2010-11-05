@@ -13,7 +13,7 @@ define('APP_URL', 'http://localhost/manialib/');
 define('APP_MANIALINK', 'manialib');
 
 // Default controller
-define('URL_PARAM_DEFAULT_CONTROLLER', 'Home');
+define('APP_MVC_DEFAULT_CONTROLLER', 'Home');
 
 // Debug level
 // 1 for easy development

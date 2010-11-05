@@ -45,7 +45,7 @@ class ActionController
 	 * Overrride this to define the controller's default action name
 	 * @var string
 	 */
-	protected $defaultAction = URL_PARAM_DEFAULT_ACTION;
+	protected $defaultAction = APP_MVC_DEFAULT_ACTION;
 	/**
 	 * Current controller name
 	 */	
