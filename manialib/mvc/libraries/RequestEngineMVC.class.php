@@ -57,7 +57,7 @@ class RequestEngineMVC extends RequestEngine
 			$route = array();
 		}
 		// $route[0] is null because of the first '/'
-		$this->controller = array_key_exists(1, $route) && $route[1] ? $route[1] : URL_PARAM_DEFAULT_CONTROLLER;
+		$this->controller = array_key_exists(1, $route) && $route[1] ? $route[1] : APP_MVC_DEFAULT_CONTROLLER;
 		$this->action = array_key_exists(2, $route) && $route[2] ? $route[2] : null;
 		$this->controller = Route::separatorToUpperCamelCase($this->controller);
 		$this->action = $this->action ? Route::separatorToCamelCase($this->action) : null;
