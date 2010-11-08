@@ -1,11 +1,19 @@
 <?php
 /**
- * MySQL abstraction layer, based on PHP's MySQLi extension
+ * MySQL abstraction layer
+ * 
+ * @see DatabaseConnection 
+ * @author Maxime Raoust
+ * @copyright 2009-2010 NADEO 
+ * @package ManiaLib
+ */
+
+/**
+ * Database connection
  * 
  * Usage example:
  * <code>
  * <?php
- * 
  * require_once(APP_FRAMEWORK_LIBRARIES_PATH.'Database.php');
  * 
  * try
@@ -28,13 +36,6 @@
  * ?>
  * </code>
  * 
- * @author Maxime Raoust
- * @copyright 2009-2010 NADEO 
- * @package ManiaLib
- */
-
-/**
- * Database connection instance
  * @package ManiaLib
  * @subpackage Database
  */
@@ -189,6 +190,7 @@ class DatabaseConnection
 
 /**
  * Database query result
+ * @see DatabaseConnection
  * @package ManiaLib
  * @subpackage Database
  */
@@ -273,6 +275,7 @@ class DatabaseRecordSet
 
 /**
  * Misc database tools
+ * @see DatabaseConnection
  * @package ManiaLib
  * @subpackage Database
  */
