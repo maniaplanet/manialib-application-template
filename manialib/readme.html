@@ -133,7 +133,7 @@ webserver.
 <li>Create <b>/config/config.php</b> and edit it to match your settings. You may 
 use /config/config-example.php for help.</li>
 <li>If you want to use the <b>Shoutbox</b> controller, create the table in your 
-database using <b>/install/manialib.sql</b></li>
+database (see sql dump below)</li>
 <li>That's it!</li>
 </ol>
 
@@ -142,6 +142,18 @@ database using <b>/install/manialib.sql</b></li>
 <b>http://localhost/manialib/</b>, you can use the short Manialink 
 <b>manialibdev</b>.
 </p>
+
+<h3>SQL structure of the shoutbox table</h3>
+<pre>
+CREATE TABLE IF NOT EXISTS `ManiaLib_Shouts` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `datePosted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `login` varchar(25) NOT NULL,
+  `nickname` varchar(75) NOT NULL,
+  `message` varchar(160) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+</pre>
 
 <h2>Working with ManiaLib</h2>
 
@@ -199,6 +211,20 @@ about() will named about.php. All in all, the view will be:
 <li><b>http://yourwebsite.com/index.php?/home/about/</b> is a page</li>
 <li>It maps to <b>HomeController::about()</b> in <b>/controllers/HomeController.class.php</b></li>
 <li>The view is <b>/views/Home/about.php</b></li>
+</ul>
+
+<h3>Directory structure</h3>
+<ul>
+<li><b>/config/</b> : config files</li>
+<li><b>/controllers/</b> : controllers of your application</li>
+<li><b>/filters/</b> : filters of your application</li>
+<li><b>/images/</b> : images</li>
+<li><b>/langs/</b> : XML dictionaries</li>
+<li><b>/libraries/</b> : misc classes, autoloaded with the naming convention <i>ClassName.class.php</i></li>
+<li><b>/logs/</b> : error and debug logs</li>
+<li><b>/manialib/</b> : ManiaLib framework; <b>DO NOT MODIFY ANY FILE IN THIS DIRECTORY</b></li>
+<li><b>/models/</b> : models</li>
+<li><b>/views/</b> : all your views</li>
 </ul>
 
 <h3>Documentation</h3>
