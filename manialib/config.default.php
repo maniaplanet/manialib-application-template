@@ -318,5 +318,34 @@ if(!defined('APP_MVC_FRAMEWORK') && !defined('APP_FRAMEWORK_REQUEST_ENGINE_CLASS
 	 */
 	define('APP_FRAMEWORK_REQUEST_ENGINE_CLASS', 'RequestEngine');
 }
+if(!defined('APP_MANIAHOME_SHOW_BUTTON'))
+{
+	/**
+	 * Whether to show the ManiaHome favourite button
+	 */
+	define('APP_MANIAHOME_SHOW_BUTTON', true);
+}
+if(!defined('APP_MANIAHOME_NAME'))
+{
+	/**
+	 * Name of your Manialink for the ManiaHome favourite button. 
+	 * It can have special characters.
+	 */
+	define('APP_MANIAHOME_NAME', APP_MANIALINK);
+}
+if(!defined('APP_MANIAHOME_URL'))
+{
+	/**
+	 * URL or short Manialink of your Manialink for the ManiaHome favourite button
+	 */
+	define('APP_MANIAHOME_URL', APP_MANIALINK);
+}
+if(!defined('APP_MANIAHOME_PICTURE'))
+{
+	/**
+	 * URL of your banner for ManiaHome
+	 */
+	define('APP_MANIAHOME_PICTURE', null);
+}
 
 ?>

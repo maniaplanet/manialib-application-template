@@ -39,18 +39,20 @@ $ui->setManialink($manialink);
 $ui->save();
 
 // Maniahome
-Manialink::beginFrame(39, -43, 15);
+if(APP_MANIAHOME_SHOW_BUTTON)
 {
-	Manialink::appendXML(
-		'<include url="http://maniahome.trackmania.com/add.php?name='.
-		APP_MANIALINK.
-		'&amp;url='.
-		APP_MANIALINK.
-	//	'&amp;picture='.
-	//	'[pictureUrl]'.
-		'"/>');
+	Manialink::beginFrame(39, -43, 15);
+	{
+		Manialink::appendXML(
+			'<include url="http://maniahome.trackmania.com/add.php?'.
+			'name='.APP_MANIAHOME_NAME.
+			'&amp;url='.APP_MANIAHOME_URL.
+			(APP_MANIAHOME_PICTURE?'&amp;picture='.APP_MANIAHOME_PICTURE:'').
+			'"/>');
+	}
+	Manialink::endFrame();	
 }
-Manialink::endFrame();
+
 
 // Refresh button
 $ui = new Icon64(5);
