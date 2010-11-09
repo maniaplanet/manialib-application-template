@@ -105,28 +105,25 @@ along with ManiaLib.  If not, see
 <h2>Requirements</h2>
 <ul>
 <li>
-Good knowledge of PHP and Manialinks. ManiaLib is a powerful framework to 
-create Manialinks in PHP. Therefore you'll need to be familiar with both
-PHP and Manialinks to be confortable with ManiaLib.
+<b>Experience with PHP and Manialinks.</b>
 </li>
 <li>
-PHP editor. You can use text editors such as 
-<a href="http://notepad-plus-plus.org/">Notepad++</a> but we strongly suggest 
-that you use an IDE with advanced features such as autocompletion etc.: 
-<a href="http://www.eclipse.org/pdt/">Eclipse PDT</a> is a good choice here.
+<b>PHP editor.</b> Text editor (eg.
+<a href="http://notepad-plus-plus.org/">Notepad++</a>) or IDE (recommended) (eg.
+<a href="http://www.eclipse.org/pdt/">Eclipse PDT</a>) 
 </li>
 <li>
-Local webserver with <b>PHP 5.2+</b> to test your Manialink localy. 
-<a href="http://www.apachefriends.org/en/xampp.html">XAMPP</a> and 
-<a href="http://www.easyphp.org/">EasyPHP</a> are both good solutions on Windows.
+<b>Local Web server w/ PHP 5.2+</b> to test your Manialink localy. 
+(eg. <a href="http://www.apachefriends.org/en/xampp.html">XAMPP</a> or 
+<a href="http://www.easyphp.org/">EasyPHP</a>)
 </li>
+<li><b>MySQL</b> (optionnal)</li>
 </ul>
 
 <h2>Installation</h2>
 <p>
 ManiaLib is a framework, but it is provided with an example to help you 
-getting started. Here are the instructions to install the example on your local
-webserver.
+get started. Here are the instructions to setup the example.
 </p>
 <ol>
 <li><b>Unzip</b> the package in an empty directory and upload everything.</li>
@@ -162,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `ManiaLib_Shouts` (
 The recommended method for creating a Manialink with Manialib is to use the MVC 
 framework. It implements the 
 <a href="http://en.wikipedia.org/wiki/Model%E2%80%93View%E2%80%93Controller">Model-View-Controller</a> 
-design pattern. It may sound complicated, but it's not:
+design pattern. It may sound complicated more complicated than it really is:
 <ul>
 <li>
 The <b>model</b> manages the data (typically MySQL)
@@ -176,9 +173,7 @@ response
 </li>
 </ul>
 
-<p>
-How does it all work in ManiaLib? 
-</p>
+<h3>How does it work in ManiaLib?</h3>
 <p>
 First, you need to know that every page will be accessed through <b>index.php</b>. 
 You just need to put the path of your request at the begining of the query 
