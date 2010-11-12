@@ -17,125 +17,8 @@ abstract class ManiacodeComponent
 	 */
 	protected $xmlTagName;
 	protected $xml;
-	/**#@-*/
-	
-	final function save()
-	{	
-		if ($this->xmlTagName)
-		{
-			$this->xml = Maniacode::$domDocument->createElement($this->xmlTagName);
-			end(Maniacode::$parentNodes)->appendChild($this->xml);
-		}
-		
-		if (isset($this->message))
-		{
-			$elem  = Maniacode::$domDocument->createElement('message');
-			$value = Maniacode::$domDocument->createTextNode($this->message);
-			$elem->appendChild($value);
-			$this->xml->appendChild($elem);
-		}
-		
-		if (isset($this->name))
-		{
-			$elem  = Maniacode::$domDocument->createElement('name');
-			$value = Maniacode::$domDocument->createTextNode($this->name);
-			$elem->appendChild($value);
-			$this->xml->appendChild($elem);
-		}
-		
-		if (isset($this->url))
-		{
-			$elem  = Maniacode::$domDocument->createElement('url');
-			$value = Maniacode::$domDocument->createTextNode($this->url);
-			$elem->appendChild($value);
-			$this->xml->appendChild($elem);
-		}
-		
-		if (isset($this->ip))
-		{
-			$elem  = Maniacode::$domDocument->createElement('ip');
-			$value = Maniacode::$domDocument->createTextNode($this->ip);
-			$elem->appendChild($value);
-			$this->xml->appendChild($elem);
-		}
-		
-		if (isset($this->file))
-		{
-			$elem  = Maniacode::$domDocument->createElement('file');
-			$value = Maniacode::$domDocument->createTextNode($this->file);
-			$elem->appendChild($value);
-			$this->xml->appendChild($elem);
-		}
-		
-		if (isset($this->link))
-		{
-			$elem  = Maniacode::$domDocument->createElement('link');
-			$value = Maniacode::$domDocument->createTextNode($this->link);
-			$elem->appendChild($value);
-			$this->xml->appendChild($elem);
-		}
-		
-		if (isset($this->password))
-		{
-			$elem  = Maniacode::$domDocument->createElement('password');
-			$value = Maniacode::$domDocument->createTextNode($this->password);
-			$elem->appendChild($value);
-			$this->xml->appendChild($elem);
-		}
-		
-		if (isset($this->connectionType))
-		{
-			$elem  = Maniacode::$domDocument->createElement('connection_type');
-			$value = Maniacode::$domDocument->createTextNode($this->connectionType);
-			$elem->appendChild($value);
-			$this->xml->appendChild($elem);
-		}
-		
-		if (isset($this->login))
-		{
-			$elem  = Maniacode::$domDocument->createElement('login');
-			$value = Maniacode::$domDocument->createTextNode($this->login);
-			$elem->appendChild($value);
-			$this->xml->appendChild($elem);
-		}
-		
-		if (isset($this->email))
-		{
-			$elem  = Maniacode::$domDocument->createElement('email');
-			$value = Maniacode::$domDocument->createTextNode($this->email);
-			$elem->appendChild($value);
-			$this->xml->appendChild($elem);
-		}
-		
-		if (isset($this->tracks) && is_array($this->tracks) && count($this->tracks))
-		{
-			foreach ($this->tracks as $track)
-			{
-				$track->save();
-			}
-		}
-	}
-}
-
-/**
- * File download
- * @package ManiaLib
- * @subpackage ManiacodeToolkit
- */
-abstract class FileDownload extends ManiacodeComponent
-{
-	/**#@+
-	 * @ignore
-	 */
 	protected $name;
-	protected $url;
 	/**#@-*/
-	
-	function __construct($name = '', $url  = '')
-	{
-		$this->name = $name;
-		$this->url = $url;
-	}
 	
 	/**
 	 * This method sets the Name of the file once download
@@ -160,6 +43,47 @@ abstract class FileDownload extends ManiacodeComponent
 		return $this->name;
 	}
 	
+	protected function preFilter() {}
+	protected function postFilter() {}
+	
+	final function save()
+	{	
+		$this->preFilter();
+		
+		$this->xml = Maniacode::$domDocument->createElement($this->xmlTagName);
+		end(Maniacode::$parentNodes)->appendChild($this->xml);
+		
+		if (isset($this->name))
+		{
+			$elem  = Maniacode::$domDocument->createElement('name');
+			$value = Maniacode::$domDocument->createTextNode($this->name);
+			$elem->appendChild($value);
+			$this->xml->appendChild($elem);
+		}
+		
+		$this->postFilter();
+	}
+}
+
+/**
+ * File download
+ * @package ManiaLib
+ * @subpackage ManiacodeToolkit
+ */
+abstract class FileDownload extends ManiacodeComponent
+{
+	/**#@+
+	 * @ignore
+	 */
+	protected $url;
+	/**#@-*/
+	
+	function __construct($name = '', $url  = '')
+	{
+		$this->name = $name;
+		$this->url = $url;
+	}
+	
 	/**
 	 * This method sets the url to download the file
 	 *
@@ -181,6 +105,17 @@ abstract class FileDownload extends ManiacodeComponent
 	function getUrl()
 	{
 		return $this->url;
+	}
+	
+	protected function postFilter()
+	{
+		if (isset($this->url))
+		{
+			$elem  = Maniacode::$domDocument->createElement('url');
+			$value = Maniacode::$domDocument->createTextNode($this->url);
+			$elem->appendChild($value);
+			$this->xml->appendChild($elem);
+		}
 	}
 }
 
@@ -250,7 +185,6 @@ class InstallTrackPack extends ManiacodeComponent
 	 * @ignore
 	 */
 	protected $xmlTagName = 'install_track_pack';
-	protected $name;
 	protected $tracks = array();
 	/**#@-*/
 	
@@ -258,17 +192,7 @@ class InstallTrackPack extends ManiacodeComponent
 	{
 		$this->name = $name;
 	}
-	
-	function setName($name)
-	{
-		$this->name = $name;
-	}
-	
-	function getName()
-	{
-		return $this->name;
-	}
-	
+
 	function addTrack($name = '',  $url = '')
 	{
 		$this->tracks[] = new PackageTrack($name, $url);
@@ -277,6 +201,17 @@ class InstallTrackPack extends ManiacodeComponent
 	function getLastInsert()
 	{
 		return end($this->tracks);
+	}
+	
+	protected function postFilter()
+	{
+		if (isset($this->tracks) && is_array($this->tracks) && count($this->tracks))
+		{
+			foreach ($this->tracks as $track)
+			{
+				$track->save();
+			}
+		}
 	}
 }
 
@@ -376,6 +311,17 @@ class InstallSkin extends FileDownload
 	{
 		return $this->file;
 	}
+	
+	protected  function postFilter()
+	{
+		if (isset($this->file))
+		{
+			$elem  = Maniacode::$domDocument->createElement('file');
+			$value = Maniacode::$domDocument->createTextNode($this->file);
+			$elem->appendChild($value);
+			$this->xml->appendChild($elem);
+		}
+	}
 }
 
 /**
@@ -424,6 +370,17 @@ class ShowMessage extends ManiacodeComponent
 	{
 		return $this->message;
 	}
+	
+	function postFilter()
+	{
+		if ($this->message)
+		{
+			$elem  = Maniacode::$domDocument->createElement('message');
+			$value = Maniacode::$domDocument->createTextNode($this->message);
+			$elem->appendChild($value);
+			$this->xml->appendChild($elem);
+		}
+	}
 }
 
 /**
@@ -453,6 +410,17 @@ class GotoLink extends ManiacodeComponent
 	function getLink()
 	{
 		return $this->link;
+	}
+	
+	protected function postFilter()
+	{
+		if (isset($this->link))
+		{
+			$elem  = Maniacode::$domDocument->createElement('link');
+			$value = Maniacode::$domDocument->createTextNode($this->link);
+			$elem->appendChild($value);
+			$this->xml->appendChild($elem);
+		}
 	}
 }
 
@@ -514,6 +482,33 @@ class JoinServer extends ManiacodeComponent
 	{
 		return $this->connectionType;
 	}
+	
+	protected function postFilter()
+	{
+		if (isset($this->ip))
+		{
+			$elem  = Maniacode::$domDocument->createElement('ip');
+			$value = Maniacode::$domDocument->createTextNode($this->ip);
+			$elem->appendChild($value);
+			$this->xml->appendChild($elem);
+		}
+		
+		if (isset($this->password))
+		{
+			$elem  = Maniacode::$domDocument->createElement('password');
+			$value = Maniacode::$domDocument->createTextNode($this->password);
+			$elem->appendChild($value);
+			$this->xml->appendChild($elem);
+		}
+		
+		if (isset($this->connectionType))
+		{
+			$elem  = Maniacode::$domDocument->createElement('connection_type');
+			$value = Maniacode::$domDocument->createTextNode($this->connectionType);
+			$elem->appendChild($value);
+			$this->xml->appendChild($elem);
+		}
+	}
 }
 
 /**
@@ -544,6 +539,17 @@ class AddBuddy extends ManiacodeComponent
 	{
 		return $this->login;
 	}
+	
+	protected function postFilter()
+	{
+		if (isset($this->login))
+		{
+			$elem  = Maniacode::$domDocument->createElement('login');
+			$value = Maniacode::$domDocument->createTextNode($this->login);
+			$elem->appendChild($value);
+			$this->xml->appendChild($elem);
+		}
+	}
 }
 
 /**
@@ -573,6 +579,17 @@ class InviteBuddy
 	function getEmail()
 	{
 		return $this->email;
+	}
+	
+	protected function postFilter()
+	{
+		if (isset($this->email))
+		{
+			$elem  = Maniacode::$domDocument->createElement('email');
+			$value = Maniacode::$domDocument->createTextNode($this->email);
+			$elem->appendChild($value);
+			$this->xml->appendChild($elem);
+		}
 	}
 }
 

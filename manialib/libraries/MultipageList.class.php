@@ -121,12 +121,12 @@ class MultipageList
 	
 	 function addPlayerId()
 	 {
-		$this->arrowNext->addPlayerId();
-		$this->arrowPrev->addPlayerId();
-		$this->arrowFastNext->addPlayerId();
-		$this->arrowFastPrev->addPlayerId();
-		$this->arrowLast->addPlayerId();
-		$this->arrowFirst->addPlayerId();
+		$this->pageNavigator->arrowNext->addPlayerId();
+		$this->pageNavigator->arrowPrev->addPlayerId();
+		$this->pageNavigator->arrowFastNext->addPlayerId();
+		$this->pageNavigator->arrowFastPrev->addPlayerId();
+		$this->pageNavigator->arrowLast->addPlayerId();
+		$this->pageNavigator->arrowFirst->addPlayerId();
 	 }
 	
 	function savePageNavigator()
