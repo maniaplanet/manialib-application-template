@@ -68,7 +68,7 @@ abstract class Manialink
 	{
 		if(self::$dicos)
 		{
-			array_map(array(self, 'includeManialink'), self::$dicos);
+			array_map(array('Manialink', 'includeManialink'), self::$dicos);
 		}
 		if($return)
 		{
@@ -178,7 +178,7 @@ abstract class Manialink
 	 */
 	static function appendXML($XML)
 	{
-		$doc = new DOMDocument('1.0', 'utf8');
+		$doc = new DOMDocument();
 		$doc->loadXML($XML);
 		$node = self::$domDocument->importNode($doc->firstChild, true);
 		end(self::$parentNodes)->appendChild($node);

@@ -283,7 +283,7 @@ class InstallSkin extends FileDownload
 	protected $file;
 	/**#@-*/
 	
-	function __construc($name='', $file='', $url='')
+	function __construct($name='', $file='', $url='')
 	{
 		parent::__construct($name, $url);
 		$this->setFile($file);
@@ -465,7 +465,7 @@ class JoinServer extends ManiacodeComponent
 	
 	function setPassword($password)
 	{
-		$this->setPassword = $password;
+		$this->password = $password;
 	}
 	
 	function getPassword()
@@ -557,7 +557,7 @@ class AddBuddy extends ManiacodeComponent
  * @package ManiaLib
  * @subpackage ManiacodeToolkit 
  */
-class InviteBuddy
+class InviteBuddy extends ManiacodeComponent
 {
 	/**#@+
 	 * @ignore

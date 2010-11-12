@@ -138,7 +138,7 @@ class RequestEngineMVC extends RequestEngine
 	/**
 	 * @ignore 
 	 */
-	protected function createLinkString($controller = Route::CUR, $action = Route::CUR, $params)
+	protected function createLinkString($controller = Route::CUR, $action = Route::CUR, $params = array())
 	{
 		switch($controller)
 		{

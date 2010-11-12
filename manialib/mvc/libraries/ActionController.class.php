@@ -153,7 +153,7 @@ class ActionController
 	/**
 	 * Executes an action from within another action
 	 */
-	final protected function chainAction($controllerName=null, $actionName)
+	final protected function chainAction($controllerName, $actionName)
 	{
 		if($controllerName==null ||  $controllerName == $this->controllerName)
 		{
@@ -169,7 +169,7 @@ class ActionController
 	/**
 	 * Executes an action from within another action and override the view from the first action
 	 */
-	final protected function chainActionAndView($controllerName=null, $actionName, $resetViews = true)
+	final protected function chainActionAndView($controllerName, $actionName, $resetViews = true)
 	{
 		if($resetViews)
 		{

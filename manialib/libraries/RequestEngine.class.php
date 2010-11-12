@@ -329,7 +329,7 @@ class RequestEngine
 	/**
 	 * @ignore 
 	 */
-	protected function createLinkString($file=null, $relativePath=true, $params)
+	protected function createLinkString($file=null, $relativePath=true, $params=array())
 	{
 		// Check for context
 		if(!isset($_SERVER))
