@@ -178,7 +178,7 @@ abstract class Manialink
 	 */
 	static function appendXML($XML)
 	{
-		$doc = new DOMDocument();
+		$doc = new DOMDocument('1.0', 'utf8');
 		$doc->loadXML($XML);
 		$node = self::$domDocument->importNode($doc->firstChild, true);
 		end(self::$parentNodes)->appendChild($node);

@@ -4,7 +4,6 @@
  * @copyright 2009-2010 NADEO 
  */
 
-require_once(APP_FRAMEWORK_LIBRARIES_PATH.'Database.php');
 require_once(APP_MVC_MODELS_PATH.'Shout.class.php');
 
 /**

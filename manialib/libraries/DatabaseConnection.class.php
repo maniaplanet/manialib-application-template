@@ -14,7 +14,6 @@
  * Usage example:
  * <code>
  * <?php
- * require_once(APP_FRAMEWORK_LIBRARIES_PATH.'Database.php');
  * 
  * try
  * {
