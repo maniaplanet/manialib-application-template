@@ -629,7 +629,7 @@ abstract class GuiElement extends GuiComponent
 				$this->xml->setAttribute('maniazone', $this->maniazone);
 	
 			// Add action
-			if($this->action !== null)
+			if($this->action !== null && Manialink::$linksEnabled)
 				$this->xml->setAttribute('action', $this->action);
 			if($this->actionKey !== null)
 				$this->xml->setAttribute('actionkey', $this->actionKey);
