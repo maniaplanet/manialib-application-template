@@ -31,10 +31,10 @@ class ManiaLib_Gui_Cards_Navigation_Button extends ManiaLib_Gui_Elements_Quad
 	public $iconSizeMinimizer = 1.5;
 	public $textSizeMinimizer = 3;
 	public $textOffset = 9;
-	public $isSelected = false;
 	/**
 	 * @ignore
 	 */
+	protected $isSelected = false;
 	protected $forceLinks = true;
 
 	function __construct ($sx=29.5, $sy=8.5) 

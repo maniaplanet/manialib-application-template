@@ -1,6 +1,8 @@
 <?php
 
-class ManiaLib_Application_Views_Dialogs_TwoButtons extends ManiaLib_Application_View
+class ManiaLib_Application_Views_Dialogs_TwoButtons 
+	extends ManiaLib_Application_View
+	implements ManiaLib_Application_Views_Dialogs_DialogInterface
 {
 	function display()
 	{

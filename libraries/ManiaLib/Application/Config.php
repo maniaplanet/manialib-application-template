@@ -2,6 +2,11 @@
 
 class ManiaLib_Application_Config extends ManiaLib_Config_Configurable
 {
+	/**
+	 * @var Manialib_Application_Tracking_Config
+	 */
+	public $tracking;
+	
 	public $URL;
 	public $manialink;
 	public $namespace;
@@ -22,6 +27,13 @@ class ManiaLib_Application_Config extends ManiaLib_Config_Configurable
 	
 	public $defaultController = 'Home';
 	public $defaultAction = 'index';
+	
+	function __construct()
+	{
+		$this->loadNestedConfig(array(
+			'tracking' => 'Manialib_Application_Tracking_Config',
+		));
+	}
 	
 	protected function validate()
 	{

@@ -44,20 +44,26 @@ class ManiaLib_Gui_Cards_Challenge extends ManiaLib_Gui_Elements_Quad
 	
 	function __construct ()
 	{
+		$this->cardElementsPosZ = -3;
+		$this->cardElementsHalign = 'center';
+		
 		$this->setStyle(ManiaLib_Gui_Elements_Quad::BgsChallengeMedals);
 		$this->setSubStyle(ManiaLib_Gui_Elements_BgsChallengeMedals::BgNotPlayed);
 		
 		$this->bgImage = new ManiaLib_Gui_Elements_Quad(15, 13.5);
 		$this->bgImage->setHalign("center");
 		$this->bgImage->setPosition(0, -0.5, 0);
+		$this->addCardElement($this->bgImage);
 		
 		$this->points = new ManiaLib_Gui_Elements_Label(9);
 		$this->points->setPosition(-6.5, -10.75, 2);
+		$this->addCardElement($this->points);
 		
 		$this->text = new ManiaLib_Gui_Elements_Label(15);
 		$this->text->setPosition(0, -14, 4);
 		$this->text->setHalign("center");
 		$this->text->setStyle(ManiaLib_Gui_Elements_Label::TextChallengeNameSmall);
+		$this->addCardElement($this->text);
 		
 		$this->lockedMessage = new ManiaLib_Gui_Elements_Label(13);
 		$this->lockedMessage->setPosition(0, -1.5, 2);
@@ -106,29 +112,13 @@ class ManiaLib_Gui_Cards_Challenge extends ManiaLib_Gui_Elements_Quad
 		{
 			$this->setImage("BgsChallengeRace.dds");
 		}
-	}
-	
-	/**
-	 * @ignore
-	 */
-	protected function postFilter()
-	{
-		// Algin the title and its bg at the top center of the main quad		
-		$arr = ManiaLib_Gui_Tools::getAlignedPos ($this, "center", "top");
-		$x = $arr["x"];
-		$y = $arr["y"];
 		
-		ManiaLib_Gui_Manialink::beginFrame($x, $y, $this->posZ-3);
-			$this->bgImage->save();
-			$this->points->save();		
-			if(!$this->clickable)
-			{
-				$this->clickableMask->save();
-				$this->clickableLock->save();
-				$this->lockedMessage->save();
-			}
-			$this->text->save();
-		ManiaLib_Gui_Manialink::endFrame();
+		if(!$this->clickable)
+		{
+			$this->addCardElement($this->clickableMask);
+			$this->addCardElement($this->clickableLock);
+			$this->addCardElement($this->lockedMessage);
+		}
 	}
 }
 

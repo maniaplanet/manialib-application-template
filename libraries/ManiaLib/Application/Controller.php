@@ -85,7 +85,7 @@ class ManiaLib_Application_Controller
 	final public static function dispatch()
 	{
 		$request = ManiaLib_Application_Request::getInstance();
-		self::getController($request->getController())->launch();
+		self::factory($request->getController())->launch();
 		ManiaLib_Application_Response::getInstance()->render();
 	}
 	
@@ -93,7 +93,7 @@ class ManiaLib_Application_Controller
 	 * @return ManiaLib_Application_Controller
 	 * @ignore
 	 */
-	final static public function getController($controllerName)
+	final static public function factory($controllerName)
 	{
 		$controllerClass = 
 			ManiaLib_Config_Loader::$config->application->namespace.NAMESPACE_SEPARATOR.
@@ -110,7 +110,7 @@ class ManiaLib_Application_Controller
 	 * If you want to do stuff at instanciation, override self::onConstruct()
 	 * @ignore
 	 */
-	function __construct($controllerName)
+	protected function __construct($controllerName)
 	{
 		$this->controllerName = $controllerName;
 		if(!$this->defaultAction)
@@ -231,7 +231,7 @@ class ManiaLib_Application_Controller
 	 */
 	final protected function executeActionCrossController($controllerName, $actionName)
 	{
-		$controller = self::getController($controllerName);
+		$controller = self::factory($controllerName);
 		$controller->checkActionExists($actionName);
 		$controllerFilters = $controller->getFilters();
 		foreach($controllerFilters as $controllerFilter)

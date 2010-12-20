@@ -86,6 +86,23 @@ class ManiaLib_Application_Response
 		}
 	}
 
+	public function getViewClassName($controllerName, $actionName)
+	{
+		$className =
+			ManiaLib_Config_Loader::$config->application->namespace.
+			NAMESPACE_SEPARATOR.
+			'Views'.
+			NAMESPACE_SEPARATOR.
+			$controllerName;
+		
+		if($actionName)
+		{
+			$className .= NAMESPACE_SEPARATOR.ucfirst($actionName);
+		}
+			
+		return $className;
+	}
+	
 	public function registerDialog(ManiaLib_Application_DialogHelper $dialog)
 	{
 		if($this->dialog)
@@ -95,9 +112,29 @@ class ManiaLib_Application_Response
 		$this->dialog = $dialog;
 	}
 
-	public function registerView($controllerName, $actionName)
+	/**
+	 * You can register a view:
+	 *  - by $controllerName, $actionName
+	 *  - by $className which must be a instanceof manialib_application_view
+	 */
+	public function registerView(/* Polymorphic */)
 	{
-		$this->views[] = array($controllerName, $actionName);
+		$args = func_get_args();
+		switch(count($args))
+		{
+			case 1:
+				$className = reset($args);
+				break;
+			
+			case 2:
+				$className = call_user_func_array(
+					array($this, 'getViewClassName'), func_get_args());
+				break;
+				
+			default:
+				throw new BadMethodCallException('Too many arguments');
+		}
+		$this->views[] = $className;
 	}
 	
 	public function resetViews()
@@ -110,53 +147,52 @@ class ManiaLib_Application_Response
 		$this->body .= $content;
 	}
 	
+	protected function registerHeaderFooterDialog()
+	{
+		if($this->dialog)
+		{
+			array_unshift($this->views, $this->dialog->className);
+		}
+		
+		$_ = NAMESPACE_SEPARATOR;
+		$APPNS = ManiaLib_Config_Loader::$config->application->namespace;
+		
+		$appViews = $APPNS.$_.'Views';
+		$frameworkViews = 'ManiaLib'.$_.'Application'.$_.'Views';
+		
+		$header = $_.'Header';
+		$footer = $_.'Footer';
+		
+		if(class_exists($appViews.$header))
+		{
+			array_unshift($this->views, $appViews.$header);
+		}
+		elseif(class_exists($frameworkViews.$header))
+		{
+			array_unshift($this->views, $frameworkViews.$header);
+		}
+		
+		if(class_exists($appViews.$footer))
+		{
+			array_push($this->views, $appViews.$footer);
+		}
+		elseif(class_exists($frameworkViews.$footer))
+		{
+			array_push($this->views, $frameworkViews.$footer);
+		}
+	}
+	
 	public function render()
 	{
+		$this->registerHeaderFooterDialog();
+		
 		ob_start();
 		try 
 		{
-			$appViews = 
-				ManiaLib_Config_Loader::$config->application->namespace.
-				NAMESPACE_SEPARATOR.
-				'Views';
-			$frameworkViews = 'ManiaLib'.NAMESPACE_SEPARATOR.'Application'.NAMESPACE_SEPARATOR.'Views';
-			$header = NAMESPACE_SEPARATOR.'Header';
-			if(class_exists($appViews.$header))
-			{
-				ManiaLib_Application_View::renderExternal($appViews, 'Header');
-			}
-			elseif(class_exists($frameworkViews.$header))
-			{
-				ManiaLib_Application_View::renderExternal($frameworkViews, 'Header');
-			}
-			
-			if($this->dialog)
-			{
-				// TODO This is not the best way to do it, is it?
-				ManiaLib_Application_View::renderExternal($this->dialog->className, null);
-				ManiaLib_Gui_Manialink::disableLinks();
-			}
 			foreach($this->views as $view)
 			{
-				$view[0] = 
-					ManiaLib_Config_Loader::$config->application->namespace.
-					NAMESPACE_SEPARATOR.
-					'Views'.
-					NAMESPACE_SEPARATOR.
-					$view[0];
-				ManiaLib_Application_View::renderExternal($view[0], $view[1]);
+				ManiaLib_Application_View::render($view);
 			}
-			
-			$footer = NAMESPACE_SEPARATOR.'Footer';
-			if(class_exists($appViews.$footer))
-			{
-				ManiaLib_Application_View::renderExternal($appViews, 'Footer');
-			}
-			elseif(class_exists($frameworkViews.$footer))
-			{
-				ManiaLib_Application_View::renderExternal($frameworkViews, 'Footer');
-			}
-			
 			$this->body = ob_get_contents();
 		}
 		catch(Exception $e)
@@ -170,7 +206,6 @@ class ManiaLib_Application_Response
 		echo $this->body;
 	}
 }
-
 
 class ManiaLib_Application_ResponseException extends Exception {}
 class ManiaLib_Application_DialogAlreadyRegisteredException extends Exception {}

@@ -28,6 +28,9 @@ class ManiaLib_Gui_Cards_Panel extends ManiaLib_Gui_Elements_Quad
 		$this->sizeX = $sx;
 		$this->sizeY = $sy;
 
+		$this->cardElementsHalign = 'center';
+		$this->cardElementsPosY = -1;
+		
 		$titleBgWidth = $sx - 2;
 		$titleWidth = $sx - 4;
 		
@@ -35,12 +38,19 @@ class ManiaLib_Gui_Cards_Panel extends ManiaLib_Gui_Elements_Quad
 		$this->setSubStyle(ManiaLib_Gui_DefaultStyles::Panel_Substyle);
 		
 		$this->titleBg = new ManiaLib_Gui_Elements_Quad ($titleBgWidth, 4);
+		$this->titleBg->setHalign("center");
 		$this->titleBg->setStyle(ManiaLib_Gui_DefaultStyles::Panel_TitleBg_Style);
 		$this->titleBg->setSubStyle(ManiaLib_Gui_DefaultStyles::Panel_TitleBg_Substyle);
-
+		
+		$this->addCardElement($this->titleBg);
+		
 		$this->title = new ManiaLib_Gui_Elements_Label ($titleWidth);
-		$this->title->setStyle(ManiaLib_Gui_DefaultStyles::Panel_Title_Style);
+		$this->title->setHalign("center");
 		$this->title->setPositionY(-0.75);
+		$this->title->setStyle(ManiaLib_Gui_DefaultStyles::Panel_Title_Style);
+		
+		$this->addCardElement($this->title);
+		
 	}
 	
 	function setSizeX($x)
@@ -48,25 +58,6 @@ class ManiaLib_Gui_Cards_Panel extends ManiaLib_Gui_Elements_Quad
 		parent::setSizeX($x);
 		$this->titleBg->setSizeX($x-2);
 		$this->title->setSizeX($x-4);
-	}
-	
-	/**
-	 * @ignore
-	 */
-	protected function postFilter()
-	{
-		// Algin the title and its bg at the top center of the main quad		
-		$arr = ManiaLib_Gui_Tools::getAlignedPos ($this, "center", "top");
-		$x = $arr["x"];
-		$y = $arr["y"];
-		$this->titleBg->setHalign("center");
-		$this->title->setHalign("center");
-		
-		// Draw them
-		ManiaLib_Gui_Manialink::beginFrame($x, $y-1, $this->posZ+1);
-			$this->titleBg->save();
-			$this->title->save();
-		ManiaLib_Gui_Manialink::endFrame();
 	}
 }
 

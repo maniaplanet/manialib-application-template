@@ -183,7 +183,6 @@ class ManiaLib_Application_Request
 	 */
 	function registerReferer()
 	{
-		// FIXME With HPHP, there's a bug with the register referer
 		$session = ManiaLib_Application_Session::getInstance();
 		$link = $this->createLink();
 		$this->registerRefererAtDestruct = $link;

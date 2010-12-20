@@ -29,6 +29,24 @@ abstract class ManiaLib_Gui_Element extends ManiaLib_Gui_Component
 	protected $xmlTagName = 'xmltag'; // Redeclare this for each child
 	protected $xml;
 	/**#@-*/
+	
+	/**
+	 * Used by cards, all the elements in that array will be renderd before
+	 * the post filter.
+	 * @var array[ManiaLib_Gui_Element]
+	 */
+	protected $cardElements = array();
+	
+	/**#@+
+	 * Will be used to set the frame containing all the cards elements relative
+	 * to the current element.
+	 */
+	protected $cardElementsHalign = 'left';
+	protected $cardElementsValign = 'top';
+	protected $cardElementsPosX = 0;
+	protected $cardElementsPosY = 0;
+	protected $cardElementsPosZ = 1; 
+	/**#@-*/
 
 	/**
 	 * Manialink element default constructor. It's common to specify the size of
@@ -389,6 +407,11 @@ abstract class ManiaLib_Gui_Element extends ManiaLib_Gui_Component
 	{
 		return $this->manialink || $this->url || $this->action || $this->maniazone;
 	}
+	
+	protected function addCardElement(ManiaLib_Gui_Element $element)
+	{
+		$this->cardElements[] = $element;
+	}
 
 	/**
 	 * Override this method in subclasses to perform some action before
@@ -498,6 +521,30 @@ abstract class ManiaLib_Gui_Element extends ManiaLib_Gui_Component
 		if($layout instanceof ManiaLib_Gui_Layouts_AbstractLayout)
 		{
 			$layout->postFilter($this);
+		}
+		
+		// Card Elements
+		if($this->cardElements)
+		{
+			// Algin the title and its bg at the top center of the main quad		
+			$arr = ManiaLib_Gui_Tools::getAlignedPos(
+				$this, $this->cardElementsHalign, $this->cardElementsValign);
+			$x = $arr["x"];
+			$y = $arr["y"];
+		
+		
+			// Draw them
+			ManiaLib_Gui_Manialink::beginFrame(
+				$x + $this->cardElementsPosX, 
+				$y + $this->cardElementsPosY, 
+				$this->posZ + $this->cardElementsPosZ);
+				
+			foreach($this->cardElements as $element)
+			{
+				$element->save();
+			}
+			
+			ManiaLib_Gui_Manialink::endFrame();
 		}
 
 		// Post filtering

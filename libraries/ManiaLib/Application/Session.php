@@ -52,10 +52,10 @@ final class ManiaLib_Application_Session
 				session_name(self::SIDName);
 				session_start();
 				self::$started = true;
+				//ManiaLib_Log_Logger::info('Session started');
 			}
 			catch(Exception $exception)
 			{
-				// FIXME Fix that session bug
 				ManiaLib_Log_Logger::error($exception->getMessage());
 			}
 		}
@@ -77,7 +77,7 @@ final class ManiaLib_Application_Session
 	 */
 	function delete($name)
 	{
-		unset ($_SESSION[$name]);
+		unset($_SESSION[$name]);
 	}
 
 	/**
