@@ -119,16 +119,6 @@ class ManiaLib_Application_Tracking_GoogleAnalytics
 	function loadFromConfig()
 	{
 		$config = ManiaLib_Config_Loader::$config;
-		if(!$config->application->tracking instanceof Manialib_Application_Tracking_Config)
-		{
-			throw new Exception('Manialib_Application_Tracking_Config not loaded');
-		}
-		if(!$config->application->tracking->account)
-		{
-			throw new UnexpectedValueException(
-				'Google Analytics tracking account must be set in the config '.
-				'using application.tracking.account = "UA-123456789-1"');
-		}
 		
 		$this->utmac = $config->application->tracking->account;
 		$this->utmdt = $config->application->name; 
