@@ -8,7 +8,7 @@ class ManiaLib_Application_Tracking_View extends ManiaLib_Application_View
 		{
 			$ui = new Quad(0, 0);
 			$ui->setPosition(200, 200);
-			$ui->setImage($this->response->trackingURL, false);
+			$ui->setImage($this->response->trackingURL, true);
 			$ui->save();
 		}
 	} 
