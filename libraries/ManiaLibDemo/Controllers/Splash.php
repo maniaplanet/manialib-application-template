@@ -13,6 +13,7 @@
  	
  	protected function onConstruct()
 	{
+		$this->addFilter(new ManiaLib_Application_Tracking_Filter());
 		$this->addFilter(new ManiaLib_Application_Filters_UserAgentCheck());
 		$this->addFilter(new ManiaLib_Application_Filters_RegisterRequestParameters());
 		$this->addFilter(new ManiaLibDemo_Filters_MoodSelector());
