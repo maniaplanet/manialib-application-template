@@ -2,15 +2,10 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib
- * @subpackage MVC
  */
 
 /**
  * ManiaLib_Application_Route class
- * 
- * @package ManiaLib
- * @subpackage MVC
  */
 abstract class ManiaLib_Application_Route
 {

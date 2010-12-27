@@ -1,11 +1,7 @@
 <?php
 /**
- * MVC framwork magic happens here!
- * 
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib
- * @subpackage MVC
  */
 
 /**
@@ -36,8 +32,6 @@
  *    function anotherAction() {} // mapped by /home/another_action/
  * }
  * </code>
- * @package ManiaLib
- * @subpackage MVC
  */
 class ManiaLib_Application_Controller
 {
@@ -77,6 +71,9 @@ class ManiaLib_Application_Controller
 	 */
 	protected $response;
 	
+	/**
+	 * @deprecated
+	 */
 	protected $enableSession = true;
 
 	/**
@@ -119,7 +116,7 @@ class ManiaLib_Application_Controller
 		}
 		$this->request = ManiaLib_Application_Request::getInstance();
 		$this->response = ManiaLib_Application_Response::getInstance();
-		if($this->enableSession)
+		if(ManiaLib_Config_Loader::$config->session->enabled)
 		{
 			$this->session = ManiaLib_Application_Session::getInstance();
 		}

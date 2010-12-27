@@ -1,5 +1,12 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
+/**
+ * Database config
+ */
 class ManiaLib_Database_Config extends ManiaLib_Config_Configurable
 {
 	public $host = '127.0.0.1';

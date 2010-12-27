@@ -1,5 +1,13 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
+/**
+ * NoCache driver
+ * You should NOT use this driver in production, use APC instead
+ */
 class ManiaLib_Cache_Drivers_NoCache extends ManiaLib_Cache_Cache
 {
 	function exists($key)

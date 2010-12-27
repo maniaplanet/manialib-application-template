@@ -1,5 +1,12 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
+/**
+ * Fancy panel
+ */
 class ManiaLib_Gui_Cards_FancyPanel extends ManiaLib_Gui_Elements_Bgs1
 {
 	/**

@@ -1,5 +1,12 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
+/**
+ * Dialog with one button
+ */
 class ManiaLib_Application_Views_Dialogs_OneButton 
 	extends ManiaLib_Application_View
 	implements ManiaLib_Application_Views_Dialogs_DialogInterface

@@ -2,15 +2,12 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib
  */
 
 
 /**
  * GUI Toolkit
  * Manialink GUI Toolkit main class
- * @package ManiaLib
- * @subpackage GUIToolkit
  */
 abstract class ManiaLib_Gui_Manialink
 {

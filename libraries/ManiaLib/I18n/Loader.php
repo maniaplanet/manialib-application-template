@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
 /**
  * I18n loader magic: loads the dynamic dicos, put everything in the cache

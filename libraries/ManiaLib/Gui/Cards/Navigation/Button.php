@@ -2,15 +2,10 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib
  */
 
 /**
  * Navigation button
- * For the Navigation card
- * @see Navigation
- * @package ManiaLib
- * @subpackage GUIToolkit_Cards
  */ 
 class ManiaLib_Gui_Cards_Navigation_Button extends ManiaLib_Gui_Elements_Quad
 {

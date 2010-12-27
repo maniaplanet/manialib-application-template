@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
 /**
  * Base class for creating GUI elements
@@ -406,6 +410,13 @@ abstract class ManiaLib_Gui_Element extends ManiaLib_Gui_Component
 	function hasLink()
 	{
 		return $this->manialink || $this->url || $this->action || $this->maniazone;
+	}
+	
+	function setCardElementPosition($posX=0, $posY=0, $posZ=0)
+	{
+		$this->cardElementsPosX = $posX;
+		$this->cardElementsPosY = $posY;
+		$this->cardElementsPosZ = $posZ;
 	}
 	
 	protected function addCardElement(ManiaLib_Gui_Element $element)

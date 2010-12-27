@@ -2,15 +2,12 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib
  */
 
 
 /**
  * Navigation menu
  * Looks like the navigation menu on the left in the game menus
- * @package ManiaLib
- * @subpackage GUIToolkit_Cards
  */
 class ManiaLib_Gui_Cards_Navigation_Menu extends ManiaLib_Gui_Elements_Quad
 {

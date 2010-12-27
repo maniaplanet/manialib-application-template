@@ -2,8 +2,6 @@
 /**
  * @author Philippe Melot 
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib
- * @subpackage MVC_DefaultFilters
  */
 
 /**
@@ -11,17 +9,20 @@
  * Register this filter in your controller, and all the actions will require 
  * authentication using the Manialink Authentication System developped by NADEO
  * @see ManiaLib_Authentication_Authentication 
- * @package ManiaLib
- * @subpackage MVC_DefaultFilters
  */
 class ManiaLib_Authentication_Filter extends ManiaLib_Application_AdvancedFilter
 {
+	const SESSION_ISAUTH = 'mlauth_isauth';
+	const SESSION_TRIED = 'mlauth_tried';
+	
 	/**#@+
 	 * @ignore
 	 */
 	protected static $onFailureCallback;
 	protected static $onFailureCallbackParameters;
 	/**#@-*/
+	
+	protected $shortManialink;
 	
 	static function setOnFailureCallback($callback)
 	{
@@ -38,28 +39,34 @@ class ManiaLib_Authentication_Filter extends ManiaLib_Application_AdvancedFilter
 	 */
 	function preFilter()
 	{
-		if(!$this->session->exists('isAuthentified'))
+		if(!$this->session->exists(self::SESSION_ISAUTH))
 		{
+			if(!$this->session->get(self::SESSION_TRIED, false))
+			{
+				$this->session->set(self::SESSION_TRIED, true);
+				if(!$this->shortManialink)
+				{
+					if(ManiaLib_Config_Loader::$config->application)
+					{
+						if($ml = ManiaLib_Config_Loader::$config->application->manialink)
+						{
+							$this->shortManialink = $ml;
+						}
+					}
+				}
+				$this->request->redirectManialinkAbsolute($this->shortManialink.'?authentication=1');
+			}
+			
 			try
 			{
-				$playerlogin = $this->request->get('playerlogin');
-				if(!$playerlogin)
-				{
-					$playerlogin = $this->session->getStrict('login');
-				}
-
-				$token = $this->request->get('token');
-				if(!$token)
-				{
-					$token = $this->session->getStrict('token');
-				}
-				
-				if(ManiaLib_Authentication_Authentication::checkAuthenticationToken($playerlogin, $token))
-					$this->session->set('isAuthentified',1);
-					
+				ManiaLib_Log_Logger::info($_GET);
+				$login = $this->session->getStrict('login');
+				$token = $this->session->getStrict('token');
+				ManiaLib_Authentication_Authentication::checkAuthenticationToken($login, $token);
+				$this->session->set(self::SESSION_ISAUTH, 1);
 				$this->session->delete('token');
 			}
-			catch (ManiaLib_Authentication_Exception $e)
+			catch (Exception $e)
 			{
 				if(self::$onFailureCallback)
 				{
@@ -72,7 +79,11 @@ class ManiaLib_Authentication_Filter extends ManiaLib_Application_AdvancedFilter
 					$parameters = array('Manialink:home');
 				}
 
-				call_user_func_array($callback, $parameters);
+				//call_user_func_array($callback, $parameters);
+				
+				// FIXME Put a better callback here
+				throw new ManiaLib_Application_UserException
+					('This manialink is only available to United Forever players');
 			}
 		}
 	}

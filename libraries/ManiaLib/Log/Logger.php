@@ -1,5 +1,12 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
+/**
+ * Logger
+ */
 class ManiaLib_Log_Logger
 {
 	const LOG_DATE = true;

@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Philippe Melot
+ * @copyright 2009-2010 NADEO 
+ */
 
 /**
  * Maniacode Toolkit base component

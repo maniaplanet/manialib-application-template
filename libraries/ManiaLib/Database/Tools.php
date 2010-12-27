@@ -1,5 +1,12 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
+/**
+ * Database tools
+ */
 abstract class ManiaLib_Database_Tools
 {
 	/**
@@ -7,6 +14,8 @@ abstract class ManiaLib_Database_Tools
 	 */
 	static function getLimitString($offset, $length)
 	{
+		$offset = (int)$offset;
+		$length = (int)$length;
 		if(!$offset && !$length)
 		{
 			return '';

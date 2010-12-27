@@ -2,14 +2,10 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib
- * @subpackage MVC
  */
 
 /**
- * View rendering features
- * @package ManiaLib
- * @subpackage MVC
+ * View features
  */
 abstract class ManiaLib_Application_View
 {
@@ -61,11 +57,6 @@ abstract class ManiaLib_Application_View
 	abstract function display();
 }
 
-/**
- * @package ManiaLib
- * @subpackage MVC
- * @ignore
- */
 class ManiaLib_Application_ViewNotFoundException extends Exception {}
 
 ?>

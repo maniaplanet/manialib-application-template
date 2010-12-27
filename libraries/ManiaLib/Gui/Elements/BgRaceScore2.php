@@ -1,9 +1,11 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
 /**
  * BgRaceScore2 quad
- * @package ManiaLib
- * @subpackage GUIToolkit
  */	
 class ManiaLib_Gui_Elements_BgRaceScore2 extends ManiaLib_Gui_Elements_Quad
 {

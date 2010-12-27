@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
 /**
  * La classe qu'on a du mal à la trouver

@@ -1,5 +1,12 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
+/**
+ * Application config
+ */
 class ManiaLib_Application_Config extends ManiaLib_Config_Configurable
 {
 	/**

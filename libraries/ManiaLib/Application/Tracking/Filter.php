@@ -1,5 +1,12 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
+/**
+ * Tracking filter
+ */
 class ManiaLib_Application_Tracking_Filter implements ManiaLib_Application_Filterable
 {
 	/**
@@ -17,8 +24,13 @@ class ManiaLib_Application_Tracking_Filter implements ManiaLib_Application_Filte
 			{
 				$this->tracker = new ManiaLib_Application_Tracking_GoogleAnalytics();
 				$this->tracker->loadFromConfig();
+				$this->tracker->loadCookie();
 				$this->tracking = true;
-				ManiaLib_Log_Logger::info('tracking');
+				if($config->session->enabled)
+				{
+					$session = ManiaLib_Application_Session::getInstance();
+					$this->tracker->utmul = $session->get('lang', 'en');
+				}
 			}
 		}
 	}

@@ -1,9 +1,11 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
 /**
  * BgsChallengeMedals quad
- * @package ManiaLib
- * @subpackage GUIToolkit
  */	
 class ManiaLib_Gui_Elements_BgsChallengeMedals extends ManiaLib_Gui_Elements_Quad
 {

@@ -1,9 +1,11 @@
 <?php
+/**
+ * @author Philippe Melot
+ * @copyright 2009-2010 NADEO 
+ */
 
 /**
  * File download
- * @package ManiaLib
- * @subpackage ManiacodeToolkit
  */
 abstract class ManiaLib_Maniacode_Elements_FileDownload extends ManiaLib_Maniacode_Component
 {

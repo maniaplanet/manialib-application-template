@@ -1,11 +1,12 @@
 <?php
 /**
- * Error handling features
- * 
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
  */
 
+/**
+ * Error handling features
+ */
 abstract class ManiaLib_Application_ErrorHandling
 {
 	/**

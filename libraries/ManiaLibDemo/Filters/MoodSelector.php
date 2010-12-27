@@ -4,6 +4,8 @@
  * @copyright 2009-2010 NADEO 
  */
 
+/**
+ */
 class ManiaLibDemo_Filters_MoodSelector extends ManiaLib_Application_AdvancedFilter
 {
 	const SESSION_VARIABLE = 'backgroundImage';

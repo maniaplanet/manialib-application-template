@@ -1,9 +1,11 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
 /**
  * Music
- * @package ManiaLib
- * @subpackage GUIToolkit
  */
 class ManiaLib_Gui_Elements_Music extends ManiaLib_Gui_Element
 {

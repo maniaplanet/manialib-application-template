@@ -1,5 +1,12 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
+/**
+ * Database result
+ */
 class ManiaLib_Database_RecordSet
 {
 	const FETCH_ASSOC = MYSQL_ASSOC;
@@ -11,6 +18,14 @@ class ManiaLib_Database_RecordSet
 	function __construct($result)
 	{
 		$this->result = $result;
+	}
+	
+	function checkIfEmpty()
+	{
+		if($this->recordCount() == 0)
+		{
+			throw new ManiaLib_Services_NotFoundException();
+		}
 	}
 	
 	/**
@@ -46,7 +61,7 @@ class ManiaLib_Database_RecordSet
 	 * @param array An optional array of parameters to pass to the constructor for class_name objects.
 	 * @return object
 	 */	
-	function fetchObject($className, array $params = array())
+	function fetchObject($className, $params = array())
 	{
 		if($className)
 		{

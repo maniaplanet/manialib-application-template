@@ -1,5 +1,12 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
+/**
+ * Config base class
+ */
 abstract class ManiaLib_Config_Configurable
 {
 	/**

@@ -1,5 +1,12 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
+/**
+ * Database connection singleton
+ */
 class ManiaLib_Database_Connection
 {
 	static protected $instance;
@@ -83,6 +90,10 @@ class ManiaLib_Database_Connection
 	function execute($query)
 	{
 		$mtime = microtime(true);
+		if(func_num_args() > 1)
+		{
+			$query = call_user_func_array('sprintf', func_get_args());
+		}
 		$result = mysql_query($query, $this->connection);
 		if(!$result)
 		{

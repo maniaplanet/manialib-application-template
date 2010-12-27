@@ -1,5 +1,11 @@
 <?php
+/**
+ * @author Maxime Raoust
+ * @copyright 2009-2010 NADEO 
+ */
 
+/**
+ */
 class ManiaLibDemo_Views_Dialogs_MoodSelector extends ManiaLib_Application_Views_Dialogs_OneButton
 {
 	function onConstruct()

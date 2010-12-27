@@ -1,9 +1,11 @@
 <?php 
+/**
+ * @author Philippe Melot
+ * @copyright 2009-2010 NADEO 
+ */
 
 /**
  * Goto link
- * @package ManiaLib
- * @subpackage ManiacodeToolkit 
  */
 class ManiaLib_Maniacode_Elements_GotoLink extends ManiaLib_Maniacode_Component
 {

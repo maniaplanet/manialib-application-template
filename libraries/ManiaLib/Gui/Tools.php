@@ -2,14 +2,11 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib
  */
 
 /**
  * GUI Tools
  * Misc helpers for the GUI toolkit
- * @package ManiaLib
- * @subpackage GUIToolkit
  */
 abstract class ManiaLib_Gui_Tools
 {

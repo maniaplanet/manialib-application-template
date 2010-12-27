@@ -2,13 +2,10 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib
  */
  
 /**
- * Session engine
- * Helps handling PHP sessions
- * @package ManiaLib
+ * PHP Session handling simplified
  */
 final class ManiaLib_Application_Session
 {
@@ -34,6 +31,11 @@ final class ManiaLib_Application_Session
 	{
 		if (!self::$instance)
 		{
+			if(!ManiaLib_Config_Loader::$config->session->enabled)
+			{
+				throw new Exception(
+					'Cannot instanciate session: session handling has been disabled in the config');
+			}
 			$class = __CLASS__;
 			self::$instance = new $class;
 		}

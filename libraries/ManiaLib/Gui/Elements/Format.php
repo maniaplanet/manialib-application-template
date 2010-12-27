@@ -1,9 +1,11 @@
 <?php 
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
 /**
  * Format
- * @package ManiaLib
- * @subpackage GUIToolkit
  */
 class ManiaLib_Gui_Elements_Format extends ManiaLib_Gui_Element
 {

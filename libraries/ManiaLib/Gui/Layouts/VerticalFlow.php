@@ -2,14 +2,11 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib
  */
 
 /**
  * Flow layout
  * Column-like, items fill vertically the current column then the next one on the right etc.
- * @package ManiaLib
- * @subpackage GUIToolkit_Layouts
  */
 class ManiaLib_Gui_Layouts_VerticalFlow extends ManiaLib_Gui_Layouts_AbstractLayout
 {

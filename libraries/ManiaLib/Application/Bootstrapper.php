@@ -1,5 +1,12 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
+/**
+ * Default bootstrapper
+ */
 abstract class ManiaLib_Application_Bootstrapper
 {
 	static function run($configFile, $configClass = 'ManiaLib_Config_Config')

@@ -1,9 +1,11 @@
 <?php
+/**
+ * @author Philippe Melot
+ * @copyright 2009-2010 NADEO 
+ */
 
 /**
  * Install replay
- * @package ManiaLib
- * @subpackage ManiacodeToolkit 
  */
 class ManiaLib_Maniacode_Elements_InstallReplay extends ManiaLib_Maniacode_Elements_FileDownload
 {

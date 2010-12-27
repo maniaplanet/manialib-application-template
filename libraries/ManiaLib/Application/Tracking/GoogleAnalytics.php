@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
 /**
  * Google Analytics tracking in Manialinks
@@ -10,102 +14,102 @@ class ManiaLib_Application_Tracking_GoogleAnalytics
 	/**
 	 * @var string
 	 */
-	protected $trackingURL;
+	public $trackingURL;
 	/**
 	 * @var ManiaLib_Gui_Elements_Quad
 	 */
-	protected $trackingQuad;
+	public $trackingQuad;
 	
 	/**
 	 * Urchin version
 	 */
-	protected $utmwv = '4.8.6';
+	public $utmwv = '4.8.6';
 	/**
 	 * Hostname
 	 */
-	protected $utmhn;
+	public $utmhn;
 	/**
 	 * Charsert
 	 */
-	protected $utmcs = 'UTF-8';
+	public $utmcs = 'UTF-8';
 	/**
 	 * Screen resolution
 	 */
-	protected $utmsr = '-';
+	public $utmsr = '-';
 	/**
 	 * Color-depth
 	 */
-	protected $utmsc = '-';
+	public $utmsc = '-';
 	/**
 	 * Language
 	 */
-	protected $utmul;
+	public $utmul;
 	/**
 	 * Java enabled
 	 */
-	protected $utmje = 0;
+	public $utmje = 0;
 	/**
 	 * Flash version
 	 */
-	protected $utmfl = 0;
+	public $utmfl = 0;
 	/**
 	 * Random
 	 */
-	protected $utmhid;
+	public $utmhid;
 	/**
 	 * Referer
 	 */
-	protected $utmr = 0;
+	public $utmr = 0;
 	/**
 	 * Route
 	 */
-	protected $utmp;
+	public $utmp;
 	/**
 	 * Google Analytics account
 	 */
-	protected $utmac;
+	public $utmac;
 	/**
 	 * Random
 	 */
-	protected $utmn;
+	public $utmn;
 	/**
 	 * ?
 	 */
-	protected $utmu = 'q';
+	public $utmu = 'q';
 	/**
 	 * Carriage return (?)
 	 */
-	protected $utmcr = 1;
+	public $utmcr = 1;
 	/**
 	 * Document title
 	 */
-	protected $utmdt;
+	public $utmdt;
 	/**
 	 * Cookie
 	 */
-	protected $utmcc;
+	public $utmcc;
 	/**
 	 * Cookie var
 	 */
-	protected $__utma;
+	public $__utma;
 	/**
 	 * Cookie var
 	 */
-	protected $__utmb;
+	public $__utmb;
 	/**
 	 * Cookie var
 	 */
-	protected $__utmc;
+	public $__utmc;
 	/**
 	 * Cookie var
 	 */
-	protected $__utmz;
+	public $__utmz;
 
 	function __construct()
 	{
 		$this->utmhid = rand(1000000000,9999999999);
 		$this->utmn = rand(1000000000,9999999999);
-		$this->utmul = 'en-us';  // TODO Language
+		$this->utmul = 'en';
 		if(array_key_exists('HTTP_REFERER', $_SERVER))
 		{
 			$this->utmr = $_SERVER['HTTP_REFERER'];
@@ -133,6 +137,71 @@ class ManiaLib_Application_Tracking_GoogleAnalytics
 	}
 	
 	/**
+	 * Loads cookie information
+	 * @see http://services.google.com/analytics/breeze/en/ga_cookies/index.html
+	 */
+	function loadCookie()
+	{
+		$cookieNumber = rand(10000000,99999999);
+		$cookieRandom = rand(1000000000,2147483647); //number under 2147483647
+		
+		$utma = ManiaLib_Utils_Array::get($_COOKIE, '__utma', '');
+		$utma = $utma ? explode('.', $utma) : array();
+		
+		$utmb = ManiaLib_Utils_Array::get($_COOKIE, '__utmb', '');
+		$utmb = $utmb ? explode('.', $utmb) : array();
+		
+		$utmc = ManiaLib_Utils_Array::get($_COOKIE, '__utmc', '');
+		$utmc = $utmc ? explode('.', $utmc) : array();
+		
+		$utmz = array();
+		
+		$utma[0] = ManiaLib_Utils_Array::get($utma, 0, $cookieNumber); // Domain hash
+		$utma[1] = ManiaLib_Utils_Array::get($utma, 1, $cookieRandom); // Random unique ID
+		$utma[2] = ManiaLib_Utils_Array::get($utma, 2, time()); // Time of initial visit
+		$utma[3] = ManiaLib_Utils_Array::get($utma, 3, time()); // Begining of previous session
+		$utma[4] = ManiaLib_Utils_Array::get($utma, 4, time()); // Begining of current session
+		$utma[5] = ManiaLib_Utils_Array::get($utma, 5, 0); // Session counter
+		
+		$cookieNumber = $utma[0];
+		
+		if(!$utmb || !$utmc)
+		{
+			// New session has started
+			$utma[5]++;
+			$utma[3] = $utma[4];
+			$utma[4] = time();
+		}
+		
+		$utmb[0] = $cookieNumber;
+		
+		$utmc[0] = $cookieNumber;
+		
+		$utmz[0] = $cookieNumber; // Domain hash
+		$utmz[1] = time(); // Timestamp
+		$utmz[2] = $utma[5]; // Session number
+		$utmz[3] = // Campaign information
+			'utmcsr=(direct)|'. //utm_source
+			'utmccn=(direct)|'. //utm_campaign
+			'utmcmd=(none)'; //utm_medium'
+		
+		$__utma = implode('.', $utma);
+		$__utmb = implode('.', $utmb);
+		$__utmc = implode('.', $utmc);
+		$__utmz = implode('.', $utmz);
+		
+		setcookie('__utma', $__utma, strtotime('+2 years'));
+		setcookie('__utmb', $__utmb, strtotime('+30 minutes'));
+		setcookie('__utmc', $__utmb, 0);
+		setcookie('__utmz', $__utmz, strtotime('+6 months'));
+		
+		$this->__utma = $__utma.';';
+		$this->__utmb = $__utmb.';';
+		$this->__utmc = $__utmc.';';
+		$this->__utmz = $__utmz.';';
+	}
+	
+	/**
 	 * Computes the tracking URL and returns it. Its is a 1*1 gif image that
 	 * should be called by the client.
 	 * @return string
@@ -141,29 +210,6 @@ class ManiaLib_Application_Tracking_GoogleAnalytics
 	{
 		if(!$this->trackingURL)
 		{
-			// TODO Better cookie handling
-			$cookieNumber = rand(10000000,99999999);
-			$cookieRandom = rand(1000000000,2147483647);
-			$cookieToday = time();
-					
-			$this->__utma =
-				$cookieNumber.'.'. // Cookie bumber
-				$cookieRandom.'.'. //number under 2147483647
-				$cookieToday.'.'. //time (20-01-2007) cookie first set
-				$cookieToday.'.'. //time (24-02-2007) cookie previous set
-				$cookieToday.'.'. //time (03-03-2007) today
-				'3;+';
-			$this->__utmb = $cookieNumber.';+'; //cookie number
-			$this->__utmc = $cookieNumber.';+'; //cookie number
-			$this->__utmz = 
-				$cookieNumber.'.'. //cookie number
-				$cookieToday.'.'. //time (03-03-2007) today
-				'1.'.
-				'1.'.
-				'utmccn=(direct)|'. //utm_campaign
-				'utmcsr=(direct)|'. //utm_source
-				'utmcmd=(none);'; //utm_medium'
-			
 			$params = array(
 				'utmwv' => $this->utmwv,
 				'utmhn' => $this->utmhn,
@@ -182,10 +228,10 @@ class ManiaLib_Application_Tracking_GoogleAnalytics
 				'utmcr' => $this->utmcr,
 				'utmdt' => $this->utmdt,
 				'utmcc' => 
-					$this->__utma.
-					//$this->__utmb.
-					//$this->__utmc.
-					$this->__utmz
+					'__utma='.$this->__utma.'+'.
+					'__utmb='.$this->__utmb.'+'.
+					'__utmc='.$this->__utmc.'+'.
+					'__utmz='.$this->__utmz
 				);
 		
 			$this->trackingURL = self::GA_TRACKING_URL.'?'.http_build_query($params);

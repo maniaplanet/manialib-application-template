@@ -1,5 +1,12 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
+/**
+ * APC Cache driver
+ */
 class ManiaLib_Cache_Drivers_APC extends ManiaLib_Cache_Cache
 {
 	function exists($key)

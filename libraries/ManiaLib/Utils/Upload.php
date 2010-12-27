@@ -2,13 +2,10 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib
  */
 
 /** 
  * Helps dealing with uploads from Manialinks
- * @package ManiaLib
- * @subpackage Helpers
  */ 
 final class ManiaLib_Utils_Upload
 {

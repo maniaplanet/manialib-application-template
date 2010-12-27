@@ -2,14 +2,11 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib
  */
 
 /**
  * Column layout
  * Elements are added below their predecessor
- * @package ManiaLib
- * @subpackage GUIToolkit_Layouts
  */
 class ManiaLib_Gui_Layouts_Column extends ManiaLib_Gui_Layouts_AbstractLayout
 {

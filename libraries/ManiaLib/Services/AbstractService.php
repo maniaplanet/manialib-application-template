@@ -1,5 +1,12 @@
 <?php
+/**
+ * @author Maxime Raoust
+ * @copyright 2009-2010 NADEO 
+ */
 
+/**
+ * Abstract service
+ */
 abstract class ManiaLib_Services_AbstractService
 {
 	/**

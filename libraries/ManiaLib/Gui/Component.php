@@ -1,5 +1,12 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
+/**
+ * Component
+ */
 abstract class ManiaLib_Gui_Component
 {
 	/**#@+

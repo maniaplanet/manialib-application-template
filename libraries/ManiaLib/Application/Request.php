@@ -2,8 +2,6 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib
- * @subpackage MVC
  */
 
 /**
@@ -29,6 +27,8 @@ class ManiaLib_Application_Request
 	protected $action;
 	protected $controller;
 	protected $defaultController;
+	
+	protected $sessionEnabled;
 	
 	/**
 	 * Gets the instance
@@ -74,11 +74,13 @@ class ManiaLib_Application_Request
 		$this->action = array_key_exists(2, $route) && $route[2] ? $route[2] : null;
 		$this->controller = ManiaLib_Application_Route::separatorToUpperCamelCase($this->controller);
 		$this->action = $this->action ? ManiaLib_Application_Route::separatorToCamelCase($this->action) : null;
+		
+		$this->sessionEnabled = ManiaLib_Config_Loader::$config->session->enabled;
 	}
 	
 	function __destruct()
 	{
-		if($this->registerRefererAtDestruct)
+		if($this->registerRefererAtDestruct && $this->sessionEnabled)
 		{
 			$session = ManiaLib_Application_Session::getInstance();
 			$session->set('referer', rawurlencode($this->registerRefererAtDestruct));
@@ -183,9 +185,12 @@ class ManiaLib_Application_Request
 	 */
 	function registerReferer()
 	{
-		$session = ManiaLib_Application_Session::getInstance();
-		$link = $this->createLink();
-		$this->registerRefererAtDestruct = $link;
+		if($this->sessionEnabled)
+		{
+			$session = ManiaLib_Application_Session::getInstance();
+			$link = $this->createLink();
+			$this->registerRefererAtDestruct = $link;
+		}
 	}
 	
 	/**
@@ -194,8 +199,12 @@ class ManiaLib_Application_Request
 	 */
 	function getReferer($default=null)
 	{
-		$session = ManiaLib_Application_Session::getInstance();
-		$referer = $session->get('referer');
+		$referer = null;
+		if($this->sessionEnabled)
+		{
+			$session = ManiaLib_Application_Session::getInstance();
+			$referer = $session->get('referer');
+		}
 		if($referer)
 		{
 			return rawurldecode($referer);
@@ -206,7 +215,7 @@ class ManiaLib_Application_Request
 		}
 		else
 		{
-			return $this->appURL.'index.php';
+			return $this->appURL;
 		}
 	}
 	

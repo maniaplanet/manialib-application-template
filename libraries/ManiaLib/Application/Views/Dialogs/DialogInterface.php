@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
 /**
  * If instance of that interface is rendered, all links will be disabled 

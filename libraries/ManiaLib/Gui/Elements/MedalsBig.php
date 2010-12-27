@@ -1,9 +1,11 @@
 <?php 
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
 /**
  * MedalsBig quad
- * @package ManiaLib
- * @subpackage GUIToolkit
  */	
 class ManiaLib_Gui_Elements_MedalsBig extends ManiaLib_Gui_Elements_Icon
 {

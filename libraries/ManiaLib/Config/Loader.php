@@ -1,5 +1,12 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
+/**
+ * Config loader
+ */
 class ManiaLib_Config_Loader extends ManiaLib_Loader_Loader
 {
 	/**

@@ -1,9 +1,11 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
 /**
  * ManiaLib_Gui_Elements_Icons64x64_1 quad
- * @package ManiaLib
- * @subpackage GUIToolkit
  */	
 class ManiaLib_Gui_Elements_Icons64x64_1 extends ManiaLib_Gui_Elements_Icon
 {

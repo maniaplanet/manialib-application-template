@@ -1,5 +1,13 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
+/**
+ * Smart loader
+ * Used to load classes and put them in the cache (eg. configs, langs etc.)
+ */
 abstract class ManiaLib_Loader_Loader
 {
 	protected $debugPrefix;
@@ -18,8 +26,7 @@ abstract class ManiaLib_Loader_Loader
 	protected function __construct()
 	{
 		$this->cacheEnabled = true;
-		// FIXME Several ManiaLib application on one server == Cache collisions
-		$this->cacheKey = get_class($this);
+		$this->cacheKey = crc32(__FILE__).'_'.get_class($this);
 	}
 	
 	protected final function initCache()

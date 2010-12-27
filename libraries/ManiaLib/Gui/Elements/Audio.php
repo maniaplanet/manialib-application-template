@@ -1,9 +1,11 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
 /**
  * Audio player
- * @package ManiaLib
- * @subpackage GUIToolkit
  */
 class ManiaLib_Gui_Elements_Audio extends ManiaLib_Gui_Elements_Music
 {

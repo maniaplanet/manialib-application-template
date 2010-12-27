@@ -1,10 +1,12 @@
 <?php
+/**
+ * @author Philippe Melot
+ * @copyright 2009-2010 NADEO 
+ */
 
 /**
  * Package track
  * Use it only with InstallTrackPack
- * @package ManiaLib
- * @subpackage ManiacodeToolkit 
  */
 class ManiaLib_Maniacode_Elements_PackageTrack extends ManiaLib_Maniacode_Elements_FileDownload
 {

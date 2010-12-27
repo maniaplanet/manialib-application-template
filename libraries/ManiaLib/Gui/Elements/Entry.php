@@ -1,10 +1,12 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
 /**
  * Entry
  * Input field for Manialinks
- * @package ManiaLib
- * @subpackage GUIToolkit
  */
 class ManiaLib_Gui_Elements_Entry extends ManiaLib_Gui_Elements_Label
 {

@@ -1,4 +1,8 @@
 <?php 
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
 /**
  * ManiaLib_Application_Filterable implentation with access to Session, Request and Response

@@ -2,14 +2,11 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib
  */
 
 /**
  * Page Navigator
  * Page navigation arrows at the bottom of the lists
- * @package ManiaLib
- * @subpackage GUIToolkit_Cards
  */
 class ManiaLib_Gui_Cards_PageNavigator extends ManiaLib_Gui_Component
 {

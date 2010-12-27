@@ -2,14 +2,11 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib
  */
 
 /**
  * Bullet
  * Bullet to make nice lists
- * @package ManiaLib
- * @subpackage GUIToolkit_Cards
  */
 class ManiaLib_Gui_Cards_Bullet extends ManiaLib_Gui_Elements_Spacer
 {

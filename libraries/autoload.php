@@ -38,4 +38,12 @@ function require_once_recursive($directory)
 	}
 }
 
+if(!function_exists('_'))
+{
+	function _($text)
+	{
+		return $text;
+	}
+}
+
 ?>

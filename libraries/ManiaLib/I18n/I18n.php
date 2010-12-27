@@ -16,7 +16,7 @@
  * to your controller (it will look for the lang parameter in the URL and save
  * it automatically in the session).
  * 
- * Then, put your dictionary files in the APP_LANGS_PATH directory. You must use
+ * Then, put your dictionary files in the public/langs directory. You must use
  * same structure as classic Manialink dictionary, but you can add placeholders
  * for variables using '[1]', '[2]', etc. (without the quotes).
  * 
@@ -49,21 +49,12 @@
  * 
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib
- * @subpackage Internationalization
  */
-
-
-define('APP_FRAMEWORK_LANGS_PATH', null);
-define('APP_LANGS_PATH', null);
 
 /**
  * i18n core class
  * You shouldn't have to do anything with it. Use "__()" & "__date()" instead
  * @see __()
- * @package ManiaLib
- * @subpackage Internationalization
- * @ignore
  */
 class ManiaLib_I18n_I18n
 {

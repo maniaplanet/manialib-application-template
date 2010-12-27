@@ -2,14 +2,11 @@
 /**
  * @author Maxime Raoust
  * @copyright 2009-2010 NADEO 
- * @package ManiaLib
  */
 
 /**
  * This class helps to create multipage lists. Maybe difficult to use at
  * first... Doc should be written about it...
- * @package ManiaLib
- * @subpackage Helpers
  */
 class ManiaLib_Utils_MultipageList
 {

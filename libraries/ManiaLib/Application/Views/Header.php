@@ -1,5 +1,12 @@
 <?php 
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
+/**
+ * Default header
+ */
 class ManiaLib_Application_Views_Header extends ManiaLib_Application_View
 {
 	function display()

@@ -1,5 +1,11 @@
 <?php
+/**
+ * @author Maxime Raoust
+ * @copyright 2009-2010 NADEO 
+ */
 
+/**
+ */
 class ManiaLibDemo_Views_Header extends ManiaLib_Application_Views_Header
 {
 	function display()

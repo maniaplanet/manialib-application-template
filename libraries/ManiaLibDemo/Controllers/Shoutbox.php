@@ -1,5 +1,11 @@
 <?php
+/**
+ * @author Maxime Raoust
+ * @copyright 2009-2010 NADEO 
+ */
 
+/**
+ */
 class ManiaLibDemo_Controllers_Shoutbox extends ManiaLib_Application_Controller
 {
 	const ANTIFLOOD_DELAY = 30; // 30 seconds between each shout
@@ -12,7 +18,7 @@ class ManiaLibDemo_Controllers_Shoutbox extends ManiaLib_Application_Controller
 		$this->addFilter(new ManiaLib_Application_Filters_UserAgentCheck());
 		$this->addFilter(new ManiaLib_Application_Filters_RegisterRequestParameters());
 		$this->addFilter(new ManiaLibDemo_Filters_MoodSelector());
-		$this->addFilter(new ManiaLibDemo_Filters_SplashScreen());
+		$this->addFilter(new ManiaLib_Application_Splashscreen_Filter());
 	}
 	
 	protected function checkLogin()

@@ -1,5 +1,12 @@
 <?php
+/**
+ * @author MaximeRaoust
+ * @copyright 2009-2010 NADEO 
+ */
 
+/**
+ * Tracking view
+ */
 class ManiaLib_Application_Tracking_View extends ManiaLib_Application_View
 {
 	function display()
