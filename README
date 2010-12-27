@@ -2,6 +2,14 @@
 | MANIALIB README
 +--------------------------------------------------------------------------------
 
+--
+WARNING
+ 
+If you want to use this in production, you should configure rewrite 
+rules so that all the folders but public/ are forbidden. If you don't do that,
+people will be able to download your config/app.ini file !
+---
+
 This is a preview package of ManiaLib 2.0
 Code is undocumented and may change a lot.
 For information and (some) support, please go the dedicated forum:
