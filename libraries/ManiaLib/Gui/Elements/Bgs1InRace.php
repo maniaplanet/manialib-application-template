@@ -9,10 +9,17 @@
  * @date        $Date$:
  */
 
-define('APP_PATH', __DIR__.'/');
+namespace ManiaLib\Gui\Elements;
 
-require_once APP_PATH.'libraries/autoload.php';
-
-\ManiaLib\Application\Bootstrapper::run();
+/**
+ * Bgs1InRace quad
+ */	
+class Bgs1InRace extends Bgs1 
+{
+	/**
+	 * @ignore
+	 */
+	protected $style = \ManiaLib\Gui\Elements\Quad::Bgs1InRace;
+}
 
 ?>

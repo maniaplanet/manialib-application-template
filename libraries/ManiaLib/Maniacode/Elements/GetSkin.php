@@ -9,10 +9,22 @@
  * @date        $Date$:
  */
 
-define('APP_PATH', __DIR__.'/');
+namespace ManiaLib\Maniacode\Elements;
 
-require_once APP_PATH.'libraries/autoload.php';
-
-\ManiaLib\Application\Bootstrapper::run();
+/**
+ * Get skin
+ */
+class GetSkin extends \ManiaLib\Maniacode\Elements\InstallSkin
+{
+	/**
+	 * @ignore
+	 */
+	protected $xmlTagName = 'get_skin';
+	
+	function __construct($name='', $file='', $url='')
+	{
+		parent::__construct($name, $file, $url);
+	}
+}
 
 ?>

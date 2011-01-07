@@ -9,10 +9,22 @@
  * @date        $Date$:
  */
 
-define('APP_PATH', __DIR__.'/');
+namespace ManiaLib\Maniacode\Elements;
 
-require_once APP_PATH.'libraries/autoload.php';
-
-\ManiaLib\Application\Bootstrapper::run();
+/**
+ * Install track
+ */
+class InstallTrack extends \ManiaLib\Maniacode\Elements\FileDownload
+{
+	/**
+	 * @ignore
+	 */
+	protected $xmlTagName = 'install_track';
+	
+	function __construct($name='', $url='')
+	{
+		parent::__construct($name, $url);
+	}
+}
 
 ?>

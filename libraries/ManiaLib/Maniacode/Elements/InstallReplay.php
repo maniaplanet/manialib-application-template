@@ -9,10 +9,23 @@
  * @date        $Date$:
  */
 
-define('APP_PATH', __DIR__.'/');
+namespace ManiaLib\Maniacode\Elements;
 
-require_once APP_PATH.'libraries/autoload.php';
+/**
+ * Install replay
+ */
+class InstallReplay extends \ManiaLib\Maniacode\Elements\FileDownload
+{
+	/**
+	 * @ignore
+	 */
+	protected $xmlTagName = 'install_replay';
+	
+	function __construct($name='', $url='')
+	{
+		parent::__construct($name, $url);
+	}
+}
 
-\ManiaLib\Application\Bootstrapper::run();
 
 ?>

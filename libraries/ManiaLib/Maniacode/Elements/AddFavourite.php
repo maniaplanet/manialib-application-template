@@ -9,10 +9,22 @@
  * @date        $Date$:
  */
 
-define('APP_PATH', __DIR__.'/');
+namespace ManiaLib\Maniacode\Elements;
 
-require_once APP_PATH.'libraries/autoload.php';
-
-\ManiaLib\Application\Bootstrapper::run();
+/**
+ * Add favorite
+ */
+class AddFavourite extends \ManiaLib\Maniacode\Elements\AddBuddy
+{
+	/**
+	 * @ignore
+	 */
+	protected $xmlTagName = 'add_favourite';
+	
+	function __construct($login)
+	{
+		parent::__construct($login);
+	}
+}
 
 ?>

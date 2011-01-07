@@ -9,10 +9,21 @@
  * @date        $Date$:
  */
 
-define('APP_PATH', __DIR__.'/');
-
-require_once APP_PATH.'libraries/autoload.php';
-
-\ManiaLib\Application\Bootstrapper::run();
+namespace ManiaLib\Gui\Layouts;
+ 
+/**
+ * Line layout
+ * Elements are added at the right of their predecessor
+ */
+class Line extends AbstractLayout
+{
+	/**
+	 * @ignore
+	 */
+	function postFilter(\ManiaLib\Gui\Element $item)
+	{
+		$this->xIndex += $item->getSizeX() + $this->marginWidth;
+	}
+}
 
 ?>

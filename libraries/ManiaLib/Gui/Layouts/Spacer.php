@@ -9,10 +9,14 @@
  * @date        $Date$:
  */
 
-define('APP_PATH', __DIR__.'/');
+namespace ManiaLib\Gui\Layouts;
 
-require_once APP_PATH.'libraries/autoload.php';
-
-\ManiaLib\Application\Bootstrapper::run();
+/**
+ * Null layout
+ * Do nothing, used to set a frame's size
+ */
+class Spacer extends AbstractLayout
+{
+}
 
 ?>

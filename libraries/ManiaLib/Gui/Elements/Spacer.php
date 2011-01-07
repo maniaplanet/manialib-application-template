@@ -9,10 +9,17 @@
  * @date        $Date$:
  */
 
-define('APP_PATH', __DIR__.'/');
+namespace ManiaLib\Gui\Elements;
 
-require_once APP_PATH.'libraries/autoload.php';
-
-\ManiaLib\Application\Bootstrapper::run();
+/**
+ * A blank element, useful to place gaps between elements when using layouts
+ */
+class Spacer extends \ManiaLib\Gui\Element
+{
+	/**
+	 * @ignore
+	 */
+	protected $xmlTagName = null;
+} 
 
 ?>

@@ -8,11 +8,7 @@
  * @author      $Author$:
  * @date        $Date$:
  */
+ 
 
-define('APP_PATH', __DIR__.'/');
-
-require_once APP_PATH.'libraries/autoload.php';
-
-\ManiaLib\Application\Bootstrapper::run();
 
 ?>

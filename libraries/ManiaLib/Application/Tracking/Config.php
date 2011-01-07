@@ -9,10 +9,14 @@
  * @date        $Date$:
  */
 
-define('APP_PATH', __DIR__.'/');
+namespace ManiaLib\Application\Tracking;
 
-require_once APP_PATH.'libraries/autoload.php';
-
-\ManiaLib\Application\Bootstrapper::run();
+/**
+ * Tracking config
+ */
+class Config extends \ManiaLib\Config\Configurable
+{
+	public $account; // eg UA-123456789-1
+}
 
 ?>

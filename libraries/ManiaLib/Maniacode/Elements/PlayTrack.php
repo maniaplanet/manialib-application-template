@@ -8,11 +8,22 @@
  * @author      $Author$:
  * @date        $Date$:
  */
+namespace ManiaLib\Maniacode\Elements;
 
-define('APP_PATH', __DIR__.'/');
-
-require_once APP_PATH.'libraries/autoload.php';
-
-\ManiaLib\Application\Bootstrapper::run();
+/**
+ * Play track
+ */
+class PlayTrack extends \ManiaLib\Maniacode\Elements\FileDownload
+{
+	/**
+	 * @ignore
+	 */
+	protected $xmlTagName = 'play_track';
+	
+	function __construct($name='', $url='')
+	{
+		parent::__construct($name, $url);
+	}
+}
 
 ?>

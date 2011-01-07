@@ -9,10 +9,12 @@
  * @date        $Date$:
  */
 
-define('APP_PATH', __DIR__.'/');
+namespace ManiaLib\Application\Views\Dialogs;
 
-require_once APP_PATH.'libraries/autoload.php';
-
-\ManiaLib\Application\Bootstrapper::run();
+/**
+ * If instance of that interface is rendered, all links will be disabled 
+ * after the rendering of the view
+ */
+interface DialogInterface {}
 
 ?>

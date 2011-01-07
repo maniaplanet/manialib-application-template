@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
@@ -9,10 +9,17 @@
  * @date        $Date$:
  */
 
-define('APP_PATH', __DIR__.'/');
+namespace ManiaLib\Utils;
 
-require_once APP_PATH.'libraries/autoload.php';
-
-\ManiaLib\Application\Bootstrapper::run();
+/**
+ * Debug stuff
+ */
+abstract class Debug
+{
+	static function isDebug()
+	{
+		return \ManiaLib\Config\Loader::$config->debug;
+	}
+}
 
 ?>

@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
@@ -9,10 +9,17 @@
  * @date        $Date$:
  */
 
-define('APP_PATH', __DIR__.'/');
+namespace ManiaLib\Application\Views;
 
-require_once APP_PATH.'libraries/autoload.php';
-
-\ManiaLib\Application\Bootstrapper::run();
+/**
+ * Default footer
+ */
+class Footer extends \ManiaLib\Application\View
+{
+	function display()
+	{
+		\ManiaLib\Gui\Manialink::render();
+	}
+}
 
 ?>

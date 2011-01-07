@@ -9,10 +9,12 @@
  * @date        $Date$:
  */
 
-define('APP_PATH', __DIR__.'/');
+namespace ManiaLib\Application;
 
-require_once APP_PATH.'libraries/autoload.php';
-
-\ManiaLib\Application\Bootstrapper::run();
+/**
+ * User exception
+ * The message will be displayed to the user when thrown
+ */
+class UserException extends \Exception {}
 
 ?>

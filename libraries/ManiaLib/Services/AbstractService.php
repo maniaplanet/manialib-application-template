@@ -9,10 +9,23 @@
  * @date        $Date$:
  */
 
-define('APP_PATH', __DIR__.'/');
+namespace ManiaLib\Services;
 
-require_once APP_PATH.'libraries/autoload.php';
+/**
+ * Abstract service
+ */
+abstract class AbstractService
+{
+	/**
+	 * @var \ManiaLib\Database\Connection
+	 */
+	protected $db;
+	
+	function __construct()
+	{
+		$this->db = \ManiaLib\Database\Connection::getInstance();
+	}
+}
 
-\ManiaLib\Application\Bootstrapper::run();
 
 ?>

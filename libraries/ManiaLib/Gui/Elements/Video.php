@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
@@ -9,10 +9,23 @@
  * @date        $Date$:
  */
 
-define('APP_PATH', __DIR__.'/');
+namespace ManiaLib\Gui\Elements;
 
-require_once APP_PATH.'libraries/autoload.php';
+/**
+ * Video
+ */
+class Video extends \ManiaLib\Gui\Elements\Audio
+{
+	/**
+	 * @ignore 
+	 */
+	protected $xmlTagName = 'video';
 
-\ManiaLib\Application\Bootstrapper::run();
+	function __construct($sx = 32, $sy = 24)
+	{
+		$this->sizeX = $sx;
+		$this->sizeY = $sy;
+	}
+}
 
 ?>
