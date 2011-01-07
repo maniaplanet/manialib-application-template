@@ -1,1 +1,0 @@
-<?php class Icons128x32_1 extends ManiaLib_Gui_Elements_Icons128x32_1 {} ?>
