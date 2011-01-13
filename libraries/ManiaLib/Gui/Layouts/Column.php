@@ -23,7 +23,13 @@ class Column extends AbstractLayout
 	/**
 	 * @ignore
 	 */
-	protected $direction = -1;
+	protected $direction;
+	
+	function __construct($sizeX = 20, $sizeY = 20, $direction = self::DIRECTION_DOWN)
+	{
+		parent::__construct($sizeX, $sizeY);
+		$this->direction = $direction;
+	}
 	
 	function setDirection($direction)
 	{
