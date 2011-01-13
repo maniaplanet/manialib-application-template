@@ -80,10 +80,11 @@ class Logger
 	{
 		if(!self::$loaded)
 		{
-			if(\ManiaLib\Config\Loader::$config)
+			if(is_object(\ManiaLib\Config\Loader::$config))
 			{
-				if($config = \ManiaLib\Config\Loader::$config->log)
+				if(is_object(\ManiaLib\Config\Loader::$config->log))
 				{
+					$config = \ManiaLib\Config\Loader::$config->log;
 					if(file_exists($path = \ManiaLib\Config\Loader::$config->log->path))
 					{
 						self::$path = $path;

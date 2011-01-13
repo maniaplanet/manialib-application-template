@@ -17,6 +17,11 @@ namespace ManiaLib\Cache\Drivers;
  */
 class NoCache extends \ManiaLib\Cache\Cache
 {
+	function enableLogging() 
+	{
+		return false;
+	}
+	
 	function exists($key)
 	{
 		return false;
@@ -42,6 +47,5 @@ class NoCache extends \ManiaLib\Cache\Cache
 	
 	function inc($key) {}
 }
-
 
 ?>

@@ -144,7 +144,7 @@ abstract class AbstractLayout extends \ManiaLib\Gui\Component
 	 * Typical use: look for overflow
 	 * @ignore
 	 */
-	function preFilter(\ManiaLib\Gui\Element $item) 
+	function preFilter(\ManiaLib\Gui\Component $item) 
 	{	
 	}
 
@@ -153,7 +153,7 @@ abstract class AbstractLayout extends \ManiaLib\Gui\Component
 	 * Typical use: update x,y,z indexes for the next item
 	 * @ignore 
 	 */
-	function postFilter(\ManiaLib\Gui\Element $item)
+	function postFilter(\ManiaLib\Gui\Component $item)
 	{
 	}
 }

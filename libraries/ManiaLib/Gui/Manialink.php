@@ -29,6 +29,7 @@ abstract class Manialink
 	public static $imagesURL;
 	public static $mediaURL;
 	
+	protected static $swapPosY = false;
 	protected static $dicos = array();
 	/**#@-*/
 	
@@ -128,7 +129,10 @@ abstract class Manialink
 		$frame = self::$domDocument->createElement('frame');
 		if($x || $y || $z)
 		{
-			$frame->setAttribute('posn', $x.' '.$y.' '.$z);
+			if (self::$swapPosY)
+				$frame->setAttribute('posn', $x.' '.(-$y).' '.$z);
+			else
+				$frame->setAttribute('posn', $x.' '.$y.' '.$z);
 		}
 		end(self::$parentNodes)->appendChild($frame);
 		if($scale)
@@ -210,6 +214,36 @@ abstract class Manialink
 	static function enableLinks()
 	{
 		self::$linksEnabled = true;
+	}
+	
+	/**
+	 * Normal Manialink behavior for the Y positioning of Elements.
+	 * This will decrease Y coordinates from top to bottom.
+	 * This method is mainly used by ManiaLive.
+	 */
+	final public static function setNormalPositioning()
+	{
+		self::$swapPosY = false;
+	}
+	
+	/**
+	 * Swapped Manialink behavior for the Y positioning of Elements.
+	 * This will increase from top to bottom.
+	 * This method is mainly used by ManiaLive.
+	 */
+	final public static function setSwappedPositioning()
+	{
+		self::$swapPosY = true;
+	}
+	
+	/**
+	 * Returns whether Y-Positioning is swapped for all
+	 * Elements currently drawn.
+	 * This method is mainly used by ManiaLive.
+	 */
+	final public static function isYSwapped()
+	{
+		return self::$swapPosY;
 	}
 	
 	/**

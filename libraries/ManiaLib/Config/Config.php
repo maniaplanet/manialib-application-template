@@ -37,6 +37,10 @@ class Config extends Configurable
 	 * @var \ManiaLib\Session\Config
 	 */
 	public $session;
+	/**
+	 * @var \ManiaLib\Benchmark\Config
+	 */
+	public $benchmark;
 	
 	public $timezone = 'Europe/Paris';
 	public $timezoneName = 'GMT+1';
@@ -45,17 +49,6 @@ class Config extends Configurable
 	
 	public $disableCache = false;
 	
-	public function __construct()
-	{
-		parent::__construct();
-		$this->loadNestedConfig(array(
-			'application' => '\ManiaLib\Application\Config',
-			'database' => '\ManiaLib\Database\Config',
-			'i18n' => '\ManiaLib\I18n\Config',
-			'log' => '\ManiaLib\Log\Config',
-			'session' => '\ManiaLib\Session\Config',
-		));
-	}
 }
 
 ?>

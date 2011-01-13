@@ -9,21 +9,20 @@
  * @date        $Date$:
  */
 
-namespace ManiaLib\Gui\Layouts;
- 
-/**
- * Line layout
- * Elements are added at the right of their predecessor
- */
-class Line extends AbstractLayout
+namespace ManiaLib\Benchmark;
+
+class Config extends \ManiaLib\Config\Configurable
 {
+	public $enabled = false;
 	/**
-	 * @ignore
+	 * Benchmark will be done every N requests
 	 */
-	function postFilter(\ManiaLib\Gui\Component $item)
-	{
-		$this->xIndex += $item->getSizeX() + $this->marginWidth;
-	}
+	public $samplingRate = 100;
+	/**
+	 * Stores at most N execution times in the stack 
+	 */
+	public $maxElements = 60;
 }
+
 
 ?>

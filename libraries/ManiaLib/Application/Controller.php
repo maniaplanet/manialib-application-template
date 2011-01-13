@@ -317,8 +317,6 @@ class Controller
 	}
 }
 
-// FIXME Use user-error for ControllerNotFound, ViewNotFound, ActionNotFound
-
 class ControllerNotFoundException extends UserException{}
 class ActionNotFoundException extends UserException {}
 

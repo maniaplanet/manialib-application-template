@@ -27,9 +27,10 @@ class Flow extends AbstractLayout
 	/**
 	 * @ignore
 	 */
-	function preFilter(\ManiaLib\Gui\Element $item)
+	function preFilter(\ManiaLib\Gui\Component $item)
 	{
-		$availableWidth = $this->sizeX - $this->xIndex - $this->borderWidth;
+		// flo: added 0.1 because of floating mistakes
+		$availableWidth = $this->sizeX - $this->xIndex - $this->borderWidth + 0.1;
 
 		// If end of the line is reached
 		if($availableWidth < $item->getSizeX() & $this->currentLineElementCount > 0)
@@ -45,7 +46,7 @@ class Flow extends AbstractLayout
 	/**
 	 * @ignore
 	 */
-	function postFilter(\ManiaLib\Gui\Element $item)
+	function postFilter(\ManiaLib\Gui\Component $item)
 	{
 		$this->xIndex += $item->getSizeX() + $this->marginWidth;
 		if(!$this->maxHeight || $item->getSizeY() > $this->maxHeight)

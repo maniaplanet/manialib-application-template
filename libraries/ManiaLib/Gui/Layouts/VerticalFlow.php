@@ -27,9 +27,10 @@ class VerticalFlow extends AbstractLayout
 	/**
 	 * @ignore
 	 */
-	function preFilter(\ManiaLib\Gui\Element $item)
+	function preFilter(\ManiaLib\Gui\Component $item)
 	{
-		$availableHeight = $this->sizeY + $this->yIndex - $this->borderHeight;
+		// add minimal number to avoid floating error
+		$availableHeight = $this->sizeY + $this->yIndex - $this->borderHeight + 0.1;
 
 		// If end of the line is reached
 		if($availableHeight < $item->getSizeY() & $this->currentColumnElementCount > 0)
@@ -45,7 +46,7 @@ class VerticalFlow extends AbstractLayout
 	/**
 	 * @ignore
 	 */
-	function postFilter(\ManiaLib\Gui\Element $item)
+	function postFilter(\ManiaLib\Gui\Component $item)
 	{
 		$this->yIndex -= $item->getSizeY() + $this->marginHeight;
 		if(!$this->maxWidth || $item->getSizeX() > $this->maxWidth)

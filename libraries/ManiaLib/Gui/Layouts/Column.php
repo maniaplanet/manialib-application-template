@@ -33,22 +33,22 @@ class Column extends AbstractLayout
 	/**
 	 * @ignore
 	 */
-	function preFilter(\ManiaLib\Gui\Element $item)
+	function preFilter(\ManiaLib\Gui\Component $item)
 	{
 		if($this->direction == self::DIRECTION_UP)
 		{
-			$this->yIndex += $item->getSizeY() + $this->marginHeight;
+			$this->yIndex += $item->getRealSizeY() + $this->marginHeight;
 		}
 	}
 	
 	/**
 	 * @ignore
 	 */
-	function postFilter(\ManiaLib\Gui\Element $item)
+	function postFilter(\ManiaLib\Gui\Component $item)
 	{
 		if($this->direction == self::DIRECTION_DOWN)
 		{
-			$this->yIndex -= $item->getSizeY() + $this->marginHeight;
+			$this->yIndex -= $item->getRealSizeY() + $this->marginHeight;
 		}
 	}
 }

@@ -47,6 +47,11 @@ class Connection
 	{
 		$this->config = \ManiaLib\Config\Loader::$config->database;
 		
+		if(!is_object($this->config))
+		{
+			$this->config = new Config();
+		}
+		
 		$this->host = $this->config->host;
 		$this->user = $this->config->user;
 		$this->password = $this->config->password;
@@ -76,7 +81,7 @@ class Connection
 	
 	function select($database)
 	{
-		if($database != $this->database)
+		if($database && $database != $this->database)
 		{
 			$this->database = $database;
 			if(!mysql_select_db($this->database, $this->connection))

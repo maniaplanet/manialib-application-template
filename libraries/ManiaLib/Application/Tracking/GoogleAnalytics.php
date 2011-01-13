@@ -188,7 +188,7 @@ class GoogleAnalytics
 		$utmz[0] = $domainHash; // Domain hash
 		$utmz[1] = time(); // Timestamp
 		$utmz[2] = $utma[5]; // Session number
-		$utmz[3] = 1; // TODO Campaign number
+		$utmz[3] = 1; // Campaign number
 		$utmz[4] = // Campaign information
 			'utmcsr=(direct)|'. //utm_source
 			'utmccn=(direct)|'. //utm_campaign
@@ -272,5 +272,10 @@ class GoogleAnalytics
 		return $this->domainHash;
 	}
 }
+
+
+
+
+
 
 ?>

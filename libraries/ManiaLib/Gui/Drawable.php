@@ -9,21 +9,19 @@
  * @date        $Date$:
  */
 
-namespace ManiaLib\Gui\Layouts;
- 
+namespace ManiaLib\Gui;
+
 /**
- * Line layout
- * Elements are added at the right of their predecessor
+ * Can be drawn onto the Screen.
+ * This is mainly used by ManiaLive.
  */
-class Line extends AbstractLayout
+interface Drawable
 {
 	/**
-	 * @ignore
+	 * This draws the object onto the screen.
+	 * Contains the drawing process.
 	 */
-	function postFilter(\ManiaLib\Gui\Component $item)
-	{
-		$this->xIndex += $item->getSizeX() + $this->marginWidth;
-	}
+	function save();
 }
 
 ?>

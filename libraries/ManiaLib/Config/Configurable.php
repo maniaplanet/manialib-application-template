@@ -23,43 +23,35 @@ abstract class Configurable
 	 */
 	protected function validate() {}
 	
-	function __construct() {}
-	
-//	final function __construct()
-//	{
-//		$reflect = new \ReflectionClass($this);
-//		$props = $reflect->getProperties();
-//		foreach($props as $prop)
-//		{
-//			if(!$prop->isStatic() && $prop->isPublic())
-//			{
-//				$comment = $prop->getDocComment();
-//				$matches = null;
-//				preg_match('/@var ([[:alpha:][:alnum:]-_]+)/', $comment, $matches);
-//				if(isset($matches[1]))
-//				{
-//					$class = $matches[1];
-//					if(class_exists($class))
-//					{
-//						if(is_subclass_of($class, '\ManiaLib\Config\Configurable'));
-//						{
-//							$key = $prop->getName();
-//							$this->$key = new $class;
-//						}
-//					}
-//				}
-//			}
-//		}
-//	}
-	
-	// TODO Deprecate \ManiaLib\Config\Configurable::loadNestedConfig() and use @var tag when bug in HPHP is fixed
+	function __construct()
+	{
+		$reflect = new \ReflectionClass($this);
+		$props = $reflect->getProperties();
+		foreach($props as $prop)
+		{
+			if(!$prop->isStatic() && $prop->isPublic())
+			{
+				$comment = $prop->getDocComment();
+				$matches = null;
+				preg_match('/@var\s+(\S+)/', $comment, $matches);
+				if(isset($matches[1]))
+				{
+					$class = $matches[1];
+					if(class_exists($class))
+					{
+						if(is_subclass_of($class, '\ManiaLib\Config\Configurable'));
+						{
+							$key = $prop->getName();
+							$this->$key = new $class;
+						}
+					}
+				}
+			}
+		}
+	}
 	
 	/**
-	 * This is how we load nested config classes.
-	 * It would be way better to use the commented code above that automatically
-	 * load nested classes from the "@var" tag.
-	 * Unfortunately, HPHP doesn't support ReflectionProperty::getDocComments()
-	 * for now...
+	 * @deprecated Use "var" tag instead
 	 */
 	final protected function loadNestedConfig(array $classes)
 	{

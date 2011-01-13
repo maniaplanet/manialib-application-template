@@ -25,6 +25,9 @@ abstract class Component
 	protected $sizeX;
 	protected $sizeY;
 	protected $scale;
+	protected $visible = true;
+	protected $valign = null;
+	protected $halign = null;
 	/**#@-*/
 	
 	/**
@@ -34,6 +37,7 @@ abstract class Component
 	function setPositionX($posX)
 	{
 		$this->posX = $posX;
+		$this->onMove();
 	}
 	
 	/**
@@ -43,6 +47,7 @@ abstract class Component
 	function setPositionY($posY)
 	{
 		$this->posY = $posY;
+		$this->onMove();
 	}
 	
 	/**
@@ -52,6 +57,7 @@ abstract class Component
 	function setPositionZ($posZ)
 	{
 		$this->posZ = $posZ;
+		$this->onMove();
 	}
 	
 	/**
@@ -61,6 +67,7 @@ abstract class Component
 	function setPosX($posX)
 	{
 		$this->posX = $posX;
+		$this->onMove();
 	}
 	
 	/**
@@ -70,6 +77,7 @@ abstract class Component
 	function setPosY($posY)
 	{
 		$this->posY = $posY;
+		$this->onMove();
 	}
 	
 	/**
@@ -79,6 +87,7 @@ abstract class Component
 	function setPosZ($posZ)
 	{
 		$this->posZ = $posZ;
+		$this->onMove();
 	}
 	
 	/**
@@ -88,6 +97,7 @@ abstract class Component
 	function incPosX($posX)
 	{
 		$this->posX += $posX;
+		$this->onMove();
 	}
 	
 	/**
@@ -97,6 +107,7 @@ abstract class Component
 	function incPosY($posY)
 	{
 		$this->posY += $posY;
+		$this->onMove();
 	}
 	
 	/**
@@ -106,6 +117,7 @@ abstract class Component
 	function incPosZ($posZ)
 	{
 		$this->posZ += $posZ;
+		$this->onMove();
 	}
 	
 	/**
@@ -114,11 +126,53 @@ abstract class Component
 	 * @param float
 	 * @param float
 	 */
-	function setPosition($posX = 0, $posY = 0, $posZ = 0)
+	function setPosition()
 	{
-		$this->posX = $posX;
-		$this->posY = $posY;
-		$this->posZ = $posZ;
+		$args = func_get_args();
+		
+		if (!empty($args))
+			$this->posX = array_shift($args);
+			
+		if (!empty($args))
+			$this->posY = array_shift($args);
+			
+		if (!empty($args))
+			$this->posZ = array_shift($args);
+			
+		$this->onMove();
+	}
+	
+	/**
+	 * Sets the vertical alignment of the element.
+	 * @param string Vertical alignment can be either "top", "center" or
+	 * "bottom"
+	 */
+	function setValign($valign)
+	{
+		$this->valign = $valign;
+	}
+
+	/**
+	 * Sets the horizontal alignment of the element
+	 * @param string Horizontal alignement can be eithe "left", "center" or
+	 * "right"
+	 */
+	function setHalign($halign)
+	{
+		$this->halign = $halign;
+	}
+
+	/**
+	 * Sets the alignment of the element
+	 * @param string Horizontal alignement can be eithe "left", "center" or
+	 * "right"
+	 * @param string Vertical alignment can be either "top", "center" or
+	 * "bottom"
+	 */
+	function setAlign($halign = null, $valign = null)
+	{
+		$this->setHalign($halign);
+		$this->setValign($valign);
 	}
 	
 	/**
@@ -128,6 +182,7 @@ abstract class Component
 	function setSizeX($sizeX)
 	{
 		$this->sizeX = $sizeX;
+		$this->onResize();
 	}
 	
 	/**
@@ -137,6 +192,7 @@ abstract class Component
 	function setSizeY($sizeY)
 	{
 		$this->sizeY = $sizeY;
+		$this->onResize();
 	}
 	
 	/**
@@ -144,10 +200,17 @@ abstract class Component
 	 * @param float
 	 * @param float
 	 */
-	function setSize($sizeX, $sizeY)
+	function setSize()
 	{
-		$this->sizeX = $sizeX;
-		$this->sizeY = $sizeY;
+		$args = func_get_args();
+		
+		if (!empty($args))
+			$this->sizeX = array_shift($args);
+			
+		if (!empty($args))
+			$this->sizeY = array_shift($args);
+			
+		$this->onResize();
 	}
 	
 	/**
@@ -158,6 +221,16 @@ abstract class Component
 	function setScale($scale)
 	{
 		$this->scale = $scale;
+	}
+	
+	/**
+	 * Sets the visibility of the Component.
+	 * This is used by ManiaLive.
+	 * @param bool $visible If set to false the Component (and subcomponents) is not rendered.
+	 */
+	function setVisibility($visible)
+	{
+		$this->visible = $visible;
 	}
 	
 	/**
@@ -213,6 +286,101 @@ abstract class Component
 	{
 		return $this->scale;
 	}
+	
+	/**
+	 * Returns the width of the element with the
+	 * applied scaling factor.
+	 * @return float
+	 */
+	function getRealSizeX()
+	{
+		return $this->sizeX * ($this->scale ? $this->scale : 1);
+	}
+	
+	/**
+	 * Returns the height of the element with the
+	 * applied scaling factor.
+	 * @return float
+	 */
+	function getRealSizeY()
+	{
+		return $this->sizeY * ($this->scale ? $this->scale : 1);
+	}
+	
+	/**
+	 * Return the x-coordinate for the left border of the Component.
+	 * @return float
+	 */
+	function getBorderLeft()
+	{
+		return $this->getPosX();
+	}
+	
+	/**
+	 * Return the x-coordinate for the right border of the Component.
+	 * @return float
+	 */
+	function getBorderRight()
+	{
+		return $this->getPosX() + $this->getRealSizeX();
+	}
+	
+	/**
+	 * Return y-coordinate for the top border of the Component.
+	 * @return float
+	 */
+	function getBorderTop()
+	{
+		return $this->getPosY();
+	}
+	
+	/**
+	 * Return y-coordinate for the bottom border of the Component.
+	 * @return float
+	 */
+	function getBorderBottom()
+	{
+		return $this->getPosY() + $this->getRealSizeY();
+	}
+	
+	/**
+	 * @todo moved Halign and Valign into the Component class, shall it stay here?
+	 */
+	
+	/**
+	 * Returns the horizontal alignment of the element
+	 * @return string
+	 */
+	function getHalign()
+	{
+		return $this->halign;
+	}
+
+	/**
+	 * Returns the vertical alignment of the element
+	 * @return string
+	 */
+	function getValign()
+	{
+		return $this->valign;
+	}
+	
+	/**
+	 * Is the Component rendered onto the screen or not?
+	 * This is used by ManiaLive.
+	 * @return bool
+	 */
+	function isVisible()
+	{
+		return $this->visible;
+	}
+	
+	/**
+	 * Overwriteable functions.
+	 */
+	protected function onResize() {}
+	
+	protected function onMove() {}
 }
 
 ?>

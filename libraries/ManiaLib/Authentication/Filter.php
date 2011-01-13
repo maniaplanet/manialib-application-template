@@ -63,10 +63,6 @@ class Filter extends \ManiaLib\Application\AdvancedFilter
 				}
 				
 				$params = $_GET;
-				
-				// FIXME action and controler are first parameter in current version, this may change!
-				array_shift($params);
-				
 				$params['authentication'] = 1;
 				$params['redirect'] = $this->request->getController() . '/' . $this->request->getAction();
 

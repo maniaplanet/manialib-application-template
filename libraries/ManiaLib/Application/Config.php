@@ -37,13 +37,6 @@ class Config extends \ManiaLib\Config\Configurable
 	public $defaultController = 'Home';
 	public $defaultAction = 'index';
 	
-	function __construct()
-	{
-		$this->loadNestedConfig(array(
-			'tracking' => '\ManiaLib\Application\Tracking\Config',
-		));
-	}
-	
 	protected function validate()
 	{
 		// Check exists is not a good idea when you don't want to use it...

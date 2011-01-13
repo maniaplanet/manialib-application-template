@@ -34,11 +34,7 @@ abstract class ErrorHandling
 	
 	/**
 	 * Error handler
-	 * Converts standard PHP errors into ErrorException
-	 * Usage (loaded by default in the MVC framework):
-	 * <code>
-	 * set_error_handler(array('ErrorHandling', 'exceptionErrorHandler'));
-	 * </code>
+	 * Converts PHP errors into ErrorException
 	 * @throws ErrorException
 	 */
 	static function exceptionErrorHandler($errno, $errstr, $errfile, $errline) 
@@ -48,24 +44,7 @@ abstract class ErrorHandling
 	
 	/**
 	 * Exception handler
-	 * Used to cleanly catch exceptions, and is also used as uncaught exception handler.
 	 * Prints a nice error message in manialink
-	 * Usage for catching exceptions:
-	 * <code>
-	 * try
-	 * {
-	 *     //...
-	 * }
-	 * catch(\Exception $exception)
-	 * {
-	 *     ErrorHandling::exceptionHandler($exception);
-	 * }
-	 * </code>
-	 * Usage for default exception handling:
-	 * <code>
-	 * set_exception_handler(array('ErrorHandling', 'exceptionHandler'));
-	 * </code>
-	 * Note: the MVC framework uses both by default
 	 */
 	static function exceptionHandler(\Exception $exception)
 	{
@@ -74,26 +53,48 @@ abstract class ErrorHandling
 		
 		if($exception instanceof \ManiaLib\Application\UserException)
 		{
-			$message = self::computeShortMessage($exception).'  '.$requestURI;
+			$message = static::computeShortMessage($exception).'  '.$requestURI;
 			\ManiaLib\Log\Logger::user($message);
-			self::showErrorDialog($exception->getMessage());
+			static::showErrorDialog($exception->getMessage());
 		}
 		else
 		{
-			$requestURILine = sprintf(self::$messageConfigs['default']['line'], 'Request URI', $requestURI);			
-			$message = self::computeMessage($exception, self::$messageConfigs['default'], array($requestURILine));
+			$requestURILine = sprintf(static::$messageConfigs['default']['line'], 'Request URI', $requestURI);			
+			$message = static::computeMessage($exception, static::$messageConfigs['default'], array($requestURILine));
 			\ManiaLib\Log\Logger::error($message);
 			
 			if(\ManiaLib\Utils\Debug::isDebug())
 			{
-				$requestURILine = sprintf(self::$messageConfigs['debug']['line'], 'Request URI', $requestURI);
-				$message = self::computeMessage($exception, self::$messageConfigs['debug'], array($requestURILine));
-				self::showDebugDialog($message);
+				$requestURILine = sprintf(static::$messageConfigs['debug']['line'], 'Request URI', $requestURI);
+				$message = static::computeMessage($exception, static::$messageConfigs['debug'], array($requestURILine));
+				static::showDebugDialog($message);
 			}
 			else
 			{
-				self::showErrorDialog();
+				static::showErrorDialog();
 			}
+		}
+	}
+	
+	/**
+	 * Fallback exception handler when nothing works. 
+	 * Just tries to dump the exception in a file at the app root and prints a 
+	 * message.
+	 */
+	static function fatalExceptionHandler(\Exception $exception)
+	{
+		var_dump($exception);exit;
+		if(defined('APP_PATH'))
+		{
+			@file_put_contents(APP_PATH.'fatal-error.log', print_r($exception, true), FILE_APPEND);
+		}
+		if(array_key_exists('HTTP_USER_AGENT', $_SERVER) && $_SERVER['HTTP_USER_AGENT'] == 'GameBox')
+		{
+			echo '<manialink><timeout>0</timeout><label text="Fatal error." /></manialink>';
+		}
+		else
+		{
+			echo 'Fatal error.';
 		}
 	}
 	
@@ -178,8 +179,13 @@ abstract class ErrorHandling
 	 * @return string
 	 * @ignore
 	 */
-	static protected function computeMessage(\Exception $e, array $styles, array $additionalLines = array())
+	final static function computeMessage(\Exception $e, $styles = array(), $additionalLines = array())
 	{
+		if(!$styles)
+		{
+			$styles = static::$messageConfigs['default'];
+		}
+		
 		$trace = $e->getTraceAsString();
 		$trace = explode("\n", $trace);
 		foreach ($trace as $key=>$value)
@@ -202,7 +208,7 @@ abstract class ErrorHandling
 	 * @return string
 	 * @ignore
 	 */
-	static protected function computeShortMessage(\Exception $e)
+	final static function computeShortMessage(\Exception $e)
 	{
 		$message = get_class($e).'  '.$e->getMessage().'  ('.$e->getCode().')';
 		return $message;

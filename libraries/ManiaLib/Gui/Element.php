@@ -14,7 +14,7 @@ namespace ManiaLib\Gui;
 /**
  * Base class for creating GUI elements
  */
-abstract class Element extends Component
+abstract class Element extends Component implements Drawable
 {
 	const USE_ABSOLUTE_URL = true;
 
@@ -23,8 +23,6 @@ abstract class Element extends Component
 	 */
 	protected $style;
 	protected $subStyle;
-	protected $valign = null;
-	protected $halign = null;
 	protected $manialink;
 	protected $url;
 	protected $urlId;
@@ -90,39 +88,6 @@ abstract class Element extends Component
 	function setSubStyle($substyle)
 	{
 		$this->subStyle = $substyle;
-	}
-
-	/**
-	 * Sets the vertical alignment of the element.
-	 * @param string Vertical alignment can be either "top", "center" or
-	 * "bottom"
-	 */
-	function setValign($valign)
-	{
-		$this->valign = $valign;
-	}
-
-	/**
-	 * Sets the horizontal alignment of the element
-	 * @param string Horizontal alignement can be eithe "left", "center" or
-	 * "right"
-	 */
-	function setHalign($halign)
-	{
-		$this->halign = $halign;
-	}
-
-	/**
-	 * Sets the alignment of the element
-	 * @param string Horizontal alignement can be eithe "left", "center" or
-	 * "right"
-	 * @param string Vertical alignment can be either "top", "center" or
-	 * "bottom"
-	 */
-	function setAlign($halign = null, $valign = null)
-	{
-		$this->setHalign($halign);
-		$this->setValign($valign);
 	}
 
 	/**
@@ -458,6 +423,12 @@ abstract class Element extends Component
 	 */
 	final function save()
 	{
+		// this check is important for ManiaLive
+		if ($this->visible === false)
+		{
+			return;
+		}
+
 		// Optional pre filtering
 		$this->preFilter();
 
@@ -467,7 +438,18 @@ abstract class Element extends Component
 		{
 			$layout->preFilter($this);
 			$this->posX += $layout->xIndex;
-			$this->posY += $layout->yIndex;
+			
+			// if we swap positioning in ManiaLive, then we
+			// need to check that before positioning.
+			if (Manialink::isYSwapped())
+			{
+				$this->posY -= $layout->yIndex;
+			}
+			else
+			{
+				$this->posY += $layout->yIndex;
+			}
+			
 			$this->posZ += $layout->zIndex;
 		}
 
@@ -480,8 +462,17 @@ abstract class Element extends Component
 			// Add pos
 			if($this->posX || $this->posY || $this->posZ)
 			{
-				$this->xml->setAttribute('posn',
-				$this->posX.' '.$this->posY.' '.$this->posZ);
+				// ManiaLive check whether position is swapped.
+				if (Manialink::isYSwapped())
+				{
+					$this->xml->setAttribute('posn',
+					$this->posX.' '.(-$this->posY).' '.$this->posZ);
+				}
+				else
+				{
+					$this->xml->setAttribute('posn',
+					$this->posX.' '.$this->posY.' '.$this->posZ);
+				}
 			}
 
 			// Add size

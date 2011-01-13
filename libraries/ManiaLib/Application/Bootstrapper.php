@@ -16,45 +16,83 @@ namespace ManiaLib\Application;
  */
 abstract class Bootstrapper
 {
-	static function run($configFile = null, $configClass = '\ManiaLib\Config\Config')
+	static $configFile;
+	static $configClass = '\ManiaLib\Config\Config';
+	static $errorReporting = E_ALL;
+	static $errorHandlingClass = '\ManiaLib\Application\ErrorHandling';
+	static $errorHandler = 'exceptionErrorHandler';
+	static $exceptionHandler = 'exceptionHandler';
+	static $fatalExceptionHandler = 'fatalExceptionHandler';
+	/**
+	 * Microtime, which is set just at the begining of run() for benchmarking
+	 * purpose
+	 * @var float
+	 */
+	static $mtime;
+	
+	final static function run()
 	{
-		error_reporting(E_ALL);
-		set_error_handler(array('\ManiaLib\Application\ErrorHandling', 'exceptionErrorHandler'));
+		static::$mtime = microtime(true);
+		error_reporting(static::$errorReporting);
+		set_error_handler(array(static::$errorHandlingClass, static::$errorHandler));
+		
+		if(!static::$configFile)
+		{
+			static::$configFile = APP_PATH.'config/app.ini';
+		}
 		
 		try 
 		{
-			if(!$configFile)
-			{
-				$configFile = APP_PATH.'config/app.ini';
-			}
-			
 			$loader = \ManiaLib\Config\Loader::getInstance();
-			$loader->setConfigFilename($configFile);
-			$loader->setConfigClassname($configClass);
+			$loader->setConfigFilename(static::$configFile);
+			$loader->setConfigClassname(static::$configClass);
 			$loader->smartLoad();
 			
-			$loader = \ManiaLib\I18n\Loader::getInstance();
-			$loader->smartLoad();
+			static::onPreDispatch();
 			
 			try 
 			{
-				\ManiaLib\Application\Controller::dispatch();
+				static::onDispatch();		
 			}
 			catch(\Exception $exception)
 			{
-				ErrorHandling::exceptionHandler($exception);
+				call_user_func(
+				array(
+					static::$errorHandlingClass, 
+					static::$exceptionHandler), 
+				$exception);
 			}
-			
 		}
 		catch(\Exception $exception)
 		{
-			// Fallback fatal error log
-			if(defined('APP_PATH'))
-			{
-				@file_put_contents(APP_PATH.'fatal_error.log', print_r($exception, true), FILE_APPEND);
-			}
-			echo '<manialink><timeout>0</timeout><label text="Fatal error" /></manialink>';
+			call_user_func(
+				array(
+					static::$errorHandlingClass, 
+					static::$fatalExceptionHandler), 
+				$exception);
 		}
+		
+		\ManiaLib\Benchmark\ApplicationRequests::touch(static::$mtime);
+	}
+	
+	/**
+	 * Called between config loading and application dispatching.
+	 * Typically used to load stuff such as i18n, route map etc. 
+	 */
+	static protected function onPreDispatch()
+	{
+		$loader = \ManiaLib\I18n\Loader::getInstance();
+		$loader->smartLoad();
+	}
+	
+	/**
+	 * Actually dispatch the application
+	 * Exception thrown from here will be catched by the callback defined by 
+	 * array(static::$errorHandlingClass, static::$exceptionHandler)
+	 */
+	static protected function onDispatch()
+	{
+		\ManiaLib\Application\Controller::dispatch();
 	}
 }
 

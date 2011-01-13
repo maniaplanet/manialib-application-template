@@ -62,7 +62,19 @@ abstract class Cache
 	 */
 	static public function getUniqueAppCacheKeyPrefix()
 	{
-		return crc32(__FILE__);
+		if(defined('APP_ID'))
+		{
+			return APP_ID;
+		}
+		else
+		{
+			return crc32(__FILE__);
+		}
+	}
+	
+	function enableLogging()
+	{
+		return true;
 	}
 	
 	abstract function exists($key);

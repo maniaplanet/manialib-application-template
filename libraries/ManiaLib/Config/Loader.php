@@ -80,6 +80,33 @@ class Loader extends \ManiaLib\Loader\Loader
 		$values = $this->associateArray($values);
 		$config = $this->arrayToConfig($values);
 		$config->doValidate();
+		if(defined('APP_ID'))
+		{
+			// Register the object in the cache if the benchmarking is enabled
+			// This is done so that a Munin plugin can know what applications
+			// should be graphed.
+			if(is_object($config->benchmark) && $config->benchmark->enabled)
+			{
+				$key = 'maniastudio_registered_applications';
+				if($this->cache->exists($key))
+				{
+					$registeredApps = $this->cache->fetch($key);
+					if(!is_array($registeredApps))
+					{
+						$registeredApps = array();
+					}
+				}
+				else
+				{
+					$registeredApps = array();
+				}
+				if(!in_array(APP_ID, $registeredApps))
+				{
+					$registeredApps[] = APP_ID;
+				}
+				$this->cache->store($key, $registeredApps);
+			}
+		}
 		return $config;
 	}
 	

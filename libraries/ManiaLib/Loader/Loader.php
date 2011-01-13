@@ -94,7 +94,7 @@ abstract class Loader
 			}
 			$message = ob_get_contents();
 			ob_end_clean();
-			if($message)
+			if($message && $this->cache->enableLogging())
 			{
 				\ManiaLib\Log\Logger::loader("\n".$message);
 			}

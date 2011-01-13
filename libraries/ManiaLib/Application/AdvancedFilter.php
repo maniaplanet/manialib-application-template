@@ -10,7 +10,7 @@
  */
 
 namespace ManiaLib\Application;
-
+ 
 /**
  * Filterable implentation with access to Session, Request and Response
  * @see \ManiaLib\Application\Filterable
