@@ -53,4 +53,5 @@ class Filter implements \ManiaLib\Application\Filterable
 	}
 }
 
+
 ?>
