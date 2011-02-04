@@ -37,7 +37,7 @@ abstract class Component
 	function setPositionX($posX)
 	{
 		$this->posX = $posX;
-		$this->onMove();
+		$this->move();
 	}
 	
 	/**
@@ -47,7 +47,7 @@ abstract class Component
 	function setPositionY($posY)
 	{
 		$this->posY = $posY;
-		$this->onMove();
+		$this->move();
 	}
 	
 	/**
@@ -57,7 +57,7 @@ abstract class Component
 	function setPositionZ($posZ)
 	{
 		$this->posZ = $posZ;
-		$this->onMove();
+		$this->move();
 	}
 	
 	/**
@@ -67,7 +67,7 @@ abstract class Component
 	function setPosX($posX)
 	{
 		$this->posX = $posX;
-		$this->onMove();
+		$this->move();
 	}
 	
 	/**
@@ -77,7 +77,7 @@ abstract class Component
 	function setPosY($posY)
 	{
 		$this->posY = $posY;
-		$this->onMove();
+		$this->move();
 	}
 	
 	/**
@@ -87,7 +87,7 @@ abstract class Component
 	function setPosZ($posZ)
 	{
 		$this->posZ = $posZ;
-		$this->onMove();
+		$this->move();
 	}
 	
 	/**
@@ -97,7 +97,7 @@ abstract class Component
 	function incPosX($posX)
 	{
 		$this->posX += $posX;
-		$this->onMove();
+		$this->move();
 	}
 	
 	/**
@@ -107,7 +107,7 @@ abstract class Component
 	function incPosY($posY)
 	{
 		$this->posY += $posY;
-		$this->onMove();
+		$this->move();
 	}
 	
 	/**
@@ -117,7 +117,7 @@ abstract class Component
 	function incPosZ($posZ)
 	{
 		$this->posZ += $posZ;
-		$this->onMove();
+		$this->move();
 	}
 	
 	/**
@@ -139,7 +139,7 @@ abstract class Component
 		if (!empty($args))
 			$this->posZ = array_shift($args);
 			
-		$this->onMove();
+		$this->move();
 	}
 	
 	/**
@@ -182,7 +182,7 @@ abstract class Component
 	function setSizeX($sizeX)
 	{
 		$this->sizeX = $sizeX;
-		$this->onResize();
+		$this->resize();
 	}
 	
 	/**
@@ -192,7 +192,7 @@ abstract class Component
 	function setSizeY($sizeY)
 	{
 		$this->sizeY = $sizeY;
-		$this->onResize();
+		$this->resize();
 	}
 	
 	/**
@@ -210,7 +210,7 @@ abstract class Component
 		if (!empty($args))
 			$this->sizeY = array_shift($args);
 			
-		$this->onResize();
+		$this->resize();
 	}
 	
 	/**
@@ -344,10 +344,6 @@ abstract class Component
 	}
 	
 	/**
-	 * @todo moved Halign and Valign into the Component class, shall it stay here?
-	 */
-	
-	/**
 	 * Returns the horizontal alignment of the element
 	 * @return string
 	 */
@@ -378,9 +374,9 @@ abstract class Component
 	/**
 	 * Overwriteable functions.
 	 */
-	protected function onResize() {}
+	protected function resize() {}
 	
-	protected function onMove() {}
+	protected function move() {}
 }
 
 ?>

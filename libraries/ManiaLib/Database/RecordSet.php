@@ -88,6 +88,26 @@ class RecordSet
 	}
 	
 	/**
+	 * Fetches a single value of the current row, or the default value if there's no row.
+	 * Typically useful for SELECT COUNT() queries.
+	 */
+	function fetchSingleValue($default = 0, $throwException = false)
+	{
+		if($row = $this->fetchRow())
+		{
+			return reset($row);
+		}
+		elseif(!$throwException)
+		{
+			return $default;
+		}
+		else
+		{
+			throw new \ManiaLib\Services\NotFoundException();
+		}
+	}
+	
+	/**
 	 * Gets the number of rows in a result
 	 * @return int
 	 */
@@ -95,6 +115,8 @@ class RecordSet
 	{
 		return mysql_num_rows($this->result);
 	}
+	
+	
 }
 
 ?>

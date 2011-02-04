@@ -11,11 +11,17 @@
 
 namespace ManiaLib\Gui\Cards;
 
+use ManiaLib\Gui\Elements\Label;
+
+use ManiaLib\Gui\Elements\Bgs1;
+
+use ManiaLib\Gui\Elements\Quad;
+
 /**
  * Panel
  * Very useful! A quad with a title and a title background
  */
-class Panel extends \ManiaLib\Gui\Elements\Quad
+class Panel extends Quad
 {
 	/**
 	 * @var \ManiaLib\Gui\Elements\Label
@@ -38,23 +44,22 @@ class Panel extends \ManiaLib\Gui\Elements\Quad
 		$titleBgWidth = $sx - 2;
 		$titleWidth = $sx - 4;
 		
-		$this->setStyle(\ManiaLib\Gui\DefaultStyles::Panel_Style);
-		$this->setSubStyle(\ManiaLib\Gui\DefaultStyles::Panel_Substyle);
+		$this->setStyle(Quad::Bgs1);
+		$this->setSubStyle(Bgs1::BgWindow2);
 		
-		$this->titleBg = new \ManiaLib\Gui\Elements\Quad ($titleBgWidth, 4);
+		$this->titleBg = new Quad ($titleBgWidth, 4);
 		$this->titleBg->setHalign("center");
-		$this->titleBg->setStyle(\ManiaLib\Gui\DefaultStyles::Panel_TitleBg_Style);
-		$this->titleBg->setSubStyle(\ManiaLib\Gui\DefaultStyles::Panel_TitleBg_Substyle);
+		$this->titleBg->setStyle(Quad::Bgs1);
+		$this->titleBg->setSubStyle(Bgs1::BgTitle3);
 		
 		$this->addCardElement($this->titleBg);
 		
-		$this->title = new \ManiaLib\Gui\Elements\Label ($titleWidth);
+		$this->title = new Label($titleWidth);
 		$this->title->setHalign("center");
 		$this->title->setPositionY(-0.75);
-		$this->title->setStyle(\ManiaLib\Gui\DefaultStyles::Panel_Title_Style);
+		$this->title->setStyle(Label::TextTitle3);
 		
 		$this->addCardElement($this->title);
-		
 	}
 	
 	function setSizeX($x)

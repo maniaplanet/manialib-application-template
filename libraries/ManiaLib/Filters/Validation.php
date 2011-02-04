@@ -5,7 +5,7 @@
 
 namespace ManiaLib\Filters;
 
-class Validation
+abstract class Validation
 {
 	/**
 	 * Check if the data is a boolean
@@ -17,7 +17,7 @@ class Validation
 	 */
 	static function bool($data)
 	{
-		return self::validate($data, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+		self::validate($data, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
 	}
 	
 	/**
@@ -27,7 +27,7 @@ class Validation
 	 */
 	static function email($data)
 	{
-		return self::validate($data, FILTER_VALIDATE_EMAIL);
+		self::validate($data, FILTER_VALIDATE_EMAIL);
 	}
 	
 	/**
@@ -37,7 +37,7 @@ class Validation
 	 */
 	static function float($data)
 	{
-		return self::validate($data, FILTER_VALIDATE_FLOAT);
+		self::validate($data, FILTER_VALIDATE_FLOAT);
 	}
 	
 	/**
@@ -52,15 +52,15 @@ class Validation
 	static function int($data, $minRange = null, $maxRange = null, $allowOctal = false, $allowHexa = false)
 	{
 		$options = array();
-		if($minRange === null)
+		if($minRange !== null)
 		{
 			$options['options'] = array();
 			$options['options']['min_range'] = (int)$minRange;
 		}
 		
-		if($maxRange === null)
+		if($maxRange !== null)
 		{
-			if(!is_array($options['options']))
+			if(!isset($options['options']))
 			{
 				$options['options'] = array();
 			}
@@ -79,7 +79,7 @@ class Validation
 			$options = null;
 		}
 		
-		return self::validate($data, FILTER_VALIDATE_INT, $options);
+		self::validate($data, FILTER_VALIDATE_INT, $options);
 	}
 	
 	/**
@@ -106,7 +106,7 @@ class Validation
 			$options = $options | FILTER_FLAG_NO_RES_RANGE;
 		}
 		
-		return self::validate($data, FILTER_VALIDATE_IP, $options);
+		self::validate($data, FILTER_VALIDATE_IP, $options);
 	}
 	
 	/**
@@ -116,7 +116,7 @@ class Validation
 	 */
 	static function regularExpression($data)
 	{
-		return self::validate($data, FILTER_VALIDATE_REGEXP);
+		self::validate($data, FILTER_VALIDATE_REGEXP);
 	}
 	
 	/**
@@ -136,7 +136,7 @@ class Validation
 			$options = $options | FILTER_FLAG_QUERY_REQUIRED;
 		}
 		
-		return self::validate($data, FILTER_VALIDATE_URL, $options);
+		self::validate($data, FILTER_VALIDATE_URL, $options);
 	}
 	
 	/**
@@ -152,13 +152,18 @@ class Validation
 		{
 			foreach ($data as $key => $value)
 			{
-				$data[$key] = filter_var($value, $filter, $options);
+				if(filter_var($value, $filter, $options) === false)
+				{
+					throw new \InvalidArgumentException();
+				}
 			}
-			return $data;
 		}
 		else
 		{
-			return filter_var($data, $filter, $options);
+			if(filter_var($data, $filter, $options) === false)
+			{
+				throw new \InvalidArgumentException();
+			}
 		}
 	}
 }

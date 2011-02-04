@@ -55,7 +55,6 @@ class Client
 	protected $username;
 	protected $password;
 	
-	protected $connectionHandle;
 	protected $contentType;
 	protected $acceptType;
 	

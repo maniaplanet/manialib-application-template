@@ -49,7 +49,6 @@ final class Session
 			{
 				session_start();
 				self::$started = true;
-				//\ManiaLib\Log\Logger::info('Session started');
 			}
 			catch(\Exception $exception)
 			{

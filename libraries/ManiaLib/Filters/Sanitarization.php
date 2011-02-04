@@ -10,7 +10,7 @@ namespace ManiaLib\Filters;
  * Use the methods to clean correctly variables
  * @author Philippe Melot
  */
-class Sanitarization
+abstract class Sanitarization
 {
 	/**
 	 * Remove all characters except letters, digits and !#$%&'*+-/=?^_`{|}~@.[]
@@ -25,14 +25,11 @@ class Sanitarization
 
 	/**
 	 * Remove all characters except digits, +- and optionally .,eE
-	 * Available flags:
-	 * * FILTER_FLAG_ALLOW_FRACTION: Allows a period (.) as a fractional separator in numbers
-	 * * FILTER_FLAG_ALLOW_THOUSAND: Allows a comma (,) as a thousands separator in numbers
-	 * * FILTER_FLAG_ALLOW_SCIENTIFIC: Allows an e or E for scientific notation in numbers
-	 * @param string|array $data
-	 * @param mixed $options Associative array of options or bitwise disjunction of flags.
-	 * If filter accepts options, flags can be provided in "flags" field of array
-	 * @return string|array the sanitized values
+	 * @param array|string $data
+	 * @param bool $allowFraction set to true if you want to allowed . (default = true)
+	 * @param bool $allowThousandComma set to true if you want to allow the comma to separate thousand (default = false)
+	 * @param bool $allowScientific set to true if you want to allow scientific notation (e or E) (default = false)
+	 * @return array|string The Sanitize values
 	 */
 	static function float($data, $allowFraction = true, $allowThousandComma = false, $allowScientific = true )
 	{

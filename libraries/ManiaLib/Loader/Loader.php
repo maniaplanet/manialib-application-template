@@ -76,7 +76,7 @@ abstract class Loader
 				$this->initCache();
 				if($this->cache->exists($this->cacheKey))
 				{
-					$this->data = $this->cache->get($this->cacheKey);
+					$this->data = $this->cache->fetch($this->cacheKey);
 					$this->postLoad();
 				}
 				else
@@ -94,7 +94,7 @@ abstract class Loader
 			}
 			$message = ob_get_contents();
 			ob_end_clean();
-			if($message && $this->cache->enableLogging())
+			if($message && $this->cache && $this->cache->enableLogging())
 			{
 				\ManiaLib\Log\Logger::loader("\n".$message);
 			}

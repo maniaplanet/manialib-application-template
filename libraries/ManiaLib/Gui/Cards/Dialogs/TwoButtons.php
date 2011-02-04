@@ -30,8 +30,17 @@ class TwoButtons extends OneButton
 		
 		$this->button2 = new \ManiaLib\Gui\Elements\Button;
 		$this->button2->setPosition(15, 0, 0);
-		$this->button2->setAlign('center', 'bottom');
+		$this->button2->setAlign('left', 'bottom');
 		$this->addCardElement($this->button2);
+	}
+	
+	function preFilter()
+	{
+		parent::preFilter();
+		$this->button->setHalign('right');
+		$this->button2->setPositionY(2 - $this->sizeY);
+		$this->button->setPositionX(-2);
+		$this->button2->setPositionX(2);
 	}
 }
 

@@ -55,6 +55,10 @@ abstract class Element extends Component implements Drawable
 	protected $cardElementsPosX = 0;
 	protected $cardElementsPosY = 0;
 	protected $cardElementsPosZ = 1; 
+	/**
+	 * @var \ManiaLib\Gui\Layouts\AbstractLayout
+	 */
+	protected $cardElementsLayout = null;
 	/**#@-*/
 
 	/**

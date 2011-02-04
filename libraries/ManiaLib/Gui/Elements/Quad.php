@@ -25,6 +25,7 @@ class Quad extends \ManiaLib\Gui\Element
 	const BgsChallengeMedals  = 'BgsChallengeMedals';
 	const BgsPlayerCard       = 'BgsPlayerCard';
 	const Icons128x128_1      = 'Icons128x128_1';
+	const Icons128x128_Blink  = 'Icons128x128_Blink';
 	const Icons128x32_1       = 'Icons128x32_1';
 	const Icons64x64_1        = 'Icons64x64_1';
 	const MedalsBig           = 'MedalsBig';

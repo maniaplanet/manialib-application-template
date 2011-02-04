@@ -109,7 +109,7 @@ class Connection
 		$result = mysql_query($query, $this->connection);
 		if(!$result)
 		{
-			throw new QueryException(mysql_error(), mysql_errno());
+			throw new QueryException(mysql_error().': '.$query, mysql_errno());
 		}
 		if($this->config->queryLog)
 		{
@@ -147,6 +147,21 @@ class Connection
 	function getDatabase()
 	{
 		return $this->database;
+	}
+	
+	function beginTransaction()
+	{
+		$this->execute('BEGIN');
+	}
+	
+	function commitTransaction()
+	{
+		$this->execute('COMMIT');
+	}
+	
+	function rollbackTransaction()
+	{
+		$this->execute('ROLLBACK');
 	}
 }
 

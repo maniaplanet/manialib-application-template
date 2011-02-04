@@ -12,7 +12,7 @@
 namespace ManiaLib\Utils;
 
 /** 
- * Misc functions for TM styled strings
+ * Misc methods for TM styled string and other common formatting tasks
  */ 
 abstract class TMStrings
 {
@@ -53,6 +53,41 @@ abstract class TMStrings
 		return preg_replace(
 			'/\\$[hlp](.*?)(?:\\[.*?\\](.*?))?(?:\\$[hlp]|$)/ixu', '$1$2', 
 			$string);
+	}
+	
+	/**
+	 * Format a line with [yellow bold] title + content label
+	 * eg: "<b>Title:</b>   content"
+	 */
+	static function formatLine($title, $label='', $titleStyle = '$o$ff0', $labelStyle = '')
+	{
+		return '$<'.$titleStyle.$title.'$<$n $>:$>'.'    '.$labelStyle.$label;
+	}
+	
+	/**
+	 * 350 Coppers or N/A 
+	 */
+	static function formatCoppersAmount($amount, $strict = true)
+	{
+		if(!$amount && $strict)
+		{
+			return _('N/A');
+		}
+		else
+		{
+			return sprintf(_('%s Coppers'), $amount);
+		}
+	}
+	
+	static function formatDate($timestamp)
+	{
+		return date('l jS \of F Y', $timestamp);
+	}
+	
+	static function formatLongDate($timestamp)
+	{
+		//return date('l jS \of F Y @ h:i A e', $timestamp);
+		return date('r', $timestamp);
 	}
 }
 

@@ -11,6 +11,8 @@
 
 namespace ManiaLib\Gui\Cards\Dialogs;
 
+use ManiaLib\Gui\Elements\Label;
+
 /**
  * Dialog box with 1 button
  */
@@ -24,10 +26,6 @@ class OneButton extends \ManiaLib\Gui\Cards\Panel
 	 * @var \ManiaLib\Gui\Elements\Label
 	 */
 	public $text;
-	/**
-	 * @ignore
-	 */
-	protected $elementsToShow = array();
 	
 	function __construct($sizeX = 65, $sizeY = 25)
 	{
@@ -41,9 +39,19 @@ class OneButton extends \ManiaLib\Gui\Cards\Panel
 		$this->button->setAlign('center', 'bottom');
 		$this->addCardElement($this->button);
 		
-		$this->text = new \ManiaLib\Gui\Elements\Label($this->sizeX - 6, $this->sizeY - 11);
-		$this->text->setAlign('left', 'top');
+		$this->text = new Label();
+		$this->text->setAlign('center', 'center');
+		$this->text->enableAutonewline();
+		$this->text->setStyle(Label::TextInfoMedium);
 		$this->addCardElement($this->text);
+	}
+	
+	function preFilter()
+	{
+		parent::preFilter();
+		$this->text->setSize($this->sizeX - 6, $this->sizeY - 11);
+		$this->text->setPositionY(2 - ($this->sizeY/2));
+		$this->button->setPositionY(2 - $this->sizeY);
 	}
 	
 }

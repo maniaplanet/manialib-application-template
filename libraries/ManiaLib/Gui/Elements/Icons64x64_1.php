@@ -104,6 +104,11 @@ class Icons64x64_1 extends \ManiaLib\Gui\Elements\Icon
 	const Windowed                    = 'Windowed';
 	const YellowHigh                  = 'YellowHigh';
 	const YellowLow                   = 'YellowLow';
+	
+	function __construct($size = 4)
+	{
+		parent::__construct($size);
+	}
 }
 
 ?>

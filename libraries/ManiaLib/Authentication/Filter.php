@@ -71,12 +71,12 @@ class Filter extends \ManiaLib\Application\AdvancedFilter
 			
 			try
 			{
-				\ManiaLib\Log\Logger::info($_GET);
 				$login = $this->session->getStrict('login');
 				$token = $this->session->getStrict('token');
 				Authentication::checkAuthenticationToken($login, $token);
 				$this->session->set(self::SESSION_ISAUTH, 1);
 				$this->session->delete('token');
+				$this->request->delete('authentication');
 			}
 			catch (\Exception $e)
 			{
