@@ -135,6 +135,7 @@ class Client
 		$options[CURLOPT_USERPWD] = $this->username.':'.$this->password;
 		$options[CURLOPT_TIMEOUT] = 2;
 		$options[CURLOPT_RETURNTRANSFER] = true;
+		$options[CURLOPT_USERAGENT] = 'ManiaLib Rest Client (2.0 preview)'; 
 		
 		try 
 		{
