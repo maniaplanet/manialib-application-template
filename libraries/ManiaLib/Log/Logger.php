@@ -80,24 +80,18 @@ class Logger
 	{
 		if(!self::$loaded)
 		{
-			if(is_object(\ManiaLib\Config\Loader::$config))
+			$config = Config::getInstance();
+			if(file_exists($path = $config->path))
 			{
-				if(is_object(\ManiaLib\Config\Loader::$config->log))
-				{
-					$config = \ManiaLib\Config\Loader::$config->log;
-					if(file_exists($path = \ManiaLib\Config\Loader::$config->log->path))
-					{
-						self::$path = $path;
-						self::$prefix = $config->prefix ? $config->prefix.'-' : ''; 
-						
-						self::$debugLog = $config->debug;
-						self::$errorLog = $config->error;
-						self::$userLog = $config->user;
-						self::$loaderLog = $config->loader;
-						
-						self::$loaded = true;
-					}
-				}
+				self::$path = $path;
+				self::$prefix = $config->prefix ? $config->prefix.'-' : ''; 
+				
+				self::$debugLog = $config->debug;
+				self::$errorLog = $config->error;
+				self::$userLog = $config->user;
+				self::$loaderLog = $config->loader;
+				
+				self::$loaded = true;
 			}
 		}
 		return !empty(self::$path);

@@ -16,98 +16,46 @@ namespace ManiaLib\Config;
  */
 class Loader extends \ManiaLib\Loader\Loader
 {
-	/**
-	 * @var \ManiaLib\Config\Config
-	 */
-	static $config;
-	
-	protected static $instance;
+	static $aliases = array(
+		'application' => 'ManiaLib\\Application\\Config',
+		'database' => 'ManiaLib\\Database\\Config',
+		'log' => 'ManiaLib\\Log\\Config',
+		'tracking' => 'ManiaLib\\Application\\Tracking\\Config',
+		'i18n' => 'ManiaLib\\I18n\\Config',
+		'benchmark' => 'ManiaLib\\Benchmark\\Config',
+		'session' => 'ManiaLib\Session\Config',
+	);
 	
 	protected $debugPrefix = '[CONFIG LOADER]';
 	protected $configFilename;
-	protected $configClassname = '\ManiaLib\Config\Config';
-	
-	/**
-	 * @return \ManiaLib\Config\Loader
-	 */
-	static function getInstance()
-	{
-		if(!self::$instance)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
 
 	function setConfigFilename($configFilename)
 	{
 		$this->configFilename = $configFilename;
 	}
 	
-	function setConfigClassname($configClassname)
-	{
-		
-		$this->configClassname = $configClassname;
-	}
-	
 	protected function preLoad()
 	{
-		if(!file_exists($this->configFilename))
+		if(!$this->configFilename)
 		{
-			throw new \Exception($this->configFilename.' does not exist');
-		}
-		if(!is_subclass_of($this->configClassname, '\ManiaLib\Config\Configurable'))
-		{
-			throw new \InvalidArgumentException(
-				$this->configClassname.' must be a subclass of \ManiaLib\Config\Configurable');
+			$this->configFilename = APP_PATH.'config/app.ini';
 		}
 	}
 	
-	protected function postLoad()
-	{
-		self::$config = $this->data;
-	}
-	
-	/**
-	 * @return \ManiaLib\Config\Config
-	 */
-	protected function load()
+ 	protected function load()
 	{
 		$values = $this->loadINI($this->configFilename);
-		$this->debug($this->configFilename.' parsed');
 		list($values, $overrides) = $this->scanOverrides($values);
 		$values = $this->processOverrides($values, $overrides);
-		$values = $this->associateArray($values);
-		$config = $this->arrayToConfig($values);
-		$config->doValidate();
-		if(defined('APP_ID'))
+		$values = $this->loadAliases($values);
+		$values = $this->replaceAliases($values);
+		$instances = $this->arrayToSingletons($values);
+		$this->debug(sprintf('Loaded %d class instances', count($instances)));
+		if(class_exists('\\ManiaLib\\Benchmark\\ApplicationRequests'))
 		{
-			// Register the object in the cache if the benchmarking is enabled
-			// This is done so that a Munin plugin can know what applications
-			// should be graphed.
-			if(is_object($config->benchmark) && $config->benchmark->enabled)
-			{
-				$key = 'maniastudio_registered_applications';
-				if($this->cache->exists($key))
-				{
-					$registeredApps = $this->cache->fetch($key);
-					if(!is_array($registeredApps))
-					{
-						$registeredApps = array();
-					}
-				}
-				else
-				{
-					$registeredApps = array();
-				}
-				if(!in_array(APP_ID, $registeredApps))
-				{
-					$registeredApps[] = APP_ID;
-				}
-				$this->cache->store($key, $registeredApps);
-			}
+			\ManiaLib\Benchmark\ApplicationRequests::registerApplication();
 		}
-		return $config;
+		return $instances;
 	}
 	
 	/**
@@ -115,8 +63,14 @@ class Loader extends \ManiaLib\Loader\Loader
 	 */
 	protected function loadINI($filename)
 	{
+		if(!file_exists($filename))
+		{
+			$this->debug('No config file found');
+			return array();
+		}
 		try 
 		{
+			$this->debug('Found config file '.$filename);
 			return parse_ini_file($filename, true);
 		}
 		catch(\Exception $e)
@@ -192,65 +146,96 @@ class Loader extends \ManiaLib\Loader\Loader
 	}
 	
 	/**
-	 * Converts a normal array with keys that contains "." to an associative array
 	 * @return array
 	 */
-	protected function associateArray(array $array)
+	protected function loadAliases(array $values)
 	{
-		$result = array();
-		foreach ($array as $key => $value)
+		foreach ($values as $key => $value)
 		{
-			$sections = explode('.', $key);
-			$pointer =& $result;
-			foreach($sections as $section)
+			if(preg_match('/^\s*alias\s+(\S+)$/i', $key, $matches))
 			{
-				if(!array_key_exists($section, $pointer))
+				if(isset($matches[1]))
 				{
-					$pointer[$section] = array();
+					self::$aliases[$matches[1]] = $value;
+					unset($values[$key]);
+					$this->debug(sprintf('Found alias "%s"', $matches[1]));
 				}
-				$pointer =& $pointer[$section];
 			}
-			$pointer = $value;
 		}
-		return $result;
+		return $values;
 	}
 	
 	/**
-	 * @return \ManiaLib\Config\Config
+	 * @return array
 	 */
-	protected function arrayToConfig($values)
+	protected function replaceAliases(array $values)
 	{
-		$config = new $this->configClassname;
-		$this->importValues($values, $config);
-		return $config;
-	}
-	
-	/**
-	 * Puts the values from the array into the config class
-	 */
-	protected function importValues(array $values, \ManiaLib\Config\Configurable $config)
-	{
-		foreach($values as $key => $value)
+		$newValues = array();
+		foreach ($values as $key => $value)
 		{
-			if(property_exists($config, $key))
+			$callback = explode('.', $key, 2);
+			if(count($callback) == 2)
 			{
-				if($config->$key instanceof \ManiaLib\Config\Configurable)
+				$className = reset($callback);
+				$propertyName = end($callback);
+				if(isset(self::$aliases[$className]))
 				{
-					$this->importValues($value, $config->$key);
+					$className = self::$aliases[$className];
 				}
-				else
-				{
-					if($config->$key)
-					{
-						$this->debug('Overriding '.get_class($config).'::$'.$key);
-					}
-					$config->$key = $value;
-				}
+				$newValues[$className.'.'.$propertyName] = $value;
 			}
 			else
 			{
-				$this->debug('Warning: '.get_class($config).'::$'.$key.' does not exists');
+				$newValues[$key] = $value;
 			}
+		}
+		return $newValues;
+	}
+	
+	/**
+	 * @return array[Singleton]
+	 */
+	protected function arrayToSingletons($values)
+	{
+		$instances = array();
+		foreach($values as $key => $value)
+		{
+			$callback = explode('.', $key, 2);
+			if(count($callback) != 2)
+			{
+				$this->debug('Could not parse key='.$key);
+				continue;
+			}
+			$className = reset($callback);
+			$propertyName = end($callback);
+			if(!class_exists($className))
+			{
+				$this->debug(sprintf('Class %s does not exists', $className));
+				continue;
+			}
+			if(!is_subclass_of($className, '\\ManiaLib\\Utils\\Singleton'))
+			{
+				$this->debug(sprintf('Class %s must be an instance of \ManiaLib\Utils\Singleton', $className));
+				continue;
+			}
+			if(!property_exists($className, $propertyName))
+			{
+				$this->debug(sprintf('%s::%s does not exists or is not public', $className, $propertyName));
+				continue;
+			}
+			$instance = call_user_func(array($className, 'getInstance'));
+			
+			$instance->$propertyName = $value;
+			$instances[$className] = $instance;
+		}
+		return $instances;
+	}
+	
+	protected function postCacheLoad()
+	{
+		foreach ($this->data as $instance)
+		{
+			\ManiaLib\Utils\Singleton::forceInstance($instance);
 		}
 	}
 }

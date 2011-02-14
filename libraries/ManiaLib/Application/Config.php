@@ -14,13 +14,8 @@ namespace ManiaLib\Application;
 /**
  * Application config
  */
-class Config extends \ManiaLib\Config\Configurable
+class Config extends \ManiaLib\Utils\Singleton
 {
-	/**
-	 * @var \ManiaLib\Application\Tracking\Config
-	 */
-	public $tracking;
-	
 	public $URL;
 	public $manialink;
 	public $namespace;
@@ -37,15 +32,19 @@ class Config extends \ManiaLib\Config\Configurable
 	public $defaultController = 'Home';
 	public $defaultAction = 'index';
 	
-	protected function validate()
+	function getLangsURL()
 	{
-		// Check exists is not a good idea when you don't want to use it...
-//		$this->checkExists('URL');
-//		$this->checkExists('manialink');
-//		$this->checkExists('namespace');
-		$this->setDefault('langsURL', $this->URL.'langs/');
-		$this->setDefault('imagesURL', $this->URL.'images/');
-		$this->setDefault('mediaURL', $this->URL.'media/');
+		return $this->langsURL?:$this->URL.'langs/';
+	}
+	
+	function getImagesURL()
+	{
+		return $this->imagesURL?:$this->URL.'images/';
+	}
+	
+	function getMediaURL()
+	{
+		return $this->langsURL?:$this->URL.'media/';
 	}
 }
 

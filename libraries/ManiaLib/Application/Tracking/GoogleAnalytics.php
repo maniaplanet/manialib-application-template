@@ -128,15 +128,12 @@ class GoogleAnalytics
 	
 	/**
 	 * Loads the parameters from the application config
-	 * @see \ManiaLib\Config\Config
 	 */
 	function loadFromConfig()
 	{
-		$config = \ManiaLib\Config\Loader::$config;
-		
-		$this->utmac = $config->application->tracking->account;
-		$this->utmdt = $config->application->name; 
-		$this->utmhn = parse_url($config->application->URL, PHP_URL_HOST);
+		$this->utmac = Config::getInstance()->account;
+		$this->utmdt = \ManiaLib\Application\Config::getInstance()->name; 
+		$this->utmhn = parse_url(\ManiaLib\Application\Config::getInstance()->URL, PHP_URL_HOST);
 		
 		$request = \ManiaLib\Application\Request::getInstance();
 		$route = '/'.$request->getController().'/';

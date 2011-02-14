@@ -24,20 +24,17 @@ class Filter implements \ManiaLib\Application\Filterable
 	
 	function preFilter()
 	{
-		$config = \ManiaLib\Config\Loader::$config;
-		if($config->application->tracking instanceof Config)
+		$config = Config::getInstance();
+		if($config->account)
 		{
-			if($config->application->tracking->account)
+			$this->tracker = new GoogleAnalytics();
+			$this->tracker->loadFromConfig();
+			$this->tracker->loadCookie();
+			$this->tracking = true;
+			if(\ManiaLib\Session\Config::getInstance()->enabled)
 			{
-				$this->tracker = new GoogleAnalytics();
-				$this->tracker->loadFromConfig();
-				$this->tracker->loadCookie();
-				$this->tracking = true;
-				if($config->session->enabled)
-				{
-					$session = \ManiaLib\Session\Session::getInstance();
-					$this->tracker->utmul = $session->get('lang', 'en');
-				}
+				$session = \ManiaLib\Session\Session::getInstance();
+				$this->tracker->utmul = $session->get('lang', 'en');
 			}
 		}
 	}

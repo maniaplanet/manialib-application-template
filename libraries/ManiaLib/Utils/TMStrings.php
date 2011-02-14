@@ -61,7 +61,7 @@ abstract class TMStrings
 	 */
 	static function formatLine($title, $label='', $titleStyle = '$o$ff0', $labelStyle = '')
 	{
-		return '$<'.$titleStyle.$title.'$<$n $>:$>'.'    '.$labelStyle.$label;
+		return ($title?'$<'.$titleStyle.$title.'$<$n $>:$>':'').($label?'    '.$labelStyle.$label:'');
 	}
 	
 	/**

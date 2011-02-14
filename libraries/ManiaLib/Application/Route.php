@@ -52,7 +52,7 @@ abstract class Route
 	{
 		if(self::$separator === null)
 		{
-			self::$separator = \ManiaLib\Config\Loader::$config->application->URLSeparator;
+			self::$separator = Config::getInstance()->URLSeparator;
 		}
 		return self::$separator;
 	}

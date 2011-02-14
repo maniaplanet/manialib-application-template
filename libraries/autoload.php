@@ -19,7 +19,7 @@ define('NAMESPACE_SEPARATOR', '\\');
 
 define('APP_LIBRARIES_PATH', __DIR__);
 
-function __autoload($className)
+function maniaLibAutoload($className)
 {
 	$className = str_replace(NAMESPACE_SEPARATOR, DIRECTORY_SEPARATOR, $className);
 	$path = APP_LIBRARIES_PATH.DIRECTORY_SEPARATOR.$className.'.php';
@@ -28,5 +28,7 @@ function __autoload($className)
 		require_once $path;
 	}
 }
+
+spl_autoload_register('maniaLibAutoload');
 
 ?>

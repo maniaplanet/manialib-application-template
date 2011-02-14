@@ -14,7 +14,7 @@ namespace ManiaLib\Database;
 /**
  * Database config
  */
-class Config extends \ManiaLib\Config\Configurable
+class Config extends \ManiaLib\Utils\Singleton
 {
 	public $host = '127.0.0.1';
 	public $user = 'root';

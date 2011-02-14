@@ -92,7 +92,7 @@ class Response
 	public function getViewClassName($controllerName, $actionName)
 	{
 		$className =
-			\ManiaLib\Config\Loader::$config->application->namespace.
+			Config::getInstance()->namespace.
 			NAMESPACE_SEPARATOR.
 			'Views'.
 			NAMESPACE_SEPARATOR.
@@ -158,7 +158,7 @@ class Response
 		}
 		
 		$_ = NAMESPACE_SEPARATOR;
-		$APPNS = \ManiaLib\Config\Loader::$config->application->namespace;
+		$APPNS = Config::getInstance()->namespace;
 		
 		$appViews = $APPNS.$_.'Views';
 		$frameworkViews = 'ManiaLib'.$_.'Application'.$_.'Views';

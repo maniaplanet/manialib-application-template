@@ -37,7 +37,7 @@ abstract class View
 	{
 		if(!class_exists($viewClass))
 		{
-			throw new ViewNotFoundException('Page not found');
+			throw new ViewNotFoundException('View not found: '.$viewClass);
 		}
 		$view = new $viewClass();
 		

@@ -76,14 +76,14 @@ final class Upload
 				'Couldn\'t read input file');
   		}
   		if(!file_put_contents(
-			$this->uploadPath.$this->uploadedFilename, 
+			$this->getUploadedFilename(), 
 			$this->inputFile))
 		{
 			throw new Exception(
 				'Couldn\'t save input file to '.
 				$this->uploadPath.$this->uploadedFilename);
 		}
-		if(!chmod($this->uploadPath.$this->uploadedFilename, 
+		if(!chmod($this->getUploadedFilename(), 
 			self::UPLOADED_FILE_RIGHTS))
 		{
 			throw new Exception(
@@ -106,7 +106,7 @@ final class Upload
 	 */
 	function getUploadedFilename()
 	{
-		return $this->uploadPath.$this->uploadedFilename;
+		return $this->uploadPath.DIRECTORY_SEPARATOR.$this->uploadedFilename;
 	}
 	
 	/**

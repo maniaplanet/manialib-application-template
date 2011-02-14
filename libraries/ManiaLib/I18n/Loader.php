@@ -50,18 +50,18 @@ class Loader extends \ManiaLib\Loader\Loader
 	protected function load()
 	{
 		$dico = array();
-		if(\ManiaLib\Config\Loader::$config && \ManiaLib\Config\Loader::$config->i18n)
+		if(Config::getInstance()->dynamic)
 		{
-			if(\ManiaLib\Config\Loader::$config->i18n->dynamic)
+			$files = array();
+			foreach(Config::getInstance()->paths as $path)
 			{
-				$files = array();
-				foreach(\ManiaLib\Config\Loader::$config->i18n->paths as $path)
-				{
-					$files = array_merge($files, $this->getLangFilesRecursive($path));
-				}
-				//var_dump($files);
-				$dico = array();
-				foreach($files as $file)
+				$files = array_merge($files, $this->getLangFilesRecursive($path));
+			}
+			//var_dump($files);
+			$dico = array();
+			foreach($files as $file)
+			{
+				if(file_exists($file))
 				{
 					$dico = $this->parseDico($file, $dico);
 				}
@@ -77,26 +77,29 @@ class Loader extends \ManiaLib\Loader\Loader
 	protected function getLangFilesRecursive($directoryPath)
 	{
 		$files = array();
-		if ($handle = opendir($directoryPath))
+		if(file_exists($directoryPath))
 		{
-			while (false !== ($file = readdir($handle)))
+			if ($handle = opendir($directoryPath))
 			{
-				if(substr($file, 0, 1)=='.')
+				while (false !== ($file = readdir($handle)))
 				{
-					continue;
+					if(substr($file, 0, 1)=='.')
+					{
+						continue;
+					}
+					elseif(is_dir($directoryPath.'/'.$file))
+					{
+						$files = array_merge(
+							$files, 
+							$this->getLangFilesRecursive($directoryPath.'/'.$file));
+					}
+					elseif(substr($file, -4)=='.xml')
+					{
+						$files[] = $directoryPath.'/'.$file;
+					}
 				}
-				elseif(is_dir($directoryPath.'/'.$file))
-				{
-					$files = array_merge(
-						$files, 
-						$this->getLangFilesRecursive($directoryPath.'/'.$file));
-				}
-				elseif(substr($file, -4)=='.xml')
-				{
-					$files[] = $directoryPath.'/'.$file;
-				}
+				closedir($handle);
 			}
-			closedir($handle);
 		}
 		return $files;
 	}

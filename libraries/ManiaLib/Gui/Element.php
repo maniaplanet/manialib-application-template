@@ -550,7 +550,9 @@ abstract class Element extends Component implements Drawable
 			\ManiaLib\Gui\Manialink::beginFrame(
 				$x + $this->cardElementsPosX, 
 				$y + $this->cardElementsPosY, 
-				$this->posZ + $this->cardElementsPosZ);
+				$this->posZ + $this->cardElementsPosZ,
+				$this->scale,
+				$this->cardElementsLayout);
 				
 			foreach($this->cardElements as $element)
 			{

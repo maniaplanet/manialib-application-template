@@ -25,7 +25,7 @@ class Shoutbox extends \ManiaLib\Application\Controller
 		$this->addFilter(new \ManiaLib\Application\Filters\UserAgentCheck());
 		$this->addFilter(new \ManiaLib\Application\Filters\RegisterRequestParameters());
 		$this->addFilter(new \ManiaLibDemo\Filters\MoodSelector());
-		$this->addFilter(new \ManiaLib\Application\Splashscreen\Filter());
+		//$this->addFilter(new \ManiaLib\Application\Splashscreen\Filter());
 	}
 	
 	protected function checkLogin()

@@ -4,9 +4,9 @@
  * 
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
- * @version     $Revision: 1930 $:
+ * @version     $Revision: 2232 $:
  * @author      $Author: Maxime $:
- * @date        $Date: 2011-01-19 12:56:03 +0100 (mer., 19 janv. 2011) $:
+ * @date        $Date: 2011-02-08 18:17:06 +0100 (mar., 08 févr. 2011) $:
  */
 
 namespace ManiaLib\Gui\Cards;
@@ -35,7 +35,7 @@ class Data extends Bgs1
 	 */
 	public $data = array();
 	
-	function __construct($sizeX = 70, $sizeY = 25)
+	function __construct($sizeX = 70, $sizeY = 0)
 	{
 		parent::__construct($sizeX, $sizeY);
 		
@@ -55,14 +55,14 @@ class Data extends Bgs1
 	{
 		foreach($this->data as $data)
 		{
-			$ui = new Label($this->sizeX - $this->cardElementsPosX*2, 3.5);
+			$ui = new Label($this->sizeX - $this->cardElementsPosX*2, 3.25);
 			$ui->setText(TMStrings::formatLine(
 				Arrays::get($data, 0, ''),
 				Arrays::get($data, 1, '')
 			));
 			$this->addCardElement($ui);
 		}
-		$this->setSizeY(count($this->data)*3.5 - $this->cardElementsPosY*2);
+		$this->setSizeY($this->sizeY+count($this->data)*3.25 - $this->cardElementsPosY*2);
 	}
 }
 

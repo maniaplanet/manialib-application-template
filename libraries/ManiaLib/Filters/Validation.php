@@ -131,7 +131,7 @@ abstract class Validation
 	{
 		$options = ($requirePath ? FILTER_FLAG_PATH_REQUIRED : 0);
 		
-		if (!$requireQuery)
+		if ($requireQuery)
 		{
 			$options = $options | FILTER_FLAG_QUERY_REQUIRED;
 		}

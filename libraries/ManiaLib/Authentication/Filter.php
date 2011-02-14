@@ -53,12 +53,9 @@ class Filter extends \ManiaLib\Application\AdvancedFilter
 				$this->session->set(self::SESSION_TRIED, true);
 				if(!$this->shortManialink)
 				{
-					if(\ManiaLib\Config\Loader::$config->application)
+					if($ml = \ManiaLib\Application\Config::getInstance()->manialink)
 					{
-						if($ml = \ManiaLib\Config\Loader::$config->application->manialink)
-						{
-							$this->shortManialink = $ml;
-						}
+						$this->shortManialink = $ml;
 					}
 				}
 				

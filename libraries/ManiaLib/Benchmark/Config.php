@@ -11,7 +11,7 @@
 
 namespace ManiaLib\Benchmark;
 
-class Config extends \ManiaLib\Config\Configurable
+class Config extends \ManiaLib\Utils\Singleton
 {
 	public $enabled = false;
 	/**

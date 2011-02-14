@@ -15,8 +15,10 @@ namespace ManiaLib\Loader;
  * Smart loader
  * Used to load classes and put them in the cache (eg. configs, langs etc.)
  */
-abstract class Loader
+abstract class Loader extends \ManiaLib\Utils\Singleton
 {
+	static $enableDump = false;
+	public $message;
 	protected $debugPrefix;
 	protected $cacheEnabled = true;
 	protected $cacheDriver;
@@ -77,6 +79,7 @@ abstract class Loader
 				if($this->cache->exists($this->cacheKey))
 				{
 					$this->data = $this->cache->fetch($this->cacheKey);
+					$this->postCacheLoad();
 					$this->postLoad();
 				}
 				else
@@ -84,7 +87,7 @@ abstract class Loader
 					$this->runtimeLoad();
 					$this->postLoad();
 					$this->cache->add($this->cacheKey, $this->data);
-					$this->debug('Data successfully cached with key "'.$this->cacheKey.'"');
+					$this->debug('Data cached at "'.$this->cacheKey.'"');
 				}
 			}
 			else
@@ -92,11 +95,11 @@ abstract class Loader
 				$this->runtimeLoad();
 				$this->postLoad();
 			}
-			$message = ob_get_contents();
+			$this->message = ob_get_contents();
 			ob_end_clean();
-			if($message && $this->cache && $this->cache->enableLogging())
+			if($this->message && $this->cache && $this->cache->enableLogging())
 			{
-				\ManiaLib\Log\Logger::loader("\n".$message);
+				\ManiaLib\Log\Logger::loader("\n".$this->message);
 			}
 		}
 		catch(\Exception $exception)
@@ -105,18 +108,33 @@ abstract class Loader
 			throw $exception;
 		}
 	}
-
+	
+	final function testLoad()
+	{
+		try 
+		{
+			$this->disableCache();
+			$this->runtimeLoad();
+			echo $this->message;
+		} 
+		catch (\Exception $e) 
+		{
+			echo $this->message;
+			echo 'ERROR: '.$e->getMessage();
+		}
+	}
+	
 	final protected function runtimeLoad()
 	{
 		$mtime = microtime(true);
-		$this->debug('Starting runtime load');
 		$this->preLoad();
-		$this->debug('Pre-load completed');
 		$this->data = $this->load();
-		$this->debug('Load completed');
-		$this->debug("Data dump:\n\n".print_r($this->data, true));
+		if(static::$enableDump)
+		{
+			$this->debug("Data dump:\n\n".print_r($this->data, true));
+		}
 		$mtime = microtime(true) - $mtime;
-		$this->debug('Runtime load completed in '.number_format($mtime*1000, 2).' milliseconds');
+		$this->debug('Loaded in '.number_format($mtime*1000, 2).' milliseconds');
 	}
 	
 	/**
@@ -135,6 +153,11 @@ abstract class Loader
 	 * Loads the stuff and returns it
 	 */
 	abstract protected function load();
+	
+	/**
+	 * Stuff to be done when the data has been loaded from cache 
+	 */
+	protected function postCacheLoad() {}
 	
 	protected function debug($message)
 	{

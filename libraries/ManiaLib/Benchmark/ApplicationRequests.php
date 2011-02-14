@@ -25,18 +25,46 @@ abstract class ApplicationRequests
 	const BENCHMARK_MAX_ELEMENTS = 50;
 
 	/**
+	 * Register the app in the cache if the benchmarking is enabled
+	 * This is done so that a Munin plugin can know what applications should be graphed
+	 */
+	public static function registerApplication()
+	{
+		if(defined('APP_ID'))
+		{
+			if(Config::getInstance()->enabled)
+			{
+				$cache = \ManiaLib\Cache\Cache::getInstance();
+				$key = 'maniastudio_registered_applications';
+				if($cache->exists($key))
+				{
+					$registeredApps = $cache->fetch($key);
+					if(!is_array($registeredApps))
+					{
+						$registeredApps = array();
+					}
+				}
+				else
+				{
+					$registeredApps = array();
+				}
+				if(!in_array(APP_ID, $registeredApps))
+				{
+					$registeredApps[] = APP_ID;
+				}
+				$cache->store($key, $registeredApps);
+			}
+		}
+	}
+	
+	/**
 	 * Call this method at the end of your page execution
 	 */
 	public static function touch($mtimeStart = 0)
 	{
 		try 
 		{
-			if(!is_object(\ManiaLib\Config\Loader::$config->benchmark))
-			{
-				return;
-			}
-			
-			$config = \ManiaLib\Config\Loader::$config->benchmark;
+			$config = Config::getInstance();
 			
 			if(!$config->enabled)
 			{

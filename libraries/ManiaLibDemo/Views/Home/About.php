@@ -21,8 +21,6 @@ use ManiaLib\Gui\Cards\FancyPanel;
 
 class About extends \ManiaLib\Application\View
 {
-	public $cache = true;
-	
 	function display()
 	{
 		$this->renderSubView('Navigation');

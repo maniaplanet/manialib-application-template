@@ -14,7 +14,7 @@ namespace ManiaLib\Session;
 /**
  * Session config
  */
-class Config extends \ManiaLib\Config\Configurable
+class Config extends \ManiaLib\Utils\Singleton
 {
 	public $enabled = true;
 }

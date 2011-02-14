@@ -13,7 +13,7 @@ namespace ManiaLib\Log;
 /**
  * Log config
  */
-class Config extends \ManiaLib\Config\Configurable
+class Config extends \ManiaLib\Utils\Singleton
 {
 	public $path;
 	public $prefix;
@@ -23,10 +23,10 @@ class Config extends \ManiaLib\Config\Configurable
 	public $loader = 'loader.log';
 	public $verbose = false;
 	
-	protected function validate()
+	function __construct()
 	{
-		$this->setDefault('path', defined('APP_PATH') ? APP_PATH.'logs/' : null);
-	} 
+		$this->path = APP_PATH.'logs/';
+	}
 }
 
 

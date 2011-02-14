@@ -15,40 +15,12 @@ namespace ManiaLib\Config;
  * Base config
  * Extends this in your application to add config values
  */
-class Config extends Configurable
+class Config extends \ManiaLib\Utils\Singleton
 {
-	/**
-	 * @var \ManiaLib\Application\Config
-	 */
-	public $application;
-	/**
-	 * @var \ManiaLib\Database\Config
-	 */
-	public $database;
-	/**
-	 * @var \ManiaLib\I18n\Config
-	 */
-	public $i18n;
-	/**
-	 * @var \ManiaLib\Log\Config
-	 */
-	public $log;
-	/**
-	 * @var \ManiaLib\Session\Config
-	 */
-	public $session;
-	/**
-	 * @var \ManiaLib\Benchmark\Config
-	 */
-	public $benchmark;
-	
 	public $timezone = 'Europe/Paris';
 	public $timezoneName = 'GMT+1';
-	
 	public $debug = false;
-	
 	public $disableCache = false;
-	
 }
 
 ?>

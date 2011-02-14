@@ -11,6 +11,10 @@
 
 namespace ManiaLib\Application\Views\Dialogs;
 
+use ManiaLib\Gui\Manialink;
+use ManiaLib\Gui\Elements\Bgs1;
+use ManiaLib\Gui\Elements\Quad;
+
 /**
  * Dialog with two buttons
  */

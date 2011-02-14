@@ -9,6 +9,8 @@
  * @date        $Date$:
  */
 
+// FIXME Useless with the new config system
+
 namespace ManiaLib\Utils;
 
 /**
@@ -18,7 +20,7 @@ abstract class Debug
 {
 	static function isDebug()
 	{
-		return \ManiaLib\Config\Loader::$config->debug;
+		return \ManiaLib\Config\Config::getInstance()->debug;
 	}
 }
 

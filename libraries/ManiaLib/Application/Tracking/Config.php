@@ -14,7 +14,7 @@ namespace ManiaLib\Application\Tracking;
 /**
  * Tracking config
  */
-class Config extends \ManiaLib\Config\Configurable
+class Config extends \ManiaLib\Utils\Singleton
 {
 	public $account; // eg UA-123456789-1
 }

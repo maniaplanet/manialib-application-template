@@ -27,7 +27,7 @@ final class Session
 	{
 		if (!self::$instance)
 		{
-			if(!\ManiaLib\Config\Loader::$config->session->enabled)
+			if(!Config::getInstance()->enabled)
 			{
 				throw new Exception(
 					'Cannot instanciate session: session handling has been disabled in the config');

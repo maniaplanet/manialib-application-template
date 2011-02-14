@@ -17,7 +17,6 @@ namespace ManiaLib\Application;
 abstract class Bootstrapper
 {
 	static $configFile;
-	static $configClass = '\ManiaLib\Config\Config';
 	static $errorReporting = E_ALL;
 	static $errorHandlingClass = '\ManiaLib\Application\ErrorHandling';
 	static $errorHandler = 'exceptionErrorHandler';
@@ -36,16 +35,10 @@ abstract class Bootstrapper
 		error_reporting(static::$errorReporting);
 		set_error_handler(array(static::$errorHandlingClass, static::$errorHandler));
 		
-		if(!static::$configFile)
-		{
-			static::$configFile = APP_PATH.'config/app.ini';
-		}
-		
 		try 
 		{
 			$loader = \ManiaLib\Config\Loader::getInstance();
 			$loader->setConfigFilename(static::$configFile);
-			$loader->setConfigClassname(static::$configClass);
 			$loader->smartLoad();
 			
 			static::onPreDispatch();
@@ -81,8 +74,11 @@ abstract class Bootstrapper
 	 */
 	static protected function onPreDispatch()
 	{
-		$loader = \ManiaLib\I18n\Loader::getInstance();
-		$loader->smartLoad();
+		if(\ManiaLib\I18n\Config::getInstance()->dynamic)
+		{
+			$loader = \ManiaLib\I18n\Loader::getInstance();
+			$loader->smartLoad();
+		}
 	}
 	
 	/**

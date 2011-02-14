@@ -13,6 +13,7 @@ namespace ManiaLib\Gui;
 
 /**
  * Component
+ * @todo maybe check the performance impact of the move and resize callbacks?
  */
 abstract class Component
 {
@@ -36,8 +37,9 @@ abstract class Component
 	 */
 	function setPositionX($posX)
 	{
+		$oldX = $this->posX;
 		$this->posX = $posX;
-		$this->move();
+		$this->move($oldX, $this->posY, $this->posZ);
 	}
 	
 	/**
@@ -46,8 +48,9 @@ abstract class Component
 	 */
 	function setPositionY($posY)
 	{
+		$oldY = $this->posY;
 		$this->posY = $posY;
-		$this->move();
+		$this->move($this->posX, $oldY, $this->posZ);
 	}
 	
 	/**
@@ -56,8 +59,9 @@ abstract class Component
 	 */
 	function setPositionZ($posZ)
 	{
+		$oldZ = $this->posZ;
 		$this->posZ = $posZ;
-		$this->move();
+		$this->move($this->posX, $this->posY, $oldZ);
 	}
 	
 	/**
@@ -66,8 +70,9 @@ abstract class Component
 	 */
 	function setPosX($posX)
 	{
+		$oldX = $this->posX;
 		$this->posX = $posX;
-		$this->move();
+		$this->move($oldX, $this->posY, $this->posZ);
 	}
 	
 	/**
@@ -76,8 +81,9 @@ abstract class Component
 	 */
 	function setPosY($posY)
 	{
+		$oldY = $this->posY;
 		$this->posY = $posY;
-		$this->move();
+		$this->move($this->posX, $oldY, $this->posZ);
 	}
 	
 	/**
@@ -86,8 +92,9 @@ abstract class Component
 	 */
 	function setPosZ($posZ)
 	{
+		$oldZ = $this->posZ;
 		$this->posZ = $posZ;
-		$this->move();
+		$this->move($this->posX, $this->posY, $oldZ);
 	}
 	
 	/**
@@ -96,8 +103,9 @@ abstract class Component
 	 */
 	function incPosX($posX)
 	{
+		$oldX = $this->posX;
 		$this->posX += $posX;
-		$this->move();
+		$this->move($oldX, $this->posY, $this->posZ);
 	}
 	
 	/**
@@ -106,8 +114,9 @@ abstract class Component
 	 */
 	function incPosY($posY)
 	{
+		$oldY = $this->posY;
 		$this->posY += $posY;
-		$this->move();
+		$this->move($this->posX, $oldY, $this->posZ);
 	}
 	
 	/**
@@ -116,8 +125,9 @@ abstract class Component
 	 */
 	function incPosZ($posZ)
 	{
+		$oldZ = $this->posZ;
 		$this->posZ += $posZ;
-		$this->move();
+		$this->move($this->posX, $this->posY, $oldZ);
 	}
 	
 	/**
@@ -128,6 +138,10 @@ abstract class Component
 	 */
 	function setPosition()
 	{
+		$oldX = $this->posX;
+		$oldY = $this->posY;
+		$oldZ = $this->posZ;
+		
 		$args = func_get_args();
 		
 		if (!empty($args))
@@ -139,7 +153,7 @@ abstract class Component
 		if (!empty($args))
 			$this->posZ = array_shift($args);
 			
-		$this->move();
+		$this->move($oldX, $oldY, $oldZ);
 	}
 	
 	/**
@@ -181,8 +195,9 @@ abstract class Component
 	 */
 	function setSizeX($sizeX)
 	{
+		$oldX = $this->sizeX;
 		$this->sizeX = $sizeX;
-		$this->resize();
+		$this->resize($oldX, $this->sizeY);
 	}
 	
 	/**
@@ -191,8 +206,9 @@ abstract class Component
 	 */
 	function setSizeY($sizeY)
 	{
+		$oldY = $this->sizeY;
 		$this->sizeY = $sizeY;
-		$this->resize();
+		$this->resize($this->sizeX, $oldY);
 	}
 	
 	/**
@@ -202,6 +218,9 @@ abstract class Component
 	 */
 	function setSize()
 	{
+		$oldX = $this->sizeX;
+		$oldY = $this->sizeY;
+		
 		$args = func_get_args();
 		
 		if (!empty($args))
@@ -210,7 +229,7 @@ abstract class Component
 		if (!empty($args))
 			$this->sizeY = array_shift($args);
 			
-		$this->resize();
+		$this->resize($oldX, $oldY);
 	}
 	
 	/**
@@ -374,9 +393,9 @@ abstract class Component
 	/**
 	 * Overwriteable functions.
 	 */
-	protected function resize() {}
+	protected function resize($oldX, $oldY) {}
 	
-	protected function move() {}
+	protected function move($oldX, $oldY, $oldZ) {}
 }
 
 ?>

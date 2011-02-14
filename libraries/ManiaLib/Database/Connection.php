@@ -45,13 +45,7 @@ class Connection
 	 */
 	protected function __construct()
 	{
-		$this->config = \ManiaLib\Config\Loader::$config->database;
-		
-		if(!is_object($this->config))
-		{
-			$this->config = new Config();
-		}
-		
+		$this->config = Config::getInstance();
 		$this->host = $this->config->host;
 		$this->user = $this->config->user;
 		$this->password = $this->config->password;

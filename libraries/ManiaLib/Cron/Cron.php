@@ -4,9 +4,9 @@
  * 
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
- * @version     $Revision: 2187 $:
+ * @version     $Revision: 2302 $:
  * @author      $Author: Maxime $:
- * @date        $Date: 2011-02-03 18:09:41 +0100 (jeu., 03 févr. 2011) $:
+ * @date        $Date: 2011-02-11 18:01:19 +0100 (ven., 11 févr. 2011) $:
  */
  
 namespace ManiaLib\Cron;
@@ -16,17 +16,11 @@ use ManiaLib\Utils\Singleton;
 abstract class Cron extends Singleton
 {
 	static $configFile;
-	static $configClass = '\ManiaLib\Config\Config';
 	static $errorReporting = E_ALL;
 	static $errorHandlingClass = '\ManiaLib\Application\ErrorHandling';
 	static $errorHandler = 'exceptionErrorHandler';
 	static $exceptionHandler = 'exceptionHandler';
 	static $fatalExceptionHandler = 'fatalExceptionHandler';
-	
-	/**
-	 * @var \ManiaLib\Config\Config
-	 */
-	protected $config;
 	protected $sectionCount = 0;
 	protected $output;
 	
@@ -48,9 +42,7 @@ abstract class Cron extends Singleton
 			$loader = \ManiaLib\Config\Loader::getInstance();
 			$loader->disableCache();
 			$loader->setConfigFilename(static::$configFile);
-			$loader->setConfigClassname(static::$configClass);
 			$loader->smartLoad();
-			$this->config = \ManiaLib\Config\Loader::$config;
 		}
 		catch (\Exception $e)
 		{

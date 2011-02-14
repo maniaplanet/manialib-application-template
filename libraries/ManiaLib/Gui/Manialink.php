@@ -41,13 +41,12 @@ abstract class Manialink
 	 */
 	final public static function load($createManialinkElement = true, $timeoutValue=0)
 	{
-		// Load the config
-		$config = \ManiaLib\Config\Loader::$config;
-		if($config->application)
+		if(class_exists('\ManiaLib\Application\Config'))
 		{
-			self::$langsURL = $config->application->langsURL;
-			self::$imagesURL = $config->application->imagesURL;
-			self::$mediaURL = $config->application->mediaURL;
+			$config = \ManiaLib\Application\Config::getInstance();
+			self::$langsURL = $config->getLangsURL();
+			self::$imagesURL = $config->getImagesURL();
+			self::$mediaURL = $config->getMediaURL();
 		}
 		
 		// Load the XML object

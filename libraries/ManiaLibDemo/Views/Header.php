@@ -58,8 +58,8 @@ class Header extends \ManiaLib\Application\Views\Header
 		{
 			Manialink::appendXML(
 				'<include url="http://maniahome.trackmania.com/add.php?'.
-				'name='.\ManiaLib\Config\Loader::$config->application->name.
-				'&amp;url='.\ManiaLib\Config\Loader::$config->application->manialink.
+				'name='.\ManiaLib\Application\Config::getInstance()->name.
+				'&amp;url='.\ManiaLib\Application\Config::getInstance()->manialink.
 				'"/>');
 		}
 		Manialink::endFrame();	

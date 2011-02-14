@@ -56,7 +56,7 @@ class Request
 	 */
 	protected function __construct()
 	{
-		// FIXME This is a hack because of a bug on the master server and may cause some trouble!
+		// TODO This is a hack because of a bug on the master server and may cause some trouble!
 		foreach ($_GET as $key => $value)
 			$this->params[str_replace('amp;', '', $key)] = $value;
 		
@@ -65,9 +65,9 @@ class Request
 			$this->params = array_map('stripslashes', $this->params);
 		}
 		$this->requestParams = $this->params;
-		$this->appURL = \ManiaLib\Config\Loader::$config->application->URL;
+		$this->appURL = Config::getInstance()->URL;
 		
-		$this->defaultController = \ManiaLib\Config\Loader::$config->application->defaultController;
+		$this->defaultController = Config::getInstance()->defaultController;
 		$route = \ManiaLib\Utils\Arrays::getNotNull($_SERVER, 'PATH_INFO', '/');
 		$route = substr($route, 1); // Remove starting /
 		$route = explode('/', $route);
@@ -76,7 +76,7 @@ class Request
 		$this->controller = \ManiaLib\Application\Route::separatorToUpperCamelCase($this->controller);
 		$this->action = $this->action ? \ManiaLib\Application\Route::separatorToCamelCase($this->action) : null;
 		
-		$this->sessionEnabled = \ManiaLib\Config\Loader::$config->session->enabled;
+		$this->sessionEnabled = \ManiaLib\Session\Config::getInstance()->enabled;
 	}
 	
 	function __destruct()
@@ -407,7 +407,7 @@ class Request
 			}
 		}
 		
-		if(\ManiaLib\Config\Loader::$config->application->useRewriteRules)
+		if(Config::getInstance()->useRewriteRules)
 		{
 			$url = $this->appURL.$route;
 		}

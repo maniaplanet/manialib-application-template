@@ -95,12 +95,12 @@ class Controller
 	final static public function factory($controllerName)
 	{
 		$controllerClass = 
-			\ManiaLib\Config\Loader::$config->application->namespace.NAMESPACE_SEPARATOR.
+			Config::getInstance()->namespace.NAMESPACE_SEPARATOR.
 			'Controllers'.NAMESPACE_SEPARATOR.
 			$controllerName;
 		if(!class_exists($controllerClass))
 		{
-			throw new ControllerNotFoundException('Page not found: /'.$controllerName.'/');
+			throw new ControllerNotFoundException('Controller not found: /'.$controllerName.'/');
 		}	
 		return new $controllerClass($controllerName);
 	}
@@ -114,11 +114,11 @@ class Controller
 		$this->controllerName = $controllerName;
 		if(!$this->defaultAction)
 		{
-			$this->defaultAction = \ManiaLib\Config\Loader::$config->application->defaultAction;
+			$this->defaultAction = Config::getInstance()->defaultAction;
 		}
 		$this->request = \ManiaLib\Application\Request::getInstance();
 		$this->response = \ManiaLib\Application\Response::getInstance();
-		if(\ManiaLib\Config\Loader::$config->session->enabled)
+		if(\ManiaLib\Session\Config::getInstance()->enabled)
 		{
 			$this->session = \ManiaLib\Session\Session::getInstance();
 		}
@@ -213,18 +213,18 @@ class Controller
 			catch(\Exception $e)
 			{
 				throw new ActionNotFoundException(
-					'Page not found: /'.$this->controllerName.'/'.$actionName.'/');
+					'Action not found: /'.$this->controllerName.'/'.$actionName.'/');
 			}
 		}
 		if(!$this->reflectionMethods[$actionName]->isPublic())
 		{
 			throw new ActionNotFoundException(
-				'Page not found: /'.$this->controllerName.'/'.$actionName.'/');
+				'Action not found: /'.$this->controllerName.'/'.$actionName.'/');
 		}
 		if($this->reflectionMethods[$actionName]->isFinal())
 		{
 			throw new ActionNotFoundException(
-				'Page not found: /'.$this->controllerName.'/'.$actionName.'/');
+				'Action not found: /'.$this->controllerName.'/'.$actionName.'/');
 		}
 	}
 

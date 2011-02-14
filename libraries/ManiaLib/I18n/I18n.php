@@ -70,12 +70,13 @@ class I18n
 	 */
 	public static function getTranslation($textId)
 	{
-		if(\ManiaLib\Config\Loader::$config->i18n->dynamic)
+		if(Config::getInstance()->dynamic)
 		{
 			return self::getInstance()->getTranslationPrivate($textId);
 		}
 		else
 		{
+			
 			return $textId;
 		}
 	}
@@ -95,7 +96,7 @@ class I18n
 
 	protected function __construct()
 	{
-		if(\ManiaLib\Config\Loader::$config->i18n->dynamic)
+		if(\ManiaLib\Session\Config::getInstance()->enabled)
 		{
 			$session = \ManiaLib\Session\Session::getInstance();
 			$this->currentLang = $session->get("lang", "en");
