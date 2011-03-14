@@ -134,13 +134,7 @@ class GoogleAnalytics
 		$this->utmac = Config::getInstance()->account;
 		$this->utmdt = \ManiaLib\Application\Config::getInstance()->name; 
 		$this->utmhn = parse_url(\ManiaLib\Application\Config::getInstance()->URL, PHP_URL_HOST);
-		
-		$request = \ManiaLib\Application\Request::getInstance();
-		$route = '/'.$request->getController().'/';
-		$action = $request->getAction();
-		if($action) $route.= $action.'/';
-		
-		$this->utmp = $route;
+		$this->utmp = \ManiaLib\Application\Dispatcher::getInstance()->getPathInfo();
 	}
 	
 	/**

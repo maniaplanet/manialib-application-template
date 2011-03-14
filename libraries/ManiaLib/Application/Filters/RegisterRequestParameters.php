@@ -12,49 +12,56 @@
 namespace ManiaLib\Application\Filters;
 
 /**
- * Register request parameters
  * Register usual paramaters such as login, nickname etc. so that you only need 
- * to access them through the \ManiaLib\Session\Session
- * Example:
- * If your enable this extension, to retrieve the login of the current user you
- * only have to do:
- * <code>
- * $session = \ManiaLib\Session\Session::getInstance();
- * //...
- * $session->get('login');
- * </code>
+ * to access them through the session
  */
 class RegisterRequestParameters extends \ManiaLib\Application\AdvancedFilter
 {
-	/**
-	 * @ignore
-	 */
 	function preFilter()
 	{		
-		if($playerLogin = $this->request->get('playerlogin'))
+		if(!$this->session->login)
 		{
-			$this->session->set('login', $playerLogin);
+			if($login = $this->request->get('playerlogin'))
+			{
+				$this->session->login = $login;
+			}
+			elseif($login = $this->request->get('login'))
+			{
+				$this->session->login = $login;
+			}
 		}
-		$this->request->registerProtectedParam('playerlogin');
-		$this->request->registerGlobalParam('login');
-		$this->request->registerGlobalParam('nickname');
-		$this->request->registerGlobalParam('path');
-		$this->request->registerGlobalParam('lang');
-		$this->request->registerGlobalParam('token');
-		$this->request->registerGlobalParam('sess');
-		$this->request->registerGlobalParam('game');
 		
-		if ($redirect = $this->request->get('redirect'))
+		if(!$this->session->nickname)
 		{
-			$this->request->delete('redirect');
-			$redirect = explode('/', $redirect);
-			$this->request->redirectManialink($redirect[0], $redirect[1]);
+			if($nickname = $this->request->get('nickname'))
+			{
+				$this->session->nickname = $nickname;
+			}
 		}
+		
+		if(!$this->session->path)
+		{
+			if($path = $this->request->get('path'))
+			{
+				$this->session->path = $path;
+			}
+		}
+		
+		if(!$this->session->lang)
+		{
+			if($lang = $this->request->get('lang'))
+			{
+				$this->session->lang = $lang;
+			}
+		}
+		
+		$this->request->delete('login');
+		$this->request->delete('playerlogin');
+		$this->request->delete('nickname');
+		$this->request->delete('path');
+		$this->request->delete('lang');
 	}
 	
-	/**
-	 * @ignore
-	 */
 	function postFilter() {}
 }
 

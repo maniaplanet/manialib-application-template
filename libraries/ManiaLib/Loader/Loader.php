@@ -20,52 +20,20 @@ abstract class Loader extends \ManiaLib\Utils\Singleton
 	static $enableDump = false;
 	public $message;
 	protected $debugPrefix;
-	protected $cacheEnabled = true;
-	protected $cacheDriver;
 	protected $cacheKey;
 	/**
-	 * @var \ManiaLib\Cache\Cache
+	 * @var \ManiaLib\Cache\CacheInterface
 	 */
 	protected $cache;
-	protected $data;
+	public $data;
 	
 	/**
 	 * Singleton with self::getInstance() must be declared in childs 
 	 */
 	protected function __construct()
 	{
-		$this->cacheEnabled = true;
-		$this->cacheKey = \ManiaLib\Cache\Cache::getUniqueAppCacheKeyPrefix().'_'.get_class($this);
-	}
-	
-	protected final function initCache()
-	{
-		if($this->cacheEnabled && !$this->cache)
-		{
-			if($this->cacheDriver)
-			{
-				$this->cache = \ManiaLib\Cache\Cache::getInstance($this->cacheDriver);
-			}
-			else
-			{
-				$this->cache = \ManiaLib\Cache\Cache::getInstance();
-			}
-		}		
-	}
-	
-	function enableCache()
-	{
-		$this->cacheEnabled = true;
-	}
-	
-	function disableCache()
-	{
-		$this->cacheEnabled = false;
-	}
-	
-	function setCacheDriver($driver)
-	{
-		$this->cacheDriver = $driver;
+		$this->cacheKey = \ManiaLib\Cache\Cache::getPrefix().get_class($this);
+		$this->cache = \ManiaLib\Cache\Cache::factory('apc');
 	}
 	
 	final function smartLoad()
@@ -73,31 +41,24 @@ abstract class Loader extends \ManiaLib\Utils\Singleton
 		try 
 		{
 			ob_start();
-			if($this->cacheEnabled)
+			if($this->cache->exists($this->cacheKey))
 			{
-				$this->initCache();
-				if($this->cache->exists($this->cacheKey))
-				{
-					$this->data = $this->cache->fetch($this->cacheKey);
-					$this->postCacheLoad();
-					$this->postLoad();
-				}
-				else
-				{
-					$this->runtimeLoad();
-					$this->postLoad();
-					$this->cache->add($this->cacheKey, $this->data);
-					$this->debug('Data cached at "'.$this->cacheKey.'"');
-				}
+				$this->data = $this->cache->fetch($this->cacheKey);
+				$this->postCacheLoad();
+				$this->postLoad();
 			}
 			else
 			{
 				$this->runtimeLoad();
 				$this->postLoad();
+				$this->cache->add($this->cacheKey, $this->data);
+				$this->debug('Data cached at "'.$this->cacheKey.'"');
 			}
 			$this->message = ob_get_contents();
 			ob_end_clean();
-			if($this->message && $this->cache && $this->cache->enableLogging())
+			
+			// Only log if APC is loaded (fallback NoCache driver won't log anything)
+			if($this->message && $this->cache instanceof \ManiaLib\Cache\Drivers\APC)
 			{
 				\ManiaLib\Log\Logger::loader("\n".$this->message);
 			}
@@ -113,7 +74,6 @@ abstract class Loader extends \ManiaLib\Utils\Singleton
 	{
 		try 
 		{
-			$this->disableCache();
 			$this->runtimeLoad();
 			echo $this->message;
 		} 

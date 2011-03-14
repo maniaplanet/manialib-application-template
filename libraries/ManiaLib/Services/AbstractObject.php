@@ -4,14 +4,12 @@
  * 
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
- * @version     $Revision: 1955 $:
+ * @version     $Revision: 2467 $:
  * @author      $Author: Maxime $:
- * @date        $Date: 2011-01-20 12:46:46 +0100 (jeu., 20 janv. 2011) $:
+ * @date        $Date: 2011-02-18 12:27:52 +0100 (ven., 18 févr. 2011) $:
  */
  
 namespace ManiaLib\Services;
-
-// TODO Move this next to db, eg. Database/LightORM
 
 /**
  * Abstract object for (very) simple object relational mapping
@@ -22,13 +20,19 @@ abstract class AbstractObject
 	/**
 	 * Fetches a single object from the record set
 	 */
-	static function fromRecordSet(\ManiaLib\Database\RecordSet $result)
+	static function fromRecordSet(\ManiaLib\Database\RecordSet $result, $strict=true, $default=null)
 	{
-		if(!$result->recordCount())
+		if(!($object = $result->fetchObject(get_called_class())))
 		{
-			throw new NotFoundException();
+			if($strict)
+			{
+				throw new NotFoundException(sprintf('in %s::fromRecorSet()', get_called_class()));
+			}
+			else
+			{
+				return $default;
+			}
 		}
-		$object = $result->fetchObject(get_called_class());
 		$object->onFetchObject();
 		return $object;
 	}
@@ -39,9 +43,8 @@ abstract class AbstractObject
 	static function arrayFromRecordSet(\ManiaLib\Database\RecordSet $result)
 	{
 		$array = array();
-		while($object = $result->fetchObject(get_called_class()))
+		while($object = static::fromRecordSet($result, false))
 		{
-			$object->onFetchObject();
 			$array[] = $object;
 		}
 		return $array;
@@ -50,6 +53,8 @@ abstract class AbstractObject
 	/**
 	 * Override this to do things when the object is fetched from a record set.
 	 * Eg.: convering MySQL's TIMESTAMP fields into timestamp integers.
+	 * 
+	 * You can also use the constructor since myqsl_fetch_object fills props before calling it
 	 */
 	protected function onFetchObject() {}
 }

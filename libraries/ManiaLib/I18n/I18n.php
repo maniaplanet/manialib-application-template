@@ -59,10 +59,8 @@ namespace ManiaLib\I18n
  *  __date($timestamp); // Returns, for example: "Friday, July 3rd 2009"
  *  </code>
  */
-class I18n
+class I18n extends \ManiaLib\Utils\Singleton
 {
-	protected static $instance;
-	
 	protected $currentLang = "en";
 	
 	/**
@@ -79,19 +77,6 @@ class I18n
 			
 			return $textId;
 		}
-	}
-		
-	/**
-	 * @return \ManiaLib\I18n\I18n
-	 */
-	public static function getInstance()
-	{
-		if (!self::$instance)
-		{
-			$class = __CLASS__;
-			self::$instance = new $class();
-		}
-		return self::$instance;
 	}
 
 	protected function __construct()

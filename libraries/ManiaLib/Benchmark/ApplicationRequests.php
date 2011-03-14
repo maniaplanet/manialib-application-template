@@ -17,99 +17,67 @@ namespace ManiaLib\Benchmark;
  * It stores the data in the cache: number of requests (inc counter) and a
  * stack of execution times so we can make Munin graphs out of it.
  * 
- * You should not need to use it unless you are running very high demande apps.
+ * You should not need to use it unless you are running very high demand apps.
  */
 abstract class ApplicationRequests
 {
-	const SAMPLING_RATE = 100;
-	const BENCHMARK_MAX_ELEMENTS = 50;
-
-	/**
-	 * Register the app in the cache if the benchmarking is enabled
-	 * This is done so that a Munin plugin can know what applications should be graphed
-	 */
-	public static function registerApplication()
-	{
-		if(defined('APP_ID'))
-		{
-			if(Config::getInstance()->enabled)
-			{
-				$cache = \ManiaLib\Cache\Cache::getInstance();
-				$key = 'maniastudio_registered_applications';
-				if($cache->exists($key))
-				{
-					$registeredApps = $cache->fetch($key);
-					if(!is_array($registeredApps))
-					{
-						$registeredApps = array();
-					}
-				}
-				else
-				{
-					$registeredApps = array();
-				}
-				if(!in_array(APP_ID, $registeredApps))
-				{
-					$registeredApps[] = APP_ID;
-				}
-				$cache->store($key, $registeredApps);
-			}
-		}
-	}
-	
-	/**
-	 * Call this method at the end of your page execution
-	 */
 	public static function touch($mtimeStart = 0)
 	{
 		try 
 		{
 			$config = Config::getInstance();
-			
-			if(!$config->enabled)
+			if(!$config->enabled || !defined('APP_ID'))
 			{
 				return;
 			}
 			
-			$cache = \ManiaLib\Cache\Cache::getInstance();
-			$prefix = \ManiaLib\Cache\Cache::getUniqueAppCacheKeyPrefix();
-			$requestKey = $prefix.'_requests_count';
-			$benchmarkKey = $prefix.'_requests_benchmark';
+			$cache = \ManiaLib\Cache\Cache::factory('memcache');
+			$prefix = \ManiaLib\Cache\Cache::getPrefix();
+			$registeredAppsKeys = 'maniastudio_registered_applications';
+			$requestKey = $prefix.'requests_count';
+			$benchmarkKey = $prefix.'requests_benchmark';
 			
-			if(!$cache->exists($requestKey))
+			// First we register the application in a stack in the cache
+			// so that we can easilly fetch data of multiple apps from teh cache
+			$registeredApps = $cache->fetch($registeredAppsKeys);
+			if(!$registeredApps || !is_array($registeredApps))
+			{
+				$registeredApps = array(APP_ID);
+				$cache->add($registeredAppsKeys, $registeredApps);
+			}
+			elseif(!in_array(APP_ID, $registeredApps))
+			{
+				$registeredApps[] = APP_ID;
+				$cache->replace($registeredAppsKeys, $registeredApps);
+			}
+			
+			// Then we increment the counter for that app
+			$count = $cache->fetch($requestKey);
+			if(!$count)
 			{
 				$count = 0;
-				$cache->store($requestKey, $count);
-			}
-			else
-			{
-				$count = $cache->fetch($requestKey);
+				$cache->add($requestKey, $count);
 			}
 			$cache->inc($requestKey);
 			
+			// And we check if we need to store the execution time
 			if($count < $config->maxElements || $count % $config->samplingRate == 1)
 			{
 				if($mtimeStart)
 				{
-					$diff = microtime(true) - $mtimeStart;
-					if(!$cache->exists($benchmarkKey))
+					$benchmark = $cache->fetch($benchmarkKey);
+					if(!$benchmark || !is_array($benchmark))
 					{
 						$benchmark = array();
+						$cache->add($benchmarkKey, $benchmark);
 					}
-					else
-					{
-						$benchmark = $cache->fetch($benchmarkKey);
-						if(!is_array($benchmark))
-						{
-							$benchmark = array();
-						}
-					}
-					if(count($benchmark) > $config->maxElements)
+					while($config->maxElements && count($benchmark) > $config->maxElements)
 					{
 						array_pop($benchmark);
 					}
+					$diff = microtime(true) - $mtimeStart;
 					array_unshift($benchmark, $diff);
-					$cache->store($benchmarkKey, $benchmark);
+					$cache->replace($benchmarkKey, $benchmark);
 				}
 			}
 		}

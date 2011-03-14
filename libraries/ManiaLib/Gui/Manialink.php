@@ -179,6 +179,7 @@ abstract class Manialink
 			}
 			header('Content-Type: text/xml; charset=utf-8');
 			echo self::$domDocument->saveXML();
+			// TODO MANIALIB Maybe exiting here is not the best option
 			exit;
 		}
 		else
@@ -261,6 +262,26 @@ abstract class Manialink
 	static function addDico($url)
 	{
 		self::$dicos[] = $url;
+	}
+	
+	/**
+	 * Manialink's version of var_dump. Just pass a data and it will output it to teh screen
+	 */
+	static function var_dump($data /*, ... polymorphic */)
+	{
+//		ob_start();
+//		call_user_func_array('var_dump', func_get_args());
+//		$content = ob_get_contents();
+//		$content = strip_tags($content);
+//		ob_end_clean();
+		
+		self::load();
+		$ui = new Elements\Label(128, 96);
+		$ui->enableAutonewline();
+		$ui->setAlign('center', 'center');
+		$ui->setText(print_r($data, true));
+		$ui->save();
+		self::render();
 	}
 }
 

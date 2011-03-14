@@ -139,6 +139,26 @@ abstract class Validation
 		self::validate($data, FILTER_VALIDATE_URL, $options);
 	}
 	
+	static function object($data, $className = '\stdClass')
+	{
+		$validationMethod = function ($value, $key = 0) use ($className) 
+		{
+			if(!is_a($value, $className))
+			{
+				throw new \InvalidArgumentException();
+			}
+		};
+		
+		if(is_array($data))
+		{
+			array_walk($data, $validationMethod);
+		}
+		else
+		{
+			call_user_func($validationMethod,$data);
+		}
+	}
+	
 	/**
 	 * validate data
 	 * @param array|string $data

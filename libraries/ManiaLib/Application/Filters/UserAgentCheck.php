@@ -115,7 +115,7 @@ HTML;
 	 */
 	function preFilter()
 	{
-		if(!\ManiaLib\Utils\Debug::isDebug())
+		if(!\ManiaLib\Config\Config::getInstance()->debug)
 		{
 			if(!array_key_exists('HTTP_USER_AGENT', $_SERVER) 
 				|| $_SERVER['HTTP_USER_AGENT'] != 'GameBox')

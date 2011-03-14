@@ -48,6 +48,22 @@ abstract class Route
 		return strtolower(preg_replace('/([^A-Z])([A-Z])/', '$1'.self::getSeparator().'$2', $string)); 
 	}
 	
+	static function computeRoute($controller, $action)
+	{
+		$controller = static::camelCaseToSeparator($controller);
+		$action = static::camelCaseToSeparator($action);
+		$route = '';
+		if($controller)
+		{
+			$route .= '/'.$controller.'/';
+			if($action)
+			{
+				$route .= $action.'/';
+			}
+		}
+		return $route;
+	}
+	
 	protected static function getSeparator()
 	{
 		if(self::$separator === null)

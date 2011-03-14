@@ -14,9 +14,8 @@ namespace ManiaLib\Database;
 /**
  * Database connection singleton
  */
-class Connection
+class Connection extends \ManiaLib\Utils\Singleton
 {
-	static protected $instance;
 	/**
 	 * @var \ManiaLib\Database\Config	
 	 */
@@ -27,22 +26,9 @@ class Connection
 	protected $password;
 	protected $database;
 	protected $charset;
+	protected $transactionRefCount;
+	protected $transactionRollback;
 	
-	/**
-	 * @return \ManiaLib\Database\Connection
-	 */
-	public static function getInstance()
-	{
-		if (!self::$instance)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-	
-	/**
-	 * @ignore
-	 */
 	protected function __construct()
 	{
 		$this->config = Config::getInstance();
@@ -143,19 +129,105 @@ class Connection
 		return $this->database;
 	}
 	
+	/**
+	 * ACID Transactions
+	 * ONLY WORKS WITH INNODB TABLES !
+	 * 
+	 * ----
+	 * 
+	 * It handles EXPERIMENTAL (== never tested!!!) nested transactions
+	 * one "BEGIN" on the first call of beginTransaction
+	 * one "COMMIT" on the last call of commitTransaction (when the ref count is 1)
+	 * one "ROLLBACK" on the first call of rollbackTransaction
+	 */
 	function beginTransaction()
 	{
-		$this->execute('BEGIN');
+		if($this->transactionRollback)
+		{
+			throw new Exception('Transaction must be rollback\'ed!');
+		}
+		if($this->transactionRefCount === null)
+		{
+			$this->execute('BEGIN');
+			$this->transactionRefCount = 1;
+		}
+		else
+		{
+			$this->transactionRefCount++;
+		}
 	}
 	
+	/**
+	 * @see self::beginTransaction()
+	 */
 	function commitTransaction()
 	{
-		$this->execute('COMMIT');
+		if($this->transactionRollback)
+		{
+			throw new Exception('Transaction must be rollback\'ed!');
+		}
+		if($this->transactionRefCount === null)
+		{
+			throw new Exception('Transaction was not previously started');
+		}
+		elseif($this->transactionRefCount > 1)
+		{
+			$this->transactionRefCount--;
+		}
+		elseif($this->transactionRefCount == 1)
+		{
+			$this->execute('COMMIT');
+			$this->transactionRefCount = null;
+		}
+		else
+		{
+			throw new Exception(
+				'Transaction reference counter error: '.
+				print_r($this->transactionRefCount, true));
+		}
 	}
 	
+	/**
+	 * @see self::beginTransaction()
+	 */
 	function rollbackTransaction()
 	{
-		$this->execute('ROLLBACK');
+		if(!$this->transactionRollback)
+		{
+			$this->transactionRollback = true;
+			$this->execute('ROLLBACK');
+		}
+		
+		if($this->transactionRefCount > 1)
+		{
+			$this->transactionRefCount--;
+		}
+		elseif($this->transactionRefCount == 1)
+		{
+			$this->transactionRefCount = null;
+			$this->transactionRollback = null;
+		}
+		else
+		{
+			throw new Exception(
+				'Transaction reference counter error: '.
+				print_r($this->transactionRefCount, true));
+		}
+	}
+	
+	function doTransaction($callback)
+	{
+		try 
+		{
+			$this->beginTransaction();
+			call_user_func($callback);
+			$this->commitTransaction();
+		} 
+		catch (\Exception $e) 
+		{
+			$this->rollbackTransaction();
+			throw $e;
+		}
 	}
 }
 

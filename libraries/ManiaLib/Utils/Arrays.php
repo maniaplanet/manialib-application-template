@@ -36,6 +36,23 @@ abstract class Arrays
 		}
 		return $default;
 	}
+	
+	static function getProperty(array $array, $property, $default = null)
+	{
+		$values = array();
+		foreach ($array as $key => $value) 
+		{
+			if(is_null($value->$property))
+			{
+				$values[$key] = $default;
+			}
+			else 
+			{
+				$values[$key] = $value->$property; 
+			}
+		}
+		return $values;
+	}
 }
 
 ?>

@@ -12,49 +12,46 @@
 namespace ManiaLib\Session;
 
 /**
- * PHP Session handling simplified
+ * Session handling for humans
  */
-final class Session
+class Session extends \ManiaLib\Utils\Singleton
 {
-	protected static $instance;
-	protected static $started = false;
-
-	/**
-	 * Gets the instance
-	 * @return \ManiaLib\Session\Session
-	 */
-	public static function getInstance()
-	{
-		if (!self::$instance)
-		{
-			if(!Config::getInstance()->enabled)
-			{
-				throw new Exception(
-					'Cannot instanciate session: session handling has been disabled in the config');
-			}
-			$class = __CLASS__;
-			self::$instance = new $class;
-		}
-		return self::$instance;
-	}
+	protected static $started = false;	
 	
-	/**
-	 * @ignore
-	 */
+	public $login;
+	public $nickname;
+	public $lang;
+	public $path;
+	public $game;
+	
 	protected function __construct()
 	{
-		if(!self::$started)
+		if(!Config::getInstance()->enabled)
 		{
-			try 
-			{
-				session_start();
-				self::$started = true;
-			}
-			catch(\Exception $exception)
-			{
-				\ManiaLib\Log\Logger::error($exception->getMessage());
-			}
+			throw new Exception(
+				'Cannot instanciate session: session handling has been disabled in the config');
 		}
+		
+		if(self::$started)
+		{
+			return;
+		}
+		
+		session_start();
+		self::$started = true;
+		
+		$keys = array('login', 'nickname', 'lang', 'path', 'game');
+		$session = $this;
+		array_walk($keys, function ($value) use ($session) {
+			if(isset($_SESSION[$value]))
+			{
+				 $session->$value =& $_SESSION[$value];
+			}
+			else
+			{
+				$_SESSION[$value] =& $session->$value;
+			}
+		});
 	}
 
 	/**

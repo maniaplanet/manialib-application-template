@@ -32,6 +32,13 @@ class Config extends \ManiaLib\Utils\Singleton
 	public $defaultController = 'Home';
 	public $defaultAction = 'index';
 	
+	public $maniaLibViewsNS = 'ManiaLib\\Application\\Views\\';
+	public $applicationViewsNS;
+	
+	public $renderer;
+	
+	public $webapp = false;
+	
 	function getLangsURL()
 	{
 		return $this->langsURL?:$this->URL.'langs/';
@@ -44,7 +51,39 @@ class Config extends \ManiaLib\Utils\Singleton
 	
 	function getMediaURL()
 	{
-		return $this->langsURL?:$this->URL.'media/';
+		return $this->mediaURL?:$this->URL.'media/';
+	}
+	
+	function getLinkCreationURL()
+	{
+		return $this->useRewriteRules ?  
+			substr($this->URL, 0, -1) :  $this->URL.'index.php';
+	}
+	
+	function getManiaLibViewsNS()
+	{
+		return $this->maniaLibViewsNS;
+	}
+	
+	function getApplicationViewsNS()
+	{
+		return $this->applicationViewsNS?:$this->namespace.'\\Views\\';
+	}
+	
+	function getRenderer()
+	{
+		if($this->renderer)
+		{
+			return $this->renderer;
+		}
+		elseif($this->webapp)
+		{
+			return 'ManiaLib\\Application\\Rendering\\Smarty';
+		}
+		else
+		{
+			return 'ManiaLib\\Application\\Rendering\\Manialink';
+		}
 	}
 }
 

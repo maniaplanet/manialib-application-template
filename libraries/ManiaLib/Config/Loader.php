@@ -24,6 +24,8 @@ class Loader extends \ManiaLib\Loader\Loader
 		'i18n' => 'ManiaLib\\I18n\\Config',
 		'benchmark' => 'ManiaLib\\Benchmark\\Config',
 		'session' => 'ManiaLib\Session\Config',
+		'config' => 'ManiaLib\\Config\\Config',
+		'maniahome' => 'ManiaLib\\ManiaHome\\Config',
 	);
 	
 	protected $debugPrefix = '[CONFIG LOADER]';
@@ -51,10 +53,6 @@ class Loader extends \ManiaLib\Loader\Loader
 		$values = $this->replaceAliases($values);
 		$instances = $this->arrayToSingletons($values);
 		$this->debug(sprintf('Loaded %d class instances', count($instances)));
-		if(class_exists('\\ManiaLib\\Benchmark\\ApplicationRequests'))
-		{
-			\ManiaLib\Benchmark\ApplicationRequests::registerApplication();
-		}
 		return $instances;
 	}
 	

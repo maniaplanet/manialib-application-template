@@ -14,20 +14,12 @@ namespace ManiaLib\Application;
 /**
  * Manages http request: retrieve params, create links and redirections
  */
-class Request
+class Request extends \ManiaLib\Utils\Singleton
 {
-	/**
-	 * @ignore 
-	 */
-	static private $instance;
-	
 	protected $requestParams = array();
 	protected $params = array();
 	protected $protectedParams = array();
 	protected $globalParams = array();
-	protected $URLBase;
-	protected $URLPath;
-	protected $URLFile;
 	protected $registerRefererAtDestruct;
 	protected $appURL;
 
@@ -37,26 +29,10 @@ class Request
 	
 	protected $sessionEnabled;
 	
-	/**
-	 * Gets the instance
-	 * @return \ManiaLib\Application\Request
-	 */
-	public static function getInstance()
-	{
-		if (!self::$instance)
-		{
-			$class = __CLASS__;
-			self::$instance = new $class;
-		}
-		return self::$instance;
-	}
-	
-	/**
-	 * @ignore 
-	 */
 	protected function __construct()
 	{
-		// TODO This is a hack because of a bug on the master server and may cause some trouble!
+		// This is a hack because of a bug on the master server
+		// May it cause bugs ? IDK
 		foreach ($_GET as $key => $value)
 			$this->params[str_replace('amp;', '', $key)] = $value;
 		
@@ -65,17 +41,9 @@ class Request
 			$this->params = array_map('stripslashes', $this->params);
 		}
 		$this->requestParams = $this->params;
-		$this->appURL = Config::getInstance()->URL;
-		
-		$this->defaultController = Config::getInstance()->defaultController;
-		$route = \ManiaLib\Utils\Arrays::getNotNull($_SERVER, 'PATH_INFO', '/');
-		$route = substr($route, 1); // Remove starting /
-		$route = explode('/', $route);
-		$this->controller = \ManiaLib\Utils\Arrays::getNotNull($route, 0, $this->defaultController);
-		$this->action = \ManiaLib\Utils\Arrays::get($route, 1);
-		$this->controller = \ManiaLib\Application\Route::separatorToUpperCamelCase($this->controller);
-		$this->action = $this->action ? \ManiaLib\Application\Route::separatorToCamelCase($this->action) : null;
-		
+		$config = Config::getInstance();
+		$this->appURL = $config->getLinkCreationURL();
+		$this->defaultController = $config->defaultController;
 		$this->sessionEnabled = \ManiaLib\Session\Config::getInstance()->enabled;
 	}
 	
@@ -83,9 +51,17 @@ class Request
 	{
 		if($this->registerRefererAtDestruct && $this->sessionEnabled)
 		{
-			$session = \ManiaLib\Session\Session::getInstance();
-			$session->set('referer', rawurlencode($this->registerRefererAtDestruct));
+			if(!Response::getInstance()->dialog)
+			{
+				$session = \ManiaLib\Session\Session::getInstance();
+				$session->set('referer', rawurlencode($this->registerRefererAtDestruct));
+			}
 		}
+	}
+	
+	function exists($name)
+	{
+		return array_key_exists($name, $this->params);
 	}
 	
 	/**
@@ -104,6 +80,11 @@ class Request
 		{
 			return $default;
 		}	
+	}
+	
+	function getAll()
+	{
+		return $this->params;
 	}
 	
 	/**
@@ -166,16 +147,25 @@ class Request
 		}
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	public function getAction($defaultAction = null)
 	{
-		return $this->action ? $this->action : $defaultAction;
+		return Dispatcher::getInstance()->getAction($defaultAction);
 	}
 		
+	/**
+	 * @deprecated
+	 */
 	public function getController()
 	{
-		return $this->controller;
+		return Dispatcher::getInstance()->getController();
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	public function isAction($action, $defaultAction = null)
 	{
 		return (strcasecmp($this->getAction($defaultAction), $action) == 0);
@@ -186,12 +176,7 @@ class Request
 	 */
 	function registerReferer()
 	{
-		if($this->sessionEnabled)
-		{
-			$session = \ManiaLib\Session\Session::getInstance();
-			$link = $this->createLink();
-			$this->registerRefererAtDestruct = $link;
-		}
+		$this->registerRefererAtDestruct = $this->createLink();
 	}
 	
 	/**
@@ -221,10 +206,7 @@ class Request
 	}
 	
 	/**
-	 * Registers the '$name' parameter as protected parameters. Protected
-	 * parameters are always removed from the parameter array when the page is
-	 * loaded.
-	 * @param string
+	 * @deprecated
 	 */
 	function registerProtectedParam($name)
 	{
@@ -233,10 +215,7 @@ class Request
 	}
 	
 	/**
-	 * Registers the "$name" parameter as protected parameters. Global
-	 * parameters atr always removed from the parameter array and saved as a
-	 * session parameter when the page is loaded.
-	 * @param string
+	 * @deprecated
 	 */
 	function registerGlobalParam($name)
 	{
@@ -257,41 +236,66 @@ class Request
 	 * @param string Can be the name of a controller or a class const of Route
 	 * @param string Can be the name of an action or a class const of Route 
 	 */
-	public function redirectManialink($controller = \ManiaLib\Application\Route::CUR, $action = \ManiaLib\Application\Route::CUR)
+	function redirectManialink($controller = Route::CUR, $action = Route::CUR)
 	{
 		$manialink = $this->createLink($controller, $action);
 		$this->redirectManialinkAbsolute($manialink);
 	}
+	
+	
 	
 	/**
 	 * Redirects to the specified route with, with names of GET vars as parameters of the method
 	 * @param string Can be the name of a controller or a class const of Route
 	 * @param string Can be the name of an action or a class const of Route 
 	 */
-	public function redirectManialinkArgList($controller, $action)
+	function redirectManialinkArgList($controller = Route::CUR, $action = Route::CUR)
 	{
-		$arr = func_get_args();
-		array_shift($arr);
-		$args = array();
-		foreach($arr as $elt)
-		{
-			if(array_key_exists($elt, $this->params))
-			{
-				$args[$elt] = $this->params[$elt];
-			}	
-		}
+		$args = func_get_args();
+		array_shift($args);
+		array_shift($args);
+		$args = $this->filterArgs($args);
 		$manialink = $this->createLinkString($controller, $action, $args);
 		$this->redirectManialinkAbsolute($manialink);
 	}
 	
 	/**
 	 * Creates a Manialink redirection to the specified absolute URI
-	 * 
-	 * @param string
 	 */
 	function redirectManialinkAbsolute($absoluteUri)
 	{
 		\ManiaLib\Gui\Manialink::redirect($absoluteUri);
+	}
+	
+	/**
+	 * Creates a Web redirection
+	 */
+	function redirectWeb($controller = Route::CUR, $action = Route::CUR)
+	{
+		$manialink = $this->createLink($controller, $action);
+		$this->redirectWebAbsolute($manialink);
+	}
+	
+	/**
+	 * Creates a Web redirection
+	 */
+	function redirectWebArgList($controller = Route::CUR, $action = Route::CUR)
+	{
+		$args = func_get_args();
+		array_shift($args);
+		array_shift($args);
+		$args = $this->filterArgs($args);
+		$link = $this->createLinkString($controller, $action, $args);
+		$this->redirectWebAbsolute($link);
+	}
+	
+	/**
+	 * Creates a Web redirection
+	 */
+	function redirectWebAbsolute($absoluteUri)
+	{
+		header('Location: '.$absoluteUri);
+		exit;
 	}
 	
 	/**
@@ -308,7 +312,7 @@ class Request
 	 * @param string Can be the name of a controller or a class const of Route
 	 * @param string Can be the name of an action or a class const of Route 
 	 */
-	public function createLink($controller = \ManiaLib\Application\Route::CUR, $action = \ManiaLib\Application\Route::CUR)
+	public function createLink($controller = Route::CUR, $action = Route::CUR)
 	{
 		return $this->createLinkString($controller, $action, $this->params);
 	}
@@ -318,18 +322,12 @@ class Request
 	 * @param string Can be the name of a controller or a class const of Route
 	 * @param string Can be the name of an action or a class const of Route 
 	 */
-	function createLinkArgList($controller = \ManiaLib\Application\Route::CUR, $action = \ManiaLib\Application\Route::CUR)
+	function createLinkArgList($controller = Route::CUR, $action = Route::CUR)
 	{
-		$arr = func_get_args();
-		array_shift($arr);
-		$args = array();
-		foreach($arr as $elt)
-		{
-			if(array_key_exists($elt, $this->params))
-			{
-				$args[$elt] = $this->params[$elt];
-			}	
-		}
+		$args = func_get_args();
+		array_shift($args);
+		array_shift($args);
+		$args = $this->filterArgs($args);
 		return $this->createLinkString($controller, $action, $args);
 	}
 	
@@ -342,91 +340,68 @@ class Request
 	 */
 	function createAbsoluteLinkArgList($absoluteLink)
 	{
-		$arr = func_get_args();
-		array_shift($arr);
-		$args = array();
-		foreach($arr as $elt)
-		{
-			if(array_key_exists($elt, $this->params))
-			{
-				$args[$elt] = $this->params[$elt];
-			}	
-		}
+		$args = func_get_args();
+		array_shift($args);
+		$args = $this->filterArgs($args);
 		return $absoluteLink.($args ? '?'.http_build_query($args) : '');
 	}
 	
 	/**
 	 * @ignore 
 	 */
-	protected function createLinkString($controller = \ManiaLib\Application\Route::CUR, $action = \ManiaLib\Application\Route::CUR, $params = array())
+	protected function createLinkString($controller = Route::CUR, $action = Route::CUR, $params = array())
 	{
 		switch($controller)
 		{
-			case \ManiaLib\Application\Route::CUR:
+			case Route::CUR:
 			case null:
 				$controller = $this->getController();
 				break;
 				
-			case \ManiaLib\Application\Route::DEF:
+			case Route::DEF:
 				$controller = $this->defaultController;
 				break;
 				
-			case \ManiaLib\Application\Route::NONE:
+			case Route::NONE:
 				$controller = null;
 				break;
 				
-			default:
-				// Nothing here
+			default: //Nothing here
 		}
-		
 		switch($action)
 		{
-			case \ManiaLib\Application\Route::CUR:
+			case Route::CUR:
 			case null:
 				 $action = $this->getAction(null);
 				 break;
 				 
-			case \ManiaLib\Application\Route::DEF:
-			case \ManiaLib\Application\Route::NONE:
+			case Route::DEF:
+			case Route::NONE:
 				$action = null;
 				break;
 				
-			default:
-				// Nothing here
+			default: // Nothing here
 		}
-		$controller = \ManiaLib\Application\Route::camelCaseToSeparator($controller);
-		$action = \ManiaLib\Application\Route::camelCaseToSeparator($action);
-		
-		$route = '';
-		if($controller)
-		{
-			$route .= $controller.'/';
-			if($action)
-			{
-				$route .= $action.'/';
-			}
-		}
-		
-		if(Config::getInstance()->useRewriteRules)
-		{
-			$url = $this->appURL.$route;
-		}
-		else 
-		{
-			$route = $route ? '/'.$route : '';
-			$url = $this->appURL.'index.php'.$route;
-		}
-		
-		if(count($params))
-		{
-			$queryString = '?'.http_build_query($params, '', '&');
-		}
-		else
-		{
-			$queryString = '';
-		}
+		$url = $this->appURL.Route::computeRoute($controller, $action);
+		$queryString = count($params)?'?'.http_build_query($params, '', '&'):'';
 		
 		return $url.$queryString;
+	}
+	
+	/**
+	 * @return array
+	 */
+	protected function filterArgs(array $args)
+	{
+		$result = array();
+		foreach($args as $elt)
+		{
+			if(array_key_exists($elt, $this->params))
+			{
+				$result[$elt] = $this->params[$elt];
+			}	
+		}
+		return $result;
 	}
 }
 

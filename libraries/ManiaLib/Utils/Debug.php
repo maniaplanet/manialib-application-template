@@ -9,15 +9,16 @@
  * @date        $Date$:
  */
 
-// FIXME Useless with the new config system
-
 namespace ManiaLib\Utils;
 
 /**
- * Debug stuff
+ * @deprecated
  */
 abstract class Debug
 {
+	/**
+	 * @deprecated
+	 */
 	static function isDebug()
 	{
 		return \ManiaLib\Config\Config::getInstance()->debug;

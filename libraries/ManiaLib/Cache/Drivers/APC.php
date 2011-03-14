@@ -14,16 +14,19 @@ namespace ManiaLib\Cache\Drivers;
 /**
  * APC Cache driver
  */
-class APC extends \ManiaLib\Cache\Cache
+class APC extends \ManiaLib\Utils\Singleton implements \ManiaLib\Cache\CacheInterface
 {
+	protected function __construct()
+	{
+		if(!function_exists('apc_add'))
+		{
+			throw new Exception('APC module is not available');
+		}
+	}
+	
 	function exists($key)
 	{
 		return apc_exists($key);
-	}
-	
-	function get($key)
-	{
-		return apc_fetch($key);
 	}
 	
 	function fetch($key)
@@ -39,7 +42,7 @@ class APC extends \ManiaLib\Cache\Cache
 		}
 	}
 	
-	function store($key, $value, $ttl=0)
+	function replace($key, $value, $ttl=0)
 	{
 		if(!apc_store($key, $value, $ttl))
 		{
@@ -52,14 +55,6 @@ class APC extends \ManiaLib\Cache\Cache
 		if(!apc_delete($key))
 		{
 			throw new \Exception('apc_delete('.$key.') failed');
-		}
-	}
-	
-	function clearCache()
-	{
-		if(!apc_clear_cache())
-		{
-			throw new \Exception('apc_clear_cache() failed');
 		}
 	}
 	

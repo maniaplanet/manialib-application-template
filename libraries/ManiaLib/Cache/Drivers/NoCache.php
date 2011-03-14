@@ -12,38 +12,25 @@
 namespace ManiaLib\Cache\Drivers;
 
 /**
- * NoCache driver
- * You should NOT use this driver in production, use APC instead
+ * Cache emulation that does nothing, useful for development
  */
-class NoCache extends \ManiaLib\Cache\Cache
+class NoCache extends \ManiaLib\Utils\Singleton implements \ManiaLib\Cache\CacheInterface
 {
-	function enableLogging() 
-	{
-		return false;
-	}
-	
 	function exists($key)
 	{
 		return false;
 	}
 	
-	function get($key)
-	{
-		throw new \Exception('Value does not exists in cache (NoCache driver)');
-	}
-	
 	function fetch($key)
 	{
-		throw new \Exception('Value does not exists in cache (NoCache driver)');
+		return false;
 	}
 	
 	function add($key, $value, $ttl=0) {}
 	
-	function store($key, $value, $ttl=0) {}
+	function replace($key, $value, $ttl=0) {}
 	
 	function delete($key) {}
-	
-	function clearCache() {}
 	
 	function inc($key) {}
 }

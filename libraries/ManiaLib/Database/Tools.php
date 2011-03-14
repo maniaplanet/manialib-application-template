@@ -16,6 +16,9 @@ namespace ManiaLib\Database;
  */
 abstract class Tools
 {
+	const ORDER_ASC = 1;
+	const ORDER_DESC = -1;
+	
 	/**
 	 * Returns the "LIMIT x,x" string depending on both values
 	 */
@@ -35,6 +38,22 @@ abstract class Tools
 		{
 			return 'LIMIT '.$offset.', '.$length;
 		}
+	}
+	
+	/**
+	 * @param int 1 or -1
+	 * @return " ASC " or " DESC "
+	 */
+	static function getOrder($order)
+	{
+		switch($order)
+		{
+			case static::ORDER_ASC: return ' ASC ';
+			case static::ORDER_DESC: return ' DESC ';
+			default: 
+				throw new \InvalidArgumentException(sprintf('Invalid order value: %s', $order));
+		}
+		
 	}
 	
 	/**

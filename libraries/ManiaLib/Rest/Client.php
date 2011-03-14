@@ -11,17 +11,6 @@
 
 namespace ManiaLib\Rest;
 
-if (!function_exists('curl_init')) 
-{
-	throw new \Exception('ManiaLib\\Rest\\Client needs the CURL PHP extension.');
-}
-if (!function_exists('json_decode')) 
-{
-	throw new \Exception('ManiaLib\\Rest\\Client needs the JSON PHP extension.');
-}
-
-class Exception extends \Exception {}
-
 /**
  * Lightweight REST client for Web Services.
  * 
@@ -50,17 +39,28 @@ class Exception extends \Exception {}
  */
 class Client
 {
-	protected $APIURL = 'http://api.maniastudio.com';
-	
+	protected $APIURL = 'https://api.maniastudio.com';
 	protected $username;
 	protected $password;
-	
 	protected $contentType;
 	protected $acceptType;
+	protected $serializeCallback;
+	protected $unserializeCallback;
+	protected $timeout;
 	
 	function __construct($username = null, $password = null) 
 	{
-		$this->setAuth($username, $password);
+		if (!function_exists('curl_init')) 
+		{
+			throw new \Exception(sprintf('%s needs the CURL PHP extension.', get_called_class()));
+		}
+		$this->username = $username?:Config::getInstance()->username;
+		$this->password = $password?:Config::getInstance()->password;
+		$this->contentType = 'application/json';
+		$this->acceptType = 'application/json';
+		$this->serializeCallback = 'json_encode';
+		$this->unserializeCallback = 'json_decode';
+		$this->timeout = 3;
 	}
 
 	function setAuth($username, $password)
@@ -74,13 +74,38 @@ class Client
 		$this->APIURL = $URL;
 	}
 	
+	function setContentType($contentType)
+	{
+		$this->contentType = $contentType;
+	}
+	
+	function setAcceptType($acceptType)
+	{
+		$this->acceptType = $acceptType;
+	}
+	
+	function setSerializeCallback($callback)
+	{
+		$this->serializeCallback = $callback;
+	}
+	
+	function setUnserializeCallback($callback)
+	{
+		$this->unserializeCallback = $callback;
+	}
+	
+	function setTimeout($timeout)
+	{
+		$this->timeout = $timeout;
+	}
+	
 	function execute($verb, $ressource, array $params = array())
 	{
 		$url = $this->APIURL.$ressource;
 		if($verb == 'POST' || $verb == 'PUT')
 		{
 			 $data = array_pop($params);
-			 $data = json_encode($data);
+			 $data = call_user_func($this->serializeCallback, $data);
 		}
 		else
 		{
@@ -88,13 +113,13 @@ class Client
 		}
 		if($params)
 		{
-			array_map('urlencode', $params);
+			$params = array_map('urlencode', $params);
 			array_unshift($params, $url);
 			$url = call_user_func_array('sprintf', $params);
 		}
 		
-		$header[] = 'Accept: application/json';
-		$header[] = 'Content-type: application/json';
+		$header[] = 'Accept: '.$this->acceptType;
+		$header[] = 'Content-type: '.$this->contentType;
 		
 		$options = array();
 		
@@ -126,16 +151,21 @@ class Client
 				break;
 				
 			default:
-				throw new Exception('Unsupported HTTP method: '.$verb);
+				throw new \InvalidArgumentException('Unsupported HTTP method: '.$verb);
 		}
 		
 		$options[CURLOPT_URL] = $url;
 		$options[CURLOPT_HTTPHEADER] = $header;
 		$options[CURLOPT_HTTPAUTH] = CURLAUTH_BASIC;
 		$options[CURLOPT_USERPWD] = $this->username.':'.$this->password;
-		$options[CURLOPT_TIMEOUT] = 2;
+		$options[CURLOPT_TIMEOUT] = $this->timeout;
 		$options[CURLOPT_RETURNTRANSFER] = true;
 		$options[CURLOPT_USERAGENT] = 'ManiaLib Rest Client (2.0 preview)'; 
+		
+		// This normally should not be done
+		// But the certificates of our api are self-signed for now
+		$options[CURLOPT_SSL_VERIFYHOST] = 0;
+		$options[CURLOPT_SSL_VERIFYPEER] = 0;
 		
 		try 
 		{
@@ -154,7 +184,7 @@ class Client
 			throw $e;
 		}
 		
-		$response = json_decode($response);
+		$response = $response?call_user_func($this->unserializeCallback, $response):null;
 		
 		if($info['http_code'] == 200)
 		{
@@ -168,9 +198,9 @@ class Client
 			}
 			else
 			{
-				$message = 'API error';
+				$message = 'API error. Check the HTTP error code.';
 			}
-			throw new Exception($message, $info['http_code']);
+			throw new \Exception($message, $info['http_code']);
 		}
 	}
 }

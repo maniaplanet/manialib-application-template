@@ -52,17 +52,6 @@ class Header extends \ManiaLib\Application\Views\Header
 		$ui->setPosition(39, -48, 15);
 		$ui->setManialink($manialink);
 		$ui->save();
-
-		// TODO Do something better for ManiaHome
-		Manialink::beginFrame(39, -43, 15);
-		{
-			Manialink::appendXML(
-				'<include url="http://maniahome.trackmania.com/add.php?'.
-				'name='.\ManiaLib\Application\Config::getInstance()->name.
-				'&amp;url='.\ManiaLib\Application\Config::getInstance()->manialink.
-				'"/>');
-		}
-		Manialink::endFrame();	
 	}
 }
 

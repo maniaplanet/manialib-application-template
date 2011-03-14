@@ -12,7 +12,7 @@
 namespace ManiaLib\Services;
 
 /**
- * Abstract service
+ * Abstract data access service
  */
 abstract class AbstractService
 {
@@ -20,10 +20,16 @@ abstract class AbstractService
 	 * @var \ManiaLib\Database\Connection
 	 */
 	protected $db;
+
+	/**
+	 * Overide in service implementations to select a default database
+	 */
+	protected $databaseName;
 	
 	function __construct()
 	{
 		$this->db = \ManiaLib\Database\Connection::getInstance();
+		$this->db->select($this->databaseName);
 	}
 }
 

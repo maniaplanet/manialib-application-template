@@ -20,7 +20,6 @@ abstract class Bootstrapper
 	static $errorReporting = E_ALL;
 	static $errorHandlingClass = '\ManiaLib\Application\ErrorHandling';
 	static $errorHandler = 'exceptionErrorHandler';
-	static $exceptionHandler = 'exceptionHandler';
 	static $fatalExceptionHandler = 'fatalExceptionHandler';
 	/**
 	 * Microtime, which is set just at the begining of run() for benchmarking
@@ -41,20 +40,7 @@ abstract class Bootstrapper
 			$loader->setConfigFilename(static::$configFile);
 			$loader->smartLoad();
 			
-			static::onPreDispatch();
-			
-			try 
-			{
-				static::onDispatch();		
-			}
-			catch(\Exception $exception)
-			{
-				call_user_func(
-				array(
-					static::$errorHandlingClass, 
-					static::$exceptionHandler), 
-				$exception);
-			}
+			static::onDispatch();		
 		}
 		catch(\Exception $exception)
 		{
@@ -64,21 +50,7 @@ abstract class Bootstrapper
 					static::$fatalExceptionHandler), 
 				$exception);
 		}
-		
 		\ManiaLib\Benchmark\ApplicationRequests::touch(static::$mtime);
-	}
-	
-	/**
-	 * Called between config loading and application dispatching.
-	 * Typically used to load stuff such as i18n, route map etc. 
-	 */
-	static protected function onPreDispatch()
-	{
-		if(\ManiaLib\I18n\Config::getInstance()->dynamic)
-		{
-			$loader = \ManiaLib\I18n\Loader::getInstance();
-			$loader->smartLoad();
-		}
 	}
 	
 	/**
@@ -88,7 +60,13 @@ abstract class Bootstrapper
 	 */
 	static protected function onDispatch()
 	{
-		\ManiaLib\Application\Controller::dispatch();
+		if(\ManiaLib\I18n\Config::getInstance()->dynamic)
+		{
+			$loader = \ManiaLib\I18n\Loader::getInstance();
+			$loader->smartLoad();
+		}
+		
+		Dispatcher::getInstance()->run();
 	}
 }
 

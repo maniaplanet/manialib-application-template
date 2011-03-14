@@ -53,6 +53,10 @@ class DialogHelper
 	 */
 	public $buttonManialink;
 	/**
+	 * @var bool
+	 */
+	public $buttonAddplayerid = false;
+	/**
 	 * @var string 
 	 */
 	public $button2Label = 'Cancel';
@@ -60,6 +64,10 @@ class DialogHelper
 	 * @var string 
 	 */
 	public $button2Manialink;
+	/**
+	 * @var bool
+	 */
+	public $button2Addplayerid = false;
 	/**
 	 * @var string
 	 */

@@ -13,7 +13,6 @@ namespace ManiaLib\Gui;
 
 /**
  * Component
- * @todo maybe check the performance impact of the move and resize callbacks?
  */
 abstract class Component
 {

@@ -15,13 +15,11 @@ if(!defined('APP_PATH'))
 	exit;			
 }
 
-define('NAMESPACE_SEPARATOR', '\\');
-
 define('APP_LIBRARIES_PATH', __DIR__);
 
 function maniaLibAutoload($className)
 {
-	$className = str_replace(NAMESPACE_SEPARATOR, DIRECTORY_SEPARATOR, $className);
+	$className = str_replace('\\', DIRECTORY_SEPARATOR, $className);
 	$path = APP_LIBRARIES_PATH.DIRECTORY_SEPARATOR.$className.'.php';
 	if(file_exists($path))
 	{
@@ -30,5 +28,13 @@ function maniaLibAutoload($className)
 }
 
 spl_autoload_register('maniaLibAutoload');
+
+if(!function_exists('_'))
+{
+	function _($string)
+	{
+		return $string;
+	}
+}
 
 ?>

@@ -107,6 +107,16 @@ class RecordSet
 		}
 	}
 	
+	function fetchArrayOfSingleValues()
+	{
+		$array = array();
+		while($row = mysql_fetch_row($this->result))
+		{
+			$array[] = reset($row);
+		}
+		return $array;
+	}
+	
 	/**
 	 * Gets the number of rows in a result
 	 * @return int

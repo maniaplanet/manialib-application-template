@@ -77,16 +77,7 @@ class Controller
 	 * @var \ManiaLib\Application\Response
 	 */
 	protected $response;
-	
-	/**
-	 * @ignore
-	 */
-	final public static function dispatch()
-	{
-		$request = \ManiaLib\Application\Request::getInstance();
-		self::factory($request->getController())->launch();
-		\ManiaLib\Application\Response::getInstance()->render();
-	}
+	protected $launched;
 	
 	/**
 	 * @return \ManiaLib\Application\Controller
@@ -95,16 +86,43 @@ class Controller
 	final static public function factory($controllerName)
 	{
 		$controllerClass = 
-			Config::getInstance()->namespace.NAMESPACE_SEPARATOR.
-			'Controllers'.NAMESPACE_SEPARATOR.
+			Config::getInstance()->namespace.'\\'.
+			'Controllers'.'\\'.
 			$controllerName;
 		if(!class_exists($controllerClass))
 		{
 			throw new ControllerNotFoundException('Controller not found: /'.$controllerName.'/');
-		}	
+		}
 		return new $controllerClass($controllerName);
 	}
 
+	/**
+	 * @ignore
+	 */
+	final function launch()
+	{
+		if($this->launched)
+		{
+			throw new Exception('Controller was previously launched!');
+		}
+		$this->launched = true;
+		
+		$actionName = Dispatcher::getInstance()->getAction($this->defaultAction);
+		$this->checkActionExists($actionName);
+
+		foreach($this->filters as $filter)
+		{
+			$filter->preFilter();
+		}
+
+		$this->executeAction($actionName);
+
+		foreach(array_reverse($this->filters) as $filter)
+		{
+			$filter->postFilter();
+		}
+	}
+	
 	/**
 	 * If you want to do stuff at instanciation, override self::onConstruct()
 	 * @ignore
@@ -153,56 +171,27 @@ class Controller
 	}
 
 	/**
-	 * @return array[\ManiaLib\Application\Filterable]
-	 * @ignore
-	 */
-	final public function getFilters()
-	{
-		return $this->filters;
-	}
-
-	/**
 	 * Executes an action from within another action
+	 * @deprecated Use executeAction
 	 */
-	final protected function chainAction($controllerName, $actionName)
+	final protected function chainAction($actionName)
 	{
-		if($controllerName==null ||  $controllerName == $this->controllerName)
-		{
-			$this->checkActionExists($actionName);
-			$this->executeAction($actionName);
-		}
-		else
-		{
-			$this->executeActionCrossController($controllerName,$actionName);
-		}
+		$this->executeAction($actionName, false);
 	}
 
 	/**
 	 * Executes an action from within another action and override the view from the first action
+	 * @deprecated Use executeAction
 	 */
-	final protected function chainActionAndView($controllerName, $actionName, $resetViews = true)
+	final protected function chainActionAndView($actionName, $resetViews = true)
 	{
-		if($resetViews)
-		{
-			$this->response->resetViews();
-		}
-		if($controllerName==null || $controllerName == $this->controllerName)
-		{
-			$this->checkActionExists($actionName);
-			$this->response->registerView($this->controllerName, $actionName);
-			$this->executeAction($actionName);
-		}
-		else
-		{
-			$this->response->registerView($controllerName, $actionName);
-			$this->executeActionCrossController($controllerName, $actionName);
-		}
+		$this->executeAction($actionName, true, $resetViews);
 	}
 
 	/**
 	 * @ignore
 	 */
-	final public function checkActionExists($actionName)
+	final protected function checkActionExists($actionName)
 	{
 		if(!array_key_exists($actionName, $this->reflectionMethods))
 		{
@@ -231,46 +220,20 @@ class Controller
 	/**
 	 * @ignore
 	 */
-	final protected function executeActionCrossController($controllerName, $actionName)
+	final protected function executeAction($actionName, $registerView=true, $resetViews=false)
 	{
-		$controller = self::factory($controllerName);
-		$controller->checkActionExists($actionName);
-		$controllerFilters = $controller->getFilters();
-		foreach($controllerFilters as $controllerFilter)
+		$this->checkActionExists($actionName);
+		
+		if($resetViews)
 		{
-			if(!in_array($controllerFilter,$this->filters))
-			{
-				$controllerFilter->preFilter();
-			}
+			$this->response->resetViews();
 		}
-		$controller->executeAction($actionName);
-		foreach($controllerFilters as $controllerFilter)
+		
+		if($registerView)
 		{
-			if(!in_array($controllerFilter,$this->filters))
-			{
-				$controllerFilter->postFilter();
-			}
+			$this->response->registerView($this->response->getViewClassName($this->controllerName, $actionName));
 		}
-	}
-
-	/**
-	 * @ignore
-	 */
-	final public function executeAction($actionName)
-	{
-		if(!array_key_exists($actionName, $this->reflectionMethods))
-		{
-			try
-			{
-				$this->reflectionMethods[$actionName] =
-				new \ReflectionMethod(get_class($this),$actionName);
-			}
-			catch(\Exception $e)
-			{
-				throw new ActionNotFoundException($actionName);
-			}
-		}
-
+		
 		$callParameters = array();
 		$requiredParameters = $this->reflectionMethods[$actionName]->getParameters();
 		foreach($requiredParameters as $parameter)
@@ -291,28 +254,28 @@ class Controller
 		call_user_func_array(array($this, $actionName), $callParameters);
 	}
 
+	
+	
 	/**
-	 * @ignore
+	 * @return boolean Whether it was confirmed or not
 	 */
-	final protected function launch()
+	final protected function quickConfirmDialog($message)
 	{
-		$actionName = $this->request->getAction($this->defaultAction);
-		if(!$actionName) $actionName = $this->defaultAction;
-
-		$this->checkActionExists($actionName);
-
-		$this->response->registerView($this->controllerName, $actionName);
-
-		foreach($this->filters as $filter)
+		if(!$this->request->get('confirm'))
 		{
-			$filter->preFilter();
+			$d = new DialogHelper('\ManiaLib\Application\Views\Dialogs\TwoButtons');
+			$d->title = 'Confirm';
+			$d->message = $message;
+			$d->button2Manialink = $this->request->getReferer();
+			$this->request->set('confirm', rand());
+			$d->buttonManialink = $this->request->createLink(Route::CUR, Route::CUR);
+			$this->request->delete('confirm');
+			$this->response->registerDialog($d);
+			return false;
 		}
-
-		$this->executeAction($actionName);
-
-		foreach(array_reverse($this->filters) as $filter)
+		else
 		{
-			$filter->postFilter();
+			return true;
 		}
 	}
 }

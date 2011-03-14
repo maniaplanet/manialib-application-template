@@ -18,21 +18,7 @@ class Loader extends \ManiaLib\Loader\Loader
 {
 	static $dico = array();
 	
-	protected static $instance;
-	
 	protected $debugPrefix = '[I18N LOADER]';
-	
-	/**
-	 * @return \ManiaLib\I18n\Loader
-	 */
-	static function getInstance()
-	{
-		if(!self::$instance)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
 
 	protected function postLoad()
 	{

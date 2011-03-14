@@ -11,85 +11,65 @@
 
 namespace ManiaLib\Cache;
 
+const APC = 'apc';
+const MEMCACHE = 'memcache';
+const NONE = 'nocache';
+
 /**
  * La classe qu'on a du mal à la trouver
  */
 abstract class Cache
 {
-	const DRIVER_NO_CACHE = 1;
-	const DRIVER_APC = 2;
-	
-	static private $instances = array();
-	
 	/**
-	 * @return \ManiaLib\Cache\Cache
+	 * Factory for getting instances on cache objects.
+	 * You specify the driver to use as a parameter, and
+	 * it automatically falls back to the "NoCache" driver
+	 * if not found
+	 * @return \ManiaLib\Cache\CacheInterface
 	 */
-	public static function getInstance($driver = null)
+	static function factory($driver = null)
 	{
-		if (!array_key_exists($driver, self::$instances) || !self::$instances[$driver])
+		try 
 		{
-			if($driver === null)
-			{
-				if(function_exists('apc_add'))
-				{
-					$driver = self::DRIVER_APC;
-				}
-				else
-				{
-					$driver = self::DRIVER_NO_CACHE;
-				}
-			}
 			switch($driver)
 			{
-				case self::DRIVER_APC:
-					self::$instances[$driver] = new \ManiaLib\Cache\Drivers\APC();
-					break;
-					
-				case self::DRIVER_NO_CACHE:
-					self::$instances[$driver] = new \ManiaLib\Cache\Drivers\NoCache();
-					break;
-				
-				default:
-					throw new Exception('Unknown driver: '.$driver);
+				case APC: return static::getDriver('APC');
+				case MEMCACHE: return static::getDriver('Memcache');
+				default: throw new Exception();
 			}
 		}
-		return self::$instances[$driver];
+		catch(Exception $e)
+		{
+			return static::getDriver('NoCache');
+		}
 	}
 	
 	/**
-	 * Returns a unique key based on the file location to avoid cache conflicts
-	 * when several applications are running on the same server
+	 * Returns a unique prefix to avoid cache collisions
+	 * between several applications
+	 * @return string
 	 */
-	static public function getUniqueAppCacheKeyPrefix()
+	static function getPrefix()
 	{
 		if(defined('APP_ID'))
 		{
-			return APP_ID;
+			return APP_ID.'_';
 		}
 		else
 		{
-			return crc32(__FILE__);
+			return crc32(__FILE__).'_';
 		}
 	}
 	
-	function enableLogging()
+	protected static function getDriver($driver)
 	{
-		return true;
+		$className = __NAMESPACE__.'\\Drivers\\'.$driver;
+		if(!class_exists($className))
+		{
+			throw new Exception(sprintf('Cache driver %s does not exist', $className));			
+		}
+		return call_user_func(array($className, 'getInstance'));
 	}
-	
-	abstract function exists($key);
-	/**
-	 * @deprecated
-	 */
-	abstract function get($key);
-	abstract function fetch($key); 
-	abstract function add($key, $value, $ttl=0);
-	abstract function store($key, $value, $ttl=0);
-	abstract function delete($key);
-	abstract function clearCache();
-	abstract function inc($key);
 }
-
-class Exception extends \Exception {}
 
 ?>

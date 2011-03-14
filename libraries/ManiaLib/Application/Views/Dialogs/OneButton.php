@@ -40,6 +40,10 @@ class OneButton extends \ManiaLib\Application\View implements DialogInterface
 			$ui->text->setText($this->response->dialog->message);
 			$ui->button->setText($this->response->dialog->buttonLabel);
 			$ui->button->setManialink($this->response->dialog->buttonManialink);
+			if($this->response->dialog->buttonAddplayerid)
+			{
+				$ui->button->addPlayerId();
+			}
 			$ui->save();	
 		}
 		Manialink::endFrame();
