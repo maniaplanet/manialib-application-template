@@ -184,7 +184,10 @@ class Client
 			throw $e;
 		}
 		
-		$response = $response?call_user_func($this->unserializeCallback, $response):null;
+		if($response && $this->unserializeCallback)
+		{
+			$response = call_user_func($this->unserializeCallback, $response);
+		}
 		
 		if($info['http_code'] == 200)
 		{
