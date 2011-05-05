@@ -16,18 +16,35 @@ namespace ManiaLib\Application\Tracking;
  */
 class Filter implements \ManiaLib\Application\Filterable
 {
+
 	/**
 	 * @var \ManiaLib\Application\Tracking\GoogleAnalytics
 	 */
 	protected $tracker;
+	protected $account;
 	protected $tracking = false;
-	
+	protected $cookieNameSuffix;
+
+	function __construct($trackingAccount = null, $cookieNameSuffix=null)
+	{
+		if($trackingAccount)
+		{
+			$this->account = $trackingAccount;
+		}
+		$this->cookieNameSuffix = $cookieNameSuffix;
+	}
+
 	function preFilter()
 	{
-		$config = Config::getInstance();
-		if($config->account)
+		if(!$this->account)
 		{
-			$this->tracker = new GoogleAnalytics();
+			$config = Config::getInstance();
+			$this->account = $config->account;
+		}
+
+		if($this->account)
+		{
+			$this->tracker = new GoogleAnalytics($this->account, $this->cookieNameSuffix);
 			$this->tracker->loadFromConfig();
 			$this->tracker->loadCookie();
 			$this->tracking = true;
@@ -38,8 +55,8 @@ class Filter implements \ManiaLib\Application\Filterable
 			}
 		}
 	}
-	
-	function postFilter() 
+
+	function postFilter()
 	{
 		if($this->tracking)
 		{
@@ -48,7 +65,7 @@ class Filter implements \ManiaLib\Application\Filterable
 			$response->registerView('\ManiaLib\Application\Tracking\View');
 		}
 	}
-}
 
+}
 
 ?>

@@ -4,9 +4,9 @@
  * 
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
- * @version     $Revision: 2775 $:
- * @author      $Author: Maxime $:
- * @date        $Date: 2011-03-04 15:31:04 +0100 (ven., 04 mars 2011) $:
+ * @version     $Revision: 3275 $:
+ * @author      $Author: svn $:
+ * @date        $Date: 2011-04-01 18:06:13 +0200 (ven., 01 avr. 2011) $:
  */
 
 namespace ManiaLib\Authentication\Manialink;
@@ -24,7 +24,12 @@ abstract class Authentication extends \ManiaLib\Authentication\AbstractAuthentic
 
 	static protected function executeRequest($login, $token)
 	{
+		$config = \ManiaLib\Authentication\Config::getInstance();
 		$url = sprintf(self::SCRIPT, $login, $token);
+		if($config->userLogin && $config->userPassword)
+		{
+			$url .= sprintf('&userlogin=%s&userpassword=%s', $config->userLogin, $config->userPassword);
+		}
 		return file_get_contents($url);
 	}
 }

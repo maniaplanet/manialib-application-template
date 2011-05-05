@@ -22,33 +22,40 @@ use ManiaLib\Gui\Manialink;
  */
 class Error extends \ManiaLib\Application\View
 {
+	protected $width;
+	protected $height;
+	protected $message;
+
+	protected function onConstruct()
+	{
+		$this->width = $this->response->get('width', 70);
+		$this->height =  $this->response->get('height', 35);
+		$this->message = $this->response->message ?: '$<$oOops!$>'."\n".'An error occured.';
+	}
+
+
 	function display()
 	{
-		$width = $this->response->get('width', 70);
-		$height =  $this->response->get('height', 35);
-		$message = $this->response->message;
-		$message = $message ?: '$<$oOops!$>'."\n".'An error occured.';
-		
 		Manialink::load();
 		{
-			$ui = new Panel($width, $height);
+			$ui = new Panel($this->width, $this->height);
 			$ui->setAlign('center', 'center');
 			$ui->title->setStyle(Label::TextTitleError);
 			$ui->titleBg->setSubStyle(Bgs1::BgTitle2);
 			$ui->title->setText('Error');
 			$ui->save();
 
-			$ui = new Label(68);
+			$ui = new Label($this->width - 2);
 			$ui->enableAutonewline();
 			$ui->setAlign('center', 'center');
 			$ui->setPosition(0, 0, 2);
-			$ui->setText($message);
+			$ui->setText($this->message);
 			$ui->save();
 			
 			$ui = new Button();
 			$ui->setText('Back');
-			$ui->setManialink($this->response->backLink);
-			$ui->setPosition(0, -($height/2)+5, 5);
+			$ui->setManialink($this->response->errorManialink ?: $this->response->backLink);
+			$ui->setPosition(0, -($this->height/2)+5, 5);
 			$ui->setHalign('center');
 			$ui->save();
 		}

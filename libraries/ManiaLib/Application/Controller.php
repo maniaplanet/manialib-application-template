@@ -1,7 +1,7 @@
 <?php
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
- * 
+ *
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -33,9 +33,9 @@ namespace ManiaLib\Application;
  *        parent::__construct();
  *        $this->addFilter(new RegisterRequestParametersFilter());
  *    }
- *    
+ *
  *    function index() {} // mapped by /home/index/
- *    
+ *
  *    function anotherAction() {} // mapped by /home/another_action/
  * }
  * </code>
@@ -49,7 +49,7 @@ class Controller
 	protected $defaultAction;
 	/**
 	 * Current controller name
-	 */	
+	 */
 	protected $controllerName;
 	/**
 	 * Current action name
@@ -77,15 +77,14 @@ class Controller
 	 * @var \ManiaLib\Application\Response
 	 */
 	protected $response;
-	protected $launched;
-	
+
 	/**
 	 * @return \ManiaLib\Application\Controller
 	 * @ignore
 	 */
 	final static public function factory($controllerName)
 	{
-		$controllerClass = 
+		$controllerClass =
 			Config::getInstance()->namespace.'\\'.
 			'Controllers'.'\\'.
 			$controllerName;
@@ -93,22 +92,16 @@ class Controller
 		{
 			throw new ControllerNotFoundException('Controller not found: /'.$controllerName.'/');
 		}
+		array_unshift(Config::getInstance()->viewsNS, Config::getInstance()->namespace.'\\Views\\');
 		return new $controllerClass($controllerName);
 	}
 
 	/**
 	 * @ignore
 	 */
-	final function launch()
+	final function launch($actionName)
 	{
-		if($this->launched)
-		{
-			throw new Exception('Controller was previously launched!');
-		}
-		$this->launched = true;
-		
-		$actionName = Dispatcher::getInstance()->getAction($this->defaultAction);
-		$this->checkActionExists($actionName);
+		$actionName = $actionName ?: $this->defaultAction;
 
 		foreach($this->filters as $filter)
 		{
@@ -122,7 +115,7 @@ class Controller
 			$filter->postFilter();
 		}
 	}
-	
+
 	/**
 	 * If you want to do stuff at instanciation, override self::onConstruct()
 	 * @ignore
@@ -142,16 +135,16 @@ class Controller
 		}
 		$this->onConstruct();
 	}
-	
+
 	/**
-	 * Stuff to be executed when the controller is instanciated; override this in your controllers 
+	 * Stuff to be executed when the controller is instanciated; override this in your controllers
 	 */
 	protected function onConstruct(){}
 
 	/**
 	 * Add a filter to the curent controller
 	 * Typically you should call that in your controller's onConstruct() method
-	 * 
+	 *
 	 * Example:
 	 * <code>
 	 * class SomeStuffController extends \ManiaLib\Application\Controller
@@ -159,7 +152,7 @@ class Controller
 	 *     //...
 	 *     function onConstruct()
 	 *     {
-	 *			$this->addFilter(new UserAgentCheckFilter());      
+	 *			$this->addFilter(new UserAgentCheckFilter());
 	 *     }
 	 *     //...
 	 * }
@@ -217,23 +210,20 @@ class Controller
 		}
 	}
 
-	/**
-	 * @ignore
-	 */
-	final protected function executeAction($actionName, $registerView=true, $resetViews=false)
+	protected function executeAction($actionName, $registerView=true, $resetViews=false)
 	{
 		$this->checkActionExists($actionName);
-		
+
 		if($resetViews)
 		{
 			$this->response->resetViews();
 		}
-		
+
 		if($registerView)
 		{
 			$this->response->registerView($this->response->getViewClassName($this->controllerName, $actionName));
 		}
-		
+
 		$callParameters = array();
 		$requiredParameters = $this->reflectionMethods[$actionName]->getParameters();
 		foreach($requiredParameters as $parameter)
@@ -249,13 +239,13 @@ class Controller
 				$callParameters[] = $this->request->getStrict($pname, $pmessage);
 			}
 		}
-		
+
 		$this->actionName = $actionName;
 		call_user_func_array(array($this, $actionName), $callParameters);
 	}
 
-	
-	
+
+
 	/**
 	 * @return boolean Whether it was confirmed or not
 	 */
@@ -275,6 +265,7 @@ class Controller
 		}
 		else
 		{
+			$this->request->delete('confirm');
 			return true;
 		}
 	}

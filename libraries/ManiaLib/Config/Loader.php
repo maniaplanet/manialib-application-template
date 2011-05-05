@@ -18,14 +18,18 @@ class Loader extends \ManiaLib\Loader\Loader
 {
 	static $aliases = array(
 		'application' => 'ManiaLib\\Application\\Config',
-		'database' => 'ManiaLib\\Database\\Config',
-		'log' => 'ManiaLib\\Log\\Config',
-		'tracking' => 'ManiaLib\\Application\\Tracking\\Config',
-		'i18n' => 'ManiaLib\\I18n\\Config',
+		'authentication' => 'ManiaLib\\Authentication\\Config',
 		'benchmark' => 'ManiaLib\\Benchmark\\Config',
-		'session' => 'ManiaLib\Session\Config',
+		'cache' => 'ManiaLib\\Cache\\Config',
 		'config' => 'ManiaLib\\Config\\Config',
+		'database' => 'ManiaLib\\Database\\Config',
+		'i18n' => 'ManiaLib\\I18n\\Config',
+		'log' => 'ManiaLib\\Log\\Config',
 		'maniahome' => 'ManiaLib\\ManiaHome\\Config',
+		'restclient' => 'ManiaLib\\Rest\\Config',
+		'session' => 'ManiaLib\Session\Config',
+		'smarty' => 'ManiaLib\\Application\\Rendering\\SmartyConfig',
+		'tracking' => 'ManiaLib\\Application\\Tracking\\Config',
 	);
 	
 	protected $debugPrefix = '[CONFIG LOADER]';

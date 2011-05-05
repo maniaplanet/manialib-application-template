@@ -202,13 +202,13 @@ class PageNavigator extends \ManiaLib\Gui\Component
 		{
 			$this->arrowFastNext->setManialink(null);
 		} 
-		if($this->arrowPrev->hasLink() && $this->arrowFastPrev->hasLink())
+		if($this->arrowPrev->hasLink() && $this->arrowFastPrev->hasLink() && $this->currentPage-5 > 0)
 		{
 			 $this->arrowFastPrev->setSubStyle($this->arrowFastPrevStyle);
 		}
 		else
 		{
-			$this->arrowFastNext->setManialink(null);
+			$this->arrowFastPrev->setManialink(null);
 		} 
 		if($this->arrowNext->hasLink() && $this->arrowLast->hasLink())
 		{

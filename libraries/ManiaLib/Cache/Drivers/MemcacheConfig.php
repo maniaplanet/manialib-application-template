@@ -13,8 +13,7 @@ namespace ManiaLib\Cache\Drivers;
 
 class MemcacheConfig extends \ManiaLib\Utils\Singleton
 {
-	// FIXME MANIALIB CACHE We should be able to configure the hosts more precisely
-	// ie. ports, weights, timeouts etc.
+	// FIXME ManiaLib Memcache config should be based on php's config format
 	public $hosts = array('127.0.0.1');
 }
 ?>

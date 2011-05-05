@@ -39,7 +39,9 @@ namespace ManiaLib\Rest;
  */
 class Client
 {
-	protected $APIURL = 'https://api.maniastudio.com';
+	public $lastRequestInfo;
+	
+	protected $APIURL = 'https://ws.trackmania.com';
 	protected $username;
 	protected $password;
 	protected $contentType;
@@ -125,6 +127,7 @@ class Client
 		
 		switch($verb)
 		{
+			case 'HEAD':
 			case 'GET':
 				// Nothing to do
 				break;
@@ -160,7 +163,7 @@ class Client
 		$options[CURLOPT_USERPWD] = $this->username.':'.$this->password;
 		$options[CURLOPT_TIMEOUT] = $this->timeout;
 		$options[CURLOPT_RETURNTRANSFER] = true;
-		$options[CURLOPT_USERAGENT] = 'ManiaLib Rest Client (2.0 preview)'; 
+		$options[CURLOPT_USERAGENT] = 'ManiaLib Rest Client'; 
 		
 		// This normally should not be done
 		// But the certificates of our api are self-signed for now
@@ -183,6 +186,8 @@ class Client
 			}
 			throw $e;
 		}
+		
+		$this->lastRequestInfo = $info;
 		
 		if($response && $this->unserializeCallback)
 		{

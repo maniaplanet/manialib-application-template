@@ -61,7 +61,7 @@ abstract class ApplicationRequests
 			$cache->inc($requestKey);
 			
 			// And we check if we need to store the execution time
-			if($count < $config->maxElements || $count % $config->samplingRate == 1)
+			if($count < $config->maxElements || rand(0, $config->samplingRate) == 0)
 			{
 				if($mtimeStart)
 				{

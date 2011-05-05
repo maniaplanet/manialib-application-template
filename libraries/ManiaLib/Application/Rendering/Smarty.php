@@ -4,9 +4,9 @@
  * 
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
- * @version     $Revision: 2740 $:
+ * @version     $Revision: 3021 $:
  * @author      $Author: Maxime $:
- * @date        $Date: 2011-03-03 20:00:19 +0100 (jeu., 03 mars 2011) $:
+ * @date        $Date: 2011-03-16 20:56:42 +0100 (mer., 16 mars 2011) $:
  */
 
 namespace ManiaLib\Application\Rendering;
@@ -36,21 +36,18 @@ class Smarty extends \ManiaLib\Utils\Singleton implements RendererInterface
 			throw new ViewNotFoundException('View not found: '.$viewName);
 		}
 		
+		// Add some useful vars to the response
 		$config = \ManiaLib\Application\Config::getInstance();
 		$session = \ManiaLib\Session\Session::getInstance();
 		$response = \ManiaLib\Application\Response::getInstance();
-		$that = self::getInstance();
+		$tracking = \ManiaLib\Application\Tracking\Config::getInstance();
 		
 		$response->login = $session->login;
 		$response->mediaURL = $config->getMediaURL();
 		$response->appURL = $config->getLinkCreationURL();
+		$response->trackingAccount = $tracking->account;
 		
-		$viewName = str_replace('\\', DIRECTORY_SEPARATOR, $viewName);
-		$templateDir = $that->smarty->getTemplateDir();
-		$templateDir = reset($templateDir);
-		$template = $templateDir.DIRECTORY_SEPARATOR.$viewName.'.tpl';
-		$that->smarty->setTemplateDir(dirname($template));
-		
+		// Assign all response vars to the template
 		$vars = $response->getAll();
 		$smarty = $that->smarty;
 		$callback = function ($value, $key) use ($smarty) 
@@ -59,8 +56,9 @@ class Smarty extends \ManiaLib\Utils\Singleton implements RendererInterface
 		};
 		array_walk($vars, $callback);
 		
-		$that->smarty->display(basename($template));
-		
+		// Rendering
+		$viewName = str_replace('\\', DIRECTORY_SEPARATOR, $viewName);
+		$that->smarty->display($viewName.'.tpl');
 		$that->rendered = true;
 	}
 	
@@ -84,10 +82,12 @@ class Smarty extends \ManiaLib\Utils\Singleton implements RendererInterface
 		$smartyConfig = SmartyConfig::getInstance();
 		
 		$this->smarty = new \Smarty();
+		$this->smarty->error_reporting = E_ALL ^ E_NOTICE;
 		$this->smarty->setCompileDir($smartyConfig->compilePath);
 		$this->smarty->setCacheDir($smartyConfig->cachePath);
 		$this->smarty->setConfigDir($smartyConfig->configPath);
 		$this->smarty->setTemplateDir($smartyConfig->templatePath);
+		//$this->smarty->debugging = true;
 	} 
 }
 

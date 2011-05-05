@@ -4,9 +4,9 @@
  * 
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
- * @version     $Revision: 2302 $:
+ * @version     $Revision: 2961 $:
  * @author      $Author: Maxime $:
- * @date        $Date: 2011-02-11 18:01:19 +0100 (ven., 11 févr. 2011) $:
+ * @date        $Date: 2011-03-14 16:22:46 +0100 (lun., 14 mars 2011) $:
  */
  
 namespace ManiaLib\Cron;
@@ -31,22 +31,18 @@ abstract class Cron extends Singleton
 		error_reporting(static::$errorReporting);
 		set_error_handler(array(static::$errorHandlingClass, static::$errorHandler));
 		
-		if(!static::$configFile)
-		{
-			static::$configFile = APP_PATH.'config/app.ini';
-		}
-		
 		$this->debug('Loading config...');
 		try 
 		{
+			\ManiaLib\Config\Loader::$enableCache = false;
 			$loader = \ManiaLib\Config\Loader::getInstance();
-			$loader->disableCache();
 			$loader->setConfigFilename(static::$configFile);
 			$loader->smartLoad();
 		}
 		catch (\Exception $e)
 		{
-			$this->debug('ERROR WHILE LOADING CONFIG. See error logs.');
+			$this->debug('ERROR WHILE LOADING CONFIG.');
+			$this->debug($e);
 			exit;
 		}
 		$this->debug('OK');

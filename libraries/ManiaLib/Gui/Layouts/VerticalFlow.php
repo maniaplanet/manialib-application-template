@@ -33,7 +33,7 @@ class VerticalFlow extends AbstractLayout
 		$availableHeight = $this->sizeY + $this->yIndex - $this->borderHeight + 0.1;
 
 		// If end of the line is reached
-		if($availableHeight < $item->getSizeY() & $this->currentColumnElementCount > 0)
+		if($availableHeight < $item->getRealSizeY() & $this->currentColumnElementCount > 0)
 		{
 			$this->xIndex += $this->maxWidth + $this->marginWidth;
 			$this->yIndex = $this->borderHeight;
@@ -48,10 +48,10 @@ class VerticalFlow extends AbstractLayout
 	 */
 	function postFilter(\ManiaLib\Gui\Component $item)
 	{
-		$this->yIndex -= $item->getSizeY() + $this->marginHeight;
-		if(!$this->maxWidth || $item->getSizeX() > $this->maxWidth)
+		$this->yIndex -= $item->getRealSizeY() + $this->marginHeight;
+		if(!$this->maxWidth || $item->getRealSizeX() > $this->maxWidth)
 		{
-			$this->maxWidth = $item->getSizeX();
+			$this->maxWidth = $item->getRealSizeX();
 		}
 		$this->currentColumnElementCount++;
 	}

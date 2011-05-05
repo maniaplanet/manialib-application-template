@@ -26,11 +26,12 @@ class Filter extends \ManiaLib\Authentication\AbstractFilter
 		$session = \ManiaLib\Session\Session::getInstance();
 		$session->delete(static::SESS_AUTH_KEY);
 		$session->delete('login');
+		$session->delete('token');
 	}
 	
 	protected function redirectToLogin()
 	{
-		$params['application'] = Config::getInstance()->username;
+		$params['application'] = \ManiaLib\Authentication\Config::getInstance()->username;
 		$params['redirection'] = $this->request->createLink(Route::CUR, Route::CUR);
 		
 		$url = 'https://player.trackmania.com/';

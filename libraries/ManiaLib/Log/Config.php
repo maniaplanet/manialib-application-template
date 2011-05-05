@@ -18,8 +18,8 @@ class Config extends \ManiaLib\Utils\Singleton
 	public $path;
 	public $prefix;
 	public $error = 'error.log';
-	public $user = 'user-error.log';
-	public $debug = 'debug.log';
+	public $user = 'user.log';
+	public $debug = 'info.log';
 	public $loader = 'loader.log';
 	public $verbose = false;
 	

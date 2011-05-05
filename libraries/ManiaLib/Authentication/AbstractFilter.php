@@ -11,13 +11,14 @@
 
 namespace ManiaLib\Authentication;
 
+use ManiaLib\Application\SilentUserException;
+
 /**
  * Authentication abstract filter
  */
 abstract class AbstractFilter extends \ManiaLib\Application\AdvancedFilter
 {
 	const SESS_AUTH_KEY = 'manialib-auth';
-	const SESS_AUTH_ERROR = 'manialib-auth-error';
 	
 	protected $forceUnited;
 	
@@ -34,12 +35,7 @@ abstract class AbstractFilter extends \ManiaLib\Application\AdvancedFilter
 			return;		
 		}
 		
-		if($message = $this->session->get(static::SESS_AUTH_ERROR))
-		{
-			throw new \ManiaLib\Application\UserException($message);
-		}
-		
-		if(!$this->request->exists('token'))
+		if(!$this->session->token)
 		{
 			$this->redirectToLogin();
 			return;
@@ -48,7 +44,7 @@ abstract class AbstractFilter extends \ManiaLib\Application\AdvancedFilter
 		try
 		{
 			$login = $this->session->login;
-			$token = $this->request->get('token');
+			$token = $this->session->token;
 			
 			$authClassname = explode('\\', get_called_class());
 			array_pop($authClassname);
@@ -61,25 +57,24 @@ abstract class AbstractFilter extends \ManiaLib\Application\AdvancedFilter
 			{
 				if($this->session->game != 'united')
 				{
-					throw new \ManiaLib\Application\UserException(
-						'You need a United account to access this Manialink');
+					$this->response->errorManialink = 'manialink:home';
+					throw new SilentUserException(
+						'You need a TrackMania United account to access this Manialink.');
 				}
 			}
-			$this->session->login = $login;
 			$this->session->set(static::SESS_AUTH_KEY, 1);
-			$this->request->delete('token');
 			$this->request->delete('authentication');
 			
-			// FIXME MANIALIB Find a better way to do that (events?)
 			\ManiaLib\Log\Logger::info(sprintf('%s logged in', $login));
 		}
 		catch (\Exception $e)
 		{
-			$this->request->delete('token');
 			$this->request->delete('authentication');
-			if($e instanceof \ManiaLib\Application\UserException)
+			$this->session->delete('token');
+			$this->session->delete(static::SESS_AUTH_KEY);
+			
+			if($e instanceof SilentUserException)
 			{
-				$this->session->set(static::SESS_AUTH_ERROR, $e->getMessage());
 				throw $e;
 			}
 			elseif($e instanceof \ErrorException)
@@ -94,11 +89,11 @@ abstract class AbstractFilter extends \ManiaLib\Application\AdvancedFilter
 			{
 				$message = 'Authentication failed';
 			}
-			$this->session->set(static::SESS_AUTH_ERROR, $message);
 			throw new \ManiaLib\Application\UserException($message);
 		}
 	}
 	
 	abstract protected function redirectToLogin();
 }
+
 ?>

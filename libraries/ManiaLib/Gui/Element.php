@@ -206,7 +206,9 @@ abstract class Element extends Component implements Drawable
 	 */
 	function setImageFocus($imageFocus, $absoluteUrl = false)
 	{
-		if($absoluteUrl)
+		$this->setStyle(null);
+		$this->setSubStyle(null);
+		if(!$absoluteUrl)
 		{
 			$this->imageFocus = \ManiaLib\Gui\Manialink::$imagesURL.$imageFocus;
 		}
@@ -221,7 +223,9 @@ abstract class Element extends Component implements Drawable
 	 */
 	function setImageFocusid($imageFocusid)
 	{
-		$this->imageFocusid;
+		$this->setStyle(null);
+		$this->setSubStyle(null);
+		$this->imageFocusid = $imageFocusid;
 	}
 
 	/**
@@ -551,14 +555,15 @@ abstract class Element extends Component implements Drawable
 				$x + $this->cardElementsPosX, 
 				$y + $this->cardElementsPosY, 
 				$this->posZ + $this->cardElementsPosZ,
-				$this->scale,
-				$this->cardElementsLayout);
+				$this->scale);
+			\ManiaLib\Gui\Manialink::beginFrame(0, 0, 0, null, $this->cardElementsLayout);
 				
 			foreach($this->cardElements as $element)
 			{
 				$element->save();
 			}
 			
+			\ManiaLib\Gui\Manialink::endFrame();
 			\ManiaLib\Gui\Manialink::endFrame();
 		}
 

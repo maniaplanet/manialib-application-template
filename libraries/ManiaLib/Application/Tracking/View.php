@@ -18,6 +18,7 @@ use ManiaLib\Gui\Elements\Quad;
  */
 class View extends \ManiaLib\Application\View
 {
+
 	function display()
 	{
 		if($this->response->trackingURL)
@@ -27,8 +28,8 @@ class View extends \ManiaLib\Application\View
 			$ui->setImage($this->response->trackingURL, true);
 			$ui->save();
 		}
-	} 
-}
+	}
 
+}
 
 ?>

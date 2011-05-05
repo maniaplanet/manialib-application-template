@@ -34,7 +34,7 @@ abstract class AbstractAuthentication
 			
 		if(!$token)
 			throw new InvalidTokenException('Token is empty');
-		
+			
 		$response = static::executeRequest($login, $token);
 		$matches = null;
 		preg_match('/<error>([0-9]+)<\/error>/i', $response, $matches);

@@ -17,7 +17,7 @@ namespace ManiaLib\Application\Tracking;
 class GoogleAnalytics
 {
 	const GA_TRACKING_URL = 'http://www.google-analytics.com/__utm.gif';
-	
+
 	/**
 	 * @var string
 	 */
@@ -26,7 +26,6 @@ class GoogleAnalytics
 	 * @var \ManiaLib\Gui\Elements\Quad
 	 */
 	public $trackingQuad;
-	
 	/**
 	 * Urchin version
 	 */
@@ -111,32 +110,33 @@ class GoogleAnalytics
 	 * Cookie var
 	 */
 	public $__utmz;
-	
 	protected $domainHash;
 	protected $visitorId;
+	protected $cookieNameSuffix;
 
-	function __construct()
+	function __construct($account, $cookieNameSuffix=null)
 	{
-		$this->utmhid = rand(1000000000,9999999999);
-		$this->utmn = rand(1000000000,9999999999);
+		$this->utmac = $account;
+		$this->cookieNameSuffix = $cookieNameSuffix;
+		$this->utmhid = rand(1000000000, 9999999999);
+		$this->utmn = rand(1000000000, 9999999999);
 		$this->utmul = 'en';
 		if(array_key_exists('HTTP_REFERER', $_SERVER))
 		{
 			$this->utmr = $_SERVER['HTTP_REFERER'];
 		}
 	}
-	
+
 	/**
 	 * Loads the parameters from the application config
 	 */
 	function loadFromConfig()
 	{
-		$this->utmac = Config::getInstance()->account;
-		$this->utmdt = \ManiaLib\Application\Config::getInstance()->name; 
+		$this->utmdt = \ManiaLib\Application\Config::getInstance()->name;
 		$this->utmhn = parse_url(\ManiaLib\Application\Config::getInstance()->URL, PHP_URL_HOST);
 		$this->utmp = \ManiaLib\Application\Dispatcher::getInstance()->getPathInfo();
 	}
-	
+
 	/**
 	 * Loads cookie information
 	 * @see http://services.google.com/analytics/breeze/en/ga_cookies/index.html
@@ -144,26 +144,31 @@ class GoogleAnalytics
 	function loadCookie()
 	{
 		$domainHash = $this->getDomainHash();
-		$cookieRandom = rand(1000000000,2147483647); //number under 2147483647
-		
-		$utma = \ManiaLib\Utils\Arrays::get($_COOKIE, '__utma', '');
+		$cookieRandom = rand(1000000000, 2147483647); //number under 2147483647
+
+		$cookieUtma = '__utma'.$this->cookieNameSuffix;
+		$cookieUtmb = '__utmb'.$this->cookieNameSuffix;
+		$cookieUtmc = '__utmc'.$this->cookieNameSuffix;
+		$cookieUtmz = '__utmz'.$this->cookieNameSuffix;
+
+		$utma = \ManiaLib\Utils\Arrays::get($_COOKIE, $cookieUtma, '');
 		$utma = $utma ? explode('.', $utma) : array();
-		
-		$utmb = \ManiaLib\Utils\Arrays::get($_COOKIE, '__utmb', '');
+
+		$utmb = \ManiaLib\Utils\Arrays::get($_COOKIE, $cookieUtmb, '');
 		$utmb = $utmb ? explode('.', $utmb) : array();
-		
-		$utmc = \ManiaLib\Utils\Arrays::get($_COOKIE, '__utmc', '');
+
+		$utmc = \ManiaLib\Utils\Arrays::get($_COOKIE, $cookieUtmc, '');
 		$utmc = $utmc ? explode('.', $utmc) : array();
-		
+
 		$utmz = array();
-		
+
 		$utma[0] = $domainHash; // Domain hash
 		$utma[1] = \ManiaLib\Utils\Arrays::get($utma, 1, $cookieRandom); // Random unique ID
 		$utma[2] = \ManiaLib\Utils\Arrays::get($utma, 2, time()); // Time of initial visit
 		$utma[3] = \ManiaLib\Utils\Arrays::get($utma, 3, time()); // Begining of previous session
 		$utma[4] = \ManiaLib\Utils\Arrays::get($utma, 4, time()); // Begining of current session
 		$utma[5] = \ManiaLib\Utils\Arrays::get($utma, 5, 0); // Session counter
-		
+
 		if(!$utmb || !$utmc)
 		{
 			// New session has started
@@ -171,36 +176,36 @@ class GoogleAnalytics
 			$utma[3] = $utma[4];
 			$utma[4] = time();
 		}
-		
+
 		$utmb[0] = $domainHash;
-		
+
 		$utmc[0] = $domainHash;
-		
+
 		$utmz[0] = $domainHash; // Domain hash
 		$utmz[1] = time(); // Timestamp
 		$utmz[2] = $utma[5]; // Session number
 		$utmz[3] = 1; // Campaign number
 		$utmz[4] = // Campaign information
-			'utmcsr=(direct)|'. //utm_source
-			'utmccn=(direct)|'. //utm_campaign
+			'utmcsr=(direct)|'.//utm_source
+			'utmccn=(direct)|'.//utm_campaign
 			'utmcmd=(none)'; //utm_medium'
-		
+
 		$__utma = implode('.', $utma);
 		$__utmb = implode('.', $utmb);
 		$__utmc = implode('.', $utmc);
 		$__utmz = implode('.', $utmz);
-		
-		setcookie('__utma', $__utma, strtotime('+2 years'));
-		setcookie('__utmb', $__utmb, strtotime('+30 minutes'));
-		setcookie('__utmc', $__utmb, 0);
-		setcookie('__utmz', $__utmz, strtotime('+6 months'));
-		
+
+		setcookie($cookieUtma, $__utma, strtotime('+2 years'));
+		setcookie($cookieUtmb, $__utmb, strtotime('+30 minutes'));
+		setcookie($cookieUtmc, $__utmb, 0);
+		setcookie($cookieUtmz, $__utmz, strtotime('+6 months'));
+
 		$this->__utma = $__utma.';';
 		$this->__utmb = $__utmb.';';
 		$this->__utmc = $__utmc.';';
 		$this->__utmz = $__utmz.';';
 	}
-	
+
 	/**
 	 * Computes the tracking URL and returns it. Its is a 1*1 gif image that
 	 * should be called by the client.
@@ -227,18 +232,18 @@ class GoogleAnalytics
 				'utmu' => $this->utmu,
 				'utmcr' => $this->utmcr,
 				'utmdt' => $this->utmdt,
-				'utmcc' => 
-					'__utma='.$this->__utma.'+'.
+				'utmcc' =>
+				'__utma='.$this->__utma.'+'.
 //					'__utmb='.$this->__utmb.'+'.
 //					'__utmc='.$this->__utmc.'+'.
-					'__utmz='.$this->__utmz
-				);
-		
+				'__utmz='.$this->__utmz
+			);
+
 			$this->trackingURL = self::GA_TRACKING_URL.'?'.http_build_query($params);
 		}
 		return $this->trackingURL;
 	}
-	
+
 	protected function getDomainHash()
 	{
 		if(!$this->domainHash)
@@ -248,25 +253,22 @@ class GoogleAnalytics
 			{
 				return 1;
 			}
-			$h=0; 
-			$g=0;
-			$length = strlen($domain)-1;
-			for($i = $length; $i >= 0; $i--) 
+			$h = 0;
+			$g = 0;
+			$length = strlen($domain) - 1;
+			for($i = $length; $i >= 0; $i--)
 			{
-				$c = (int)(ord($domain[$i]));
+				$c = (int) (ord($domain[$i]));
 				$h = (($h << 6) & 0xfffffff) + $c + ($c << 14);
 				$g = ($h & 0xfe00000);
-				if($g!=0) $h = ($h ^ ($g >> 21));
+				if($g != 0)
+					$h = ($h ^ ($g >> 21));
 			}
 			$this->domainHash = $h;
 		}
 		return $this->domainHash;
 	}
+
 }
-
-
-
-
-
 
 ?>

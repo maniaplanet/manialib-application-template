@@ -38,6 +38,9 @@ class Memcache extends \ManiaLib\Utils\Singleton implements \ManiaLib\Cache\Cach
 		}
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	function exists($key)
 	{
 		return !($this->fetch($key) === false);

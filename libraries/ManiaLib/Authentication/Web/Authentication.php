@@ -17,7 +17,7 @@ abstract class Authentication extends \ManiaLib\Authentication\AbstractAuthentic
 
 	static protected function executeRequest($login, $token)
 	{
-		$config = Config::getInstance();
+		$config = \ManiaLib\Authentication\Config::getInstance();
 		$url = sprintf(self::SCRIPT, $config->username, $config->password, $login, $token);
 		return file_get_contents($url);
 	}

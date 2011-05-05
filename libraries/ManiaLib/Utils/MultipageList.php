@@ -72,6 +72,11 @@ class MultipageList
 	{
 		$this->urlPageName = $file;
 	}
+
+	function goToLastPage()
+	{
+		$this->currentPage = $this->getPageNumber();
+	}
 	
 	function getCurrentPage()
 	{

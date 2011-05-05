@@ -22,7 +22,7 @@ class Line extends AbstractLayout
 	 */
 	function postFilter(\ManiaLib\Gui\Component $item)
 	{
-		$this->xIndex += $item->getSizeX() + $this->marginWidth;
+		$this->xIndex += $item->getRealSizeX() + $this->marginWidth;
 	}
 }
 

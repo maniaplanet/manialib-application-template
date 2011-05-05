@@ -18,6 +18,8 @@ namespace ManiaLib\Loader;
 abstract class Loader extends \ManiaLib\Utils\Singleton
 {
 	static $enableDump = false;
+	static $enableCache = true;
+	
 	public $message;
 	protected $debugPrefix;
 	protected $cacheKey;
@@ -33,7 +35,7 @@ abstract class Loader extends \ManiaLib\Utils\Singleton
 	protected function __construct()
 	{
 		$this->cacheKey = \ManiaLib\Cache\Cache::getPrefix().get_class($this);
-		$this->cache = \ManiaLib\Cache\Cache::factory('apc');
+		$this->cache = \ManiaLib\Cache\Cache::factory(static::$enableCache?'apc':'nocache');
 	}
 	
 	final function smartLoad()
@@ -75,6 +77,7 @@ abstract class Loader extends \ManiaLib\Utils\Singleton
 		try 
 		{
 			$this->runtimeLoad();
+			$this->postLoad();
 			echo $this->message;
 		} 
 		catch (\Exception $e) 

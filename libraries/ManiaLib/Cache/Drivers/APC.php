@@ -24,6 +24,9 @@ class APC extends \ManiaLib\Utils\Singleton implements \ManiaLib\Cache\CacheInte
 		}
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	function exists($key)
 	{
 		return apc_exists($key);

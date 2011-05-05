@@ -54,6 +54,7 @@ class InstallSkin extends \ManiaLib\Maniacode\Elements\FileDownload
 	
 	protected  function postFilter()
 	{
+		parent::postFilter();
 		if (isset($this->file))
 		{
 			$elem  = \ManiaLib\Maniacode\Maniacode::$domDocument->createElement('file');

@@ -44,6 +44,16 @@ class RecordSet
 		return mysql_fetch_row($this->result);
 	}
 	
+	function fetchArrayOfRow()
+	{
+		$array = array();
+		while($row = $this->fetchRow())
+		{
+			$array[] = $row;
+		}
+		return $array;
+	}
+	
 	/**
 	 * Fetch a result row as an associative array
 	 * @return array
@@ -68,7 +78,7 @@ class RecordSet
 	 * @param array An optional array of parameters to pass to the constructor for class_name objects.
 	 * @return object
 	 */	
-	function fetchObject($className, $params = array())
+	function fetchObject($className='\\stdClass', $params = array())
 	{
 		if($className)
 		{

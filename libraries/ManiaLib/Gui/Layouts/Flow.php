@@ -33,7 +33,7 @@ class Flow extends AbstractLayout
 		$availableWidth = $this->sizeX - $this->xIndex - $this->borderWidth + 0.1;
 
 		// If end of the line is reached
-		if($availableWidth < $item->getSizeX() & $this->currentLineElementCount > 0)
+		if($availableWidth < $item->getRealSizeX() & $this->currentLineElementCount > 0)
 		{
 			$this->yIndex -= $this->maxHeight + $this->marginHeight;
 			$this->xIndex = $this->borderWidth;
@@ -48,10 +48,10 @@ class Flow extends AbstractLayout
 	 */
 	function postFilter(\ManiaLib\Gui\Component $item)
 	{
-		$this->xIndex += $item->getSizeX() + $this->marginWidth;
-		if(!$this->maxHeight || $item->getSizeY() > $this->maxHeight)
+		$this->xIndex += $item->getRealSizeX() + $this->marginWidth;
+		if(!$this->maxHeight || $item->getRealSizeY() > $this->maxHeight)
 		{
-			$this->maxHeight = $item->getSizeY();
+			$this->maxHeight = $item->getRealSizeY();
 		}
 		$this->currentLineElementCount++;
 	}

@@ -4,9 +4,9 @@
  * 
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
- * @version     $Revision: 2892 $:
- * @author      $Author: Maxime $:
- * @date        $Date: 2011-03-10 15:24:25 +0100 (jeu., 10 mars 2011) $:
+ * @version     $Revision: 3188 $:
+ * @author      $Author: svn $:
+ * @date        $Date: 2011-03-29 12:55:38 +0200 (mar., 29 mars 2011) $:
  */
 
 namespace ManiaLib\Application;
@@ -43,36 +43,25 @@ class Dispatcher extends \ManiaLib\Utils\Singleton
 			throw new \Exception(get_called_class().'::run() was previously called!');
 		}
 		$this->running = true;
-		$defaultController = Config::getInstance()->defaultController;
 		
 		$request = Request::getInstance();
 		if($request->exists(self::PATH_INFO_OVERRIDE_PARAM))
 		{
-			$route = $request->get(self::PATH_INFO_OVERRIDE_PARAM, '/');
+			$this->pathInfo = $request->get(self::PATH_INFO_OVERRIDE_PARAM, '/');
 			$request->delete(self::PATH_INFO_OVERRIDE_PARAM);
 		}
 		else
 		{
-			$route = \ManiaLib\Utils\Arrays::getNotNull($_SERVER, 'PATH_INFO', '/');
+			$this->pathInfo = \ManiaLib\Utils\Arrays::getNotNull($_SERVER, 'PATH_INFO', '/');
 		}
 		
-		$this->pathInfo = $route;
-		
-		$route = substr($route, 1); // Remove starting /
-		$route = explode('/', $route, 2);
-		
-		$this->controller = \ManiaLib\Utils\Arrays::getNotNull($route, 0, $defaultController);
-		$this->controller = Route::separatorToUpperCamelCase($this->controller);
-		
-		$this->action = \ManiaLib\Utils\Arrays::get($route, 1);
-		$this->action = $this->action ? Route::separatorToCamelCase($this->action) : '/';
-		$this->action = substr($this->action, 0, -1);
+		list($this->controller, $this->action) = Route::getActionAndControllerFromRoute($this->pathInfo);
 		
 		$this->calledURL = $request->createLink(Route::CUR, Route::CUR);
 		
 		try 
 		{
-			Controller::factory($this->controller)->launch();
+			Controller::factory($this->controller)->launch($this->action);
 			Response::getInstance()->render();
 		}
 		catch(\Exception $e )

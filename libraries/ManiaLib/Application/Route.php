@@ -47,15 +47,36 @@ abstract class Route
 	{
 		return strtolower(preg_replace('/([^A-Z])([A-Z])/', '$1'.self::getSeparator().'$2', $string)); 
 	}
-	
+
+	/**
+	 * @param string A route like "/home/index/" or "/home/"
+	 * @return array[string] An array of (controller, action) 
+	 */
+	static function getActionAndControllerFromRoute($route)
+	{
+		$defaultController = Config::getInstance()->defaultController;
+
+		if(substr($route, 0, 1) == '/') $route = substr($route, 1);
+		if(substr($route, -1, 1) == '/') $route = substr($route, 0, -1);
+		$route = explode('/', $route, 2);
+
+		$controller = \ManiaLib\Utils\Arrays::getNotNull($route, 0, $defaultController);
+		$controller = Route::separatorToUpperCamelCase($controller);
+
+		$action = \ManiaLib\Utils\Arrays::get($route, 1);
+		$action = $action ? Route::separatorToCamelCase($action) : null;
+
+		return array($controller, $action);
+	}
+
 	static function computeRoute($controller, $action)
 	{
 		$controller = static::camelCaseToSeparator($controller);
 		$action = static::camelCaseToSeparator($action);
-		$route = '';
+		$route = '/';
 		if($controller)
 		{
-			$route .= '/'.$controller.'/';
+			$route .= $controller.'/';
 			if($action)
 			{
 				$route .= $action.'/';

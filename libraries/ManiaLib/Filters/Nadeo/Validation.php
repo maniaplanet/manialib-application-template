@@ -13,11 +13,11 @@ namespace ManiaLib\Filters\Nadeo;
 
 abstract class Validation
 {
-	static function login($login)
+	static function login($login, $length=25)
 	{
-		if($login && strlen($login) <= 25)
+		if($login && strlen($login) <= $length)
 		{
-			if(preg_match('/^[a-zA-Z0-9-_\.]{1,25}$/', $login))
+			if(preg_match('/^[a-zA-Z0-9-_\.]{1,'.$length.'}$/', $login))
 			{
 				return;
 			}
@@ -32,6 +32,52 @@ abstract class Validation
 			return;
 		}
 		throw new \InvalidArgumentException('Invalid nickname "'.$nickname.'"');
+	}
+	
+	static function manialink($manialink)
+	{
+		if($manialink && strlen($manialink) <= 255)
+		{
+			return;
+		}
+		throw new \InvalidArgumentException('Invalid manialink short url "'.$manialink.'"');
+	}
+
+	static function environment($environment)
+	{
+		switch($environment)
+		{
+			case 'Merge':
+			case 'Bay':
+			case 'Coast':
+			case 'Desert':
+			case 'Island':
+			case 'Stadium':
+			case 'Snow':
+			case 'Rally':
+				break;
+
+			default:
+				throw new \InvalidArgumentException(sprintf('Invalid environment "%s"', $environment));
+		}
+	}
+
+	static function path($path)
+	{
+		// FIXME Validate path
+		if(!$path)
+		{
+			throw new \InvalidArgumentException(sprintf('Invalid path "%s"', $path));
+		}
+	}
+
+	static function challengeUID($challengeUID)
+	{
+		// FIXME Validate challenge uid
+		if(!$challengeUID || strlen($challengeUID) > 27)
+		{
+			throw new \InvalidArgumentException(sprintf('Invalid challenge UID "%s"', $challengeUID));
+		}
 	}
 }
 

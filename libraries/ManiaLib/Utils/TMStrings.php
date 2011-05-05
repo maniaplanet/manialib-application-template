@@ -56,6 +56,41 @@ abstract class TMStrings
 	}
 	
 	/**
+	 * Removes all color in string
+	 * @param string $str
+	 * @return string
+	 */
+	static function stripColors($string){
+		return preg_replace('/\\$([tinmgz]|[0-9a-fA-F]{3}|[0-9a-fA-F].{2}|[0-9a-fA-F].[0-9a-fA-F]|[0-9a-fA-F]{2}.|[^$hlpwos<>]?)/i',"", $string);
+	}
+	
+	/**
+	 * Removes the protecting styles ($< and $>) from a string
+	 * @param string Protected string
+	 * @return string Unprotected string
+	 */
+	static function unprotectStyles($string)
+	{
+		return str_replace(array (
+		'$<',
+		'$>'
+		), "", $string);
+	}
+	
+	/**
+	 * Removes all label formating from the string
+	 * @param string $string
+	 * @return string
+	 */
+	static function stripAllTmStyle($string)
+	{
+		$string = self::unprotectStyles($string);
+		$string = self::stripLinks($string);
+		$string = self::stripWideFonts($string);
+		return self::stripColors($string);
+	}
+	
+	/**
 	 * Format a line with [yellow bold] title + content label
 	 * eg: "<b>Title:</b>   content"
 	 */

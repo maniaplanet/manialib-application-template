@@ -1,7 +1,7 @@
 <?php
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
- * 
+ *
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -20,56 +20,50 @@ class Config extends \ManiaLib\Utils\Singleton
 	public $manialink;
 	public $namespace;
 	public $name;
-	
+
 	public $langsURL;
 	public $imagesURL;
 	public $mediaURL;
-	
+
 	public $URLSeparator = '_';
-	
+
 	public $useRewriteRules = false;
-	
+
 	public $defaultController = 'Home';
 	public $defaultAction = 'index';
-	
-	public $maniaLibViewsNS = 'ManiaLib\\Application\\Views\\';
-	public $applicationViewsNS;
-	
+
+	public $viewsNS = array('ManiaLib\\Application\\Views\\');
+
 	public $renderer;
-	
+
 	public $webapp = false;
-	
+
 	function getLangsURL()
 	{
 		return $this->langsURL?:$this->URL.'langs/';
 	}
-	
+
 	function getImagesURL()
 	{
 		return $this->imagesURL?:$this->URL.'images/';
 	}
-	
+
 	function getMediaURL()
 	{
 		return $this->mediaURL?:$this->URL.'media/';
 	}
-	
+
 	function getLinkCreationURL()
 	{
-		return $this->useRewriteRules ?  
+		return $this->useRewriteRules ?
 			substr($this->URL, 0, -1) :  $this->URL.'index.php';
 	}
-	
-	function getManiaLibViewsNS()
+
+	function getViewsNS()
 	{
-		return $this->maniaLibViewsNS;
+		return $this->viewsNS;
 	}
-	
-	function getApplicationViewsNS()
-	{
-		return $this->applicationViewsNS?:$this->namespace.'\\Views\\';
-	}
-	
+
 	function getRenderer()
 	{
 		if($this->renderer)

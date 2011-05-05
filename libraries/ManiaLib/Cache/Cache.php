@@ -40,7 +40,9 @@ abstract class Cache
 		}
 		catch(Exception $e)
 		{
-			return static::getDriver('NoCache');
+			$config = Config::getInstance();
+			$driver = $config->fallbackDriver ?: 'NoCache';
+			return static::getDriver($driver);
 		}
 	}
 	

@@ -48,6 +48,7 @@ abstract class Tools
 	{
 		switch($order)
 		{
+			case null:
 			case static::ORDER_ASC: return ' ASC ';
 			case static::ORDER_DESC: return ' DESC ';
 			default: 

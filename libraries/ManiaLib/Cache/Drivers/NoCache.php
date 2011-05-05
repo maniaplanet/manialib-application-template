@@ -16,6 +16,9 @@ namespace ManiaLib\Cache\Drivers;
  */
 class NoCache extends \ManiaLib\Utils\Singleton implements \ManiaLib\Cache\CacheInterface
 {
+	/**
+	 * @deprecated
+	 */
 	function exists($key)
 	{
 		return false;

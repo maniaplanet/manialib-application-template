@@ -12,39 +12,109 @@
 namespace ManiaLib\Database;
 
 /**
- * Database connection singleton
+ * Database connection. This is where the magic happens!
  */
-class Connection extends \ManiaLib\Utils\Singleton
+class Connection
 {
+	/**
+	 * @var array[\ManiaLib\Database\ConnectionParams]
+	 */
+	static protected $connections = array();
+	
 	/**
 	 * @var \ManiaLib\Database\Config	
 	 */
 	protected $config;
+	/**
+	 * @var \ManiaLib\Database\ConnectionsParams
+	 */
+	protected $params;
+	/**
+	 * MySQL connection ressource
+	 */
 	protected $connection;
-	protected $host;
-	protected $user;
-	protected $password;
-	protected $database;
+	/**
+	 * Current charset
+	 * @var string
+	 */
 	protected $charset;
+	/**
+	 * Currently selected database
+	 * @vat string
+	 */
+	protected $database;
+	/**
+	 * @var int
+	 */
 	protected $transactionRefCount;
+	/**
+	 * @var bool
+	 */
 	protected $transactionRollback;
-	
-	protected function __construct()
+
+	/**
+	 * The easiest way to retrieve a database connection. Works as a singleton,
+	 * and returns a connection with the default parameters
+	 * @return \ManiaLib\Database\Connection
+	 */
+	static function getInstance()
+	{
+		if(\array_key_exists('default', self::$connections))
+		{
+			return self::$connections['default'];
+		}
+
+		$config = Config::getInstance();
+
+		$params = new ConnectionParams();
+		$params->id = 'default';
+		$params->host = $config->host;
+		$params->user = $config->user;
+		$params->password = $config->password;
+		$params->database = $config->database;
+		$params->charset = $config->charset;
+
+		return self::factory($params);
+	}
+
+	/**
+	 * Advanced connection retrieval. You can have multiple instances of the
+	 * Connection object so you can work with several MySQL servers. If you don't
+	 * give any parameters, it will work as self::getInstance()
+	 * @return \ManiaLib\Database\Connection
+	 */
+	static function factory(ConnectionParams $params)
+	{
+		if(!$params->id)
+		{
+			throw new Exception('ConnectionParams object has no ID');
+		}
+		if(!array_key_exists($params->id, self::$connections))
+		{
+			self::$connections[$params->id] = new self($params);
+		}
+		return self::$connections[$params->id];
+	}
+
+	protected function __construct(ConnectionParams $params)
 	{
 		$this->config = Config::getInstance();
-		$this->host = $this->config->host;
-		$this->user = $this->config->user;
-		$this->password = $this->config->password;
+		$this->params = $params;
 		
-		$this->connection = mysql_connect($this->host, $this->user, $this->password);
+		$this->connection = mysql_connect(
+			$this->params->host,
+			$this->params->user,
+			$this->params->password,
+			null,
+			$this->params->ssl?MYSQL_CLIENT_SSL:null);
 				
 		if(!$this->connection)
 		{
 			throw new ConnectionException();
 		}
 
-		$this->setCharset($this->config->charset);
-		$this->select($this->config->database);
+		$this->setCharset($this->params->charset);
+		$this->select($this->params->database);
 	}
 	
 	function setCharset($charset)
@@ -107,6 +177,31 @@ class Connection extends \ManiaLib\Utils\Singleton
 			}
 		}
 		return new RecordSet($result);
+	}
+	
+	/**
+	 * Execute a query or fetch it from Memcache.
+	 */
+	function executeCache($ttl, $query)
+	{
+		$args = func_get_args();
+		array_shift($args);
+		if(func_num_args() > 2)
+		{
+			$query = call_user_func_array('sprintf', $args);
+		}
+		
+		$key = \ManiaLib\Cache\Cache::getPrefix().'mysql_'.md5($query);
+		$cache = \ManiaLib\Cache\Cache::factory(\ManiaLib\Cache\MEMCACHE);
+		$result = $cache->fetch($key);
+		
+		if(!$result)
+		{
+			$result = call_user_func_array(array($this, 'execute'), $args); 
+			$cache->add($key, $result, $ttl);
+		}
+		
+		return $result;
 	}
 	
 	function affectedRows()

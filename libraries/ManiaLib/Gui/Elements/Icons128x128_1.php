@@ -9,7 +9,6 @@
  * @date        $Date$:
  */
 
-
 namespace ManiaLib\Gui\Elements;
 
 /**

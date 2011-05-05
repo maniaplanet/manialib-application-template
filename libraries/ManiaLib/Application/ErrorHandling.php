@@ -39,7 +39,12 @@ abstract class ErrorHandling
 	 */
 	static function exceptionErrorHandler($errno, $errstr, $errfile, $errline) 
 	{
-    	throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
+    	if (!(error_reporting() & $errno)) 
+    	{
+        	// This error code is not included in error_reporting
+        	return;
+    	}
+		throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
 	}
 	
 	/**
@@ -53,7 +58,12 @@ abstract class ErrorHandling
 		$requestURI = Dispatcher::getInstance()->getCalledURL();
 		$debug = \ManiaLib\Config\Config::getInstance()->debug;
 		
-		if($exception instanceof \ManiaLib\Application\UserException)
+		if($exception instanceof SilentUserException)
+		{
+			$message = static::computeShortMessage($exception).'  '.$requestURI;
+			$userMessage = $exception->getMessage();
+		}
+		elseif($exception instanceof UserException)
 		{
 			$message = static::computeShortMessage($exception).'  '.$requestURI;
 			\ManiaLib\Log\Logger::user($message);
@@ -152,7 +162,7 @@ abstract class ErrorHandling
 	 */
 	final static function computeShortMessage(\Exception $e)
 	{
-		$message = get_class($e).'  '.$e->getMessage().'  ('.$e->getCode().')';
+		$message = get_class($e).'  '.$e->getMessage().' ('.$e->getCode().') in '.$e->getFile().' at line '.$e->getLine();
 		return $message;
 	}
 	

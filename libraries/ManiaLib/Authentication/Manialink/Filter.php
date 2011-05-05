@@ -4,9 +4,9 @@
  * 
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
- * @version     $Revision: 2778 $:
- * @author      $Author: Maxime $:
- * @date        $Date: 2011-03-04 15:55:34 +0100 (ven., 04 mars 2011) $:
+ * @version     $Revision: 3324 $:
+ * @author      $Author: svn $:
+ * @date        $Date: 2011-04-06 17:21:28 +0200 (mer., 06 avr. 2011) $:
  */
 
 namespace ManiaLib\Authentication\Manialink;
@@ -25,10 +25,15 @@ class Filter extends \ManiaLib\Authentication\AbstractFilter
 	protected function redirectToLogin()
 	{
 		$ml = \ManiaLib\Application\Config::getInstance()->manialink;
-		
+		$config = \ManiaLib\Authentication\Config::getInstance();
+
+		$pathinfo = Dispatcher::getInstance()->getPathInfo();
 		$params = $this->request->getAll();
 		$params['authentication'] = 1;
-		$params[Dispatcher::PATH_INFO_OVERRIDE_PARAM] = Dispatcher::getInstance()->getPathInfo();
+		if($pathinfo && $pathinfo != '/')
+		{
+			$params[Dispatcher::PATH_INFO_OVERRIDE_PARAM] = $pathinfo;
+		}
 		
 		$redirect = 
 			$ml.(strstr($ml, '?') ? '&' : '?').

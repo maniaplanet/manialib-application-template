@@ -13,9 +13,9 @@ namespace ManiaLib\Cache;
 
 interface CacheInterface
 {
-	function exists($key);
 	function fetch($key); 
 	function add($key, $value, $ttl=0);
+	function replace($key, $value, $ttl=0);
 	function delete($key);
 	function inc($key);
 }

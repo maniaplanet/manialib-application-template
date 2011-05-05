@@ -116,12 +116,12 @@ abstract class Tools
 	{
 		$newPosX = self::getAlignedPosX(
 			$object->getPosX(), 
-			$object->getSizeX(), 
+			$object->getRealSizeX(), 
 			$object->getHalign(), 
 			$newHalign);
 		$newPosY = self::getAlignedPosY(
 			$object->getPosY(), 
-			$object->getSizeY(), 
+			$object->getRealSizeY(), 
 			$object->getValign(), 
 			$newValign);
 		return array('x' => $newPosX, 'y' => $newPosY);

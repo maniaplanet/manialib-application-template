@@ -55,11 +55,29 @@ class RegisterRequestParameters extends \ManiaLib\Application\AdvancedFilter
 			}
 		}
 		
+		if(!$this->session->token)
+		{
+			if($token = $this->request->get('token'))
+			{
+				$this->session->token = $token;
+			}
+		}
+
+		if(!$this->session->game)
+		{
+			if($game = $this->request->get('game'))
+			{
+				$this->session->game = $game;
+			}
+		}
+		
 		$this->request->delete('login');
 		$this->request->delete('playerlogin');
 		$this->request->delete('nickname');
 		$this->request->delete('path');
 		$this->request->delete('lang');
+		$this->request->delete('token');
+		$this->request->delete('game');
 	}
 	
 	function postFilter() {}
