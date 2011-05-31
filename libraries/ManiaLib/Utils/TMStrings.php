@@ -36,7 +36,7 @@ abstract class TMStrings
 	 */
 	static function stripWideFonts($string)
 	{
-		return str_replace(array (
+		return str_ireplace(array (
 			'$w',
 			'$o',
 			'$s'
