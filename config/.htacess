@@ -1,3 +1,0 @@
-# Tweak to deny all
-Order Allow,Deny
-Deny from all
