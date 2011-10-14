@@ -33,11 +33,12 @@ abstract class Component
 	/**#@-*/
 	
 	/**
-	 * set id to access to the element out of a ManiaScript.
+	 * Set the id of the element
 	 * @param int
 	 */
 	function setId($id)
 	{
+		// TODO ManiaLib should we try to catch duplicate Ids ?
 		$this->id = $id;
 	}
 	

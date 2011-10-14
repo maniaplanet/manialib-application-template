@@ -12,284 +12,381 @@
 namespace ManiaLib\Gui;
 
 /**
- * Base class for creating GUI elements
+ * Component
  */
-abstract class Element extends Component implements Drawable
+abstract class Component
 {
-	const USE_ABSOLUTE_URL = true;
-
+	/**#@+
+	 * @ignore
+	 */
 	protected $id;
-	protected $style;
-	protected $subStyle;
-	protected $manialink;
-	protected $goto;
-	protected $manialinkId;
-	protected $url;
-	protected $urlId;
-	/**
-	 * @deprecated
-	 */
-	protected $maniazone;
-	protected $bgcolor;
-	/**
-	 * @deprecated
-	 */
-	protected $addPlayerId;
-	protected $scriptevents;
-	protected $action;
-	protected $actionKey;
-	protected $image;
-	protected $imageid;
-	protected $imageFocus;
-	protected $imageFocusid;
-	protected $xmlTagName = 'xmltag'; // Redeclare this for each child
-	protected $xml;
-	/*	 * #@- */
-	/**
-	 * Used by cards, all the elements in that array will be renderd before
-	 * the post filter.
-	 * @var array[\ManiaLib\Gui\Element]
-	 */
-	protected $cardElements = array();
-
-	/*	 * #@+
-	 * Will be used to set the frame containing all the cards elements relative
-	 * to the current element.
-	 */
-	protected $cardElementsHalign = 'left';
-	protected $cardElementsValign = 'top';
-	protected $cardElementsPosX = 0;
-	protected $cardElementsPosY = 0;
-	protected $cardElementsPosZ = 0.1;
-	/**
-	 * @var \ManiaLib\Gui\Layouts\AbstractLayout
-	 */
-	protected $cardElementsLayout = null;
-	/*	 * #@- */
-
-	/**
-	 * Manialink element default constructor. It's common to specify the size of
-	 * the element in the constructor.
-	 *
-	 * @param float Width of the element
-	 * @param float Height of the element
-	 */
-	function __construct($sizeX = 20, $sizeY = 20)
-	{
-		$this->sizeX = $sizeX;
-		$this->sizeY = $sizeY;
-	}
+	protected $posX = 0;
+	protected $posY = 0;
+	protected $posZ = 0;
+	protected $sizeX;
+	protected $sizeY;
+	protected $scale;
+	protected $visible = true;
+	protected $valign = null;
+	protected $halign = null;
+	protected $scriptEvents;
+	/**#@-*/
 	
+	/**
+	 * Set the id of the element
+	 * @param int
+	 */
 	function setId($id)
 	{
 		// TODO ManiaLib should we try to catch duplicate Ids ?
 		$this->id = $id;
 	}
 	
-	
-
 	/**
-	 * Sets the style of the element. See http://fish.stabb.de/styles/ of the
-	 * manialink 'example' for more information on Manialink styles.
-	 * @param string
+	 * Sets the X position of the element
+	 * @param float
 	 */
-	function setStyle($style)
+	function setPositionX($posX)
 	{
-		$this->style = $style;
-	}
-
-	/**
-	 * Sets the sub-style of the element. See http://fish.stabb.de/styles/ of
-	 * the manialink 'example' for more information on Manialink styles.
-	 * @param string
-	 */
-	function setSubStyle($substyle)
-	{
-		$this->subStyle = $substyle;
-	}
-
-	/**
-	 * Sets the Manialink of the element. It works as a hyperlink.
-	 * @param string Can be either a short Manialink or an URL pointing to a
-	 * Manialink
-	 */
-	function setManialink($manialink)
-	{
-		$this->manialink = $manialink;
-	}
-
-	/**
-	 * Sets the Manialink id of the element. It works as a hyperlink.
-	 * @param string Can be either a short Manialink or an URL pointing to a
-	 * Manialink
-	 */
-	function setManialinkId($manialinkId)
-	{
-		$this->manialinkId = $manialinkId;
+		$oldX = $this->posX;
+		$this->posX = $posX;
+		$this->onMove($oldX, $this->posY, $this->posZ);
 	}
 	
 	/**
-	 * @ignore
+	 * Sets the Y position of the element
+	 * @param float
 	 */
-	function setGoto($manialink)
+	function setPositionY($posY)
 	{
-		$this->manialink = $manialink;
-	}
-
-	/**
-	 * Sets the hyperlink of the element
-	 * @param string An URL
-	 */
-	function setUrl($url)
-	{
-		$this->url = $url;
-	}
-
-	/**
-	 * Sets the hyperlink id of the element
-	 * @param string An URL
-	 */
-	function setUrlId($urlId)
-	{
-		$this->urlId = $urlId;
-	}
-
-	/**
-	 * Sets the Maniazones link of the element
-	 * @param string
-	 * @deprecated
-	 */
-	function setManiazone($maniazone)
-	{
-		$this->maniazone = $maniazone;
-	}
-
-	function setScriptEvents($scriptEvents = 1)
-	{
-		$this->scriptevents = $scriptEvents;
+		$oldY = $this->posY;
+		$this->posY = $posY;
+		$this->onMove($this->posX, $oldY, $this->posZ);
 	}
 	
 	/**
-	 * @deprecated
+	 * Sets the Z position of the element
+	 * @param float
 	 */
-	function addPlayerId()
+	function setPositionZ($posZ)
 	{
-		$this->addPlayerId = 1;
+		$oldZ = $this->posZ;
+		$this->posZ = $posZ;
+		$this->onMove($this->posX, $this->posY, $oldZ);
+	}
+	
+	/**
+	 * Sets the X position of the element
+	 * @param float
+	 */
+	function setPosX($posX)
+	{
+		$oldX = $this->posX;
+		$this->posX = $posX;
+		$this->onMove($oldX, $this->posY, $this->posZ);
+	}
+	
+	/**
+	 * Sets the Y position of the element
+	 * @param float
+	 */
+	function setPosY($posY)
+	{
+		$oldY = $this->posY;
+		$this->posY = $posY;
+		$this->onMove($this->posX, $oldY, $this->posZ);
+	}
+	
+	/**
+	 * Sets the Z position of the element
+	 * @param float
+	 */
+	function setPosZ($posZ)
+	{
+		$oldZ = $this->posZ;
+		$this->posZ = $posZ;
+		$this->onMove($this->posX, $this->posY, $oldZ);
+	}
+	
+	/**
+	 * Increment position X
+	 * @param float
+	 */
+	function incPosX($posX)
+	{
+		$oldX = $this->posX;
+		$this->posX += $posX;
+		$this->onMove($oldX, $this->posY, $this->posZ);
+	}
+	
+	/**
+	 * Increment position Y
+	 * @param float
+	 */
+	function incPosY($posY)
+	{
+		$oldY = $this->posY;
+		$this->posY += $posY;
+		$this->onMove($this->posX, $oldY, $this->posZ);
+	}
+	
+	/**
+	 * Increment position Z
+	 * @param float
+	 */
+	function incPosZ($posZ)
+	{
+		$oldZ = $this->posZ;
+		$this->posZ += $posZ;
+		$this->onMove($this->posX, $this->posY, $oldZ);
+	}
+	
+	/**
+	 * Sets the position of the element
+	 * @param float
+	 * @param float
+	 * @param float
+	 */
+	function setPosition()
+	{
+		$oldX = $this->posX;
+		$oldY = $this->posY;
+		$oldZ = $this->posZ;
+		
+		$args = func_get_args();
+		
+		if (!empty($args))
+			$this->posX = array_shift($args);
+			
+		if (!empty($args))
+			$this->posY = array_shift($args);
+			
+		if (!empty($args))
+			$this->posZ = array_shift($args);
+			
+		$this->onMove($oldX, $oldY, $oldZ);
+	}
+	
+	/**
+	 * Sets the vertical alignment of the element.
+	 * @param string Vertical alignment can be either "top", "center" or
+	 * "bottom"
+	 */
+	function setValign($valign)
+	{
+		$this->valign = $valign;
 	}
 
 	/**
-	 * Sets the action of the element. For example, if you use the action "0" in
-	 * the explorer, it closes the explorer when you click on the element.
-	 * @param int
+	 * Sets the horizontal alignment of the element
+	 * @param string Horizontal alignement can be eithe "left", "center" or
+	 * "right"
 	 */
-	function setAction($action)
+	function setHalign($halign)
 	{
-		$this->action = $action;
+		$this->halign = $halign;
 	}
 
 	/**
-	 * Sets the action key associated to the element. Only works on dedicated
-	 * servers.
-	 * @param int
+	 * Sets the alignment of the element
+	 * @param string Horizontal alignement can be eithe "left", "center" or
+	 * "right"
+	 * @param string Vertical alignment can be either "top", "center" or
+	 * "bottom"
 	 */
-	function setActionKey($actionKey)
+	function setAlign($halign = null, $valign = null)
 	{
-		$this->actionKey = $actionKey;
+		$this->setHalign($halign);
+		$this->setValign($valign);
 	}
-
+	
 	/**
-	 * Sets the background color of the element using a 3-digit RGB hexadecimal
-	 * value. For example, "fff" is white and "000" is black
-	 * @param string 3-digit RGB hexadecimal value
+	 * Sets the width of the element
+	 * @param float
 	 */
-	function setBgcolor($bgcolor)
+	function setSizeX($sizeX)
 	{
-		$this->bgcolor = $bgcolor;
-		$this->setStyle(null);
-		$this->setSubStyle(null);
+		$oldX = $this->sizeX;
+		$this->sizeX = $sizeX;
+		$this->onResize($oldX, $this->sizeY);
 	}
-
+	
 	/**
-	 * Applies an image to the element
-	 * @param string The image filename (or URL)
-	 * @param bool Whether to prefix the filename with the default images dir URL
+	 * Sets the height of the element
+	 * @param float
 	 */
-	function setImage($image, $absoluteUrl = false)
+	function setSizeY($sizeY)
 	{
-		$this->setStyle(null);
-		$this->setSubStyle(null);
-		if(!$absoluteUrl)
-		{
-			$this->image = \ManiaLib\Gui\Manialink::$imagesURL.$image;
-		}
-		else
-		{
-			$this->image = $image;
-		}
+		$oldY = $this->sizeY;
+		$this->sizeY = $sizeY;
+		$this->onResize($this->sizeX, $oldY);
 	}
-
+	
 	/**
-	 * Set the image id of the element, used for internationalization
+	 * Sets the size of the element
+	 * @param float
+	 * @param float
 	 */
-	function setImageid($imageid)
+	function setSize()
 	{
-		$this->setStyle(null);
-		$this->setSubStyle(null);
-		$this->imageid = $imageid;
+		$oldX = $this->sizeX;
+		$oldY = $this->sizeY;
+		
+		$args = func_get_args();
+		
+		if (!empty($args))
+			$this->sizeX = array_shift($args);
+			
+		if (!empty($args))
+			$this->sizeY = array_shift($args);
+			
+		$this->onResize($oldX, $oldY);
 	}
-
+	
 	/**
-	 * Applies an image to the highlighter state of the element
-	 * @param string The image filename (or URL)
-	 * @param bool Whether to prefix the filename with the default images dir URL
+	 * Sets the scale factor of the element. 1=original size, 2=double size, 0.5
+	 * =half size
+	 * @param float
 	 */
-	function setImageFocus($imageFocus, $absoluteUrl = false)
+	function setScale($scale)
 	{
-		$this->setStyle(null);
-		$this->setSubStyle(null);
-		if(!$absoluteUrl)
-		{
-			$this->imageFocus = \ManiaLib\Gui\Manialink::$imagesURL.$imageFocus;
-		}
-		else
-		{
-			$this->imageFocus = $imageFocus;
-		}
+		$this->scale = $scale;
 	}
-
+	
 	/**
-	 * Set the image focus id of the element, used for internationalization
+	 * Sets the visibility of the Component.
+	 * This is used by ManiaLive.
+	 * @param bool $visible If set to false the Component (and subcomponents) is not rendered.
 	 */
-	function setImageFocusid($imageFocusid)
+	function setVisibility($visible)
 	{
-		$this->setStyle(null);
-		$this->setSubStyle(null);
-		$this->imageFocusid = $imageFocusid;
+		$this->visible = $visible;
 	}
-
-	function getId($id)
+	
+	/**
+	 * Sets additional ManiaScript events to be generated for this element.
+	 * @param string
+	 */
+	function setScriptEvents($scriptEvent)
+	{
+		$this->scriptEvents = $scriptEvent;
+	}
+	
+	function getId()
 	{
 		return $this->id;
 	}
 	
 	/**
-	 * Returns the style of the element
-	 * @return string
+	 * Returns the X position of the element
+	 * @return float
 	 */
-	function getStyle()
+	function getPosX()
 	{
-		return $this->style;
+		return $this->posX;
 	}
-
+	
 	/**
-	 * Returns the substyle of the element
-	 * @return string
+	 * Returns the Y position of the element
+	 * @return float
 	 */
-	function getSubStyle()
+	function getPosY()
 	{
-		return $this->subStyle;
+		return $this->posY;
 	}
-
+	
+	/**
+	 * Returns the Z position of the element
+	 * @return float
+	 */
+	function getPosZ()
+	{
+		return $this->posZ;
+	}
+	
+	/**
+	 * Returns the width of the element
+	 * @return float
+	 */
+	function getSizeX()
+	{
+		return $this->sizeX;
+	}
+	
+	/**
+	 * Returns the height of the element
+	 * @return float
+	 */
+	function getSizeY()
+	{
+		return $this->sizeY;
+	}
+	
+	/**
+	 * Returns the scale of the element
+	 * @return float
+	 */
+	function getScale()
+	{
+		return $this->scale;
+	}
+	
+	/**
+	 * Returns the width of the element with the
+	 * applied scaling factor.
+	 * @return float
+	 */
+	function getRealSizeX()
+	{
+		return $this->sizeX * ($this->scale ? $this->scale : 1);
+	}
+	
+	/**
+	 * Returns the height of the element with the
+	 * applied scaling factor.
+	 * @return float
+	 */
+	function getRealSizeY()
+	{
+		return $this->sizeY * ($this->scale ? $this->scale : 1);
+	}
+	
+	/**
+	 * Return the x-coordinate for the left border of the Component.
+	 * @return float
+	 */
+	function getBorderLeft()
+	{
+		return $this->getPosX();
+	}
+	
+	/**
+	 * Return the x-coordinate for the right border of the Component.
+	 * @return float
+	 */
+	function getBorderRight()
+	{
+		return $this->getPosX() + $this->getRealSizeX();
+	}
+	
+	/**
+	 * Return y-coordinate for the top border of the Component.
+	 * @return float
+	 */
+	function getBorderTop()
+	{
+		return $this->getPosY();
+	}
+	
+	/**
+	 * Return y-coordinate for the bottom border of the Component.
+	 * @return float
+	 */
+	function getBorderBottom()
+	{
+		return $this->getPosY() + $this->getRealSizeY();
+	}
+	
 	/**
 	 * Returns the horizontal alignment of the element
 	 * @return string
@@ -307,359 +404,28 @@ abstract class Element extends Component implements Drawable
 	{
 		return $this->valign;
 	}
-
-	/**
-	 * Returns the Manialink hyperlink of the element
-	 * @return string
-	 */
-	function getManialink()
-	{
-		return $this->manialink;
-	}
 	
 	/**
-	 * @ignore
+	 * Is the Component rendered onto the screen or not?
+	 * This is used by ManiaLive.
+	 * @return bool
 	 */
-	function getGoto()
+	function isVisible()
 	{
-		return $this->goto;
-	}
-
-	/**
-	 * Returns the Manialink hyperlink id of the element
-	 * @return string
-	 */
-	function getManialinkId()
-	{
-		return $this->manialinkId;
-	}
-
-	/**
-	 * Returns the Maniazones hyperlink of the element
-	 * @return string
-	 * @deprecated
-	 */
-	function getManiazone()
-	{
-		return $this->maniazone;
+		return $this->visible;
 	}
 	
 	function getScriptEvents()
 	{
-		return $this->scriptevents;
+		return $this->scriptEvents;
 	}
-
+	
 	/**
-	 * Returns the hyperlink of the element
-	 * @return string
+	 * Overwriteable functions. Used by ManiaLive.
 	 */
-	function getUrl()
-	{
-		return $this->url;
-	}
-
-	/**
-	 * Returns the hyperlink id of the element
-	 * @return string
-	 */
-	function getUrlId()
-	{
-		return $this->urlId;
-	}
-
-	/**
-	 * Returns the action associated to the element
-	 * @return int
-	 */
-	function getAction()
-	{
-		return $this->action;
-	}
-
-	/**
-	 * Returns the action key associated to the element
-	 * @return int
-	 */
-	function getActionKey()
-	{
-		return $this->actionKey;
-	}
-
-	/**
-	 * Returns whether the elements adds player information parameter to the URL
-	 * when it's clicked
-	 * @return boolean
-	 */
-	function getAddPlayerId()
-	{
-		return $this->addPlayerId;
-	}
-
-	/**
-	 * Returns the background color of the element
-	 * @return string 3-digit RGB hexadecimal value
-	 */
-	function getBgcolor()
-	{
-		return $this->bgcolor;
-	}
-
-	/**
-	 * Returns the image placed in the element
-	 * @return string The image URL
-	 */
-	function getImage()
-	{
-		return $this->image;
-	}
-
-	function getImageid()
-	{
-		return $this->imageid;
-	}
-
-	/**
-	 * Returns the image placed in the element in its highlighted state
-	 * @return string The image URL
-	 */
-	function getImageFocus()
-	{
-		return $this->imageFocus;
-	}
-
-	function getImageFocusid()
-	{
-		return $this->imageFocusid;
-	}
-
-	/**
-	 * Imports links and actions from another Manialink element
-	 * @param \ManiaLib\Gui\Element The source object
-	 */
-	function addLink(\ManiaLib\Gui\Element $object)
-	{
-		$this->manialink = $object->getManialink();
-		$this->url = $object->getUrl();
-		$this->maniazone = $object->getManiazone();
-		$this->goto = $object->getGoto();
-		$this->action = $object->getAction();
-		$this->actionKey = $object->getActionKey();
-		if($object->getAddPlayerId())
-		{
-			$this->addPlayerId = 1;
-		}
-	}
-
-	/**
-	 * Returns whether the object has a link or an action (either Manialink,
-	 * Maniazones link, hyperlink or action)
-	 * @return string
-	 */
-	function hasLink()
-	{
-		return $this->manialink || $this->url || $this->action || $this->maniazone;
-	}
-
-	function setCardElementPosition($posX=0, $posY=0, $posZ=0)
-	{
-		$this->cardElementsPosX = $posX;
-		$this->cardElementsPosY = $posY;
-		$this->cardElementsPosZ = $posZ;
-	}
-
-	protected function addCardElement(\ManiaLib\Gui\Element $element)
-	{
-		$this->cardElements[] = $element;
-	}
-
-	/**
-	 * Override this method in subclasses to perform some action before
-	 * rendering the element
-	 * @ignore
-	 */
-	protected function preFilter()
-	{
-		
-	}
-
-	/**
-	 * Override this method in subclasses to perform some action after rendering
-	 * the element
-	 * @ignore
-	 */
-	protected function postFilter()
-	{
-		
-	}
-
-	/**
-	 * Saves the object in the Manialink object stack for further rendering.
-	 * Thanks to the use of \ManiaLib\Gui\Element::preFilter() and \ManiaLib\Gui\Element::
-	 * postFilter(), you shouldn't have to override this method
-	 */
-	final function save()
-	{
-		// this check is important for ManiaLive
-		if($this->visible === false)
-		{
-			return;
-		}
-
-		// Optional pre filtering
-		$this->preFilter();
-
-		// Layout handling
-		$layout = end(\ManiaLib\Gui\Manialink::$parentLayouts);
-		if($layout instanceof \ManiaLib\Gui\Layouts\AbstractLayout)
-		{
-			$layout->preFilter($this);
-			$this->posX += $layout->xIndex;
-
-			// if we swap positioning in ManiaLive, then we
-			// need to check that before positioning.
-			if(Manialink::isYSwapped())
-			{
-				$this->posY -= $layout->yIndex;
-			}
-			else
-			{
-				$this->posY += $layout->yIndex;
-			}
-
-			$this->posZ += $layout->zIndex;
-		}
-
-		// DOM element creation
-		if($this->xmlTagName)
-		{
-			$this->xml = \ManiaLib\Gui\Manialink::$domDocument->createElement($this->xmlTagName);
-			end(\ManiaLib\Gui\Manialink::$parentNodes)->appendChild($this->xml);
-
-			// Add id
-			if($this->id !== null)
-				$this->xml->setAttribute('id', $this->id);
-			
-			// Add pos
-			if($this->posX || $this->posY || $this->posZ)
-			{
-				// ManiaLive check whether position is swapped.
-				if(Manialink::isYSwapped())
-				{
-					$this->xml->setAttribute('posn',
-						$this->posX.' '.(-$this->posY).' '.$this->posZ);
-				}
-				else
-				{
-					$this->xml->setAttribute('posn',
-						$this->posX.' '.$this->posY.' '.$this->posZ);
-				}
-			}
-
-			// Add size
-			if($this->sizeX || $this->sizeY)
-			{
-				$this->xml->setAttribute('sizen', $this->sizeX.' '.$this->sizeY);
-			}
-
-			// Add alignement
-			if($this->halign !== null)
-				$this->xml->setAttribute('halign', $this->halign);
-			if($this->valign !== null)
-				$this->xml->setAttribute('valign', $this->valign);
-			if($this->scale !== null)
-				$this->xml->setAttribute('scale', $this->scale);
-
-			// Add styles
-			if($this->style !== null)
-				$this->xml->setAttribute('style', $this->style);
-			if($this->subStyle !== null)
-				$this->xml->setAttribute('substyle', $this->subStyle);
-			if($this->bgcolor !== null)
-				$this->xml->setAttribute('bgcolor', $this->bgcolor);
-
-			// Add links
-			if($this->addPlayerId !== null && \ManiaLib\Gui\Manialink::$linksEnabled)
-				$this->xml->setAttribute('addplayerid', $this->addPlayerId);
-			if($this->manialink !== null && \ManiaLib\Gui\Manialink::$linksEnabled)
-				$this->xml->setAttribute('manialink', $this->manialink);
-			if($this->goto !== null && \ManiaLib\Gui\Manialink::$linksEnabled)
-				$this->xml->setAttribute('goto', $this->goto);
-			if($this->manialinkId !== null && \ManiaLib\Gui\Manialink::$linksEnabled)
-				$this->xml->setAttribute('manialinkId', $this->manialinkId);
-			if($this->url !== null && \ManiaLib\Gui\Manialink::$linksEnabled)
-				$this->xml->setAttribute('url', $this->url);
-			if($this->urlId !== null && \ManiaLib\Gui\Manialink::$linksEnabled)
-				$this->xml->setAttribute('urlid', $this->urlId);
-			if($this->maniazone !== null && \ManiaLib\Gui\Manialink::$linksEnabled)
-				$this->xml->setAttribute('maniazone', $this->maniazone);
-
-			// Add action
-			if($this->action !== null && \ManiaLib\Gui\Manialink::$linksEnabled)
-				$this->xml->setAttribute('action', $this->action);
-			if($this->actionKey !== null)
-				$this->xml->setAttribute('actionkey', $this->actionKey);
-
-			// Add script events
-			// Add action
-			if($this->scriptevents !== null)
-				$this->xml->setAttribute('scriptevents', $this->scriptevents);
-			
-			// Add images
-			if($this->image !== null)
-				$this->xml->setAttribute('image', $this->image);
-			if($this->imageid !== null)
-				$this->xml->setAttribute('imageid', $this->imageid);
-			if($this->imageFocus !== null)
-				$this->xml->setAttribute('imagefocus', $this->imageFocus);
-			if($this->imageFocusid !== null)
-				$this->xml->setAttribute('imagefocusid', $this->imageFocusid);
-			
-			// Add Script Attributes
-			if($this->id)
-			{
-				$this->xml->setAttribute('id', $this->id);
-			}
-			if($this->scriptEvents)
-			{
-				$this->xml->setAttribute('ScriptEvents', $this->scriptEvents);
-			}
-		}
-
-		// Layout post filtering
-		if($layout instanceof \ManiaLib\Gui\Layouts\AbstractLayout)
-		{
-			$layout->postFilter($this);
-		}
-
-		// Card Elements
-		if($this->cardElements)
-		{
-			// Algin the title and its bg at the top center of the main quad		
-			$arr = \ManiaLib\Gui\Tools::getAlignedPos(
-					$this, $this->cardElementsHalign, $this->cardElementsValign);
-			$x = $arr["x"];
-			$y = $arr["y"];
-
-
-			// Draw them
-			\ManiaLib\Gui\Manialink::beginFrame(
-				$x + $this->cardElementsPosX, $y + $this->cardElementsPosY,
-				$this->posZ + $this->cardElementsPosZ, $this->scale);
-			\ManiaLib\Gui\Manialink::beginFrame(0, 0, 0, null, $this->cardElementsLayout);
-
-			foreach($this->cardElements as $element)
-			{
-				$element->save();
-			}
-
-			\ManiaLib\Gui\Manialink::endFrame();
-			\ManiaLib\Gui\Manialink::endFrame();
-		}
-
-		// Post filtering
-		$this->postFilter();
-	}
-
+	protected function onResize($oldX, $oldY) {}
+	
+	protected function onMove($oldX, $oldY, $oldZ) {}
 }
 
 ?>
