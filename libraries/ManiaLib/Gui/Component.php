@@ -49,7 +49,7 @@ abstract class Component
 	{
 		$oldX = $this->posX;
 		$this->posX = $posX;
-		$this->move($oldX, $this->posY, $this->posZ);
+		$this->onMove($oldX, $this->posY, $this->posZ);
 	}
 	
 	/**
@@ -60,7 +60,7 @@ abstract class Component
 	{
 		$oldY = $this->posY;
 		$this->posY = $posY;
-		$this->move($this->posX, $oldY, $this->posZ);
+		$this->onMove($this->posX, $oldY, $this->posZ);
 	}
 	
 	/**
@@ -71,7 +71,7 @@ abstract class Component
 	{
 		$oldZ = $this->posZ;
 		$this->posZ = $posZ;
-		$this->move($this->posX, $this->posY, $oldZ);
+		$this->onMove($this->posX, $this->posY, $oldZ);
 	}
 	
 	/**
@@ -82,7 +82,7 @@ abstract class Component
 	{
 		$oldX = $this->posX;
 		$this->posX = $posX;
-		$this->move($oldX, $this->posY, $this->posZ);
+		$this->onMove($oldX, $this->posY, $this->posZ);
 	}
 	
 	/**
@@ -93,7 +93,7 @@ abstract class Component
 	{
 		$oldY = $this->posY;
 		$this->posY = $posY;
-		$this->move($this->posX, $oldY, $this->posZ);
+		$this->onMove($this->posX, $oldY, $this->posZ);
 	}
 	
 	/**
@@ -104,7 +104,7 @@ abstract class Component
 	{
 		$oldZ = $this->posZ;
 		$this->posZ = $posZ;
-		$this->move($this->posX, $this->posY, $oldZ);
+		$this->onMove($this->posX, $this->posY, $oldZ);
 	}
 	
 	/**
@@ -115,7 +115,7 @@ abstract class Component
 	{
 		$oldX = $this->posX;
 		$this->posX += $posX;
-		$this->move($oldX, $this->posY, $this->posZ);
+		$this->onMove($oldX, $this->posY, $this->posZ);
 	}
 	
 	/**
@@ -126,7 +126,7 @@ abstract class Component
 	{
 		$oldY = $this->posY;
 		$this->posY += $posY;
-		$this->move($this->posX, $oldY, $this->posZ);
+		$this->onMove($this->posX, $oldY, $this->posZ);
 	}
 	
 	/**
@@ -137,7 +137,7 @@ abstract class Component
 	{
 		$oldZ = $this->posZ;
 		$this->posZ += $posZ;
-		$this->move($this->posX, $this->posY, $oldZ);
+		$this->onMove($this->posX, $this->posY, $oldZ);
 	}
 	
 	/**
@@ -163,7 +163,7 @@ abstract class Component
 		if (!empty($args))
 			$this->posZ = array_shift($args);
 			
-		$this->move($oldX, $oldY, $oldZ);
+		$this->onMove($oldX, $oldY, $oldZ);
 	}
 	
 	/**
@@ -207,7 +207,7 @@ abstract class Component
 	{
 		$oldX = $this->sizeX;
 		$this->sizeX = $sizeX;
-		$this->resize($oldX, $this->sizeY);
+		$this->onResize($oldX, $this->sizeY);
 	}
 	
 	/**
@@ -218,7 +218,7 @@ abstract class Component
 	{
 		$oldY = $this->sizeY;
 		$this->sizeY = $sizeY;
-		$this->resize($this->sizeX, $oldY);
+		$this->onResize($this->sizeX, $oldY);
 	}
 	
 	/**
@@ -239,7 +239,7 @@ abstract class Component
 		if (!empty($args))
 			$this->sizeY = array_shift($args);
 			
-		$this->resize($oldX, $oldY);
+		$this->onResize($oldX, $oldY);
 	}
 	
 	/**
