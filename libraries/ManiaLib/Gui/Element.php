@@ -18,7 +18,6 @@ abstract class Element extends Component implements Drawable
 {
 	const USE_ABSOLUTE_URL = true;
 
-	protected $id;
 	protected $style;
 	protected $subStyle;
 	protected $manialink;
