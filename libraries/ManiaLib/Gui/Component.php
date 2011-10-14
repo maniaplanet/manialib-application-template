@@ -420,11 +420,11 @@ abstract class Component
 	}
 	
 	/**
-	 * Overwriteable functions.
+	 * Overwriteable functions. Used by ManiaLive.
 	 */
-	protected function resize($oldX, $oldY) {}
+	protected function onResize($oldX, $oldY) {}
 	
-	protected function move($oldX, $oldY, $oldZ) {}
+	protected function onMove($oldX, $oldY, $oldZ) {}
 }
 
 ?>
