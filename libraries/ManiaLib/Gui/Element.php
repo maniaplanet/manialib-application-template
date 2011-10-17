@@ -585,11 +585,6 @@ abstract class Element extends Component implements Drawable
 			if($this->actionKey !== null)
 				$this->xml->setAttribute('actionkey', $this->actionKey);
 
-			// Add script events
-			// Add action
-			if($this->scriptevents !== null)
-				$this->xml->setAttribute('scriptevents', $this->scriptevents);
-			
 			// Add images
 			if($this->image !== null)
 				$this->xml->setAttribute('image', $this->image);
@@ -602,13 +597,9 @@ abstract class Element extends Component implements Drawable
 			
 			// Add Script Attributes
 			if($this->id)
-			{
 				$this->xml->setAttribute('id', $this->id);
-			}
-			if($this->scriptEvents)
-			{
-				$this->xml->setAttribute('ScriptEvents', $this->scriptEvents);
-			}
+			if($this->scriptevents !== null)
+				$this->xml->setAttribute('scriptevents', $this->scriptevents);
 		}
 
 		// Layout post filtering
