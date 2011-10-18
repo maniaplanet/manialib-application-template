@@ -28,7 +28,7 @@ class Button extends \ManiaLib\Gui\Elements\Label
 	protected $style = self::CardButtonMedium;
 	/**#@-*/
 	
-	function __construct($sizeX = 35, $sizeY = 7.5)
+	function __construct($sizeX = 35, $sizeY = 7)
 	{
 		parent::__construct($sizeX, $sizeY);		
 	}
