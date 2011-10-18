@@ -33,9 +33,9 @@
  *
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
- * @version     $Revision: 5524 $:
- * @author      $Author: maxime $:
- * @date        $Date: 2011-10-18 15:30:42 +0200 (mar., 18 oct. 2011) $:
+ * @version     $Revision$:
+ * @author      $Author$:
+ * @date        $Date$:
  */
 
 #Include "TextLib" as TextLib
