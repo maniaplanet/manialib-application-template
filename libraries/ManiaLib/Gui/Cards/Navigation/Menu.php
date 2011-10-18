@@ -80,7 +80,7 @@ class Menu extends Bgs1
 		$this->setSubStyle(Bgs1::BgWindow1);
 		
 		$this->bigLogo = new \ManiaLib\Gui\Elements\ManiaPlanetLogos(80, 20);
-		$this->bigLogo->setPosition(-3, -8, 5);
+		$this->bigLogo->setPosition(-3, -8, 0.1);
 		$this->bigLogo->setSubStyle(\ManiaLib\Gui\Elements\ManiaPlanetLogos::ManiaPlanetLogoBlack);
 		
 		$this->titleBg = new Bgs1($this->sizeX, 62);
@@ -88,23 +88,23 @@ class Menu extends Bgs1
 		$this->titleBg->setSubStyle(Bgs1::BgTitle3_3);
 
 		$this->title = new Label($this->sizeX - 20);
-		$this->title->setPosition(10, -41, 2);
+		$this->title->setPosition(10, -41, 0.1);
 		$this->title->setStyle(Label::TextTitle1);
 
 		$this->subTitle = new Label($this->sizeX - 20);
-		$this->subTitle->setPosition(10, -48, 3);
+		$this->subTitle->setPosition(10, -48, 0.1);
 		$this->subTitle->setStyle(Label::TextTips);
 
 		$this->quitButton = new Button();
 		$this->quitButton->text->setText("Back");
 		$this->quitButton->text->setStyle(Label::TextButtonNavBack);
-		$this->quitButton->icon->setPosition(-8.5, -0.5, 6);
+		$this->quitButton->icon->setPosition(-8.5, -0.5, 0.1);
 		$this->quitButton->icon->setStyle(Quad::Icons128x128_1);
 		$this->quitButton->icon->setSubStyle(Icons128x128_1::BackFocusable);
 		$this->quitButton->icon->setSize(11, 11);
 
 		$this->logo = new Icons128x128_1(15);
-		$this->logo->setPosition(47, -39, 2);
+		$this->logo->setPosition(47, -39, 0.1);
 		$this->logo->setSubStyle(null);
 	}
 
@@ -156,7 +156,7 @@ class Menu extends Bgs1
 	 */
 	protected function preFilter()
 	{
-		\ManiaLib\Gui\Manialink::beginFrame(-150, 90, 1);
+		\ManiaLib\Gui\Manialink::beginFrame(-150, 90, 0.1);
 	}
 
 	/**
@@ -167,7 +167,7 @@ class Menu extends Bgs1
 		// Frame was created in preFilter
 		// \ManiaLib\Gui\Manialink::beginFrame()
 		{
-			\ManiaLib\Gui\Manialink::beginFrame($this->posX, $this->posY, $this->posZ + 1);
+			\ManiaLib\Gui\Manialink::beginFrame($this->posX, $this->posY, $this->posZ + 0.1);
 			{
 				$this->bigLogo->save();
 				$this->titleBg->save();

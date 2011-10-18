@@ -54,12 +54,12 @@ class Button extends \ManiaLib\Gui\Elements\Quad
 		
 		$this->text = new \ManiaLib\Gui\Elements\Label();
 		$this->text->setValign("center");
-		$this->text->setPosition($this->textOffset, 0.25, 1);
+		$this->text->setPosition($this->textOffset, 0.25, 0.1);
 		$this->text->setStyle(\ManiaLib\Gui\Elements\Label::TextButtonNav);
 		
 		$this->icon = new \ManiaLib\Gui\Elements\Icons128x128_1($this->sizeY);
 		$this->icon->setValign("center");
-		$this->icon->setPosition(55, 0, 1);
+		$this->icon->setPosition(55, 0, 0.1);
 		
 	}
 	
