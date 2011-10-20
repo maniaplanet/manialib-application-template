@@ -16,6 +16,9 @@ namespace ManiaLib\Gui;
  */
 abstract class Manialink
 {
+	/**
+	 * @var \DOMDocument 
+	 */
 	public static $domDocument;
 	public static $parentNodes;
 	public static $parentLayouts;
@@ -206,14 +209,9 @@ abstract class Manialink
 	
 	static function appendScript($maniaScript)
 	{
-		if(strstr($maniaScript, '--'))
-		{
-			// FIXME ManiaLib Figure out what to do with double dash
-			\ManiaLib\Log\Logger::error('Double dash in maniascript :(');
-			\ManiaLib\Log\Logger::error($maniaScript);
-		}
-		$maniaScript = str_replace('--', '-', $maniaScript);
-		self::appendXML('<script><!-- '.$maniaScript.' --></script>');
+		$script = self::$domDocument->createElement('script');
+		$script->appendChild(self::$domDocument->createComment(' '.$maniaScript.' '));
+		end(self::$parentNodes)->appendChild($script);
 	}
 
 	/**
