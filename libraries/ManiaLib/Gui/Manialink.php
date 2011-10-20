@@ -210,6 +210,7 @@ abstract class Manialink
 		{
 			// FIXME ManiaLib Figure out what to do with double dash
 			\ManiaLib\Log\Logger::error('Double dash in maniascript :(');
+			\ManiaLib\Log\Logger::error($maniaScript);
 		}
 		$maniaScript = str_replace('--', '-', $maniaScript);
 		self::appendXML('<script><!-- '.$maniaScript.' --></script>');
