@@ -9,7 +9,7 @@
  * @date        $Date$:
  */
 
-namespace ManiaScript;
+namespace ManiaLib\ManiaScript;
 
 /**
  * ManiaScript tools
