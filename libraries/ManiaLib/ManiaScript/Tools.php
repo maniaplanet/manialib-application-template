@@ -29,7 +29,7 @@ abstract class Tools
 
 	static function escapeString($string)
 	{
-		return addcslashes($string, '"');
+		return addcslashes($string, '"\\');
 	}
 
 }
