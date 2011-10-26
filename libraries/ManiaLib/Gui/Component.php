@@ -11,14 +11,9 @@
 
 namespace ManiaLib\Gui;
 
-/**
- * Component
- */
 abstract class Component
 {
-	/**#@+
-	 * @ignore
-	 */
+
 	protected $id;
 	protected $posX = 0;
 	protected $posY = 0;
@@ -30,18 +25,16 @@ abstract class Component
 	protected $valign = null;
 	protected $halign = null;
 	protected $scriptEvents;
-	/**#@-*/
-	
+
 	/**
 	 * Set the id of the element
 	 * @param int
 	 */
 	function setId($id)
 	{
-		// TODO ManiaLib should we try to catch duplicate Ids ?
 		$this->id = $id;
 	}
-	
+
 	/**
 	 * Sets the X position of the element
 	 * @param float
@@ -52,7 +45,7 @@ abstract class Component
 		$this->posX = $posX;
 		$this->onMove($oldX, $this->posY, $this->posZ);
 	}
-	
+
 	/**
 	 * Sets the Y position of the element
 	 * @param float
@@ -63,7 +56,7 @@ abstract class Component
 		$this->posY = $posY;
 		$this->onMove($this->posX, $oldY, $this->posZ);
 	}
-	
+
 	/**
 	 * Sets the Z position of the element
 	 * @param float
@@ -74,7 +67,7 @@ abstract class Component
 		$this->posZ = $posZ;
 		$this->onMove($this->posX, $this->posY, $oldZ);
 	}
-	
+
 	/**
 	 * Sets the X position of the element
 	 * @param float
@@ -85,7 +78,7 @@ abstract class Component
 		$this->posX = $posX;
 		$this->onMove($oldX, $this->posY, $this->posZ);
 	}
-	
+
 	/**
 	 * Sets the Y position of the element
 	 * @param float
@@ -96,7 +89,7 @@ abstract class Component
 		$this->posY = $posY;
 		$this->onMove($this->posX, $oldY, $this->posZ);
 	}
-	
+
 	/**
 	 * Sets the Z position of the element
 	 * @param float
@@ -107,7 +100,7 @@ abstract class Component
 		$this->posZ = $posZ;
 		$this->onMove($this->posX, $this->posY, $oldZ);
 	}
-	
+
 	/**
 	 * Increment position X
 	 * @param float
@@ -118,7 +111,7 @@ abstract class Component
 		$this->posX += $posX;
 		$this->onMove($oldX, $this->posY, $this->posZ);
 	}
-	
+
 	/**
 	 * Increment position Y
 	 * @param float
@@ -129,7 +122,7 @@ abstract class Component
 		$this->posY += $posY;
 		$this->onMove($this->posX, $oldY, $this->posZ);
 	}
-	
+
 	/**
 	 * Increment position Z
 	 * @param float
@@ -140,7 +133,7 @@ abstract class Component
 		$this->posZ += $posZ;
 		$this->onMove($this->posX, $this->posY, $oldZ);
 	}
-	
+
 	/**
 	 * Sets the position of the element
 	 * @param float
@@ -152,21 +145,21 @@ abstract class Component
 		$oldX = $this->posX;
 		$oldY = $this->posY;
 		$oldZ = $this->posZ;
-		
+
 		$args = func_get_args();
-		
-		if (!empty($args))
+
+		if(!empty($args))
 			$this->posX = array_shift($args);
-			
-		if (!empty($args))
+
+		if(!empty($args))
 			$this->posY = array_shift($args);
-			
-		if (!empty($args))
+
+		if(!empty($args))
 			$this->posZ = array_shift($args);
-			
+
 		$this->onMove($oldX, $oldY, $oldZ);
 	}
-	
+
 	/**
 	 * Sets the vertical alignment of the element.
 	 * @param string Vertical alignment can be either "top", "center" or
@@ -199,7 +192,7 @@ abstract class Component
 		$this->setHalign($halign);
 		$this->setValign($valign);
 	}
-	
+
 	/**
 	 * Sets the width of the element
 	 * @param float
@@ -210,7 +203,7 @@ abstract class Component
 		$this->sizeX = $sizeX;
 		$this->onResize($oldX, $this->sizeY);
 	}
-	
+
 	/**
 	 * Sets the height of the element
 	 * @param float
@@ -221,7 +214,7 @@ abstract class Component
 		$this->sizeY = $sizeY;
 		$this->onResize($this->sizeX, $oldY);
 	}
-	
+
 	/**
 	 * Sets the size of the element
 	 * @param float
@@ -231,18 +224,18 @@ abstract class Component
 	{
 		$oldX = $this->sizeX;
 		$oldY = $this->sizeY;
-		
+
 		$args = func_get_args();
-		
-		if (!empty($args))
+
+		if(!empty($args))
 			$this->sizeX = array_shift($args);
-			
-		if (!empty($args))
+
+		if(!empty($args))
 			$this->sizeY = array_shift($args);
-			
+
 		$this->onResize($oldX, $oldY);
 	}
-	
+
 	/**
 	 * Sets the scale factor of the element. 1=original size, 2=double size, 0.5
 	 * =half size
@@ -252,7 +245,7 @@ abstract class Component
 	{
 		$this->scale = $scale;
 	}
-	
+
 	/**
 	 * Sets the visibility of the Component.
 	 * This is used by ManiaLive.
@@ -262,7 +255,7 @@ abstract class Component
 	{
 		$this->visible = $visible;
 	}
-	
+
 	/**
 	 * Sets additional ManiaScript events to be generated for this element.
 	 * @param string
@@ -271,12 +264,12 @@ abstract class Component
 	{
 		$this->scriptEvents = $scriptEvent;
 	}
-	
+
 	function getId()
 	{
 		return $this->id;
 	}
-	
+
 	/**
 	 * Returns the X position of the element
 	 * @return float
@@ -285,7 +278,7 @@ abstract class Component
 	{
 		return $this->posX;
 	}
-	
+
 	/**
 	 * Returns the Y position of the element
 	 * @return float
@@ -294,7 +287,7 @@ abstract class Component
 	{
 		return $this->posY;
 	}
-	
+
 	/**
 	 * Returns the Z position of the element
 	 * @return float
@@ -303,7 +296,7 @@ abstract class Component
 	{
 		return $this->posZ;
 	}
-	
+
 	/**
 	 * Returns the width of the element
 	 * @return float
@@ -312,7 +305,7 @@ abstract class Component
 	{
 		return $this->sizeX;
 	}
-	
+
 	/**
 	 * Returns the height of the element
 	 * @return float
@@ -321,7 +314,7 @@ abstract class Component
 	{
 		return $this->sizeY;
 	}
-	
+
 	/**
 	 * Returns the scale of the element
 	 * @return float
@@ -330,7 +323,7 @@ abstract class Component
 	{
 		return $this->scale;
 	}
-	
+
 	/**
 	 * Returns the width of the element with the
 	 * applied scaling factor.
@@ -340,7 +333,7 @@ abstract class Component
 	{
 		return $this->sizeX * ($this->scale ? $this->scale : 1);
 	}
-	
+
 	/**
 	 * Returns the height of the element with the
 	 * applied scaling factor.
@@ -350,7 +343,7 @@ abstract class Component
 	{
 		return $this->sizeY * ($this->scale ? $this->scale : 1);
 	}
-	
+
 	/**
 	 * Return the x-coordinate for the left border of the Component.
 	 * @return float
@@ -359,7 +352,7 @@ abstract class Component
 	{
 		return $this->getPosX();
 	}
-	
+
 	/**
 	 * Return the x-coordinate for the right border of the Component.
 	 * @return float
@@ -368,7 +361,7 @@ abstract class Component
 	{
 		return $this->getPosX() + $this->getRealSizeX();
 	}
-	
+
 	/**
 	 * Return y-coordinate for the top border of the Component.
 	 * @return float
@@ -377,7 +370,7 @@ abstract class Component
 	{
 		return $this->getPosY();
 	}
-	
+
 	/**
 	 * Return y-coordinate for the bottom border of the Component.
 	 * @return float
@@ -386,7 +379,7 @@ abstract class Component
 	{
 		return $this->getPosY() + $this->getRealSizeY();
 	}
-	
+
 	/**
 	 * Returns the horizontal alignment of the element
 	 * @return string
@@ -404,7 +397,7 @@ abstract class Component
 	{
 		return $this->valign;
 	}
-	
+
 	/**
 	 * Is the Component rendered onto the screen or not?
 	 * This is used by ManiaLive.
@@ -414,18 +407,25 @@ abstract class Component
 	{
 		return $this->visible;
 	}
-	
+
 	function getScriptEvents()
 	{
 		return $this->scriptEvents;
 	}
-	
+
 	/**
 	 * Overwriteable functions. Used by ManiaLive.
 	 */
-	protected function onResize($oldX, $oldY) {}
-	
-	protected function onMove($oldX, $oldY, $oldZ) {}
+	protected function onResize($oldX, $oldY)
+	{
+		
+	}
+
+	protected function onMove($oldX, $oldY, $oldZ)
+	{
+		
+	}
+
 }
 
 ?>

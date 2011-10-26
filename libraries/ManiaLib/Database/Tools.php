@@ -59,10 +59,10 @@ abstract class Tools
 	
 	/**
 	 * Returns string like "(name1, name2) VALUES (value1, value2)" 
+	 * WARNING: Field names and values are not escaped !!!
 	 */
 	static function getValuesString(array $values)
 	{
-		// FIXME ManiaLib Add bizzare quotes on field names
 		return 
 			'('.implode(', ', array_keys($values)).') '.
 			'VALUES '.
