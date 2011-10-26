@@ -56,15 +56,10 @@ declare Text[Text][Text] _manialib_ui_dialog2;
 declare Text _manialib_ui_dialog2_current;
 declare Text[Text] _manialib_ui_autotip2;
 
-
+// Deprecated: use TextLib::Length()
 Integer manialib_strlen(Text text)
 {
-	declare length = 0;
-	while(TextLib::SubString(text, length,1) != "")
-	{
-		length = length+1;
-	}
-	return length;
+	return TextLib::Length(text);
 }
 
 Real manialib_max(Real real1, Real real2)
@@ -397,7 +392,7 @@ Void manialib_event_listener(CGameManialinkScriptEvent event)
 	{
 		foreach(listener in listeners)
 		{
-			declare length = manialib_strlen(prefixId);
+			declare length = TextLib::Length(prefixId);
 			if(TextLib::SubString(event.ControlId, 0, length) == prefixId)
 			{
 				declare data = TextLib::SubString(event.ControlId, length, 255);
