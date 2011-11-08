@@ -39,8 +39,14 @@ class ManiaScriptStandardElements extends \ManiaLib\Gui\Elements\Spacer
 
 			Manialink::beginFrame(-60, 35, 0.1);
 			{
-				$ui = new Bgs1(120, 60);
-				$ui->setSubStyle(Bgs1::BgTitle3);
+				
+				$ui = new Bgs1(123, 63);
+				$ui->setSubStyle(Bgs1::Shadow);
+				$ui->save();
+				
+				$ui = new \ManiaLib\Gui\Elements\Quad(120, 60);
+				$ui->setPosition(1.5, -1.5, 0.1);
+				$ui->setBgcolor('fffd');
 				$ui->save();
 
 				$ui = new Label(120);
@@ -76,7 +82,6 @@ class ManiaScriptStandardElements extends \ManiaLib\Gui\Elements\Spacer
 		{
 			$ui = new Bgs1InRace(75, 11);
 			$ui->setSubStyle(Bgs1InRace::BgTitle3_3);
-			$ui->save();
 			$ui->save();
 
 			$ui = new Label(67);
