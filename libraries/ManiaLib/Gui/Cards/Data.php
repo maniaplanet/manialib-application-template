@@ -30,14 +30,19 @@ class Data extends Bgs1
 	 */
 	public $data = array();
 
+	protected static function formatLine($t, $l='', $ts = '$o$09f', $ls = '')
+	{
+		return ($t ? '$<'.$ts.$t.'$<$n $>:$>' : '').($l ? '    '.$ls.$l : '');
+	}
+
 	function __construct($sizeX = 70, $sizeY = 0)
 	{
 		parent::__construct($sizeX, $sizeY);
 
-		$this->setSubStyle(Bgs1::BgList);
+		$this->setSubStyle(Bgs1::BgWindow2);
 
-		$this->cardElementsPosX = 2;
-		$this->cardElementsPosY = -2;
+		$this->cardElementsPosX = 3;
+		$this->cardElementsPosY = -3;
 		$this->cardElementsLayout = new Column();
 	}
 
@@ -50,14 +55,13 @@ class Data extends Bgs1
 	{
 		foreach($this->data as $data)
 		{
-			$ui = new Label($this->sizeX - $this->cardElementsPosX * 2, 5);
-			$ui->setText(TMStrings::formatLine(
-					Arrays::get($data, 0, ''),
-					Arrays::get($data, 1, '')
-			));
+			$ui = new Label($this->sizeX - $this->cardElementsPosX * 2, 6);
+			$ui->setText(self::formatLine(
+					Arrays::get($data, 0, ''), Arrays::get($data, 1, '')
+				));
 			$this->addCardElement($ui);
 		}
-		$this->setSizeY($this->sizeY + count($this->data) * 3.25 - $this->cardElementsPosY * 3.5);
+		$this->setSizeY($this->sizeY + count($this->data) * 6 + 6);
 	}
 
 }
