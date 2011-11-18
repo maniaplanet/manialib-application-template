@@ -13,6 +13,7 @@ namespace ManiaLib\Application;
 
 /**
  * Session handling for humans
+ * @method \ManiaLib\Application\Session getInstance()
  */
 class Session extends \ManiaLib\Utils\Singleton
 {

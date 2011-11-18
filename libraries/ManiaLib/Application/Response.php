@@ -14,6 +14,7 @@ namespace ManiaLib\Application;
 /**
  * Response engine
  * Allows to pass values between filters, controllers and views
+ * @method \ManiaLib\Application\Response getInstance()
  */
 class Response extends \ManiaLib\Utils\Singleton
 {

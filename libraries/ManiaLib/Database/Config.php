@@ -13,6 +13,7 @@ namespace ManiaLib\Database;
 
 /**
  * Database config
+ * @method \ManiaLib\Database\Config getInstance()
  */
 class Config extends \ManiaLib\Utils\Singleton
 {

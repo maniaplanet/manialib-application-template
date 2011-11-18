@@ -13,6 +13,7 @@ namespace ManiaLib\Application;
 
 /**
  * Manages http request: retrieve params, create links and redirections
+ * @method \ManiaLib\Application\Request getInstance()
  */
 class Request extends \ManiaLib\Utils\Singleton
 {

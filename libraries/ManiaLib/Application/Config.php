@@ -13,6 +13,7 @@ namespace ManiaLib\Application;
 
 /**
  * Application config
+ * @method \ManiaLib\Application\Config getInstance()
  */
 class Config extends \ManiaLib\Utils\Singleton
 {

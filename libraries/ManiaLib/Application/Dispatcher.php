@@ -11,6 +11,9 @@
 
 namespace ManiaLib\Application;
 
+/**
+ * @method \ManiaLib\Application\Dispatcher getInstance()
+ */
 class Dispatcher extends \ManiaLib\Utils\Singleton
 {
 	const PATH_INFO_OVERRIDE_PARAM = 'ml-forcepathinfo';

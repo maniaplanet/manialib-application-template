@@ -12,6 +12,7 @@ namespace ManiaLib\Log;
 
 /**
  * Log config
+ * @method \ManiaLib\Log\Config getInstance()
  */
 class Config extends \ManiaLib\Utils\Singleton
 {
