@@ -9,11 +9,14 @@
  * @date        $Date$:
  */
 
-namespace ManiaLib\Authentication;
+namespace ManiaLib\WebServices;
 
 /**
- * @deprecated
- * @todo Merge this in ManiaLib\WebServices
+ * Configure your Maniaplanet Web Services API credentials with this class
+ * so that they are automatically loaded when you instanciate one of the SDK 
+ * classes.
+ * 
+ * @method \ManiaLib\WebServices\Config getInstance()
  */
 class Config extends \ManiaLib\Utils\Singleton
 {

@@ -12,6 +12,9 @@
 namespace ManiaLib\Authentication;
 
 /**
+ * @deprecated
+ * @todo Merge this in ManiaLib\WebServices
+ * 
  * Automatic authentication using ManiaConnect. You need to specify your API
  * username/password in the config file using the following:
  * 
