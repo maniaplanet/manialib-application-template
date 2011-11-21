@@ -37,6 +37,7 @@ abstract class Tools
 		switch($alignmentString)
 		{
 			case 'center|center':
+			case 'center|center2':
 			case 'left|left':
 			case 'right|right':
 				$factor = 0;
@@ -44,11 +45,13 @@ abstract class Tools
 				
 			case 'center|left':
 			case 'right|center':
+			case 'right|center2':
 				$factor = -0.5;
 				break;
 				
 			case 'center|right':
 			case 'left|center':
+			case 'left|center2':
 				$factor = 0.5;
 				break;
 
