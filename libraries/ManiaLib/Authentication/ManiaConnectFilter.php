@@ -66,12 +66,6 @@ class ManiaConnectFilter extends \ManiaLib\Application\AdvancedFilter
 		$config = Config::getInstance();
 		$username = $config->username;
 		$password = $config->password;
-		if(!$username || !$password)
-		{
-			throw new \ManiaLib\Application\UserException(
-				'Authentication failed: app administrator '.
-				'must specify API credentials in the config file.');
-		}
 
 		$this->oauth2 = new \Maniaplanet\WebServices\ManiaConnect\Player($username, $password);
 		try
