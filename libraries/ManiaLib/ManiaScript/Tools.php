@@ -35,7 +35,7 @@ abstract class Tools
 	static function escapeString($string)
 	{
 		$string = str_replace(array("\n", "\r"), array('\n', ''), $string);
-		$string = addcslashes($string, '"');
+		$string = addcslashes($string, '\"');
 		return $string;
 	}
 
