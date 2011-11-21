@@ -11,103 +11,80 @@
 
 namespace ManiaLib\Gui\Cards\Navigation;
 
-/**
- * Navigation button
- */ 
-class Button extends \ManiaLib\Gui\Elements\Quad
+class Button extends \ManiaLib\Gui\Elements\Bgs1
 {
+
 	/**
 	 * TrackMania formatting string appended to the text when a button
 	 * is selected (default is just a light blue color)
 	 */
 	static public $unselectedTextStyle = '$fff';
-	
+
 	/**
 	 * @var \ManiaLib\Gui\Elements\Label
 	 */
 	public $text;
+
 	/**
 	 * @var \ManiaLib\Gui\Elements\Icon
 	 */
 	public $icon;
 	public $iconSizeMinimizer = 1.5;
-	public $textSizeMinimizer = 3;
-	public $textOffset = 8;
+	public $textSizeMinimizer = 10;
+
 	/**
-	 *
 	 * @var \ManiaLib\Gui\Elements\Icons64x64_1
 	 */
 	protected $selectedIcon;
-	/**
-	 * @ignore
-	 */
 	protected $isSelected = false;
 	protected $forceLinks = true;
 
-	function __construct ($sx=29.5, $sy=8.5) 
+	function __construct($sizeX = 69, $sizeY = 8.5)
 	{
-		$this->sizeX = $sx;
-		$this->sizeY = $sy;	
-		
-		$this->setStyle(\ManiaLib\Gui\Elements\Quad::Bgs1);
+		parent::__construct($sizeX, $sizeY);
+
 		$this->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgEmpty);
-		
-		$this->text = new \ManiaLib\Gui\Elements\Label();
+
+		$this->cardElementsValign = 'center2';
+
+		$this->text = new \ManiaLib\Gui\Elements\Label(45);
+		$this->text->setSizeY(0);
 		$this->text->setValign("center");
-		$this->text->setPosition($this->textOffset, 0.25, 0.1);
+		$this->text->setPosition(8);
 		$this->text->setStyle(\ManiaLib\Gui\Elements\Label::TextButtonNav);
-		
+		$this->addCardElement($this->text);
+
 		$this->icon = new \ManiaLib\Gui\Elements\Icons128x128_1($this->sizeY);
 		$this->icon->setValign("center");
 		$this->icon->setPosition(55, 0, 0.1);
-		
+		$this->addCardElement($this->icon);
 	}
-	
+
 	/**
 	 * Sets the button selected and change its styles accordingly
 	 */
-	function setSelected() 
+	function setSelected()
 	{
-		$this->isSelected = true;	
+		$this->isSelected = true;
+
 		$this->selectedIcon = new \ManiaLib\Gui\Elements\Icons64x64_1(11);
 		$this->selectedIcon->setSubStyle(\ManiaLib\Gui\Elements\Icons64x64_1::ShowRight);
 		$this->selectedIcon->setValign('center');
 		$this->selectedIcon->setPosX(71);
+		$this->addCardElement($this->selectedIcon);
 	}
-	
-	/**
-	 * @ignore
-	 */
-	protected function postFilter ()
-	{		
-		if(!$this->isSelected)
+
+	protected function preFilter()
+	{
+		if(!$this->isSelected && $this->text->getText())
 		{
-			if($this->text->getText())
-			{
-				$this->text->setText(self::$unselectedTextStyle.$this->text->getText());
-			}
+			$this->text->setText(self::$unselectedTextStyle.$this->text->getText());
 		}
-		
-		$this->text->setSizeX($this->sizeX - $this->text->getPosX() - $this->textSizeMinimizer);
-		$this->text->setSizeY(0);
-		
-		if($this->forceLinks)
-		{
-			$this->text->addLink($this);
-			$this->icon->addLink($this);
-		}
-		$newPos = \ManiaLib\Gui\Tools::getAlignedPos ($this, "left", "center");
-		
-		// Drawing
-		\ManiaLib\Gui\Manialink::beginFrame($newPos["x"], $newPos["y"], $this->posZ+1);
-			$this->text->save();
-			$this->icon->save();
-			if($this->isSelected)
-			{
-				$this->selectedIcon->save();
-			}
-		\ManiaLib\Gui\Manialink::endFrame();
+
+		$this->text->addLink($this);
+		$this->icon->addLink($this);
 	}
+
 }
 
 ?>

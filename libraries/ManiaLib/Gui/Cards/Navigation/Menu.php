@@ -113,7 +113,7 @@ class Menu extends Bgs1
 	 */
 	function addItem($topItem = self::BUTTONS_TOP)
 	{
-		$item = new Button($this->sizeX - 1);
+		$item = new Button();
 		$item->setSubStyle(Bgs1::BgEmpty);
 		if($topItem)
 			$this->items[] = $item;
