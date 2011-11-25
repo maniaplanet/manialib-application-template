@@ -8,6 +8,8 @@
 namespace ManiaLibDemo\Views\ManiaScript;
 
 use ManiaLib\Gui\Manialink;
+use ManiaLib\ManiaScript\UI;
+use ManiaLib\ManiaScript\Action;
 
 class Index extends \ManiaLib\Application\View
 {
@@ -27,8 +29,8 @@ class Index extends \ManiaLib\Application\View
 		$ui->setScriptEvents();
 		$ui->save();
 		
-		Manialink::appendScript('manialib_ui_dialog("maniahome-button", "Do you want to go to maniahome?", ["manialink", "maniahome"]);');
-		Manialink::appendScript('manialib_ui_tooltip("maniahome-button", "Click me! Click me");');
+		UI::dialog('maniahome-button', 'Do you want to visit ManiaHome?', array(Action::manialink, "maniahome"));
+		UI::tooltip('maniahome-button', 'Click me! Click me!');
 		
 		Manialink::appendScript('manialib_main_loop();');
 		Manialink::appendScript('}');
