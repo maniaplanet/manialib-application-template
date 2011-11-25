@@ -247,17 +247,17 @@ Void manialib_action_execute(Text[] action)
 		case "posz":
 			manialib_posz(action[1], TextLib::ToReal(action[2]));
 			
-		case "settext":
+		case "set_text":
 			manialib_set_text(action[1], action[2]);
 
-		case "manialib_move_to_mouse":
+		case "move_to_mouse":
 			// TODO Because of a bug in TextLib::ToReal(), we cannot use the params...
 			manialib_move_to_mouse(action[1], 0.0, -2.0, 75.0, 11.0);
 			
-		case "manialib_disable_links":
+		case "disable_links":
 			manialib_disable_links();
 			
-		case "manialib_enable_links":
+		case "enable_links":
 			manialib_enable_links();
 
 		// You can also just pass an empty array
@@ -329,15 +329,15 @@ Void manialib_ui_dialog(Text controlId, Text message, Text[] action)
 	manialib_hide("manialib-dialog");
 	manialib_posx("manialib-dialog", 0.0);
 	
-	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseClick, ["settext", "manialib-dialog-text", message]);
+	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseClick, ["set_text", "manialib-dialog-text", message]);
 	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseClick, ["show", "manialib-dialog"]);
-	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseClick, ["manialib_disable_links"]);
+	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseClick, ["disable_links"]);
 	
 	manialib_event_add_listener("manialib-dialog-no", CGameManialinkScriptEvent::Type::MouseClick, ["hide", "manialib-dialog"]);
-	manialib_event_add_listener("manialib-dialog-no", CGameManialinkScriptEvent::Type::MouseClick, ["manialib_enable_links"]);
+	manialib_event_add_listener("manialib-dialog-no", CGameManialinkScriptEvent::Type::MouseClick, ["enable_links"]);
 	
 	manialib_event_add_listener("manialib-dialog-yes", CGameManialinkScriptEvent::Type::MouseClick, ["hide", "manialib-dialog"]);
-	manialib_event_add_listener("manialib-dialog-yes", CGameManialinkScriptEvent::Type::MouseClick, ["manialib_enable_links"]);
+	manialib_event_add_listener("manialib-dialog-yes", CGameManialinkScriptEvent::Type::MouseClick, ["enable_links"]);
 	manialib_event_add_listener("manialib-dialog-yes", CGameManialinkScriptEvent::Type::MouseClick, action);
 }
 
@@ -345,9 +345,9 @@ Void manialib_ui_tooltip(Text controlId, Text message)
 {
 	manialib_hide("manialib-dialog");
 	
-	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseOver, ["settext", "manialib-tooltip-text", message]);
+	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseOver, ["set_text", "manialib-tooltip-text", message]);
 	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseOver, ["show", "manialib-tooltip"]);
-	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseOver, ["manialib_move_to_mouse", "manialib-tooltip", "0.0", "-2.0", "75.0", "11.0"]);
+	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseOver, ["move_to_mouse", "manialib-tooltip", "0.0", "-2.0", "75.0", "11.0"]);
 	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseOut, ["hide", "manialib-tooltip"]);
 }
 
