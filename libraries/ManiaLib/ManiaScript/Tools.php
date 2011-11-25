@@ -40,6 +40,26 @@ abstract class Tools
 		return $string;
 	}
 
+	/**
+	 * Converts a PHP array to a Text[] ManiaScript array (note the type!).
+	 * Usefull when used with "ManiaScript Framework Actions"
+	 */
+	static function array2maniascript(array $array)
+	{
+		if(!$array)
+		{
+			// hack because "[]" is not supported and "Text[]" doesnt work yet
+			return '[""]';
+		}
+		$array = array_values($array);
+		$array = array_map(function($element)
+			{
+				return '"'.Tools::escapeString($element).'"';
+			}, array_values($array));
+		$array = '['.implode(',', $array).']';
+		return $array;
+	}
+
 }
 
 ?>
