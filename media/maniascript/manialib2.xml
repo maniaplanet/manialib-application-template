@@ -70,29 +70,6 @@ Text manialib_event2text(CGameManialinkScriptEvent::Type eventType)
 	return "";
 }
 
-Integer[] manialib_version2array(Text version)
-{
-	declare Integer[] versionArray;
-	versionArray.add(TextLib::ToInteger(TextLib::SubString(version, 0, 4)));
-	versionArray.add(TextLib::ToInteger(TextLib::SubString(version, 5, 2)));
-	versionArray.add(TextLib::ToInteger(TextLib::SubString(version, 8, 2)));
-	versionArray.add(TextLib::ToInteger(TextLib::SubString(version, 11, 2)));
-	versionArray.add(TextLib::ToInteger(TextLib::SubString(version, 14, 2)));
-	return versionArray;
-}
-
-Boolean manialib_compare_versions(Text version1, Text version2)
-{
-	declare v1 = manialib_version2array(version1);
-	declare v2 = manialib_version2array(version2);
-	for(i, 0, 4)
-	{
-		if(v1[i] > v2[i]) return True;
-		if(v1[i] < v2[i]) return False;
-	}
-	return True;
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 //
 // Manipulation
@@ -222,11 +199,11 @@ Void manialib_enable_links()
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Callback handling (internal stuff)
+// ManiaScript Framework Actions handling (internal stuff)
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-Void manialib_callback_execute(Text[] action)
+Void manialib_action_execute(Text[] action)
 {
 	if(action.count == 0)
 	{
@@ -323,7 +300,7 @@ Void manialib_event_listener(CGameManialinkScriptEvent event)
 		{
 			foreach(action in _manialib_event_listeners[event.ControlId][eventTypeName])
 			{
-				manialib_callback_execute(action);
+				manialib_action_execute(action);
 			}
 		}
 	}
