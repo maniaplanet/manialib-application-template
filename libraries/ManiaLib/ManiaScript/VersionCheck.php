@@ -74,7 +74,7 @@ class VersionCheck implements \ManiaLib\Application\Filterable
 				$ui->setStyle(Label::TextTips);
 				$ui->setText(
 					'You cannot display this content because your Maniaplanet '.
-					'version is not up to date. Please update Maniaplanet to '.
+					'version is not up-to-date. Please update Maniaplanet to '.
 					'the latest version. While it should be automatic, you can '.
 					'find help and more information on the Maniaplanet Wiki: ');
 				$ui->save();
@@ -108,10 +108,11 @@ class VersionCheck implements \ManiaLib\Application\Filterable
 		$minVersion = Config::getInstance()->minVersion;
 		if($version !== null && $minVersion !== null)
 		{
-			$version = self::version2timestamp($version);
-			$minVersion = self::version2timestamp($minVersion);
-			if($version && $version < $minVersion)
+			$versionTimestamp = self::version2timestamp($version);
+			$minVersionTimestamp = self::version2timestamp($minVersion);
+			if($versionTimestamp < $minVersionTimestamp)
 			{
+				\ManiaLib\Log\Logger::user('Maniaplanet not up-to-date: '.$version);
 				self::displayErrorPage();
 				exit;
 			}
