@@ -1,0 +1,128 @@
+<?php
+/**
+ * ManiaLib - Lightweight PHP framework for Manialinks
+ * 
+ * @see         http://code.google.com/p/manialib/
+ * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
+ * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
+ * @version     $Revision$:
+ * @author      $Author$:
+ * @date        $Date$:
+ */
+
+namespace ManiaLib\ManiaScript;
+
+use ManiaLib\Gui\Manialink;
+use ManiaLib\Gui\Elements\Label;
+use ManiaLib\Gui\Elements\Bgs1InRace;
+
+/**
+ * Displays an error page if the client's version is older than the min version
+ * configured in ManiaLib\ManiaScript\Config.minVersion
+ * 
+ * Useful when you want to use ManiaScript features that were introduced after
+ * the first release of Maniaplanet.
+ */
+class VersionCheck implements \ManiaLib\Application\Filterable
+{
+
+	static function version2timestamp($version)
+	{
+		$v = $version;
+		return mktime(substr($v, 14, 2), substr($v, 11, 2), 0, substr($v, 5, 2),
+				substr($v, 8, 2), substr($v, 0, 4));
+	}
+
+	static function getVersion()
+	{
+		if(\ManiaLib\Application\Filters\UserAgentCheck::isManiaplanet())
+		{
+			$userAgent = \ManiaLib\Utils\Arrays::get($_SERVER, 'HTTP_USER_AGENT');
+			$regexp = '/ \(([0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}_[0-9]{2})\)/';
+			if(preg_match($regexp, $userAgent, $matches) == 1)
+			{
+				return $matches[1];
+			}
+		}
+	}
+	
+	static function displayErrorPage()
+	{
+		Manialink::load();
+		{
+			Manialink::beginFrame(-70, 35, 0.1);
+			{
+				
+				$ui = new Bgs1InRace(143, 63);
+				$ui->setSubStyle(Bgs1InRace::Shadow);
+				$ui->save();
+				
+				$ui = new \ManiaLib\Gui\Elements\Quad(140, 60);
+				$ui->setPosition(1.5, -1.5, 0.1);
+				$ui->setBgcolor('fffe');
+				$ui->save();
+
+				$ui = new Label(110);
+				$ui->setPosition(6, -6, 0.2);
+				$ui->setStyle(Label::TextButtonMedium);
+				$ui->setText(''.'Please update maniaplanet');
+				$ui->save();
+				
+				$ui = new Label(131);
+				$ui->setPosition(6, -13, 0.2);
+				$ui->enableAutonewline();
+				$ui->setStyle(Label::TextTips);
+				$ui->setText(
+					'You cannot display this content because your Maniaplanet '.
+					'version is not up to date. Please update Maniaplanet to '.
+					'the latest version. While it should be automatic, you can '.
+					'find help and more information in the Maniaplanet Wiki: ');
+				$ui->save();
+				
+				$ui = new Label(131);
+				$ui->setAlign('center', 'center');
+				$ui->setPosition(71.5, -35, 0.2);
+				$ui->setStyle(Label::TextChallengeNameMedalNone);
+				$ui->setUrl('http://wiki.maniaplanet.com/en/Changelog');
+				$ui->setText('wiki.maniaplanet.com/en/Changelog');
+				$ui->save();
+				
+				$ui = new Label(131);
+				$ui->setValign('bottom');
+				$ui->setPosition(5, -57, 0.2);
+				$ui->enableAutonewline();
+				$ui->setStyle(Label::TextTips);
+				$ui->setText(
+					'Thank you for your understanding,'."\n".
+					'Nadeo Team');
+				$ui->save();
+			}
+			Manialink::endFrame();
+		}
+		Manialink::render();
+	}
+
+	function preFilter()
+	{
+		$version = self::getVersion();
+		$minVersion = Config::getInstance()->minVersion;
+		if($version !== null && $minVersion !== null)
+		{
+			$version = self::version2timestamp($version);
+			$minVersion = self::version2timestamp($minVersion);
+			if($version && $version < $minVersion)
+			{
+				self::displayErrorPage();
+				exit;
+			}
+		}
+	}
+
+	function postFilter()
+	{
+		
+	}
+
+}
+
+?>
