@@ -172,7 +172,7 @@ Void manialib_move_to_mouse(Text controlId, Real offsetX, Real offsetY, Real bou
 	control.PosnY = manialib_max(MouseY + offsetY, -90.0 + boundingBoxY);
 }
 
-Void manialib_settext(Text controlId, Text newtext)
+Void manialib_set_text(Text controlId, Text newtext)
 {
 	declare CGameManialinkLabel control <=> (Page.MainFrame.GetFirstChild(controlId) as CGameManialinkLabel);
 	if(control != Null)
@@ -248,7 +248,7 @@ Void manialib_action_execute(Text[] action)
 			manialib_posz(action[1], TextLib::ToReal(action[2]));
 			
 		case "settext":
-			manialib_settext(action[1], action[2]);
+			manialib_set_text(action[1], action[2]);
 
 		case "manialib_move_to_mouse":
 			// TODO Because of a bug in TextLib::ToReal(), we cannot use the params...
