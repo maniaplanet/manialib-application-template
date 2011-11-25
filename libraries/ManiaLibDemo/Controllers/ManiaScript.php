@@ -12,29 +12,20 @@
 
 namespace ManiaLibDemo\Controllers;
 
-class Home extends \ManiaLib\Application\Controller
+class ManiaScript extends \ManiaLib\Application\Controller
 {
 
+	protected function onConstruct()
+	{
+		parent::onConstruct();
+		// This is to check that visitors have the latest update of Maniaplanet
+		$this->addFilter(new \ManiaLib\ManiaScript\VersionCheck());
+	}
+
 	/**
-	 * Maps to /index.php/home/index
+	 * Maps to index.php/mania-script
 	 */
 	function index()
-	{
-		
-	}
-
-	/**
-	 * Maps to /index.php/home/some-page
-	 */
-	function somePage()
-	{
-		
-	}
-
-	/**
-	 * Does not map to any URL since it's protected
-	 */
-	protected function foobar()
 	{
 		
 	}
