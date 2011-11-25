@@ -76,7 +76,7 @@ class VersionCheck implements \ManiaLib\Application\Filterable
 					'You cannot display this content because your Maniaplanet '.
 					'version is not up to date. Please update Maniaplanet to '.
 					'the latest version. While it should be automatic, you can '.
-					'find help and more information in the Maniaplanet Wiki: ');
+					'find help and more information on the Maniaplanet Wiki: ');
 				$ui->save();
 				
 				$ui = new Label(131);
