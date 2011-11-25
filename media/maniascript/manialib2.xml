@@ -187,14 +187,12 @@ Void manialib_set_text(Text controlId, Text newtext)
 
 Void manialib_disable_links()
 {
-	// TODO Uncomment when pushed in update
-	//Page.InhibitLinks = True;
+	// TODO feature in the next update of Maniaplanet ?
 }
 
 Void manialib_enable_links()
 {
-	// TODO Uncomment when pushed in update
-	//Page.InhibitLinks = False;
+	// TODO feature in the next update of Maniaplanet ?
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -239,19 +237,22 @@ Void manialib_action_execute(Text[] action)
 			manialib_toggle(action[1]);
 			
 		case "posx":
+			// FIXME Because of a bug in TextLib::ToReal() this won't work for now
 			manialib_posx(action[1], TextLib::ToReal(action[2]));
 			
 		case "posy":
+			// FIXME Because of a bug in TextLib::ToReal() this won't work for now
 			manialib_posy(action[1], TextLib::ToReal(action[2]));
 			
 		case "posz":
+			// FIXME Because of a bug in TextLib::ToReal() this won't work for now
 			manialib_posz(action[1], TextLib::ToReal(action[2]));
 			
 		case "set_text":
 			manialib_set_text(action[1], action[2]);
 
 		case "move_to_mouse":
-			// TODO Because of a bug in TextLib::ToReal(), we cannot use the params...
+			// FIXME Because of a bug in TextLib::ToReal(), we cannot use the params
 			manialib_move_to_mouse(action[1], 0.0, -2.0, 75.0, 11.0);
 			
 		case "disable_links":
