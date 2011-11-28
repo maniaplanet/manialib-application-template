@@ -564,24 +564,27 @@ abstract class Element extends Component implements Drawable
 				$this->xml->setAttribute('bgcolor', $this->bgcolor);
 
 			// Add links
-			if($this->addPlayerId !== null && \ManiaLib\Gui\Manialink::$linksEnabled)
-				$this->xml->setAttribute('addplayerid', $this->addPlayerId);
-			if($this->manialink !== null && \ManiaLib\Gui\Manialink::$linksEnabled)
-				$this->xml->setAttribute('manialink', $this->manialink);
-			if($this->goto !== null && \ManiaLib\Gui\Manialink::$linksEnabled)
-				$this->xml->setAttribute('goto', $this->goto);
-			if($this->manialinkId !== null && \ManiaLib\Gui\Manialink::$linksEnabled)
-				$this->xml->setAttribute('manialinkId', $this->manialinkId);
-			if($this->url !== null && \ManiaLib\Gui\Manialink::$linksEnabled)
-				$this->xml->setAttribute('url', $this->url);
-			if($this->urlId !== null && \ManiaLib\Gui\Manialink::$linksEnabled)
-				$this->xml->setAttribute('urlid', $this->urlId);
-			if($this->maniazone !== null && \ManiaLib\Gui\Manialink::$linksEnabled)
-				$this->xml->setAttribute('maniazone', $this->maniazone);
+			if(\ManiaLib\Gui\Manialink::$linksEnabled)
+			{
+				if($this->addPlayerId !== null)
+					$this->xml->setAttribute('addplayerid', $this->addPlayerId);
+				if($this->manialink !== null)
+					$this->xml->setAttribute('manialink', $this->manialink);
+				if($this->goto !== null)
+					$this->xml->setAttribute('goto', $this->goto);
+				if($this->manialinkId !== null)
+					$this->xml->setAttribute('manialinkId', $this->manialinkId);
+				if($this->url !== null)
+					$this->xml->setAttribute('url', $this->url);
+				if($this->urlId !== null)
+					$this->xml->setAttribute('urlid', $this->urlId);
+				if($this->maniazone !== null)
+					$this->xml->setAttribute('maniazone', $this->maniazone);
 
-			// Add action
-			if($this->action !== null && \ManiaLib\Gui\Manialink::$linksEnabled)
-				$this->xml->setAttribute('action', $this->action);
+				// Add action
+				if($this->action !== null)
+					$this->xml->setAttribute('action', $this->action);
+			}
 			if($this->actionKey !== null)
 				$this->xml->setAttribute('actionkey', $this->actionKey);
 
