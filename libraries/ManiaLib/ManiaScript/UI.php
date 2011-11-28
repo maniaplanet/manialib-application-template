@@ -73,7 +73,7 @@ abstract class UI
 	 * @param string $message Message to show in the dialog
 	 * @param array $action A ManiaScript Framework Action
 	 */
-	static function dialog($openControlId, $message, array $action)
+	static function dialog($openControlId, $message, array $action = array())
 	{
 		$script = 'manialib_ui_dialog("%s", "%s", %s); ';
 		$openControlId = Tools::escapeString($openControlId);
