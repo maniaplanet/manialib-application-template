@@ -133,6 +133,7 @@ class MultipageList
 			array_pop($array);
 		} 
 		$this->hasMorePages = $hasMorePages;	
+		$this->pageNavigator->showText(false);
 	}
 	
 	function hasMorePages()
