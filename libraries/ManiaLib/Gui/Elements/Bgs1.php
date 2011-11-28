@@ -66,6 +66,7 @@ class Bgs1 extends \ManiaLib\Gui\Elements\Quad
 	const HealthBar            = 'HealthBar';
 	const NavButton            = 'NavButton';
 	const NavButtonBlink       = 'NavButtonBlink';
+	const NavButtonQuit       = 'NavButtonQuit';
 	const ProgressBar          = 'ProgressBar';
 	const ProgressBarSmall     = 'ProgressBarSmall';
 	const Shadow               = 'Shadow';
