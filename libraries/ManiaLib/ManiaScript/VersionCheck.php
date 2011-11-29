@@ -26,6 +26,8 @@ use ManiaLib\Gui\Elements\Bgs1InRace;
 class VersionCheck implements \ManiaLib\Application\Filterable
 {
 
+	static $errorPageCallback = array('\ManiaLib\ManiaScript\VersionCheck', 'displayErrorPage');
+	
 	static function version2timestamp($version)
 	{
 		$v = $version;
@@ -113,7 +115,7 @@ class VersionCheck implements \ManiaLib\Application\Filterable
 			if($versionTimestamp < $minVersionTimestamp)
 			{
 				\ManiaLib\Log\Logger::user('Maniaplanet not up-to-date: '.$version);
-				self::displayErrorPage();
+				call_user_func(self::$errorPageCallback);
 				exit;
 			}
 		}
