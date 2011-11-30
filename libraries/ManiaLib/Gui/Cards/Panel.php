@@ -13,12 +13,9 @@ namespace ManiaLib\Gui\Cards;
 
 use ManiaLib\Gui\Elements\Label;
 use ManiaLib\Gui\Elements\Bgs1;
+use ManiaLib\Gui\Elements\Bgs1InRace;
 use ManiaLib\Gui\Elements\Quad;
 
-/**
- * Panel
- * Very useful! A quad with a title and a title background
- */
 class Panel extends Quad
 {
 
@@ -50,8 +47,8 @@ class Panel extends Quad
 
 		$this->titleBg = new Quad(0, 16.25);
 		$this->titleBg->setHalign('center');
-		$this->titleBg->setStyle(Quad::Bgs1);
-		$this->titleBg->setSubStyle(Bgs1::BgTitle3_1);
+		$this->titleBg->setStyle(Quad::Bgs1InRace);
+		$this->titleBg->setSubStyle(Bgs1InRace::BgTitle3_1);
 		$this->addCardElement($this->titleBg);
 
 		$this->title = new Label();
