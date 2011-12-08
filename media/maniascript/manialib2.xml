@@ -201,6 +201,19 @@ Void manialib_set_text(Text controlId, Text newtext)
 	}
 }
 
+Void manialib_set_entry_value(Text controlId, Text value)
+{
+	declare CGameManialinkEntry control <=> (Page.MainFrame.GetFirstChild(controlId) as CGameManialinkLabel);
+	if(control != Null)
+	{
+		control.Value = value;
+	}
+	else
+	{
+		log("[WARNING] Trying to access an unkown element: " ^ controlId);
+	}
+}
+
 Void manialib_disable_links()
 {
 	// TODO feature in the next update of Maniaplanet ?
@@ -274,6 +287,9 @@ Void manialib_action_execute(Text[] action)
 			
 		case "set_text":
 			manialib_set_text(action[1], action[2]);
+			
+		case "set_entry_value":
+			manialib_set_entry_value(action[1], action[2]);
 
 		case "move_to_mouse":
 			// FIXME Because of a bug in TextLib::ToReal(), we cannot use the params
