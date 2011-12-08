@@ -203,7 +203,7 @@ Void manialib_set_text(Text controlId, Text newtext)
 
 Void manialib_set_entry_value(Text controlId, Text value)
 {
-	declare CGameManialinkEntry control <=> (Page.MainFrame.GetFirstChild(controlId) as CGameManialinkLabel);
+	declare CGameManialinkEntry control <=> (Page.MainFrame.GetFirstChild(controlId) as CGameManialinkEntry);
 	if(control != Null)
 	{
 		control.Value = value;
