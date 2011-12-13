@@ -26,8 +26,7 @@ abstract class Singleton
 	}
 	
 	/**
-	 * Force a singleton object to be instanciated with the given instance
-	 * Use with care!
+	 * @deprecated
 	 */
 	static function forceInstance(Singleton $object)
 	{
