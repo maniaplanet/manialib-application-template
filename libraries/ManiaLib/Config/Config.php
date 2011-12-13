@@ -14,19 +14,22 @@ namespace ManiaLib\Config;
 /**
  * Base config
  * Extends this in your application to add config values
+ * @method \ManiaLib\Config\Config getInstance()
  */
 class Config extends \ManiaLib\Utils\Singleton
 {
+
 	public $appId;
 	public $timezone = 'Europe/Paris';
 	public $timezoneName = 'GMT+1';
 	public $debug = false;
 	public $disableCache = false;
-	
+
 	function __construct()
 	{
 		$this->appId = md5(__FILE__);
 	}
+
 }
 
 ?>
