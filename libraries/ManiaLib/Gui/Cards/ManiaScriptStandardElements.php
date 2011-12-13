@@ -19,9 +19,8 @@ use ManiaLib\Gui\Elements\Button;
 
 /**
  * The ManiaScript framework uses standard UI elements such as dialogs and 
- * tooltips. Someday when we can dyanmically create elements in the page with
- * maniascript we'll do that, in the meantime we just use a card for easy
- * integration...
+ * tooltips. This is card is used to create the associated XML code, but you
+ * won't need to use it
  */
 class ManiaScriptStandardElements extends \ManiaLib\Gui\Elements\Spacer
 {
@@ -39,21 +38,21 @@ class ManiaScriptStandardElements extends \ManiaLib\Gui\Elements\Spacer
 
 			Manialink::beginFrame(-60, 35, 0.1);
 			{
-				
-				$ui = new Bgs1(123, 63);
-				$ui->setSubStyle(Bgs1::Shadow);
+
+				$ui = new Bgs1InRace(123, 63);
+				$ui->setSubStyle(Bgs1InRace::Shadow);
 				$ui->save();
-				
+
 				$ui = new \ManiaLib\Gui\Elements\Quad(120, 60);
 				$ui->setPosition(1.5, -1.5, 0.1);
-				$ui->setBgcolor('fffd');
+				$ui->setBgcolor('fffe');
 				$ui->save();
 
 				$ui = new Label(120);
 				$ui->setAlign('center', 'center');
 				$ui->setPosition(60, -25, 0.8);
 				$ui->enableAutonewline();
-				$ui->setId('manialib-dialog-message');
+				$ui->setId('manialib-dialog-text');
 				$ui->setStyle(Label::TextTips);
 				$ui->setText('Are you sure?');
 				$ui->save();
@@ -77,18 +76,19 @@ class ManiaScriptStandardElements extends \ManiaLib\Gui\Elements\Spacer
 		}
 		Manialink::endFrame();
 
-		Manialink::beginFrame(300, 0, 0);
-		Manialink::setFrameId('manialib-autotip');
+		Manialink::beginFrame(300, 0, 4.9);
+		Manialink::setFrameId('manialib-tooltip');
 		{
 			$ui = new Bgs1InRace(75, 11);
 			$ui->setSubStyle(Bgs1InRace::BgTitle3_3);
+			$ui->setId('manialib-tooltip-box');
 			$ui->save();
 
 			$ui = new Label(67);
 			$ui->setValign('center2');
 			$ui->setPosition(4, -5.5, 0.1);
 			$ui->setStyle(Label::TextTips);
-			$ui->setId('manialib-autotip-text');
+			$ui->setId('manialib-tooltip-text');
 			$ui->save();
 		}
 		Manialink::endFrame();
