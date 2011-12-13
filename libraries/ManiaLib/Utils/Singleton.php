@@ -13,8 +13,9 @@ namespace ManiaLib\Utils;
 
 abstract class Singleton
 {
+
 	protected static $instances = array();
-		
+
 	static function getInstance()
 	{
 		$class = get_called_class();
@@ -24,27 +25,17 @@ abstract class Singleton
 		}
 		return self::$instances[$class];
 	}
-	
-	/**
-	 * @deprecated
-	 */
-	static function forceInstance(Singleton $object)
-	{
-		$class = get_class($object);
-		if(!isset(self::$instances[$class]))
-		{
-			self::$instances[$class] = $object;
-		}
-		else
-		{
-			throw new \Exception(sprintf('Object of class %s was previously instanciated', $class));
-		}
-	}
-	
-	protected function __construct() {}
-	
-	final protected function __clone() {} 
-}
 
+	protected function __construct()
+	{
+		
+	}
+
+	final protected function __clone()
+	{
+		
+	}
+
+}
 
 ?>
