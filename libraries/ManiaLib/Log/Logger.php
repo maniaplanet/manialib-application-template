@@ -71,7 +71,6 @@ class Logger
 				self::$debugLog = $config->debug;
 				self::$errorLog = $config->error;
 				self::$userLog = $config->user;
-				self::$loaderLog = $config->loader;
 				
 				self::$loaded = true;
 			}
