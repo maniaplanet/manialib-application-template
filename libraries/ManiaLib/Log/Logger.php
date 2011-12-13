@@ -25,38 +25,20 @@ class Logger
 	protected static $errorLog;
 	protected static $userLog;
 	protected static $debugLog;
-	protected static $loaderLog;
 	
 	static function info($message, $addDate = true)
 	{
-		if(self::load())
-		{
-			self::log($message, $addDate, self::$debugLog);
-		}
+		self::log($message, $addDate, self::$debugLog);
 	}
 	
 	static function error($message, $addDate = true)
 	{
-		if(self::load())
-		{
-			self::log($message, $addDate, self::$errorLog);
-		}
+		self::log($message, $addDate, self::$errorLog);
 	}
 	
 	static function user($message, $addDate = true)
 	{
-		if(self::load())
-		{
-			self::log($message, $addDate, self::$userLog);
-		}
-	}
-	
-	static function loader($message, $addDate = true)
-	{
-		if(self::load())
-		{
-			self::log($message, $addDate, self::$loaderLog);
-		}
+		self::log($message, $addDate, self::$userLog);
 	}
 	
 	/**
