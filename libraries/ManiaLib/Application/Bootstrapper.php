@@ -17,7 +17,6 @@ namespace ManiaLib\Application;
 abstract class Bootstrapper
 {
 
-	static $configFile;
 	static $errorReporting = E_ALL;
 	static $errorHandlingClass = '\ManiaLib\Application\ErrorHandling';
 	static $errorHandler = 'exceptionErrorHandler';
@@ -30,10 +29,6 @@ abstract class Bootstrapper
 
 		try
 		{
-			$loader = \ManiaLib\Config\Loader::getInstance();
-			$loader->setConfigFilename(static::$configFile);
-			$loader->smartLoad();
-
 			static::onDispatch();
 		}
 		catch(\Exception $exception)
@@ -52,6 +47,7 @@ abstract class Bootstrapper
 	 */
 	static protected function onDispatch()
 	{
+		\ManiaLib\Config\NewLoader::load();
 		Dispatcher::getInstance()->run();
 	}
 
