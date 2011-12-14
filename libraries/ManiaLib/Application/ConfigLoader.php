@@ -9,11 +9,11 @@
  * @date        $Date$:
  */
 
-namespace ManiaLib\Config;
+namespace ManiaLib\Application;
 
 use ManiaLib\Cache\Cache;
 
-abstract class NewLoader
+abstract class ConfigLoader
 {
 
 	protected static $configFilename;

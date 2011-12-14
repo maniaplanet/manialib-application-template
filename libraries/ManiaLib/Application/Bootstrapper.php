@@ -47,7 +47,7 @@ abstract class Bootstrapper
 	 */
 	static protected function onDispatch()
 	{
-		\ManiaLib\Config\NewLoader::load();
+		\ManiaLib\Application\ConfigLoader::load();
 		Dispatcher::getInstance()->run();
 	}
 
