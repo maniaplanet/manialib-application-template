@@ -21,7 +21,6 @@ abstract class NewLoader
 	protected static $enableCache = true;
 	protected static $aliases = array(
 		'application' => 'ManiaLib\\Application\\Config',
-		'config' => 'ManiaLib\\Config\\Config',
 		'database' => 'ManiaLib\\Database\\Config',
 		'log' => 'ManiaLib\\Log\\Config',
 		'tracking' => 'ManiaLib\\Application\\Tracking\\Config',
