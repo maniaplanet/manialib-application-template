@@ -21,32 +21,39 @@ class Connection
 	 * @var array[\ManiaLib\Database\ConnectionParams]
 	 */
 	static protected $connections = array();
+
 	/**
 	 * @var \ManiaLib\Database\Config	
 	 */
 	protected $config;
+
 	/**
 	 * @var \ManiaLib\Database\ConnectionsParams
 	 */
 	protected $params;
+
 	/**
 	 * MySQL connection ressource
 	 */
 	protected $connection;
+
 	/**
 	 * Current charset
 	 * @var string
 	 */
 	protected $charset;
+
 	/**
 	 * Currently selected database
 	 * @vat string
 	 */
 	protected $database;
+
 	/**
 	 * @var int
 	 */
 	protected $transactionRefCount;
+
 	/**
 	 * @var bool
 	 */
@@ -155,7 +162,7 @@ class Connection
 		}
 
 		$query = $this->instrumentQuery($query);
-		
+
 		$result = mysql_query($query, $this->connection);
 		if(!$result)
 		{
@@ -199,34 +206,10 @@ class Connection
 		$function = \ManiaLib\Utils\Arrays::get($frame, 'function');
 		$line = \ManiaLib\Utils\Arrays::get($frame, 'line');
 
-		$queryHeader = sprintf("/* Function: %s%s%s(), Line: %d*/ ", $class, $type, $function, $line);
+		$queryHeader = sprintf("/* Function: %s%s%s(), Line: %d*/ ", $class, $type,
+			$function, $line);
 		$query = $queryHeader.trim($query);
 		return $query;
-	}
-
-	/**
-	 * Execute a query or fetch it from Memcache.
-	 */
-	function executeCache($ttl, $query)
-	{
-		$args = func_get_args();
-		array_shift($args);
-		if(func_num_args() > 2)
-		{
-			$query = call_user_func_array('sprintf', $args);
-		}
-
-		$key = \ManiaLib\Cache\Cache::getPrefix().'mysql_'.md5($query);
-		$cache = \ManiaLib\Cache\Cache::factory(\ManiaLib\Cache\MEMCACHE);
-		$result = $cache->fetch($key);
-
-		if(!$result)
-		{
-			$result = call_user_func_array(array($this, 'execute'), $args);
-			$cache->add($key, $result, $ttl);
-		}
-
-		return $result;
 	}
 
 	function affectedRows()
