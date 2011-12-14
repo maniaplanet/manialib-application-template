@@ -19,16 +19,7 @@ namespace ManiaLib\Config;
 class Config extends \ManiaLib\Utils\Singleton
 {
 
-	public $appId;
-	public $timezone = 'Europe/Paris';
-	public $timezoneName = 'GMT+1';
 	public $debug = false;
-	public $disableCache = false;
-
-	function __construct()
-	{
-		$this->appId = md5(__FILE__);
-	}
 
 }
 
