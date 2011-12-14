@@ -16,48 +16,36 @@ namespace ManiaLib\Log;
  */
 class Logger
 {
-	const LOG_DATE = true;
-	const LOG_NO_DATE = false;
-	
+
 	protected static $loaded = false;
 	protected static $path;
 	protected static $prefix;
-	protected static $errorLog;
-	protected static $userLog;
-	protected static $debugLog;
-	
+
 	static function info($message, $addDate = true)
 	{
-		self::log($message, $addDate, self::$debugLog);
+		self::log($message, $addDate, 'info.log');
 	}
-	
+
 	static function error($message, $addDate = true)
 	{
-		self::log($message, $addDate, self::$errorLog);
+		self::log($message, $addDate, 'error.log');
 	}
-	
+
 	static function user($message, $addDate = true)
 	{
-		self::log($message, $addDate, self::$userLog);
+		self::log($message, $addDate, 'user.log');
 	}
-	
-	/**
-	 * Writes a message in the debug log. If you can, use the other methods (info, error, user)
-	 * 
-	 * @param string The message
-	 * @param boolean Whether to add the date to the message
-	 * @param string The log filename
-	 */
-	static function log($message, $addDate = self::LOG_DATE, $logFilename = 'debug.log')
+
+	static function log($message, $addDate = true, $logFilename = 'debug.log')
 	{
 		if(self::load())
 		{
-			$message = ($addDate?date('c'):'').'  '.print_r($message, true)."\n";
+			$message = ($addDate ? date('c') : '').'  '.print_r($message, true)."\n";
 			$filename = self::$path.self::$prefix.$logFilename;
 			file_put_contents($filename, $message, FILE_APPEND);
 		}
 	}
-	
+
 	static protected function load()
 	{
 		if(!self::$loaded)
@@ -66,17 +54,13 @@ class Logger
 			if(file_exists($path = $config->path))
 			{
 				self::$path = $path;
-				self::$prefix = $config->prefix ? $config->prefix.'-' : ''; 
-				
-				self::$debugLog = $config->debug;
-				self::$errorLog = $config->error;
-				self::$userLog = $config->user;
-				
+				self::$prefix = $config->prefix ? $config->prefix.'-' : '';
 				self::$loaded = true;
 			}
 		}
-		return !empty(self::$path);
+		return!empty(self::$path);
 	}
+
 }
 
 ?>
