@@ -121,7 +121,7 @@ HTML;
 
 	function preFilter()
 	{
-		if(!\ManiaLib\Config\Config::getInstance()->debug)
+		if(!\ManiaLib\Application\Config::getInstance()->debug)
 		{
 			if(!self::isManiaplanet())
 			{

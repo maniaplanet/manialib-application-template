@@ -57,7 +57,7 @@ abstract class ErrorHandling
 		$request = Request::getInstance();
 		$refererURL = $request->getReferer();
 		$requestURI = Dispatcher::getInstance()->getCalledURL();
-		$debug = \ManiaLib\Config\Config::getInstance()->debug;
+		$debug = \ManiaLib\Application\Config::getInstance()->debug;
 
 		if($exception instanceof SilentUserException)
 		{
@@ -120,7 +120,7 @@ abstract class ErrorHandling
 			echo '<h1>Oops</h1>';
 			echo '<p>An error occured. Please try again later.</p>';
 			echo '<hr />';
-			if(\ManiaLib\Config\Config::getInstance()->debug)
+			if(\ManiaLib\Application\Config::getInstance()->debug)
 			{
 				var_dump($exception);
 			}

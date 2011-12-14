@@ -30,6 +30,7 @@ class Config extends \ManiaLib\Utils\Singleton
 	public $viewsNS = array('ManiaLib\\Application\\Views\\');
 	public $renderer;
 	public $webapp = false;
+	public $debug = false;
 
 	function getMediaURL()
 	{
