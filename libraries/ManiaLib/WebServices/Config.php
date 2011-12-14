@@ -23,6 +23,7 @@ class Config extends \ManiaLib\Utils\Singleton
 
 	public $username;
 	public $password;
+	public $scope;
 
 }
 

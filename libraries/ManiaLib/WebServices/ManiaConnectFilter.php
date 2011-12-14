@@ -9,17 +9,14 @@
  * @date        $Date$:
  */
 
-namespace ManiaLib\Authentication;
+namespace ManiaLib\WebServices;
 
 /**
- * @deprecated
- * @todo Merge this in ManiaLib\WebServices
- * 
  * Automatic authentication using ManiaConnect. You need to specify your API
  * username/password in the config file using the following:
  * 
- * ManiaLib\Authentication\Config.username = api_username
- * ManiaLib\Authentication\Config.password = api_password
+ * webservices.username = api_username
+ * webservices.password = api_password
  * 
  * @see http://code.google.com/p/maniaplanet-ws-sdk/
  */
@@ -99,11 +96,6 @@ class ManiaConnectFilter extends \ManiaLib\Application\AdvancedFilter
 		$this->session->set('nickname', $player->nickname);
 		$this->session->set('path', $player->path);
 		$this->session->set(static::SESS_AUTH_KEY, 1);
-
-		if(Config::getInstance()->authLog)
-		{
-			\ManiaLib\Log\Logger::info(sprintf('%s logged in', $player->login));
-		}
 
 		$this->session->delete(static::SESS_AUTH_KEY.'-tries');
 	}
