@@ -79,13 +79,13 @@ class Menu extends Bgs1
 		$this->logo->setSubStyle(Icons128x128_1::Vehicles);
 		$this->addCardElement($this->logo);
 
-		$this->title = new Label(50);
+		$this->title = new Label(46);
 		$this->title->setPosition(22, -41, 0.1);
 		$this->title->setStyle(Label::TextTitle1);
 		$this->title->setScriptEvents();
 		$this->addCardElement($this->title);
 
-		$this->subTitle = new Label(50);
+		$this->subTitle = new Label(46);
 		$this->subTitle->setPosition(22, -47.75, 0.1);
 		$this->subTitle->setStyle(Label::TextSubTitle1);
 		$this->addCardElement($this->subTitle);

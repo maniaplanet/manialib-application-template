@@ -254,6 +254,7 @@ class Controller
 
 	/**
 	 * @return boolean Whether it was confirmed or not
+	 * @deprecated remove this now that we can make dialogs in maniascript
 	 */
 	final protected function quickConfirmDialog($message)
 	{
