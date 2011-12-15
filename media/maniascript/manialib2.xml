@@ -412,7 +412,7 @@ Void manialib_ui_tooltip(Text controlId, Text message)
 	<frame posn="-60 35 0.1">
 		<quad sizen="123 63" style="Bgs1InRace" substyle="Shadow"/>
 		<quad posn="1.5 -1.5 0.1" sizen="120 60" bgcolor="fffe"/>
-		<label id="manialib-dialog-text" posn="60 -25 0.8" sizen="120 7" halign="center" valign="center" style="TextTips" text="-" autonewline="1"/>
+		<label id="manialib-dialog-text" posn="60 -25 0.8" sizen="110 7" halign="center" valign="center" style="TextTips" text="-" autonewline="1"/>
 		<label id="manialib-dialog-yes" posn="55 -47 0.8" sizen="35 7" halign="right" style="CardButtonMedium" scriptevents="1" text="Yes"/>
 		<label id="manialib-dialog-no" posn="65 -47 0.8" sizen="35 7" style="CardButtonMedium" scriptevents="1" text="No"/>
 	</frame>
