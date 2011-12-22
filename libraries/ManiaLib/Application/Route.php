@@ -1,7 +1,7 @@
 <?php
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
- * 
+ *
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -39,8 +39,8 @@ abstract class Route
 	static function camelCaseToSeparator($string)
 	{
 		$patterns = array(
-			'/([a-z0-9])([A-Z])/',
-			'/([A-Z])([A-Z])/'
+			'/([a-z0-9])([A-Z])/u',
+			'/([A-Z])([A-Z])/u'
 		);
 		$replacements = array(
 			'$1-$2',
@@ -56,7 +56,7 @@ abstract class Route
 
 	/**
 	 * @param string A route like "/home/index/" or "/home/"
-	 * @return array[string] An array of (controller, action) 
+	 * @return array[string] An array of (controller, action)
 	 */
 	static function getActionAndControllerFromRoute($route)
 	{

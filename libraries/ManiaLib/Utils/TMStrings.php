@@ -1,7 +1,7 @@
 <?php
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
- * 
+ *
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -62,7 +62,7 @@ abstract class TMStrings
 	 */
 	static function stripColors($string)
 	{
-		return preg_replace('/\\$([tinmgz]|[0-9a-fA-F]{3}|[0-9a-fA-F].{2}|[0-9a-fA-F].[0-9a-fA-F]|[0-9a-fA-F]{2}.|[^$hlpwos<>]?)/i',
+		return preg_replace('/\\$([tinmgz]|[0-9a-fA-F]{3}|[0-9a-fA-F].{2}|[0-9a-fA-F].[0-9a-fA-F]|[0-9a-fA-F]{2}.|[^$hlpwos<>]?)/iu',
 			"", $string);
 	}
 
@@ -73,7 +73,7 @@ abstract class TMStrings
 	 */
 	static function unprotectStyles($string)
 	{
-		return preg_replace('/([^\$])(\$>|\$<)/', '$1', $string);
+		return preg_replace('/([^\$])(\$>|\$<)/u', '$1', $string);
 	}
 
 	/**
@@ -101,7 +101,7 @@ abstract class TMStrings
 	}
 
 	/**
-	 * 350 Coppers or N/A 
+	 * 350 Coppers or N/A
 	 */
 	static function formatCoppersAmount($amount, $strict = true)
 	{
@@ -140,7 +140,7 @@ abstract class TMStrings
 					return 'third';
 			}
 		}
-		
+
 		if(intval(($rank % 100) / 10) != 1)
 		{
 			if($rank % 10 == 1)

@@ -1,7 +1,7 @@
 <?php
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
- * 
+ *
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -82,7 +82,7 @@ abstract class ConfigLoader
 	{
 		foreach($values as $key => $value)
 		{
-			if(preg_match('/^\s*alias\s+(\S+)$/i', $key, $matches))
+			if(preg_match('/^\s*alias\s+(\S+)$/iu', $key, $matches))
 			{
 				if(isset($matches[1]))
 				{
@@ -142,7 +142,7 @@ abstract class ConfigLoader
 		foreach($overrides as $key => $override)
 		{
 			$matches = null;
-			if(preg_match('/^hostname: (.+)$/i', $key, $matches))
+			if(preg_match('/^hostname: (.+)$/iu', $key, $matches))
 			{
 				if($matches[1] == self::getHostname())
 				{

@@ -1,7 +1,7 @@
 <?php
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
- * 
+ *
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -101,8 +101,8 @@ abstract class ErrorHandling
 	}
 
 	/**
-	 * Fallback exception handler when nothing works. 
-	 * Just tries to dump the exception in a file at the app root and prints a 
+	 * Fallback exception handler when nothing works.
+	 * Just tries to dump the exception in a file at the app root and prints a
 	 * message.
 	 */
 	static function fatalExceptionHandler(\Exception $exception)
@@ -143,7 +143,7 @@ abstract class ErrorHandling
 		$trace = explode("\n", $trace);
 		foreach($trace as $key => $value)
 		{
-			$trace[$key] = sprintf($styles['simpleLine'], preg_replace('/#[0-9]*\s*/', '', $value));
+			$trace[$key] = sprintf($styles['simpleLine'], preg_replace('/#[0-9]*\s*/u', '', $value));
 		}
 		$file = sprintf($styles['simpleLine'], $e->getFile().' ('.$e->getLine().')');
 
