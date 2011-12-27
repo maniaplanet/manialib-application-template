@@ -12,7 +12,7 @@
 
 namespace ManiaLib\Gui\Maniacode\Elements;
 
-class ShowMessage extends Component
+class ShowMessage extends \ManiaLib\Gui\Maniacode\Component
 {
 
 	protected $xmlTagName = 'show_message';

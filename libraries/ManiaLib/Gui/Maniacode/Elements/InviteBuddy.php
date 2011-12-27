@@ -12,7 +12,7 @@
 
 namespace ManiaLib\Gui\Maniacode\Elements;
 
-class InviteBuddy extends Component
+class InviteBuddy extends \ManiaLib\Gui\Maniacode\Component
 {
 
 	protected $xmlTagName = 'invite_buddy';

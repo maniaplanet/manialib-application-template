@@ -12,7 +12,7 @@
 
 namespace ManiaLib\Gui\Maniacode\Elements;
 
-class JoinServer extends Component
+class JoinServer extends \ManiaLib\Gui\Maniacode\Component
 {
 	const PLAY = 1;
 	const SPEC = 2;
