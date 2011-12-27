@@ -193,31 +193,6 @@ class Controller
 		call_user_func_array(array($this, $actionName), $callParameters);
 	}
 
-	/**
-	 * @return boolean Whether it was confirmed or not
-	 * @deprecated remove this now that we can make dialogs in maniascript
-	 */
-	final protected function quickConfirmDialog($message)
-	{
-		if(!$this->request->get('confirm'))
-		{
-			$d = new DialogHelper('\ManiaLib\Application\Views\Dialogs\TwoButtons');
-			$d->title = 'Confirm';
-			$d->message = $message;
-			$d->button2Manialink = $this->request->getReferer();
-			$this->request->set('confirm', rand());
-			$d->buttonManialink = $this->request->createLink();
-			$this->request->delete('confirm');
-			$this->response->registerDialog($d);
-			return false;
-		}
-		else
-		{
-			$this->request->delete('confirm');
-			return true;
-		}
-	}
-
 }
 
 class ControllerNotFoundException extends UserException
