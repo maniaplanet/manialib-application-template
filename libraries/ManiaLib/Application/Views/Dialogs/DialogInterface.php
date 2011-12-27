@@ -15,6 +15,7 @@ namespace ManiaLib\Application\Views\Dialogs;
 /**
  * If instance of that interface is rendered, all links will be disabled 
  * after the rendering of the view
+ * @deprecated
  */
 interface DialogInterface {}
 
