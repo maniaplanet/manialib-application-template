@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -11,14 +12,9 @@
 
 namespace ManiaLib\Gui\Elements;
 
-/**
- * Music
- */
 class Music extends \ManiaLib\Gui\Element
 {
-	/**#@+
-	 * @ignore 
-	 */
+
 	protected $xmlTagName = 'music';
 	protected $halign = null;
 	protected $valign = null;
@@ -27,12 +23,12 @@ class Music extends \ManiaLib\Gui\Element
 	protected $posZ = null;
 	protected $data;
 	protected $dataId;
-	/**#@-*/
-	
+
 	function __construct()
 	{
+		
 	}
-	
+
 	/**
 	 * Sets the data to play
 	 * @param string The data filename (or URL)
@@ -49,7 +45,7 @@ class Music extends \ManiaLib\Gui\Element
 			$this->data = $filename;
 		}
 	}
-	
+
 	/**
 	 * Sets the data id to play
 	 * @param string The data id
@@ -58,7 +54,7 @@ class Music extends \ManiaLib\Gui\Element
 	{
 		$this->dataId = $dataId;
 	}
-	
+
 	/**
 	 * Returns the data URL
 	 * @return string
@@ -67,7 +63,7 @@ class Music extends \ManiaLib\Gui\Element
 	{
 		return $this->data;
 	}
-	
+
 	/**
 	 * Returns the data id
 	 * @return string
@@ -77,9 +73,6 @@ class Music extends \ManiaLib\Gui\Element
 		return $this->dataId;
 	}
 
-	/**
-	 * @ignore 
-	 */
 	protected function postFilter()
 	{
 		if($this->data !== null)
@@ -87,6 +80,7 @@ class Music extends \ManiaLib\Gui\Element
 		if($this->dataId !== null)
 			$this->xml->setAttribute('dataId', $this->dataId);
 	}
+
 }
 
 ?>

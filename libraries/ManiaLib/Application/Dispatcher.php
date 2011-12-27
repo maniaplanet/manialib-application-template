@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -22,18 +23,22 @@ class Dispatcher extends \ManiaLib\Utils\Singleton
 	 * @var bool
 	 */
 	protected $running;
+
 	/**
 	 * @var string
 	 */
 	protected $pathInfo;
+
 	/**
 	 * @var string
 	 */
 	protected $controller;
+
 	/**
 	 * @var string
 	 */
 	protected $action;
+
 	/**
 	 * @var string
 	 */
@@ -71,7 +76,7 @@ class Dispatcher extends \ManiaLib\Utils\Singleton
 		}
 
 		try
-		{	
+		{
 			Controller::factory($this->controller)->launch($this->action);
 			Response::getInstance()->render();
 		}

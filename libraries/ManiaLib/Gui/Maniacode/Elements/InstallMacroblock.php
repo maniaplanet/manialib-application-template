@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -11,24 +12,18 @@
 
 namespace ManiaLib\Gui\Maniacode\Elements;
 
-/**
- * Install skin
- */
-class InstallMacroblock extends \ManiaLib\Gui\Maniacode\Elements\FileDownload
+class InstallMacroblock extends FileDownload
 {
-	/**#@+
-	 * @ignore
-	 */
+
 	protected $xmlTagName = 'install_macroblock';
 	protected $file;
-	/**#@-*/
-	
+
 	function __construct($name='', $file='', $url='')
 	{
 		parent::__construct($name, $url);
 		$this->setFile($file);
 	}
-	
+
 	/**
 	 * This method sets the path to install the skin
 	 *
@@ -40,7 +35,7 @@ class InstallMacroblock extends \ManiaLib\Gui\Maniacode\Elements\FileDownload
 	{
 		$this->file = $file;
 	}
-	
+
 	/**
 	 * This method gets the path to install the skin
 	 *
@@ -51,18 +46,19 @@ class InstallMacroblock extends \ManiaLib\Gui\Maniacode\Elements\FileDownload
 	{
 		return $this->file;
 	}
-	
-	protected  function postFilter()
+
+	protected function postFilter()
 	{
 		parent::postFilter();
-		if (isset($this->file))
+		if(isset($this->file))
 		{
-			$elem  = \ManiaLib\Gui\Maniacode\Maniacode::$domDocument->createElement('file');
+			$elem = \ManiaLib\Gui\Maniacode\Maniacode::$domDocument->createElement('file');
 			$value = \ManiaLib\Gui\Maniacode\Maniacode::$domDocument->createTextNode($this->file);
 			$elem->appendChild($value);
 			$this->xml->appendChild($elem);
 		}
 	}
+
 }
 
 ?>

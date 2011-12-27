@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -11,20 +12,16 @@
 
 namespace ManiaLib\Gui\Maniacode\Elements;
 
-/**
- * Play replay
- */
-class PlayReplay extends \ManiaLib\Gui\Maniacode\Elements\FileDownload
+class PlayReplay extends FileDownload
 {
-	/**
-	 * @ignore
-	 */
+
 	protected $xmlTagName = 'play_replay';
-	
+
 	function __construct($name='', $url='')
 	{
 		parent::__construct($name, $url);
 	}
+
 }
 
 ?>

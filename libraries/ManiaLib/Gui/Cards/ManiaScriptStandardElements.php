@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -21,6 +22,7 @@ use ManiaLib\Gui\Elements\Button;
  * The ManiaScript framework uses standard UI elements such as dialogs and 
  * tooltips. This is card is used to create the associated XML code, but you
  * won't need to use it
+ * @deprecated
  */
 class ManiaScriptStandardElements extends \ManiaLib\Gui\Elements\Spacer
 {

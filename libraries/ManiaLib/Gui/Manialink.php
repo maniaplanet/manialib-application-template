@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -11,11 +12,9 @@
 
 namespace ManiaLib\Gui;
 
-/**
- * Manialink main class
- */
 abstract class Manialink
 {
+
 	/**
 	 * @var \DOMDocument 
 	 */
@@ -23,19 +22,18 @@ abstract class Manialink
 	public static $parentNodes;
 	public static $parentLayouts;
 	public static $linksEnabled = true;
-	
 	public static $langsURL;
 	public static $imagesURL;
 	public static $mediaURL;
-	
 	protected static $swapPosY = false;
-	
+
 	/**
 	 * Loads the Manialink GUI toolkit. This should be called before doing
 	 * anything with the toolkit.
 	 * @param bool Whether you want to create the root "<manialink>" element in the XML
 	 */
-	final public static function load($root = true, $timeout=0, $version=1, $background = 1)
+	final public static function load($root = true, $timeout=0, $version=1,
+		$background = 1)
 	{
 		if(class_exists('\ManiaLib\Application\Config'))
 		{
@@ -44,7 +42,7 @@ abstract class Manialink
 			self::$imagesURL = $config->getImagesURL();
 			self::$mediaURL = $config->getMediaURL();
 		}
-		
+
 		// Load the XML object
 		self::$domDocument = new \DOMDocument('1.0', 'utf-8');
 		self::$parentNodes = array();
@@ -60,7 +58,7 @@ abstract class Manialink
 			}
 			self::$domDocument->appendChild($nodeManialink);
 			self::$parentNodes[] = $nodeManialink;
-				
+
 			$nodeTimeout = self::$domDocument->createElement('timeout');
 			$nodeManialink->appendChild($nodeTimeout);
 			$nodeTimeout->nodeValue = $timeout;
@@ -101,7 +99,8 @@ abstract class Manialink
 	 * you pass a layout object, all the items inside the frame will be
 	 * positionned using constraints defined by the layout
 	 */
-	final public static function beginFrame($x=0, $y=0, $z=0, $scale=null, \ManiaLib\Gui\Layouts\AbstractLayout $layout=null)
+	final public static function beginFrame($x=0, $y=0, $z=0, $scale=null,
+		\ManiaLib\Gui\Layouts\AbstractLayout $layout=null)
 	{
 		// Update parent layout
 		$parentLayout = end(self::$parentLayouts);
@@ -125,7 +124,7 @@ abstract class Manialink
 		$frame = self::$domDocument->createElement('frame');
 		if($x || $y || $z)
 		{
-			if (self::$swapPosY)
+			if(self::$swapPosY)
 				$frame->setAttribute('posn', $x.' '.(-$y).' '.$z);
 			else
 				$frame->setAttribute('posn', $x.' '.$y.' '.$z);
@@ -153,19 +152,19 @@ abstract class Manialink
 		array_pop(self::$parentNodes);
 		array_pop(self::$parentLayouts);
 	}
-	
+
 	final static function setFrameId($id)
 	{
 		$frame = end(self::$parentNodes);
 		$frame->setAttribute('id', $id);
 	}
-	
+
 	final static function setFrameScriptEvents($scriptEvents = 1)
 	{
 		$frame = end(self::$parentNodes);
 		$frame->setAttribute('scriptevents', $scriptEvents);
 	}
-	
+
 	/**
 	 * Redirects the user to the specified Manialink
 	 */
@@ -206,7 +205,7 @@ abstract class Manialink
 		$node = self::$domDocument->importNode($doc->firstChild, true);
 		end(self::$parentNodes)->appendChild($node);
 	}
-	
+
 	static function appendScript($maniaScript)
 	{
 		$script = self::$domDocument->createElement('script');
@@ -229,7 +228,7 @@ abstract class Manialink
 	{
 		self::$linksEnabled = true;
 	}
-	
+
 	/**
 	 * Normal Manialink behavior for the Y positioning of Elements.
 	 * This will decrease Y coordinates from top to bottom.
@@ -239,7 +238,7 @@ abstract class Manialink
 	{
 		self::$swapPosY = false;
 	}
-	
+
 	/**
 	 * Swapped Manialink behavior for the Y positioning of Elements.
 	 * This will increase from top to bottom.
@@ -249,7 +248,7 @@ abstract class Manialink
 	{
 		self::$swapPosY = true;
 	}
-	
+
 	/**
 	 * Returns whether Y-Positioning is swapped for all
 	 * Elements currently drawn.
@@ -259,7 +258,7 @@ abstract class Manialink
 	{
 		return self::$swapPosY;
 	}
-	
+
 }
 
 ?>

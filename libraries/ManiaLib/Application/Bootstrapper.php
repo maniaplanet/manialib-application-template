@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -11,9 +12,6 @@
 
 namespace ManiaLib\Application;
 
-/**
- * Default bootstrapper
- */
 abstract class Bootstrapper
 {
 
@@ -40,11 +38,6 @@ abstract class Bootstrapper
 		}
 	}
 
-	/**
-	 * Actually dispatch the application
-	 * Exception thrown from here will be catched by the callback defined by 
-	 * array(static::$errorHandlingClass, static::$exceptionHandler)
-	 */
 	static protected function onDispatch()
 	{
 		\ManiaLib\Application\ConfigLoader::load();

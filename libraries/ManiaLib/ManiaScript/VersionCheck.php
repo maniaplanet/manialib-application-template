@@ -123,7 +123,7 @@ class VersionCheck implements \ManiaLib\Application\Filterable
 
 	function postFilter()
 	{
-
+		
 	}
 
 }

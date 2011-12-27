@@ -10,18 +10,11 @@
  * @date        $Date$:
  */
 
-namespace ManiaLib\Gui\Maniacode\Elements;
+namespace ManiaLib;
 
-class InstallTrack extends \ManiaLib\Gui\Maniacode\Elements\FileDownload
+abstract class Version
 {
-
-	protected $xmlTagName = 'install_track';
-
-	function __construct($name='', $url='')
-	{
-		parent::__construct($name, $url);
-	}
-
+	const VERSION = '2.0';
 }
 
 ?>

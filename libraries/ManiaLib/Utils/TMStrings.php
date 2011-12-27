@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  *
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -11,9 +12,6 @@
 
 namespace ManiaLib\Utils;
 
-/**
- * Misc methods for TM styled string and other common formatting tasks
- */
 abstract class TMStrings
 {
 
@@ -38,10 +36,10 @@ abstract class TMStrings
 	static function stripWideFonts($string)
 	{
 		return str_ireplace(array(
-			'$w',
-			'$o',
-			'$s'
-			), "", $string);
+				'$w',
+				'$o',
+				'$s'
+				), "", $string);
 	}
 
 	/**
@@ -52,7 +50,7 @@ abstract class TMStrings
 	static function stripLinks($string)
 	{
 		return preg_replace(
-			'/\\$[hlp](.*?)(?:\\[.*?\\](.*?))?(?:\\$[hlp]|$)/ixu', '$1$2', $string);
+				'/\\$[hlp](.*?)(?:\\[.*?\\](.*?))?(?:\\$[hlp]|$)/ixu', '$1$2', $string);
 	}
 
 	/**
@@ -63,7 +61,7 @@ abstract class TMStrings
 	static function stripColors($string)
 	{
 		return preg_replace('/\\$([tinmgz]|[0-9a-fA-F]{3}|[0-9a-fA-F].{2}|[0-9a-fA-F].[0-9a-fA-F]|[0-9a-fA-F]{2}.|[^$hlpwos<>]?)/iu',
-			"", $string);
+				"", $string);
 	}
 
 	/**
@@ -97,7 +95,7 @@ abstract class TMStrings
 		$labelStyle = '')
 	{
 		return ($title ? '$<'.$titleStyle.$title.'$<$n $>:$>' : '').($label ? '    '.$labelStyle.$label
-				: '');
+					: '');
 	}
 
 	/**
@@ -130,7 +128,7 @@ abstract class TMStrings
 	{
 		if($fullForPodium)
 		{
-			switch ($rank)
+			switch($rank)
 			{
 				case 1:
 					return 'first';
@@ -152,8 +150,9 @@ abstract class TMStrings
 		}
 		if(!isset($suffix))
 			$suffix = 'th';
-		return $rank . $suffix;
+		return $rank.$suffix;
 	}
+
 }
 
 ?>

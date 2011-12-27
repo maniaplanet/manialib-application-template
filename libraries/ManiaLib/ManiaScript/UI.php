@@ -24,7 +24,7 @@ use ManiaLib\Gui\Manialink;
  */
 abstract class UI
 {
-	
+
 	/**
 	 * Teh infamous dialog box
 	 * 
@@ -41,7 +41,7 @@ abstract class UI
 		$script = sprintf($script, $openControlId, $message, $action);
 		Manialink::appendScript($script);
 	}
-	
+
 	/**
 	 * Nice little tooltip when mousing over
 	 * 

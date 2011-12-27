@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -11,12 +12,9 @@
 
 namespace ManiaLib\Gui;
 
-/**
- * GUI Tools
- * Misc helpers for the GUI toolkit
- */
 abstract class Tools
 {
+
 	/**
 	 * Returns the X position of an element in relation to another element and
 	 * according to their respective alignments
@@ -42,13 +40,13 @@ abstract class Tools
 			case 'right|right':
 				$factor = 0;
 				break;
-				
+
 			case 'center|left':
 			case 'right|center':
 			case 'right|center2':
 				$factor = -0.5;
 				break;
-				
+
 			case 'center|right':
 			case 'left|center':
 			case 'left|center2':
@@ -61,8 +59,8 @@ abstract class Tools
 
 			case 'right|left':
 				$factor = -1;
-				break;		
-			
+				break;
+
 			default:
 				throw new \Exception('GUITools: Unsupported positions');
 		}
@@ -83,13 +81,13 @@ abstract class Tools
 	{
 		switch($valign)
 		{
-			case 'top': 
-			case null: 
+			case 'top':
+			case null:
 				$valign = 'right';
 				break;
-				
+
 			case 'bottom':
-				$valign = 'left';   
+				$valign = 'left';
 				break;
 		}
 		switch($newAlign)
@@ -97,8 +95,8 @@ abstract class Tools
 			case 'top':
 				$newAlign = 'right';
 				break;
-				
-			case 'bottom': 
+
+			case 'bottom':
 				$newAlign = 'left';
 				break;
 		}
@@ -115,20 +113,18 @@ abstract class Tools
 	 * @return array Calculated position of the element you want to place. The
 	 * array contains 2 elements with "x" and "y" indexes
 	 */
-	final public static function getAlignedPos(\ManiaLib\Gui\Element $object, $newHalign, $newValign)
+	final public static function getAlignedPos(\ManiaLib\Gui\Element $object,
+		$newHalign, $newValign)
 	{
 		$newPosX = self::getAlignedPosX(
-			$object->getPosX(), 
-			$object->getRealSizeX(), 
-			$object->getHalign(), 
-			$newHalign);
+				$object->getPosX(), $object->getRealSizeX(), $object->getHalign(),
+				$newHalign);
 		$newPosY = self::getAlignedPosY(
-			$object->getPosY(), 
-			$object->getRealSizeY(), 
-			$object->getValign(), 
-			$newValign);
+				$object->getPosY(), $object->getRealSizeY(), $object->getValign(),
+				$newValign);
 		return array('x' => $newPosX, 'y' => $newPosY);
 	}
+
 }
 
 ?>

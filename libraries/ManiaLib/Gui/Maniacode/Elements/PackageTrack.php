@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -12,21 +13,18 @@
 namespace ManiaLib\Gui\Maniacode\Elements;
 
 /**
- * Package track
  * Use it only with InstallTrackPack
  */
-class PackageTrack extends \ManiaLib\Gui\Maniacode\Elements\FileDownload
+class PackageTrack extends FileDownload
 {
-	/**
-	 * @ignore
-	 */
+
 	protected $xmlTagName = 'track';
-	
+
 	function __construct($name='', $url='')
 	{
 		parent::__construct($name, $url);
 	}
-}
 
+}
 
 ?>

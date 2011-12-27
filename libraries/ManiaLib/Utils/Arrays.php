@@ -1,7 +1,8 @@
-<?php 
+<?php
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -11,11 +12,9 @@
 
 namespace ManiaLib\Utils;
 
-/**
- * Array functions
- */
 abstract class Arrays
 {
+
 	/**
 	 * Returns the specified array element if it exists, or the default value
 	 */
@@ -23,7 +22,7 @@ abstract class Arrays
 	{
 		return array_key_exists($key, $array) ? $array[$key] : $default;
 	}
-	
+
 	/**
 	 * Returns the specified element if it exists and is not null (==), or the 
 	 * default value
@@ -36,23 +35,24 @@ abstract class Arrays
 		}
 		return $default;
 	}
-	
+
 	static function getProperty(array $array, $property, $default = null)
 	{
 		$values = array();
-		foreach ($array as $key => $value) 
+		foreach($array as $key => $value)
 		{
 			if(is_null($value->$property))
 			{
 				$values[$key] = $default;
 			}
-			else 
+			else
 			{
-				$values[$key] = $value->$property; 
+				$values[$key] = $value->$property;
 			}
 		}
 		return $values;
 	}
+
 }
 
 ?>

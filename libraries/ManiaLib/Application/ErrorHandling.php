@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  *
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -11,15 +12,9 @@
 
 namespace ManiaLib\Application;
 
-/**
- * Error handling features
- */
 abstract class ErrorHandling
 {
 
-	/**
-	 * @ignore
-	 */
 	protected static $messageConfigs = array(
 		'default' => array(
 			'title' => '%s',
@@ -34,8 +29,8 @@ abstract class ErrorHandling
 	);
 
 	/**
-	 * Error handler
-	 * Converts PHP errors into ErrorException
+	 * Error handler: converts PHP errors into ErrorException
+	 * 
 	 * @throws ErrorException
 	 */
 	static function exceptionErrorHandler($errno, $errstr, $errfile, $errline)
@@ -48,10 +43,6 @@ abstract class ErrorHandling
 		throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
 	}
 
-	/**
-	 * Exception handler
-	 * Prints a nice error message in manialink
-	 */
 	static function exceptionHandler(\Exception $exception)
 	{
 		$request = Request::getInstance();
@@ -72,8 +63,10 @@ abstract class ErrorHandling
 		}
 		else
 		{
-			$requestURILine = sprintf(static::$messageConfigs['default']['line'], 'Request URI', $requestURI);
-			$message = static::computeMessage($exception, static::$messageConfigs['default'], array($requestURILine));
+			$requestURILine = sprintf(static::$messageConfigs['default']['line'],
+				'Request URI', $requestURI);
+			$message = static::computeMessage($exception,
+					static::$messageConfigs['default'], array($requestURILine));
 			\ManiaLib\Log\Logger::error($message);
 			$userMessage = null;
 		}
@@ -95,21 +88,23 @@ abstract class ErrorHandling
 	static function logException(\Exception $e)
 	{
 		$requestURI = Dispatcher::getInstance()->getCalledURL();
-		$requestURILine = sprintf(static::$messageConfigs['default']['line'], 'Request URI', $requestURI);
-		$message = static::computeMessage($e, static::$messageConfigs['default'], array($requestURILine));
+		$requestURILine = sprintf(static::$messageConfigs['default']['line'],
+			'Request URI', $requestURI);
+		$message = static::computeMessage($e, static::$messageConfigs['default'],
+				array($requestURILine));
 		\ManiaLib\Log\Logger::error($message);
 	}
 
 	/**
-	 * Fallback exception handler when nothing works.
-	 * Just tries to dump the exception in a file at the app root and prints a
-	 * message.
+	 * Fallback exception handler when nothing works. It tries to dump the 
+	 * exception in a file at the app root and prints a message.
 	 */
 	static function fatalExceptionHandler(\Exception $exception)
 	{
 		if(defined('APP_PATH'))
 		{
-			@file_put_contents(APP_PATH.'fatal-error.log', print_r($exception, true), FILE_APPEND);
+			@file_put_contents(APP_PATH.'fatal-error.log', print_r($exception, true),
+					FILE_APPEND);
 		}
 		if(array_key_exists('HTTP_USER_AGENT', $_SERVER) && $_SERVER['HTTP_USER_AGENT'] == 'GameBox')
 		{
@@ -130,9 +125,9 @@ abstract class ErrorHandling
 	/**
 	 * Computes a human readable log message from any exception
 	 * @return string
-	 * @ignore
 	 */
-	final static function computeMessage(\Exception $e, $styles = array(), $additionalLines = array())
+	final static function computeMessage(\Exception $e, $styles = array(),
+		$additionalLines = array())
 	{
 		if(!$styles)
 		{
@@ -143,7 +138,8 @@ abstract class ErrorHandling
 		$trace = explode("\n", $trace);
 		foreach($trace as $key => $value)
 		{
-			$trace[$key] = sprintf($styles['simpleLine'], preg_replace('/#[0-9]*\s*/u', '', $value));
+			$trace[$key] = sprintf($styles['simpleLine'],
+				preg_replace('/#[0-9]*\s*/u', '', $value));
 		}
 		$file = sprintf($styles['simpleLine'], $e->getFile().' ('.$e->getLine().')');
 
@@ -159,7 +155,6 @@ abstract class ErrorHandling
 	/**
 	 * Computes a short human readable log message from any exception
 	 * @return string
-	 * @ignore
 	 */
 	final static function computeShortMessage(\Exception $e)
 	{

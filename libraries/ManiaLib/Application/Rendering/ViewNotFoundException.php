@@ -1,7 +1,8 @@
-<?php 
+<?php
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -11,6 +12,9 @@
 
 namespace ManiaLib\Application\Rendering;
 
-class ViewNotFoundException extends \ManiaLib\Application\UserException {}
+class ViewNotFoundException extends \ManiaLib\Application\UserException
+{
+	
+}
 
 ?>

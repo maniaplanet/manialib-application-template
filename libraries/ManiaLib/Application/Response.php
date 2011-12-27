@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  *
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -12,8 +13,8 @@
 namespace ManiaLib\Application;
 
 /**
- * Response engine
  * Allows to pass values between filters, controllers and views
+ * 
  * @method \ManiaLib\Application\Response getInstance()
  */
 class Response extends \ManiaLib\Utils\Singleton
@@ -22,11 +23,13 @@ class Response extends \ManiaLib\Utils\Singleton
 	protected $vars;
 	protected $body;
 	protected $views;
+
 	/**
 	 * @var \ManiaLib\Application\DialogHelper
 	 */
 	public $dialog;
 	protected $registerDefaultViews = true;
+
 	/**
 	 * @var \ManiaLib\Application\Rendering\RendererInterface
 	 */
@@ -72,7 +75,7 @@ class Response extends \ManiaLib\Utils\Singleton
 			return $default;
 		}
 	}
-	
+
 	function setRenderer($renderer)
 	{
 		if(!class_exists($renderer))
@@ -123,18 +126,13 @@ class Response extends \ManiaLib\Utils\Singleton
 	 * It can be a class name when using ManiaLib views for Manialinks
 	 * (eg. ManiaLibDemo\Views\Home\Index)
 	 *
-	 * It can also be a ressource name when using Smarty templates: it is the
+	 * It can also be a ressource name when using Simple Templates: it is the
 	 * filename starting from the ressource folder, less the extension
 	 * (eg. ManiaLib\Views\Example will map the the file:
-	 * APP_PATH/ressources/ManiaLib/Views/Example.tpl)
+	 * APP_PATH/ressources/ManiaLib/Views/Example.php)
 	 */
 	public function registerView($viewName)
 	{
-		if(func_num_args() != 1)
-		{
-			throw new \BadMethodCallException(get_called_class().'::registerView() '.
-				'now only takes one parameter (the view name)');
-		}
 		$this->views[] = $viewName;
 	}
 
@@ -147,15 +145,6 @@ class Response extends \ManiaLib\Utils\Singleton
 	{
 		$this->renderer->redirect($URL);
 	}
-	
-	
-	/**
-	 * @deprecated
-	 */
-//	public function appendBody($content)
-//	{
-//		$this->body .= $content;
-//	}
 
 	function disableDefaultViews()
 	{
@@ -168,7 +157,7 @@ class Response extends \ManiaLib\Utils\Singleton
 		{
 			array_unshift($this->views, $this->dialog->className);
 		}
-		
+
 		$config = Config::getInstance();
 		$viewsNS = $config->getViewsNS();
 		$headerIncluded = false;
@@ -213,7 +202,7 @@ class Response extends \ManiaLib\Utils\Singleton
 		{
 			$this->registerDefaultViews();
 		}
-		
+
 		ob_start();
 		try
 		{

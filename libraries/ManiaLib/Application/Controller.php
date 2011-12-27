@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  *
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -11,35 +12,6 @@
 
 namespace ManiaLib\Application;
 
-/**
- * Action controller
- * This is the base class for all controllers. Extend \ManiaLib\Application\Controller to create
- * a new controller for your application.
- * <b>Naming conventions</b>
- * <ul>
- * <li>Controller classes are suffixed by "Controller", naming is regular CamelCase class convention</li>
- * <li>Actions are regular camelCase convention</li>
- * <li>When creating links with the Request engine, use class and method names eg. createLink('SomeController', 'someAction')</li>
- * <li>Views folders and files use the same naming conventions as the classes/methods (eg. view/SomeController/someAction.php)</li>
- * <li>The URLs will be lowercase (camelCase is mapped to underscore-separated names)</li>
- * <li>You can change the default separator ("_") in the config</li>
- * </ul>
- * <b>Example</b>
- * <code>
- * class HomeController extends \ManiaLib\Application\Controller
- * {
- *    function __construct()
- *    {
- *        parent::__construct();
- *        $this->addFilter(new RegisterRequestParametersFilter());
- *    }
- *
- *    function index() {} // mapped by /home/index/
- *
- *    function anotherAction() {} // mapped by /home/another_action/
- * }
- * </code>
- */
 class Controller
 {
 
@@ -48,32 +20,37 @@ class Controller
 	 * @var string
 	 */
 	protected $defaultAction;
+
 	/**
 	 * Current controller name
 	 */
 	protected $controllerName;
+
 	/**
 	 * Current action name
 	 */
 	protected $actionName;
+
 	/**
 	 * @var array[\ManiaLib\Application\Filterable]
-	 * @ignore
 	 */
 	protected $filters = array();
+
 	/**
 	 * @var array[ReflectionMethod]
-	 * @ignore
 	 */
 	protected $reflectionMethods = array();
+
 	/**
 	 * @var \ManiaLib\Application\Request
 	 */
 	protected $request;
+
 	/**
 	 * @var \ManiaLib\Application\Session
 	 */
 	protected $session;
+
 	/**
 	 * @var \ManiaLib\Application\Response
 	 */
@@ -81,7 +58,6 @@ class Controller
 
 	/**
 	 * @return \ManiaLib\Application\Controller
-	 * @ignore
 	 */
 	final static public function factory($controllerName)
 	{
@@ -93,20 +69,17 @@ class Controller
 		{
 			throw new ControllerNotFoundException('Controller not found: /'.$controllerName.'/');
 		}
-		
-		$viewsNS =& Config::getInstance()->viewsNS;
+
+		$viewsNS = & Config::getInstance()->viewsNS;
 		$currentViewsNS = Config::getInstance()->namespace.'\\Views\\';
 		if(!in_array($currentViewsNS, $viewsNS))
 		{
 			array_unshift($viewsNS, $currentViewsNS);
 		}
-		
+
 		return new $controllerClass($controllerName);
 	}
 
-	/**
-	 * @ignore
-	 */
 	final function launch($actionName)
 	{
 		$actionName = $actionName ? : $this->defaultAction;
@@ -126,7 +99,6 @@ class Controller
 
 	/**
 	 * If you want to do stuff at instanciation, override self::onConstruct()
-	 * @ignore
 	 */
 	protected function __construct($controllerName)
 	{
@@ -152,19 +124,6 @@ class Controller
 	/**
 	 * Add a filter to the curent controller
 	 * Typically you should call that in your controller's onConstruct() method
-	 *
-	 * Example:
-	 * <code>
-	 * class SomeStuffController extends \ManiaLib\Application\Controller
-	 * {
-	 *     //...
-	 *     function onConstruct()
-	 *     {
-	 * 			$this->addFilter(new UserAgentCheckFilter());
-	 *     }
-	 *     //...
-	 * }
-	 * </code>
 	 */
 	final protected function addFilter(\ManiaLib\Application\Filterable $filter)
 	{
@@ -189,9 +148,6 @@ class Controller
 		$this->executeAction($actionName, true, $resetViews);
 	}
 
-	/**
-	 * @ignore
-	 */
 	final protected function checkActionExists($actionName)
 	{
 		if(!array_key_exists($actionName, $this->reflectionMethods))
@@ -218,7 +174,8 @@ class Controller
 		}
 	}
 
-	protected function executeAction($actionName, $registerView=true, $resetViews=false)
+	protected function executeAction($actionName, $registerView=true,
+		$resetViews=false)
 	{
 		$this->checkActionExists($actionName);
 
@@ -229,7 +186,8 @@ class Controller
 
 		if($registerView)
 		{
-			$this->response->registerView($this->response->getViewClassName($this->controllerName, $actionName));
+			$this->response->registerView($this->response->getViewClassName($this->controllerName,
+					$actionName));
 		}
 
 		$callParameters = array();
@@ -238,7 +196,8 @@ class Controller
 		{
 			if($parameter->isDefaultValueAvailable())
 			{
-				$callParameters[] = $this->request->get($parameter->getName(), $parameter->getDefaultValue());
+				$callParameters[] = $this->request->get($parameter->getName(),
+					$parameter->getDefaultValue());
 			}
 			else
 			{

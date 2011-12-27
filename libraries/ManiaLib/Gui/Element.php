@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -11,9 +12,6 @@
 
 namespace ManiaLib\Gui;
 
-/**
- * Base class for creating GUI elements
- */
 abstract class Element extends Component implements Drawable
 {
 	const USE_ABSOLUTE_URL = true;
@@ -25,11 +23,13 @@ abstract class Element extends Component implements Drawable
 	protected $manialinkId;
 	protected $url;
 	protected $urlId;
+
 	/**
 	 * @deprecated
 	 */
 	protected $maniazone;
 	protected $bgcolor;
+
 	/**
 	 * @deprecated
 	 */
@@ -43,28 +43,23 @@ abstract class Element extends Component implements Drawable
 	protected $imageFocusid;
 	protected $xmlTagName = 'xmltag'; // Redeclare this for each child
 	protected $xml;
-	/*	 * #@- */
+
 	/**
 	 * Used by cards, all the elements in that array will be renderd before
 	 * the post filter.
 	 * @var array[\ManiaLib\Gui\Element]
 	 */
 	protected $cardElements = array();
-
-	/*	 * #@+
-	 * Will be used to set the frame containing all the cards elements relative
-	 * to the current element.
-	 */
 	protected $cardElementsHalign = 'left';
 	protected $cardElementsValign = 'top';
 	protected $cardElementsPosX = 0;
 	protected $cardElementsPosY = 0;
 	protected $cardElementsPosZ = 0.1;
+
 	/**
 	 * @var \ManiaLib\Gui\Layouts\AbstractLayout
 	 */
 	protected $cardElementsLayout = null;
-	/*	 * #@- */
 
 	/**
 	 * Manialink element default constructor. It's common to specify the size of
@@ -78,7 +73,7 @@ abstract class Element extends Component implements Drawable
 		$this->sizeX = $sizeX;
 		$this->sizeY = $sizeY;
 	}
-	
+
 	/**
 	 * Sets the style of the element. See http://fish.stabb.de/styles/ of the
 	 * manialink 'example' for more information on Manialink styles.
@@ -118,7 +113,7 @@ abstract class Element extends Component implements Drawable
 	{
 		$this->manialinkId = $manialinkId;
 	}
-	
+
 	/**
 	 * @ignore
 	 */
@@ -159,7 +154,7 @@ abstract class Element extends Component implements Drawable
 	{
 		$this->scriptevents = $scriptEvents;
 	}
-	
+
 	/**
 	 * @deprecated
 	 */
@@ -302,7 +297,7 @@ abstract class Element extends Component implements Drawable
 	{
 		return $this->manialink;
 	}
-	
+
 	/**
 	 * @ignore
 	 */
@@ -329,7 +324,7 @@ abstract class Element extends Component implements Drawable
 	{
 		return $this->maniazone;
 	}
-	
+
 	function getScriptEvents()
 	{
 		return $this->scriptevents;
@@ -524,7 +519,7 @@ abstract class Element extends Component implements Drawable
 			// Add id
 			if($this->id !== null)
 				$this->xml->setAttribute('id', $this->id);
-			
+
 			// Add pos
 			if($this->posX || $this->posY || $this->posZ)
 			{
@@ -597,7 +592,7 @@ abstract class Element extends Component implements Drawable
 				$this->xml->setAttribute('imagefocus', $this->imageFocus);
 			if($this->imageFocusid !== null)
 				$this->xml->setAttribute('imagefocusid', $this->imageFocusid);
-			
+
 			// Add Script Attributes
 			if($this->id)
 				$this->xml->setAttribute('id', $this->id);

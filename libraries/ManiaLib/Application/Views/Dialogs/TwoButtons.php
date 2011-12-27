@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -15,9 +16,6 @@ use ManiaLib\Gui\Manialink;
 use ManiaLib\Gui\Elements\Bgs1;
 use ManiaLib\Gui\Elements\Quad;
 
-/**
- * Dialog with two buttons
- */
 class TwoButtons extends \ManiaLib\Application\View implements DialogInterface
 {
 	function display()

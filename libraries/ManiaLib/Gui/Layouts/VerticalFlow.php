@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -12,21 +13,14 @@
 namespace ManiaLib\Gui\Layouts;
 
 /**
- * Flow layout
  * Column-like, items fill vertically the current column then the next one on the right etc.
  */
 class VerticalFlow extends AbstractLayout
 {
-	/**#@+
-	 * @ignore
-	 */
+
 	protected $maxWidth = 0;
 	protected $currentColumnElementCount = 0;
-	/**#@-*/
 
-	/**
-	 * @ignore
-	 */
 	function preFilter(\ManiaLib\Gui\Component $item)
 	{
 		// add minimal number to avoid floating error
@@ -40,12 +34,8 @@ class VerticalFlow extends AbstractLayout
 			$this->currentColumnElementCount = 0;
 			$this->maxWidth = 0;
 		}
-
 	}
 
-	/**
-	 * @ignore
-	 */
 	function postFilter(\ManiaLib\Gui\Component $item)
 	{
 		$this->yIndex -= $item->getRealSizeY() + $this->marginHeight;
@@ -55,6 +45,7 @@ class VerticalFlow extends AbstractLayout
 		}
 		$this->currentColumnElementCount++;
 	}
+
 }
 
 ?>

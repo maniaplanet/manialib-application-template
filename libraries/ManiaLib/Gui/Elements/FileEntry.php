@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -11,19 +12,12 @@
 
 namespace ManiaLib\Gui\Elements;
 
-/**
- * FileEntry
- * File input field for Manialinks
- */
 class FileEntry extends Entry
 {
-	/**#@+
-	 * @ignore 
-	 */
+
 	protected $xmlTagName = 'fileentry';
 	protected $folder;
-	/**#@-*/
-	
+
 	/**
 	 * Sets the default folder
 	 * @param string
@@ -42,15 +36,13 @@ class FileEntry extends Entry
 		return $this->folder;
 	}
 
-	/**
-	 * @ignore 
-	 */
 	protected function postFilter()
 	{
 		parent::postFilter();
 		if($this->folder !== null)
 			$this->xml->setAttribute('folder', $this->folder);
 	}
+
 }
 
 ?>

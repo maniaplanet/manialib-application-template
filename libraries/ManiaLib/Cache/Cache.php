@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -21,6 +22,7 @@ const NONE = 'nocache';
  */
 abstract class Cache
 {
+
 	/**
 	 * Factory for getting instances on cache objects.
 	 * You specify the driver to use as a parameter, and
@@ -30,7 +32,7 @@ abstract class Cache
 	 */
 	static function factory($driver = null)
 	{
-		try 
+		try
 		{
 			switch($driver)
 			{
@@ -43,11 +45,11 @@ abstract class Cache
 		catch(Exception $e)
 		{
 			$config = Config::getInstance();
-			$driver = $config->fallbackDriver ?: 'NoCache';
+			$driver = $config->fallbackDriver ? : 'NoCache';
 			return static::getDriver($driver);
 		}
 	}
-	
+
 	/**
 	 * Returns a unique prefix to avoid cache collisions
 	 * between several applications
@@ -64,16 +66,17 @@ abstract class Cache
 			return crc32(__FILE__).'_';
 		}
 	}
-	
+
 	protected static function getDriver($driver)
 	{
 		$className = __NAMESPACE__.'\\Drivers\\'.$driver;
 		if(!class_exists($className))
 		{
-			throw new Exception(sprintf('Cache driver %s does not exist', $className));			
+			throw new Exception(sprintf('Cache driver %s does not exist', $className));
 		}
 		return call_user_func(array($className, 'getInstance'));
 	}
+
 }
 
 ?>

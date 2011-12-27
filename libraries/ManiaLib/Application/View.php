@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -11,20 +12,19 @@
 
 namespace ManiaLib\Application;
 
-/**
- * View features
- */
 abstract class View
 {
+
 	/**
 	 * @var \ManiaLib\Application\Request
 	 */
 	protected $request;
+
 	/**
 	 * @var \ManiaLib\Application\Response
 	 */
 	protected $response;
-	
+
 	final function __construct()
 	{
 		$this->request = \ManiaLib\Application\Request::getInstance();
@@ -41,14 +41,17 @@ abstract class View
 		$className = implode('\\', $className);
 		Rendering\Manialink::render($className);
 	}
-	
+
 	final protected function render($viewName)
 	{
 		Rendering\Manialink::render($viewName);
 	}
-	
-	protected function onConstruct() {}
-	
+
+	protected function onConstruct()
+	{
+		
+	}
+
 	abstract function display();
 }
 

@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -11,23 +12,17 @@
 
 namespace ManiaLib\Gui\Maniacode\Elements;
 
-/**
- * File download
- */
 abstract class FileDownload extends \ManiaLib\Gui\Maniacode\Component
 {
-	/**#@+
-	 * @ignore
-	 */
+
 	protected $url;
-	/**#@-*/
-	
-	function __construct($name = '', $url  = '')
+
+	function __construct($name = '', $url = '')
 	{
 		$this->name = $name;
 		$this->url = $url;
 	}
-	
+
 	/**
 	 * This method sets the url to download the file
 	 *
@@ -39,7 +34,7 @@ abstract class FileDownload extends \ManiaLib\Gui\Maniacode\Component
 	{
 		$this->url = $url;
 	}
-	
+
 	/**
 	 * This method gets the Url of the element
 	 *
@@ -50,17 +45,18 @@ abstract class FileDownload extends \ManiaLib\Gui\Maniacode\Component
 	{
 		return $this->url;
 	}
-	
+
 	protected function postFilter()
 	{
-		if (isset($this->url))
+		if(isset($this->url))
 		{
-			$elem  = \ManiaLib\Gui\Maniacode\Maniacode::$domDocument->createElement('url');
+			$elem = \ManiaLib\Gui\Maniacode\Maniacode::$domDocument->createElement('url');
 			$value = \ManiaLib\Gui\Maniacode\Maniacode::$domDocument->createTextNode($this->url);
 			$elem->appendChild($value);
 			$this->xml->appendChild($elem);
 		}
 	}
+
 }
-	
+
 ?>

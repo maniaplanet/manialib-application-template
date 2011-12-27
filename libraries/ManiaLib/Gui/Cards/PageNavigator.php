@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -12,44 +13,50 @@
 namespace ManiaLib\Gui\Cards;
 
 /**
- * Page Navigator
  * Page navigation arrows at the bottom of the lists
  */
 class PageNavigator extends \ManiaLib\Gui\Component
 {
+
 	/**
 	 * @var \ManiaLib\Gui\Elements\Icons64x64_1
 	 */
 	public $arrowNext;
+
 	/**
 	 * @var \ManiaLib\Gui\Elements\Icons64x64_1
 	 */
 	public $arrowPrev;
+
 	/**
 	 * @var \ManiaLib\Gui\Elements\Icons64x64_1
 	 */
 	public $arrowFastNext;
+
 	/**
 	 * @var \ManiaLib\Gui\Elements\Icons64x64_1
 	 */
 	public $arrowFastPrev;
+
 	/**
 	 * @var \ManiaLib\Gui\Elements\Icons64x64_1
 	 */
 	public $arrowLast;
+
 	/**
 	 * @var \ManiaLib\Gui\Elements\Icons64x64_1
 	 */
 	public $arrowFirst;
+
 	/**
 	 * @var \ManiaLib\Gui\Elements\Label
 	 */
 	public $text;
+
 	/**
 	 * @var \ManiaLib\Gui\Elements\Bgs1
 	 */
 	public $textBg;
-
 	public $arrowNoneStyle = \ManiaLib\Gui\Elements\Icons64x64_1::ClipPause;
 	public $arrowNextStyle = \ManiaLib\Gui\Elements\Icons64x64_1::ArrowNext;
 	public $arrowPrevStyle = \ManiaLib\Gui\Elements\Icons64x64_1::ArrowPrev;
@@ -58,7 +65,7 @@ class PageNavigator extends \ManiaLib\Gui\Component
 	public $arrowFirstStyle = \ManiaLib\Gui\Elements\Icons64x64_1::ArrowFirst;
 	public $arrowLastStyle = \ManiaLib\Gui\Elements\Icons64x64_1::ArrowLast;
 
-	/**#@+
+	/*	 * #@+
 	 * @ignore
 	 */
 	protected $showLast;
@@ -66,7 +73,7 @@ class PageNavigator extends \ManiaLib\Gui\Component
 	protected $showText;
 	protected $pageNumber;
 	protected $currentPage;
-	/**#@-*/
+	/*	 * #@- */
 
 	function __construct($iconSize = 8)
 	{
@@ -77,12 +84,12 @@ class PageNavigator extends \ManiaLib\Gui\Component
 		$this->arrowLast = new \ManiaLib\Gui\Elements\Icons64x64_1($iconSize);
 		$this->arrowFirst = new \ManiaLib\Gui\Elements\Icons64x64_1($iconSize);
 		$this->text = new \ManiaLib\Gui\Elements\Label(14);
-		$this->textBg = new \ManiaLib\Gui\Elements\Bgs1(16, $iconSize-2);
-		
+		$this->textBg = new \ManiaLib\Gui\Elements\Bgs1(16, $iconSize - 2);
+
 		$this->showLast = false;
 		$this->showFastNext = false;
 		$this->showText = true;
-		
+
 		$this->arrowNext->setSubStyle($this->arrowNoneStyle);
 		$this->arrowPrev->setSubStyle($this->arrowNoneStyle);
 		$this->arrowFastNext->setSubStyle($this->arrowNoneStyle);
@@ -90,7 +97,7 @@ class PageNavigator extends \ManiaLib\Gui\Component
 		$this->arrowLast->setSubStyle($this->arrowNoneStyle);
 		$this->arrowFirst->setSubStyle($this->arrowNoneStyle);
 	}
-	
+
 	/**
 	 * Sets the size of the navigation icons
 	 */
@@ -103,7 +110,7 @@ class PageNavigator extends \ManiaLib\Gui\Component
 		$this->arrowLast->setSize($iconSize, $iconSize);
 		$this->arrowFirst->setSize($iconSize, $iconSize);
 	}
-	
+
 	/**
 	 * Sets the page number
 	 */
@@ -111,7 +118,7 @@ class PageNavigator extends \ManiaLib\Gui\Component
 	{
 		$this->pageNumber = $pageNumber;
 	}
-	
+
 	/**
 	 * Sets the current page
 	 */
@@ -119,7 +126,7 @@ class PageNavigator extends \ManiaLib\Gui\Component
 	{
 		$this->currentPage = $currentPage;
 	}
-	
+
 	/**
 	 * Shows or hides the "go to first/last" navigation icons
 	 */
@@ -127,7 +134,7 @@ class PageNavigator extends \ManiaLib\Gui\Component
 	{
 		$this->showLast = $show;
 	}
-	
+
 	/**
 	 * Returns whether the "go to first/last" navigation icons are shown 
 	 */
@@ -135,7 +142,7 @@ class PageNavigator extends \ManiaLib\Gui\Component
 	{
 		return $this->showLast;
 	}
-	
+
 	/**
 	 * Shows or hides the "fast prev/next" navigation icons
 	 */
@@ -143,7 +150,7 @@ class PageNavigator extends \ManiaLib\Gui\Component
 	{
 		$this->showFastNext = $show;
 	}
-	
+
 	/**
 	 * Returns whether the "fast prev/next" navigation icons are shown 
 	 */
@@ -151,7 +158,7 @@ class PageNavigator extends \ManiaLib\Gui\Component
 	{
 		return $this->showFastNext;
 	}
-	
+
 	/**
 	 * Shows or hides the text. Note that if the current page or the page number
 	 * isn't declared, the text won't be shown
@@ -160,7 +167,7 @@ class PageNavigator extends \ManiaLib\Gui\Component
 	{
 		$this->showText = $show;
 	}
-	
+
 	/**
 	 * Returns whether the text is shown
 	 */
@@ -168,7 +175,7 @@ class PageNavigator extends \ManiaLib\Gui\Component
 	{
 		return $this->showText;
 	}
-	
+
 	/**
 	 * Saves the PageNavigator in the GUI objects stack
 	 */
@@ -179,25 +186,25 @@ class PageNavigator extends \ManiaLib\Gui\Component
 		{
 			$this->showText(false);
 		}
-		
+
 		// Auto show fast next / last
-		if($this->arrowFirst->hasLink() || $this->arrowLast->hasLink() )
+		if($this->arrowFirst->hasLink() || $this->arrowLast->hasLink())
 		{
 			$this->showLast();
 		}
-		if($this->arrowFastNext->hasLink() || $this->arrowFastPrev->hasLink() )
+		if($this->arrowFastNext->hasLink() || $this->arrowFastPrev->hasLink())
 		{
 			$this->showFastNext();
 		}
-		
+
 		// Arrow styles
 		if($this->arrowNext->hasLink())
 		{
 			$this->arrowNext->setSubStyle($this->arrowNextStyle);
-		} 
+		}
 		if($this->arrowPrev->hasLink())
 		{
-			 $this->arrowPrev->setSubStyle($this->arrowPrevStyle);
+			$this->arrowPrev->setSubStyle($this->arrowPrevStyle);
 		}
 		if($this->arrowNext->hasLink() && $this->arrowFastNext->hasLink())
 		{
@@ -209,7 +216,7 @@ class PageNavigator extends \ManiaLib\Gui\Component
 		}
 		if($this->arrowPrev->hasLink() && $this->arrowFastPrev->hasLink())
 		{
-			 $this->arrowFastPrev->setSubStyle($this->arrowFastPrevStyle);
+			$this->arrowFastPrev->setSubStyle($this->arrowFastPrevStyle);
 		}
 		else
 		{
@@ -217,7 +224,7 @@ class PageNavigator extends \ManiaLib\Gui\Component
 		}
 		if($this->arrowNext->hasLink() && $this->arrowLast->hasLink())
 		{
-			 $this->arrowLast->setSubStyle($this->arrowLastStyle);
+			$this->arrowLast->setSubStyle($this->arrowLastStyle);
 		}
 		else
 		{
@@ -225,7 +232,7 @@ class PageNavigator extends \ManiaLib\Gui\Component
 		}
 		if($this->arrowPrev->hasLink() && $this->arrowFirst->hasLink())
 		{
-			 $this->arrowFirst->setSubStyle($this->arrowFirstStyle);
+			$this->arrowFirst->setSubStyle($this->arrowFirstStyle);
 		}
 		else
 		{
@@ -234,12 +241,12 @@ class PageNavigator extends \ManiaLib\Gui\Component
 
 		// Text
 		$this->text->setStyle(\ManiaLib\Gui\Elements\Label::TextValueSmall);
-		$this->text->setText($this->currentPage . ' / ' . $this->pageNumber);
+		$this->text->setText($this->currentPage.' / '.$this->pageNumber);
 
 		// Positioning in relation to the center of the containing frame
 		$this->text->setAlign("center", "center2");
 		$this->text->setPosZ(1);
-		
+
 		$this->textBg->setSubStyle(\ManiaLib\Gui\Elements\Bgs1::BgPager);
 		$this->textBg->setAlign('center', 'center');
 		$this->textBg->setPosZ(.5);
@@ -249,41 +256,41 @@ class PageNavigator extends \ManiaLib\Gui\Component
 		$this->arrowLast->setValign("center");
 
 		$this->arrowNext->setPosition(($this->text->getSizeX() / 2) + 1, 0, 1);
-		$this->arrowFastNext->setPosition($this->arrowNext->getPosX() + $this->arrowNext->getSizeX(), 0, 1);
+		$this->arrowFastNext->setPosition($this->arrowNext->getPosX() + $this->arrowNext->getSizeX(),
+			0, 1);
 		$this->arrowLast->setPosition(
 			$this->arrowNext->getPosX() +
-			(int)$this->showFastNext*$this->arrowFastNext->getSizeX() + 
-			$this->arrowNext->getSizeX(), 
-			0, 1);
+			(int) $this->showFastNext * $this->arrowFastNext->getSizeX() +
+			$this->arrowNext->getSizeX(), 0, 1);
 
 		$this->arrowPrev->setAlign("right", "center");
 		$this->arrowFastPrev->setAlign("right", "center");
 		$this->arrowFirst->setAlign("right", "center");
 
-		$this->arrowPrev->setPosition(-($this->text->getSizeX()/2) - 1, 0, 1);
-		$this->arrowFastPrev->setPosition($this->arrowPrev->getPosX() - $this->arrowPrev->getSizeX(), 0, 1);
+		$this->arrowPrev->setPosition(-($this->text->getSizeX() / 2) - 1, 0, 1);
+		$this->arrowFastPrev->setPosition($this->arrowPrev->getPosX() - $this->arrowPrev->getSizeX(),
+			0, 1);
 		$this->arrowFirst->setPosition(
 			$this->arrowPrev->getPosX() -
-			(int)$this->showFastNext*$this->arrowFastPrev->getSizeX() - 
-			$this->arrowPrev->getSizeX(),
-			0, 1);
+			(int) $this->showFastNext * $this->arrowFastPrev->getSizeX() -
+			$this->arrowPrev->getSizeX(), 0, 1);
 
 		// Save the gui
 		\ManiaLib\Gui\Manialink::beginFrame($this->posX, $this->posY, $this->posZ);
 		{
-			if ($this->showText)
+			if($this->showText)
 			{
 				$this->textBg->save();
 				$this->text->save();
 			}
 			$this->arrowNext->save();
 			$this->arrowPrev->save();
-			if ($this->showLast)
+			if($this->showLast)
 			{
 				$this->arrowFirst->save();
 				$this->arrowLast->save();
 			}
-			if ($this->showFastNext)
+			if($this->showFastNext)
 			{
 				$this->arrowFastNext->save();
 				$this->arrowFastPrev->save();
@@ -291,6 +298,7 @@ class PageNavigator extends \ManiaLib\Gui\Component
 		}
 		\ManiaLib\Gui\Manialink::endFrame();
 	}
+
 }
 
 ?>

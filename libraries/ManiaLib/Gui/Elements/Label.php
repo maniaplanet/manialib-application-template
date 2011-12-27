@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -11,14 +12,9 @@
 
 namespace ManiaLib\Gui\Elements;
 
-/**
- * \ManiaLib\Gui\Elements\Label
- */
 class Label extends \ManiaLib\Gui\Elements\Format
 {
-	/**#@+
-	 * @ignore
-	 */
+
 	protected $xmlTagName = 'label';
 	protected $style = self::TextStaticSmall;
 	protected $posX = 0;
@@ -30,14 +26,13 @@ class Label extends \ManiaLib\Gui\Elements\Format
 	protected $maxline;
 	protected $focusAreaColor1;
 	protected $focusAreaColor2;
-	/**#@-*/
-	
+
 	function __construct($sizeX = 20, $sizeY = 7)
 	{
 		$this->sizeX = $sizeX;
 		$this->sizeY = $sizeY;
 	}
-	
+
 	/**
 	 * Sets the text
 	 * @param string
@@ -46,7 +41,7 @@ class Label extends \ManiaLib\Gui\Elements\Format
 	{
 		$this->text = $text;
 	}
-	
+
 	/**
 	 * Sets the text Id for use with Manialink dictionaries
 	 */
@@ -54,7 +49,7 @@ class Label extends \ManiaLib\Gui\Elements\Format
 	{
 		$this->textid = $textid;
 	}
-	
+
 	/**
 	 * Sets the maximum number of lines to display
 	 * @param int
@@ -63,7 +58,7 @@ class Label extends \ManiaLib\Gui\Elements\Format
 	{
 		$this->maxline = $maxline;
 	}
-	
+
 	/**
 	 * Enables wraping the text into several lines if the line is too short
 	 */
@@ -71,7 +66,7 @@ class Label extends \ManiaLib\Gui\Elements\Format
 	{
 		$this->autonewline = 1;
 	}
-	
+
 	/**
 	 * Set the default background color of the label (if it has one)
 	 * @param string $focusareacolor1 4-digit RGBA hexadecimal value
@@ -80,7 +75,7 @@ class Label extends \ManiaLib\Gui\Elements\Format
 	{
 		$this->focusAreaColor1 = $focusareacolor1;
 	}
-	
+
 	/**
 	 * Set the background color of the label when mouse is over (if it has one)
 	 * @param string $focusareacolor1 4-digit RGBA hexadecimal value
@@ -89,7 +84,7 @@ class Label extends \ManiaLib\Gui\Elements\Format
 	{
 		$this->focusAreaColor2 = $focusareacolor2;
 	}
-	
+
 	/**
 	 * Returns the text
 	 * @return string
@@ -98,7 +93,7 @@ class Label extends \ManiaLib\Gui\Elements\Format
 	{
 		return $this->text;
 	}
-	
+
 	/**
 	 * Returns the text Id
 	 * @return string
@@ -107,7 +102,7 @@ class Label extends \ManiaLib\Gui\Elements\Format
 	{
 		return $this->textid;
 	}
-	
+
 	/**
 	 * Returns the maximum number of lines to display
 	 * @return int
@@ -116,7 +111,7 @@ class Label extends \ManiaLib\Gui\Elements\Format
 	{
 		return $this->maxline;
 	}
-	
+
 	/**
 	 * Returns whether word wrapping is enabled
 	 * @return boolean
@@ -125,7 +120,7 @@ class Label extends \ManiaLib\Gui\Elements\Format
 	{
 		return $this->autonewline;
 	}
-	
+
 	/**
 	 * Return the default background color
 	 * @return string 
@@ -134,7 +129,7 @@ class Label extends \ManiaLib\Gui\Elements\Format
 	{
 		return $this->focusAreaColor1;
 	}
-	
+
 	/**
 	 * Return the background color when mouse is over
 	 * @return string 
@@ -144,9 +139,6 @@ class Label extends \ManiaLib\Gui\Elements\Format
 		return $this->focusAreaColor2;
 	}
 
-	/**
-	 * @ignore 
-	 */
 	protected function postFilter()
 	{
 		parent::postFilter();
@@ -155,14 +147,16 @@ class Label extends \ManiaLib\Gui\Elements\Format
 			if(\ManiaLib\Gui\Manialink::$linksEnabled)
 				$this->xml->setAttribute('text', $this->text);
 			else
-				$this->xml->setAttribute('text', \ManiaLib\Utils\TMStrings::stripLinks($this->text));
-		}	
+				$this->xml->setAttribute('text',
+					\ManiaLib\Utils\TMStrings::stripLinks($this->text));
+		}
 		if($this->textid !== null)
 		{
 			if(\ManiaLib\Gui\Manialink::$linksEnabled)
 				$this->xml->setAttribute('textid', $this->textid);
 			else
-				$this->xml->setAttribute('textid', \ManiaLib\Utils\TMStrings::stripLinks($this->textid));
+				$this->xml->setAttribute('textid',
+					\ManiaLib\Utils\TMStrings::stripLinks($this->textid));
 		}
 		if($this->autonewline !== null)
 			$this->xml->setAttribute('autonewline', $this->autonewline);
@@ -173,6 +167,7 @@ class Label extends \ManiaLib\Gui\Elements\Format
 		if($this->focusAreaColor2 !== null)
 			$this->xml->setAttribute('focusareacolor2', $this->focusAreaColor2);
 	}
+
 }
 
 ?>

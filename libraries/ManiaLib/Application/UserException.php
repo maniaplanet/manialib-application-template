@@ -12,7 +12,6 @@
 namespace ManiaLib\Application;
 
 /**
- * User exception
  * The message will be displayed to the user when thrown
  */
 class UserException extends \Exception

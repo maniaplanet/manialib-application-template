@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  *
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -11,11 +12,9 @@
 
 namespace ManiaLib\Database;
 
-/**
- * Database connections params
- */
 class ConnectionParams
 {
+
 	/**
 	 * Human readeable identifier of the connection, to use with the factory.
 	 * For example "server01" so you can use Connection::factory("server01")
@@ -59,6 +58,7 @@ class ConnectionParams
 	 * @var bool
 	 */
 	public $ssl = false;
+
 }
 
 ?>

@@ -24,6 +24,7 @@ use ManiaLib\Gui\Manialink;
  */
 abstract class Manipulation
 {
+
 	static function hide($controlId)
 	{
 		$script = 'manialib_hide("%s"); ';
@@ -31,7 +32,7 @@ abstract class Manipulation
 		$script = sprintf($script, $controlId);
 		Manialink::appendScript($script);
 	}
-	
+
 	static function show($controlId)
 	{
 		$script = 'manialib_hide("%s"); ';
@@ -39,7 +40,7 @@ abstract class Manipulation
 		$script = sprintf($script, $controlId);
 		Manialink::appendScript($script);
 	}
-	
+
 	static function toggle($controlId)
 	{
 		$script = 'manialib_hide("%s"); ';
@@ -47,6 +48,7 @@ abstract class Manipulation
 		$script = sprintf($script, $controlId);
 		Manialink::appendScript($script);
 	}
+
 }
 
 ?>
