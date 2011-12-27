@@ -130,24 +130,6 @@ class Controller
 		$this->filters[] = $filter;
 	}
 
-	/**
-	 * Executes an action from within another action
-	 * @deprecated Use executeAction
-	 */
-	final protected function chainAction($actionName)
-	{
-		$this->executeAction($actionName, false);
-	}
-
-	/**
-	 * Executes an action from within another action and override the view from the first action
-	 * @deprecated Use executeAction
-	 */
-	final protected function chainActionAndView($actionName, $resetViews = true)
-	{
-		$this->executeAction($actionName, true, $resetViews);
-	}
-
 	final protected function checkActionExists($actionName)
 	{
 		if(!array_key_exists($actionName, $this->reflectionMethods))
