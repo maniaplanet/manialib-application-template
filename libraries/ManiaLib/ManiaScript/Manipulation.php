@@ -48,6 +48,60 @@ abstract class Manipulation
 		$script = sprintf($script, $controlId);
 		Manialink::appendScript($script);
 	}
+	
+	static function posx($controlId, $posx)
+	{
+		$script = 'manialib_posx("%s", %f); ';
+		$controlId = Tools::escapeString($controlId);
+		$script = sprintf($script, $controlId, $posx);
+		Manialink::appendScript($script);
+	}
+	
+	static function posy($controlId, $posy)
+	{
+		$script = 'manialib_posy("%s", %f); ';
+		$controlId = Tools::escapeString($controlId);
+		$script = sprintf($script, $controlId, $posy);
+		Manialink::appendScript($script);
+	}
+	
+	static function posz($controlId, $posz)
+	{
+		$script = 'manialib_posz("%s", %f); ';
+		$controlId = Tools::escapeString($controlId);
+		$script = sprintf($script, $controlId, $posz);
+		Manialink::appendScript($script);
+	}
+	
+	static function setText($controlId, $text)
+	{
+		$script = 'manialib_set_text("%s", "%s"); ';
+		$controlId = Tools::escapeString($controlId);
+		$text = Tools::escapeString($text);
+		$script = sprintf($script, $controlId, $text);
+		Manialink::appendScript($script);
+	}
+	
+	static function setEntryValue($controlId, $value)
+	{
+		$script = 'manialib_set_entry_value("%s", "%s"); ';
+		$controlId = Tools::escapeString($controlId);
+		$value = Tools::escapeString($value);
+		$script = sprintf($script, $controlId, $value);
+		Manialink::appendScript($script);
+	}
+	
+	static function disableLinks()
+	{
+		$script = 'manialib_disable_links(); ';
+		Manialink::appendScript($script);
+	}
+	
+	static function enableLinks()
+	{
+		$script = 'manialib_enable_links(); ';
+		Manialink::appendScript($script);
+	}
 
 }
 
