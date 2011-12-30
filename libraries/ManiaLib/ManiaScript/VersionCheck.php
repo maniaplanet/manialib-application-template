@@ -17,11 +17,7 @@ use ManiaLib\Gui\Elements\Label;
 use ManiaLib\Gui\Elements\Bgs1InRace;
 
 /**
- * Displays an error page if the client's version is older than the min version
- * configured in ManiaLib\ManiaScript\Config.minVersion
- *
- * Useful when you want to use ManiaScript features that were introduced after
- * the first release of Maniaplanet.
+ * Application filter to force the client to up-to-date
  */
 class VersionCheck implements \ManiaLib\Application\Filterable
 {

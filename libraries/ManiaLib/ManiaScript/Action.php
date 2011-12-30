@@ -15,10 +15,7 @@ namespace ManiaLib\ManiaScript;
 /**
  * ManiaScript Framework Action helper.
  * 
- * When you use for example the dialog feature, you pass a ManiaScript Framework
- * Action to it ; this class helps you using them.
- * 
- * For the parameters of each action, see http://code.google.com/p/manialib/source/browse/trunk/media/maniascript/manialib2.xml#210
+ * @see http://code.google.com/p/manialib/source/browse/trunk/media/maniascript/manialib.xml
  */
 abstract class Action
 {

@@ -13,6 +13,7 @@
 namespace ManiaLib\ManiaScript;
 
 /**
+ * @see http://code.google.com/p/manialib/source/browse/trunk/media/maniascript/manialib.xml
  * @method \ManiaLib\ManiaScript\Config getInstance()
  */
 class Config extends \ManiaLib\Utils\Singleton

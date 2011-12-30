@@ -14,6 +14,9 @@ namespace ManiaLib\ManiaScript;
 
 use ManiaLib\Gui\Manialink;
 
+/**
+ * @see http://code.google.com/p/manialib/source/browse/trunk/media/maniascript/manialib.xml
+ */
 abstract class Event
 {
 	const mouseClick = 'CGameManialinkScriptEvent::Type::MouseClick';

@@ -15,12 +15,7 @@ namespace ManiaLib\ManiaScript;
 use ManiaLib\Gui\Manialink;
 
 /**
- * This is a BETA PHP abstraction of the ManiaScript framework, so the warning 
- * in the latter still applies:
- * 
- * This framework is not finished, not documented, not very useful and quite 
- * possibly full of bugs. We'll also probably break everything at some point to
- * refactor the code. However it's LGPL, so you can use at your own risk :)
+ * @see http://code.google.com/p/manialib/source/browse/trunk/media/maniascript/manialib.xml
  */
 abstract class UI
 {

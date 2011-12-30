@@ -3,11 +3,20 @@
 /**
  * ManiaLib for ManiaScript
  *
- * Min version: 2011-10-19_11_55
+ * Minimum Maniaplanet version: 2011-10-19_11_55
  * 
- * This framework is not finished, not documented, not very useful and quite 
- * possibly full of bugs. We'll also probably break everything at some point to
- * refactor the code. However it's LGPL, so you can use at your own risk :)
+ * This framework was specifically designed for use in Manialinks; it provides
+ * classic features as you can find in JavaScript frameworks (manipulation 
+ * primitives, utilities, event listening architecture, etc.). 
+ 
+ * It also provides some simple UI primitives (only dialogs and tooltips for 
+ * now). It still an early version so it's not documented, not extremely useful, 
+ * and quite possibly full of bugs. However it's LGPL so use it at your own 
+ * risk :)
+ *
+ * And don't hesitate to come ask questions in the dedicated forum, we'll be 
+ * happy to help:
+ * http://forum.maniaplanet.com/viewforum.php?f=40
  * 
  * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
@@ -23,7 +32,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
 // Internal variables
-// These are used by the framework ; you shouldn't interact with them directly!
+// These are used by the framework ; you shouldn't interact with them directly
 //
 ////////////////////////////////////////////////////////////////////////////////
 
