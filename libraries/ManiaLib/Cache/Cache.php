@@ -57,14 +57,7 @@ abstract class Cache
 	 */
 	static function getPrefix()
 	{
-		if(defined('APP_ID'))
-		{
-			return APP_ID.'_';
-		}
-		else
-		{
-			return crc32(__FILE__).'_';
-		}
+		return crc32(__FILE__).'_';
 	}
 
 	protected static function getDriver($driver)
