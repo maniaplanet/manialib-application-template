@@ -37,7 +37,7 @@ abstract class ConfigLoader
 	{
 		if(!self::$configFilename)
 		{
-			self::$configFilename = MANIALIB_PATH.'config/app.ini';
+			self::$configFilename = MANIALIB_APP_PATH.'config/app.ini';
 		}
 		return self::$configFilename;
 	}

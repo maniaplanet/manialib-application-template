@@ -2,6 +2,7 @@
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
  * 
+ * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
@@ -10,25 +11,32 @@
  */
 if(!defined('APP_PATH'))
 {
+	/**
+	 * @deprecated
+	 */
 	define('APP_PATH', __DIR__.'/../');
 }
-if(!defined('MANIALIB_PATH'))
-{
-	define('MANIALIB_PATH', APP_PATH);
-}
-
+/**
+ * @deprecated
+ */
 define('APP_LIBRARIES_PATH', __DIR__.DIRECTORY_SEPARATOR);
-define('APP_RESSOURCES_PATH', MANIALIB_PATH.'ressources'.DIRECTORY_SEPARATOR);
+/**
+ * @deprecated
+ */
+define('APP_RESSOURCES_PATH', MANIALIB_APP_PATH.'ressources'.DIRECTORY_SEPARATOR);
 
-function manialib_autoload($className)
+if(!defined('MANIALIB_APP_PATH'))
 {
-	$className = str_replace('\\', DIRECTORY_SEPARATOR, $className);
-	$path = __DIR__.DIRECTORY_SEPARATOR.$className.'.php';
-	if(file_exists($path))
-	{
-		require_once $path;
-	}
+	define('MANIALIB_APP_PATH', APP_PATH);
 }
 
-spl_autoload_register('manialib_autoload');
+spl_autoload_register(function ($className)
+	{
+		$className = str_replace('\\', DIRECTORY_SEPARATOR, $className);
+		$path = __DIR__.DIRECTORY_SEPARATOR.$className.'.php';
+		if(file_exists($path))
+		{
+			require_once $path;
+		}
+	});
 ?>

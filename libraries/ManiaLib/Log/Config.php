@@ -24,7 +24,7 @@ class Config extends \ManiaLib\Utils\Singleton
 
 	function __construct()
 	{
-		$this->path = MANIALIB_PATH.'logs/';
+		$this->path = MANIALIB_APP_PATH.'logs/';
 	}
 
 }
