@@ -101,11 +101,8 @@ abstract class ErrorHandling
 	 */
 	static function fatalExceptionHandler(\Exception $exception)
 	{
-		if(defined('APP_PATH'))
-		{
-			@file_put_contents(APP_PATH.'fatal-error.log', print_r($exception, true),
-					FILE_APPEND);
-		}
+		file_put_contents(MANIALIB_PATH.'fatal-error.log', print_r($exception, true),
+				FILE_APPEND);
 		if(array_key_exists('HTTP_USER_AGENT', $_SERVER) && $_SERVER['HTTP_USER_AGENT'] == 'GameBox')
 		{
 			echo '<manialink><timeout>0</timeout><label text="Fatal error." /></manialink>';

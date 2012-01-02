@@ -128,8 +128,7 @@ class Response extends \ManiaLib\Utils\Singleton
 	 *
 	 * It can also be a ressource name when using Simple Templates: it is the
 	 * filename starting from the ressource folder, less the extension
-	 * (eg. ManiaLib\Views\Example will map the the file:
-	 * APP_PATH/ressources/ManiaLib/Views/Example.php)
+	 * eg. ManiaLib\Views\Example will map to ressources/ManiaLib/Views/Example.php
 	 */
 	public function registerView($viewName)
 	{

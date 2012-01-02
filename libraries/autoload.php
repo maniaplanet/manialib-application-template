@@ -10,16 +10,20 @@
  */
 if(!defined('APP_PATH'))
 {
-	die('Fatal error: APP_PATH must be defined to your application root!');
+	define('APP_PATH', __DIR__.'/../');
+}
+if(!defined('MANIALIB_PATH'))
+{
+	define('MANIALIB_PATH', APP_PATH);
 }
 
 define('APP_LIBRARIES_PATH', __DIR__.DIRECTORY_SEPARATOR);
-define('APP_RESSOURCES_PATH', APP_PATH.'ressources'.DIRECTORY_SEPARATOR);
+define('APP_RESSOURCES_PATH', MANIALIB_PATH.'ressources'.DIRECTORY_SEPARATOR);
 
 function manialib_autoload($className)
 {
 	$className = str_replace('\\', DIRECTORY_SEPARATOR, $className);
-	$path = APP_LIBRARIES_PATH.$className.'.php';
+	$path = __DIR__.DIRECTORY_SEPARATOR.$className.'.php';
 	if(file_exists($path))
 	{
 		require_once $path;
