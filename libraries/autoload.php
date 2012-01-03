@@ -23,10 +23,6 @@ if(!defined('MANIALIB_APP_PATH'))
 /**
  * @deprecated
  */
-define('APP_LIBRARIES_PATH', __DIR__.DIRECTORY_SEPARATOR);
-/**
- * @deprecated
- */
 define('APP_RESSOURCES_PATH', MANIALIB_APP_PATH.'ressources'.DIRECTORY_SEPARATOR);
 
 spl_autoload_register(function ($className)
