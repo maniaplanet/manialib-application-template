@@ -9,16 +9,9 @@
  * @author      $Author$:
  * @date        $Date$:
  */
-if(!defined('APP_PATH'))
-{
-	/**
-	 * @deprecated
-	 */
-	define('APP_PATH', __DIR__.'/../');
-}
 if(!defined('MANIALIB_APP_PATH'))
 {
-	define('MANIALIB_APP_PATH', APP_PATH);
+	define('MANIALIB_APP_PATH', __DIR__.'/../');
 }
 
 spl_autoload_register(function ($className)
