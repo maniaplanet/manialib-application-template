@@ -101,7 +101,7 @@ abstract class ErrorHandling
 	 */
 	static function fatalExceptionHandler(\Exception $exception)
 	{
-		throw $e;
+		throw $exception;
 		
 		file_put_contents(MANIALIB_APP_PATH.'fatal-error.log', print_r($exception, true),
 				FILE_APPEND);
