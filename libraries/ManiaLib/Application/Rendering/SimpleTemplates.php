@@ -18,7 +18,7 @@ class SimpleTemplates implements RendererInterface
 	static function exists($viewName)
 	{
 		$viewName = str_replace('\\', DIRECTORY_SEPARATOR, $viewName);
-		return file_exists(APP_RESSOURCES_PATH.$viewName.'.php');
+		return file_exists(MANIALIB_APP_PATH.'ressources/'.$viewName.'.php');
 	}
 
 	static function render($viewName)
@@ -47,7 +47,7 @@ class SimpleTemplates implements RendererInterface
 
 		error_reporting(E_ALL ^ E_NOTICE);
 
-		require APP_RESSOURCES_PATH.$viewName.'.php';
+		require MANIALIB_APP_PATH.'ressources/'.$viewName.'.php';
 
 		error_reporting(E_ALL);
 	}
