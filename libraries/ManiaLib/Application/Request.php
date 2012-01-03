@@ -57,7 +57,7 @@ class Request extends \ManiaLib\Utils\Singleton
 		$this->referer = $session->get('referer');
 		if($this->referer)
 		{
-			$this->referer = rawurldecode($referer);
+			$this->referer = rawurldecode($this->referer);
 		}
 		else
 		{
