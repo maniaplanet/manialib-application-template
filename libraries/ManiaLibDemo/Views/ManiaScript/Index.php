@@ -17,7 +17,7 @@ class Index extends \ManiaLib\Application\View
 	function display()
 	{
 		$ui = new \ManiaLib\Gui\Elements\IncludeManialink();
-		$ui->setUrl('manialib2.xml', false);
+		$ui->setUrl('manialib.xml', false);
 		$ui->save();
 		
 		Manialink::appendScript('main() {');
