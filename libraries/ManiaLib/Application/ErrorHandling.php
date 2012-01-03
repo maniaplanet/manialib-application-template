@@ -47,7 +47,7 @@ abstract class ErrorHandling
 	{
 		$request = Request::getInstance();
 		$refererURL = $request->getReferer();
-		$requestURI = Dispatcher::getInstance()->getCalledURL();
+		$requestURI = \ManiaLib\Utils\URI::getCurrent();
 		$debug = \ManiaLib\Application\Config::getInstance()->debug;
 
 		if($exception instanceof SilentUserException)

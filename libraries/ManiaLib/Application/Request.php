@@ -29,6 +29,7 @@ class Request extends \ManiaLib\Utils\Singleton
 	protected $action;
 	protected $controller;
 	protected $defaultController;
+	protected $referer;
 
 	protected function __construct()
 	{
@@ -51,6 +52,17 @@ class Request extends \ManiaLib\Utils\Singleton
 		$config = Config::getInstance();
 		$this->appURL = $config->getLinkCreationURL();
 		$this->defaultController = $config->defaultController;
+
+		$session = \ManiaLib\Application\Session::getInstance();
+		$this->referer = $session->get('referer');
+		if($this->referer)
+		{
+			$this->referer = rawurldecode($referer);
+		}
+		else
+		{
+			$this->referer = $this->appURL;
+		}
 	}
 
 	function __destruct()
@@ -183,21 +195,7 @@ class Request extends \ManiaLib\Utils\Singleton
 	 */
 	function getReferer($default=null)
 	{
-		$referer = null;
-		$session = \ManiaLib\Application\Session::getInstance();
-		$referer = $session->get('referer');
-		if($referer)
-		{
-			return rawurldecode($referer);
-		}
-		elseif($default)
-		{
-			return $default;
-		}
-		else
-		{
-			return $this->appURL;
-		}
+		return $this->referer ? : $default;
 	}
 
 	/**
