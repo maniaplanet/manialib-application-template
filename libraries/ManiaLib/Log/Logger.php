@@ -48,7 +48,7 @@ class Logger
 	{
 		if(!self::$loaded)
 		{
-			$config = Config::getInstance();
+			$config = LoggerConfig::getInstance();
 			if(file_exists($path = $config->path))
 			{
 				self::$path = $path;

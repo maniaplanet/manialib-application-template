@@ -23,7 +23,7 @@ abstract class ConfigLoader
 	protected static $aliases = array(
 		'application' => 'ManiaLib\\Application\\Config',
 		'database' => 'ManiaLib\\Database\\Config',
-		'log' => 'ManiaLib\\Log\\Config',
+		'log' => 'ManiaLib\\Log\\LoggerConfig',
 		'tracking' => 'ManiaLib\\Application\\Tracking\\Config',
 		'webservices' => 'ManiaLib\\WebServices\\Config',
 	);
