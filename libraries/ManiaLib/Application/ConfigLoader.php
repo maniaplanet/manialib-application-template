@@ -21,11 +21,11 @@ abstract class ConfigLoader
 	protected static $hostname;
 	protected static $enableCache = true;
 	protected static $aliases = array(
-		'application' => 'ManiaLib\\Application\\Config',
-		'database' => 'ManiaLib\\Database\\Config',
-		'log' => 'ManiaLib\\Log\\LoggerConfig',
-		'tracking' => 'ManiaLib\\Application\\Tracking\\Config',
-		'webservices' => 'ManiaLib\\WebServices\\Config',
+		'application' => 'ManiaLib\Application\Config',
+		'database' => 'ManiaLib\Database\Config',
+		'log' => 'ManiaLib\Log\LoggerConfig',
+		'tracking' => 'ManiaLib\pplication\Tracking\Config',
+		'webservices' => 'ManiaLib\WebServices\Config',
 	);
 
 	static function setConfigFilename($filename)

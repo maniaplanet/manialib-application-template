@@ -17,15 +17,6 @@ abstract class Route
 
 	protected static $separator;
 
-	/**
-	 * @deprecated C'est utilisé nul part, on le garde?
-	 */
-	static function separatorToUpperCamelCase($string)
-	{
-		return implode('',
-				array_map('ucfirst', explode(self::getSeparator(), $string)));
-	}
-
 	static function separatorToCamelCase($string)
 	{
 		$string = implode('',

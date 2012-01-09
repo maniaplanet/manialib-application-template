@@ -28,6 +28,37 @@ class Session extends \ManiaLib\Utils\Singleton
 	public $lang;
 	public $path;
 
+	protected function __construct()
+	{
+		if(self::$started)
+		{
+			return;
+		}
+
+		session_name(self::NAME);
+		if(self::$id)
+		{
+			session_id(self::$id);
+		}
+		session_start();
+		self::$started = true;
+
+		$keys = array('login', 'nickname', 'lang', 'path');
+		$session = $this;
+		array_walk($keys,
+			function ($value) use ($session)
+			{
+				if(isset($_SESSION[$value]))
+				{
+					$session->$value = & $_SESSION[$value];
+				}
+				else
+				{
+					$_SESSION[$value] = & $session->$value;
+				}
+			});
+	}
+
 	/**
 	 * Sets a session var
 	 * @param string
@@ -79,37 +110,6 @@ class Session extends \ManiaLib\Utils\Singleton
 	function exists($name)
 	{
 		return array_key_exists($name, $_SESSION);
-	}
-
-	protected function __construct()
-	{
-		if(self::$started)
-		{
-			return;
-		}
-
-		session_name(self::NAME);
-		if(self::$id)
-		{
-			session_id(self::$id);
-		}
-		session_start();
-		self::$started = true;
-
-		$keys = array('login', 'nickname', 'lang', 'path');
-		$session = $this;
-		array_walk($keys,
-			function ($value) use ($session)
-			{
-				if(isset($_SESSION[$value]))
-				{
-					$session->$value = & $_SESSION[$value];
-				}
-				else
-				{
-					$_SESSION[$value] = & $session->$value;
-				}
-			});
 	}
 
 }

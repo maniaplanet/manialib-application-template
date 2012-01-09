@@ -63,7 +63,7 @@ class Controller
 	{
 		$controllerClass =
 			Config::getInstance()->namespace.'\\'.
-			'Controllers'.'\\'.
+			'Controllers\\'.
 			$controllerName;
 		if(!class_exists($controllerClass))
 		{
@@ -71,7 +71,7 @@ class Controller
 		}
 
 		$viewsNS = & Config::getInstance()->viewsNS;
-		$currentViewsNS = Config::getInstance()->namespace.'\\Views\\';
+		$currentViewsNS = Config::getInstance()->namespace.'\Views\\';
 		if(!in_array($currentViewsNS, $viewsNS))
 		{
 			array_unshift($viewsNS, $currentViewsNS);

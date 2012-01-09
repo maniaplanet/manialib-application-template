@@ -27,7 +27,7 @@ class Config extends \ManiaLib\Utils\Singleton
 	public $useRewriteRules = false;
 	public $defaultController = 'Home';
 	public $defaultAction = 'index';
-	public $viewsNS = array('ManiaLib\\Application\\Views\\');
+	public $viewsNS = array('ManiaLib\Application\Views\\');
 	public $renderer;
 	public $webapp = false;
 	public $debug = false;
@@ -66,11 +66,11 @@ class Config extends \ManiaLib\Utils\Singleton
 		}
 		elseif($this->webapp)
 		{
-			return 'ManiaLib\\Application\\Rendering\\SimpleTemplates';
+			return 'ManiaLib\Application\Rendering\SimpleTemplates';
 		}
 		else
 		{
-			return 'ManiaLib\\Application\\Rendering\\Manialink';
+			return 'ManiaLib\Application\Rendering\Manialink';
 		}
 	}
 
