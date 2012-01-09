@@ -20,7 +20,6 @@ class Config extends \ManiaLib\Utils\Singleton
 
 	public $path;
 	public $prefix;
-	public $verbose = false;
 
 	function __construct()
 	{

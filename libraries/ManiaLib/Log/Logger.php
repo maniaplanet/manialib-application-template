@@ -34,7 +34,7 @@ class Logger
 		self::log($message, $addDate, 'user.log');
 	}
 
-	static function log($message, $addDate = true, $logFilename = 'debug.log')
+	static protected function log($message, $addDate = true, $logFilename = 'debug.log')
 	{
 		if(self::load())
 		{
