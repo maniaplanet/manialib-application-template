@@ -24,10 +24,8 @@ class Config extends \ManiaLib\Utils\Singleton
 	public $database;
 	public $charset = 'utf8';
 	public $queryLog = false;
-	public $queryLogFilename = 'queries.log';
 	public $slowQueryLog = false;
-	public $slowQueryLogFilename = 'slow-queries.log';
-	public $slowQueryThreshold = 1000; // in ms
+	public $slowQueryThreshold = 1500; // in ms
 
 }
 
