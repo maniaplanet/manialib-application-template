@@ -12,6 +12,9 @@
 
 namespace ManiaLib\Utils;
 
+/*
+ * Info: pattern (?<!\$)((?:\$\$)*) match an even number of $
+ */
 abstract class Formatting
 {
 
@@ -20,7 +23,7 @@ abstract class Formatting
 	 */
 	static function stripWideFonts($string)
 	{
-		return str_ireplace(array('$w', '$o', '$s'), "", $string);
+		return preg_replace('/(?<!\$)((?:\$\$)*)\$[wos]/iu', '$1', $string);
 	}
 
 	/**
@@ -28,8 +31,7 @@ abstract class Formatting
 	 */
 	static function stripLinks($string)
 	{
-		return preg_replace(
-				'/\\$[hlp](.*?)(?:\\[.*?\\](.*?))?(?:\\$[hlp]|$)/ixu', '$1$2', $string);
+		return preg_replace('/(?<!\$)((?:\$\$)*)\$[hlp](?:\[.*?\])?(.*?)(?:\$[hlp]|$)/iu', '$1$2', $string);
 	}
 
 	/**
@@ -37,9 +39,7 @@ abstract class Formatting
 	 */
 	static function stripColors($string)
 	{
-		return preg_replace(
-				'/\\$([tinmgz]|[0-9a-fA-F]{3}|[0-9a-fA-F].{2}|[0-9a-fA-F].[0-9a-fA-F]|[0-9a-fA-F]{2}.|[^$hlpwos<>]?)/iu',
-				"", $string);
+		return preg_replace('/(?<!\$)((?:\$\$)*)\$(?:g|[0-9a-f].{2})/iu', '$1', $string);
 	}
 
 	/**
@@ -47,9 +47,8 @@ abstract class Formatting
 	 */
 	static function stripStyles($string)
 	{
-		$string = preg_replace('/([^\$])(\$>|\$<)/u', '$1', $string);
+		$string = preg_replace('/(?<!\$)((?:\$\$)*)\$[^$0-9a-hlp]/iu', '$1', $string);
 		$string = self::stripLinks($string);
-		$string = self::stripWideFonts($string);
 		$string = self::stripColors($string);
 		return $string;
 	}
