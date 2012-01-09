@@ -15,6 +15,7 @@ namespace ManiaLibDemo\Views\ManiaScript;
 use ManiaLib\Gui\Manialink;
 use ManiaLib\ManiaScript\UI;
 use ManiaLib\ManiaScript\Action;
+use ManiaLib\ManiaScript\Main;
 
 class Index extends \ManiaLib\Application\View
 {
@@ -25,7 +26,7 @@ class Index extends \ManiaLib\Application\View
 		$ui->setUrl('manialib.xml', false);
 		$ui->save();
 
-		Manialink::appendScript('main() {');
+		Main::begin();
 
 		Manialink::beginFrame(0, 0, 0, 1, new \ManiaLib\Gui\Layouts\Column());
 		{
@@ -54,8 +55,8 @@ class Index extends \ManiaLib\Application\View
 		}
 		Manialink::endFrame();
 
-		Manialink::appendScript('manialib_main_loop();');
-		Manialink::appendScript('}');
+		Main::loop();
+		Main::end();
 	}
 
 }
