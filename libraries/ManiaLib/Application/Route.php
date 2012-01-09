@@ -17,6 +17,12 @@ abstract class Route
 
 	protected static $separator;
 
+	static function separatorToUpperCamelCase($string)
+	{
+		return implode('',
+				array_map('ucfirst', explode(self::getSeparator(), $string)));
+	}
+
 	static function separatorToCamelCase($string)
 	{
 		$string = implode('',
