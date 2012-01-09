@@ -1,5 +1,10 @@
 <?php
 /**
+ * ManiaLib - Lightweight PHP framework for Manialinks
+ * 
+ * @see         http://code.google.com/p/manialib/
+ * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
+ * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
  * @author      $Author$:
  * @date        $Date$:
@@ -19,9 +24,9 @@ class Index extends \ManiaLib\Application\View
 		$ui = new \ManiaLib\Gui\Elements\IncludeManialink();
 		$ui->setUrl('manialib.xml', false);
 		$ui->save();
-		
+
 		Manialink::appendScript('main() {');
-		
+
 		Manialink::beginFrame(0, 0, 0, 1, new \ManiaLib\Gui\Layouts\Column());
 		{
 			$ui = new \ManiaLib\Gui\Elements\Button();
@@ -31,9 +36,10 @@ class Index extends \ManiaLib\Application\View
 			$ui->setScriptEvents();
 			$ui->save();
 
-			UI::dialog('maniahome-button', 'Do you want to visit ManiaHome?', array(Action::manialink, "maniahome"));
+			UI::dialog('maniahome-button', 'Do you want to visit ManiaHome?',
+				array(Action::manialink, "maniahome"));
 			UI::tooltip('maniahome-button', 'Click me! Click me!');
-			
+
 			$ui = new \ManiaLib\Gui\Elements\Button();
 			$ui->setAlign('center', 'center');
 			$ui->setText('Go to ManiaLoto');
@@ -41,11 +47,13 @@ class Index extends \ManiaLib\Application\View
 			$ui->setScriptEvents();
 			$ui->save();
 
-			UI::dialog('manialoto-button', 'Do you want to visit ManiaLo\to?'."\n".'Hmmm kay?', array(Action::manialink, "manialoto"));
+			UI::dialog('manialoto-button',
+				'Do you want to visit ManiaLo\to?'."\n".'Hmmm kay?',
+				array(Action::manialink, "manialoto"));
 			UI::tooltip('manialoto-button', 'Click me too!');
 		}
 		Manialink::endFrame();
-		
+
 		Manialink::appendScript('manialib_main_loop();');
 		Manialink::appendScript('}');
 	}
