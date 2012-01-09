@@ -15,7 +15,7 @@ namespace ManiaLib\Gui\Cards;
 use ManiaLib\Gui\Elements\Label;
 use ManiaLib\Log\Logger;
 use ManiaLib\Utils\Arrays;
-use ManiaLib\Utils\TMStrings;
+use ManiaLib\Utils\Formatting;
 use ManiaLib\Gui\Layouts\Column;
 use ManiaLib\Gui\Manialink;
 use ManiaLib\Gui\Elements\Bgs1;

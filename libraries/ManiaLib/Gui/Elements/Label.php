@@ -148,7 +148,7 @@ class Label extends \ManiaLib\Gui\Elements\Format
 				$this->xml->setAttribute('text', $this->text);
 			else
 				$this->xml->setAttribute('text',
-					\ManiaLib\Utils\TMStrings::stripLinks($this->text));
+					\ManiaLib\Utils\Formatting::stripLinks($this->text));
 		}
 		if($this->textid !== null)
 		{
@@ -156,7 +156,7 @@ class Label extends \ManiaLib\Gui\Elements\Format
 				$this->xml->setAttribute('textid', $this->textid);
 			else
 				$this->xml->setAttribute('textid',
-					\ManiaLib\Utils\TMStrings::stripLinks($this->textid));
+					\ManiaLib\Utils\Formatting::stripLinks($this->textid));
 		}
 		if($this->autonewline !== null)
 			$this->xml->setAttribute('autonewline', $this->autonewline);

@@ -12,7 +12,7 @@
 
 namespace ManiaLib\Utils;
 
-abstract class TMStrings
+abstract class Formatting
 {
 
 	/**
