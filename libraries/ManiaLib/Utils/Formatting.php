@@ -45,7 +45,7 @@ abstract class Formatting
 	/**
 	 * Removes all styles
 	 */
-	static function stripAllTmStyle($string)
+	static function stripStyles($string)
 	{
 		$string = preg_replace('/([^\$])(\$>|\$<)/u', '$1', $string);
 		$string = self::stripLinks($string);
