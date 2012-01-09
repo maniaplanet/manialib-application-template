@@ -110,7 +110,7 @@ class VersionCheck implements \ManiaLib\Application\Filterable
 			$minVersionTimestamp = self::version2timestamp($minVersion);
 			if($versionTimestamp < $minVersionTimestamp)
 			{
-				\ManiaLib\Log\Logger::user('Maniaplanet not up-to-date: '.$version);
+				\ManiaLib\Utils\Logger::user('Maniaplanet not up-to-date: '.$version);
 				call_user_func(self::$errorPageCallback);
 				exit;
 			}

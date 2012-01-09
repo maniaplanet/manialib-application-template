@@ -10,10 +10,10 @@
  * @date        $Date$:
  */
 
-namespace ManiaLib\Log;
+namespace ManiaLib\Utils;
 
 /**
- * @method \ManiaLib\Log\Config getInstance()
+ * @method \ManiaLib\Utils\Config getInstance()
  */
 class LoggerConfig extends \ManiaLib\Utils\Singleton
 {

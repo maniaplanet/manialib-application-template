@@ -72,7 +72,7 @@ class ManiaConnectFilter extends \ManiaLib\Application\AdvancedFilter
 		}
 		catch(\Maniaplanet\WebServices\Exception $e)
 		{
-			\ManiaLib\Log\Logger::info(sprintf("MPWS Exception: HTTP %d %s - %s %d",
+			\ManiaLib\Utils\Logger::info(sprintf("MPWS Exception: HTTP %d %s - %s %d",
 					$e->getHTTPStatusCode(), $e->getHTTPStatusMessage(), $e->getMessage(),
 					$e->getCode()));
 

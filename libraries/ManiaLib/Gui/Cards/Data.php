@@ -13,7 +13,7 @@
 namespace ManiaLib\Gui\Cards;
 
 use ManiaLib\Gui\Elements\Label;
-use ManiaLib\Log\Logger;
+use ManiaLib\Utils\Logger;
 use ManiaLib\Utils\Arrays;
 use ManiaLib\Utils\Formatting;
 use ManiaLib\Gui\Layouts\Column;

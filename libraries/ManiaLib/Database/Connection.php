@@ -170,7 +170,7 @@ class Connection
 		{
 			$mtime = (microtime(true) - $mtime) * 1000;
 			$message = str_pad(number_format($mtime, 3).' ms', 10, ' ').$query;
-			\ManiaLib\Log\Logger::info($message);
+			\ManiaLib\Utils\Logger::info($message);
 		}
 		if($this->config->slowQueryLog)
 		{
@@ -178,7 +178,7 @@ class Connection
 			if($mtime > $this->config->slowQueryThreshold)
 			{
 				$message = str_pad(number_format($mtime, 3).' ms', 10, ' ').$query;
-				\ManiaLib\Log\Logger::info($message);
+				\ManiaLib\Utils\Logger::info($message);
 			}
 		}
 		return new RecordSet($result);

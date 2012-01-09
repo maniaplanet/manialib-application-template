@@ -43,7 +43,7 @@ class APC extends \ManiaLib\Utils\Singleton implements \ManiaLib\Cache\CacheInte
 	{
 		if(!apc_add($key, $value, $ttl))
 		{
-			\ManiaLib\Log\Logger::error('apc_add('.$key.') failed');
+			\ManiaLib\Utils\Logger::error('apc_add('.$key.') failed');
 		}
 	}
 
@@ -51,7 +51,7 @@ class APC extends \ManiaLib\Utils\Singleton implements \ManiaLib\Cache\CacheInte
 	{
 		if(!apc_store($key, $value, $ttl))
 		{
-			\ManiaLib\Log\Logger::error('apc_store('.$key.') failed');
+			\ManiaLib\Utils\Logger::error('apc_store('.$key.') failed');
 		}
 	}
 
@@ -59,7 +59,7 @@ class APC extends \ManiaLib\Utils\Singleton implements \ManiaLib\Cache\CacheInte
 	{
 		if(!apc_delete($key))
 		{
-			\ManiaLib\Log\Logger::error('apc_delete('.$key.') failed');
+			\ManiaLib\Utils\Logger::error('apc_delete('.$key.') failed');
 		}
 	}
 

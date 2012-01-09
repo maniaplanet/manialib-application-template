@@ -58,7 +58,7 @@ abstract class ErrorHandling
 		elseif($exception instanceof UserException)
 		{
 			$message = static::computeShortMessage($exception).'  '.$requestURI;
-			\ManiaLib\Log\Logger::user($message);
+			\ManiaLib\Utils\Logger::user($message);
 			$userMessage = $exception->getMessage();
 		}
 		else
@@ -67,7 +67,7 @@ abstract class ErrorHandling
 				'Request URI', $requestURI);
 			$message = static::computeMessage($exception,
 					static::$messageConfigs['default'], array($requestURILine));
-			\ManiaLib\Log\Logger::error($message);
+			\ManiaLib\Utils\Logger::error($message);
 			$userMessage = null;
 		}
 
@@ -92,7 +92,7 @@ abstract class ErrorHandling
 			'Request URI', $requestURI);
 		$message = static::computeMessage($e, static::$messageConfigs['default'],
 				array($requestURILine));
-		\ManiaLib\Log\Logger::error($message);
+		\ManiaLib\Utils\Logger::error($message);
 	}
 
 	/**

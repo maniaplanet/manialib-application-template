@@ -10,7 +10,7 @@
  * @date        $Date$:
  */
 
-namespace ManiaLib\Log;
+namespace ManiaLib\Utils;
 
 class Logger
 {
