@@ -17,7 +17,8 @@ use ManiaLib\Cache\Cache;
 abstract class ConfigLoader
 {
 
-	protected static $configFilename;
+	protected static $INIConfigFilename;
+	protected static $PHPConfigFilename;
 	protected static $hostname;
 	protected static $enableCache = true;
 	protected static $aliases = array(
@@ -28,18 +29,27 @@ abstract class ConfigLoader
 		'webservices' => 'ManiaLib\WebServices\Config',
 	);
 
-	static function setConfigFilename($filename)
+	static function setINIConfigFilename($filename)
 	{
-		self::$configFilename = $filename;
+		self::$INIConfigFilename = $filename;
 	}
 
-	static function getConfigFilename()
+	static function getINIConfigFilename()
 	{
-		if(!self::$configFilename)
+		if(!self::$INIConfigFilename)
 		{
-			self::$configFilename = MANIALIB_APP_PATH.'config/app.ini';
+			self::$INIConfigFilename = MANIALIB_APP_PATH.'config/app.ini';
 		}
-		return self::$configFilename;
+		return self::$INIConfigFilename;
+	}
+
+	static function getPHPConfigFilename()
+	{
+		if(!self::$PHPConfigFilename)
+		{
+			self::$PHPConfigFilename = MANIALIB_APP_PATH.'config/app.php';
+		}
+		return self::$PHPConfigFilename;
 	}
 
 	static function setHostname($hostname)
@@ -63,20 +73,27 @@ abstract class ConfigLoader
 
 	static function load()
 	{
-		$key = Cache::getPrefix().get_called_class();
-		$cache = Cache::factory(self::$enableCache ? \ManiaLib\Cache\APC : \ManiaLib\Cache\NONE);
-
-		$values = $cache->fetch($key);
-		if($values === false)
+		if(file_exists(self::getPHPConfigFilename()))
 		{
-			$values = parse_ini_file(self::getConfigFilename(), true);
-			list($values, $overrides) = self::scanOverrides($values);
-			$values = self::processOverrides($values, $overrides);
-			$values = self::loadAliases($values);
-			$values = self::replaceAliases($values);
-			$cache->add($key, $values);
+			require_once self::getPHPConfigFilename();
 		}
-		self::arrayToSingletons($values);
+		else
+		{
+			$key = Cache::getPrefix().get_called_class();
+			$cache = Cache::factory(self::$enableCache ? \ManiaLib\Cache\APC : \ManiaLib\Cache\NONE);
+
+			$values = $cache->fetch($key);
+			if($values === false)
+			{
+				$values = parse_ini_file(self::getINIConfigFilename(), true);
+				list($values, $overrides) = self::scanOverrides($values);
+				$values = self::processOverrides($values, $overrides);
+				$values = self::loadAliases($values);
+				$values = self::replaceAliases($values);
+				$cache->add($key, $values);
+			}
+			self::arrayToSingletons($values);
+		}
 	}
 
 	protected static function loadAliases(array $values)

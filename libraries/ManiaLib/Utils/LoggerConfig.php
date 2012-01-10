@@ -13,7 +13,7 @@
 namespace ManiaLib\Utils;
 
 /**
- * @method \ManiaLib\Utils\Config getInstance()
+ * @method \ManiaLib\Utils\LoggerConfig getInstance()
  */
 class LoggerConfig extends \ManiaLib\Utils\Singleton
 {
