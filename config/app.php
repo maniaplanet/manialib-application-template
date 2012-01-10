@@ -10,6 +10,11 @@
  * @date        $Date$:
  */
 
+if(!defined('MANIALIB_APP_PATH'))
+{
+	exit;
+}
+
 $hostname = ManiaLib\Utils\Arrays::get($_SERVER, 'HTTP_HOST');
 
 $application = ManiaLib\Application\Config::getInstance();
@@ -24,7 +29,7 @@ if($hostname == 'www.example.com')
 	// Production config
 
 	$application->manialink = 'example';
-	$application->URL = 'http://www.example.com';
+	$application->URL = 'http://www.example.com/';
 	$application->useRewriteRules = true;
 
 	$database = \ManiaLib\Database\Config::getInstance();
@@ -38,9 +43,9 @@ if($hostname == 'www.example.com')
 }
 elseif($hostname == '127.0.0.1')
 {
-	// Local config
+	// Development config
 
-	$application->URL = 'http://127.0.0.1/manialib';
+	$application->URL = 'http://127.0.0.1/manialib/';
 	$application->debug = true;
 }
 ?>
