@@ -27,7 +27,7 @@ abstract class Main
 
 	static function loop()
 	{
-		Manialink::appendScript('manialib_main_loop()');
+		Manialink::appendScript('manialib_main_loop();');
 	}
 
 	static function end()
