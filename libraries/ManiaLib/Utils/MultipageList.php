@@ -120,6 +120,11 @@ class MultipageList
 		$length = $this->perPage;
 		return array($offset, $length);
 	}
+	
+	function getPerPage()
+	{
+		return $this->perPage;
+	}
 
 	function setHasMorePages($hasMorePages)
 	{
