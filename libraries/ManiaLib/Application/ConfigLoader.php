@@ -25,7 +25,7 @@ abstract class ConfigLoader
 		'application' => 'ManiaLib\Application\Config',
 		'database' => 'ManiaLib\Database\Config',
 		'log' => 'ManiaLib\Utils\LoggerConfig',
-		'tracking' => 'ManiaLib\pplication\Tracking\Config',
+		'tracking' => 'ManiaLib\Application\Tracking\Config',
 		'webservices' => 'ManiaLib\WebServices\Config',
 	);
 
