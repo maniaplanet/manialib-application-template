@@ -25,10 +25,16 @@ abstract class View
 	 */
 	protected $response;
 
+	/**
+	 * @var \ManiaLib\Application\Session
+	 */
+	protected $session;
+
 	final function __construct()
 	{
-		$this->request = \ManiaLib\Application\Request::getInstance();
-		$this->response = \ManiaLib\Application\Response::getInstance();
+		$this->request = Request::getInstance();
+		$this->response = Response::getInstance();
+		$this->session = Session::getInstance();
 		$this->onConstruct();
 	}
 
