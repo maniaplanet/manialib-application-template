@@ -1,7 +1,7 @@
 <?php
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
- * 
+ *
  * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
@@ -16,11 +16,10 @@ abstract class FileDownload extends \ManiaLib\Gui\Maniacode\Component
 {
 
 	protected $url;
+	/**#@-*/
 
-	function __construct($name = '', $url = '')
+	function __construct()
 	{
-		$this->name = $name;
-		$this->url = $url;
 	}
 
 	/**
