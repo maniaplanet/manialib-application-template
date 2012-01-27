@@ -31,13 +31,13 @@ class ManiaConnectFilter extends \ManiaLib\Application\AdvancedFilter
 	 */
 	protected $oauth2;
 
-	static function logout()
+	static function logout($redirectUri = null)
 	{
 		$request = \ManiaLib\Application\Request::getInstance();
 		$maniaplanet = new \Maniaplanet\WebServices\ManiaConnect\Player();
 		$maniaplanet->logout();
 
-		$logoutURL = $maniaplanet->getLogoutURL($request->createLink('/'));
+		$logoutURL = $maniaplanet->getLogoutURL($redirectUri ?: $request->createLink('/'));
 
 		$request->redirectAbsolute($logoutURL);
 	}
