@@ -24,6 +24,7 @@ namespace ManiaLib\WebServices;
 class ManiaConnectFilter extends \ManiaLib\Application\AdvancedFilter
 {
 	const SESS_AUTH_KEY = 'manialib-oauth2';
+	const SESS_NONCE_KEY = 'manialib-nonce';
 	const RETRY = 3;
 
 	/**
@@ -37,7 +38,7 @@ class ManiaConnectFilter extends \ManiaLib\Application\AdvancedFilter
 		$maniaplanet = new \Maniaplanet\WebServices\ManiaConnect\Player();
 		$maniaplanet->logout();
 
-		$logoutURL = $maniaplanet->getLogoutURL($redirectUri ?: $request->createLink('/'));
+		$logoutURL = $maniaplanet->getLogoutURL($redirectUri ? : $request->createLink('/'));
 
 		$request->redirectAbsolute($logoutURL);
 	}
@@ -51,6 +52,16 @@ class ManiaConnectFilter extends \ManiaLib\Application\AdvancedFilter
 
 		if($this->request->get('code'))
 		{
+			if($this->request->get(self::SESS_NONCE_KEY))
+			{
+				if($this->request->get(self::SESS_NONCE_KEY) != $this->session->get(self::SESS_NONCE_KEY))
+				{
+					$this->request->delete('code');
+					$this->request->delete(self::SESS_NONCE_KEY);
+					$this->request->redirect('');
+					return;
+				}
+			}
 			$tries = $this->session->get(static::SESS_AUTH_KEY.'-tries', 0);
 			$tries++;
 			if($tries > static::RETRY)
@@ -84,6 +95,9 @@ class ManiaConnectFilter extends \ManiaLib\Application\AdvancedFilter
 
 		if(!$player)
 		{
+			$nonce = md5(uniqid());
+			$this->session->set(self::SESS_NONCE_KEY, $nonce);
+			$this->request->set(self::SESS_NONCE_KEY, $nonce);
 			$loginURL = $this->oauth2->getLoginURL(Config::getInstance()->scope,
 				$this->request->createLink('.'));
 			$this->request->redirectAbsolute($loginURL);
