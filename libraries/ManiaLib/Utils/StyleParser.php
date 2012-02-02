@@ -550,7 +550,7 @@ class TextToken
 			if($this->style & StyleParser::BOLD)
 				$styles .= 'font-weight:bold;';
 			if($this->style & StyleParser::SHADOWED)
-				$styles .= 'text-shadow:1px 1px 1px #444;';
+				$styles .= 'text-shadow:1px 1px 1px rgba(0, 0, 0, 0.5);';
 			if($this->style & StyleParser::WIDE)
 				$styles .= 'letter-spacing:.1em;font-size:105%;';
 			else if($this->style & StyleParser::NARROW)
