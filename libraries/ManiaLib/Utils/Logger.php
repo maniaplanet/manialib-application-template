@@ -34,11 +34,11 @@ class Logger
 		self::log($message, $addDate, 'user.log');
 	}
 
-	static protected function log($message, $addDate = true, $logFilename = 'debug.log')
+	static function log($message, $addDate = true, $logFilename = 'debug.log', $nl="\n")
 	{
 		if(self::load())
 		{
-			$message = ($addDate ? date('c') : '').'  '.print_r($message, true)."\n";
+			$message = ($addDate ? date('c') : '').'  '.print_r($message, true).$nl;
 			$filename = self::$path.self::$prefix.$logFilename;
 			file_put_contents($filename, $message, FILE_APPEND);
 		}
