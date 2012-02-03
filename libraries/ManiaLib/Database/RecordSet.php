@@ -105,6 +105,16 @@ class RecordSet
 		}
 	}
 
+	function fetchArrayOfObject($className='\\stdClass', $params = array())
+	{
+		$array = array();
+		while($row = $this->fetchObject($className, $params))
+		{
+			$array[] = $row;
+		}
+		return $array;
+	}
+
 	/**
 	 * Fetches a single value of the current row, or the default value if there's no row.
 	 * Typically useful for SELECT COUNT() queries.
