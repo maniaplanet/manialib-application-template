@@ -38,7 +38,7 @@ class Logger
 	{
 		if(self::load())
 		{
-			$message = ($addDate ? date('c') : '').'  '.print_r($message, true).$nl;
+			$message = ($addDate ? date('c').'  ' : '').print_r($message, true).$nl;
 			$filename = self::$path.self::$prefix.$logFilename;
 			file_put_contents($filename, $message, FILE_APPEND);
 		}
