@@ -12,38 +12,34 @@
 
 namespace ManiaLib\Gui\Maniacode\Elements;
 
-/**
- * @deprecated
- * use InstallMapPack class instead
- */
-class InstallTrackPack extends \ManiaLib\Gui\Maniacode\Component
+class InstallMapPack extends \ManiaLib\Gui\Maniacode\Component
 {
 
 	protected $xmlTagName = 'install_map_pack';
-	protected $tracks = array();
+	protected $maps = array();
 
 	function __construct($name='')
 	{
 		$this->name = $name;
 	}
 
-	function addTrack($name = '', $url = '')
+	function addMap($name = '', $url = '')
 	{
-		$this->tracks[] = new \ManiaLib\Gui\Maniacode\Elements\PackageTrack($name, $url);
+		$this->maps[] = new \ManiaLib\Gui\Maniacode\Elements\PackageMap($name, $url);
 	}
 
 	function getLastInsert()
 	{
-		return end($this->tracks);
+		return end($this->maps);
 	}
 
 	protected function postFilter()
 	{
-		if(isset($this->tracks) && is_array($this->tracks) && count($this->tracks))
+		if(isset($this->maps) && is_array($this->maps) && count($this->maps))
 		{
-			foreach($this->tracks as $track)
+			foreach($this->maps as $map)
 			{
-				$track->save();
+				$map->save();
 			}
 		}
 	}

@@ -14,10 +14,8 @@ namespace ManiaLib\Gui\Maniacode\Elements;
 
 /**
  * Use it only with InstallTrackPack
- * @deprecated
- * use PackageMap class instead
  */
-class PackageTrack extends FileDownload
+class PackageMap extends FileDownload
 {
 
 	protected $xmlTagName = 'map';

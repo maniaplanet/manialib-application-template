@@ -12,15 +12,10 @@
 
 namespace ManiaLib\Gui\Maniacode\Elements;
 
-/**
- * Use it only with InstallTrackPack
- * @deprecated
- * use PackageMap class instead
- */
-class PackageTrack extends FileDownload
+class InstallMap extends \ManiaLib\Gui\Maniacode\Elements\FileDownload
 {
 
-	protected $xmlTagName = 'map';
+	protected $xmlTagName = 'install_map';
 
 	function __construct($name='', $url='')
 	{
