@@ -316,8 +316,16 @@ class Request extends \ManiaLib\Utils\Singleton
 				throw new Exception('Request link: syntax error');
 			}
 		}
-
-		$url = $this->appURL.Route::computeRoute($controller, $action);
+		
+		$config = Config::getInstance();
+		
+		if($controller == $config->defaultController && !$action)
+		{
+			$controller = null;
+		}
+		
+		$url = $config->getLinkCreationURL();
+		$url .= Route::computeRoute($controller, $action);
 		$addSid = defined('SID') && SID && !array_key_exists(Session::NAME, $_COOKIE);
 		$sid = $addSid ? htmlspecialchars(SID) : '';
 		$queryString = http_build_query($params, '', '&');

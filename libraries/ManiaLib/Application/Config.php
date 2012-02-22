@@ -31,12 +31,13 @@ class Config extends \ManiaLib\Utils\Singleton
 	public $renderer;
 	public $webapp = false;
 	public $debug = false;
+	public $pathInfoPrefix;
 
 	function getMediaURL()
 	{
 		return $this->mediaURL? : $this->URL.'media/';
 	}
-	
+
 	function getLangsURL()
 	{
 		return $this->langsURL? : $this->getMediaURL().'langs/';
@@ -49,8 +50,15 @@ class Config extends \ManiaLib\Utils\Singleton
 
 	function getLinkCreationURL()
 	{
-		return $this->useRewriteRules ?
-			substr($this->URL, 0, -1) : $this->URL.'index.php';
+		if($this->useRewriteRules)
+		{
+			$url = substr($this->URL, 0, -1);
+		}
+		else
+		{
+			$url = $this->URL.'index.php';
+		}
+		return $url.$this->pathInfoPrefix;
 	}
 
 	function getViewsNS()
