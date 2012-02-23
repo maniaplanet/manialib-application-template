@@ -1,5 +1,10 @@
 <?php
 /**
+ * ManiaLib - Lightweight PHP framework for Manialinks
+ *
+ * @see         http://code.google.com/p/manialib/
+ * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
+ * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
  * @version     $Revision$:
  * @author      $Author$:
  * @date        $Date$:
@@ -42,11 +47,6 @@ final class Upload
 			// Not sure if usefull here
 			unlink($path.$filename);
 			throw new FileTooLargeException();
-		}
-		if(!chmod($path.$filename, self::UPLOADED_FILE_RIGHTS))
-		{
-			unlink($path.$filename);
-			throw new \Exception('Couldn\'t chmod input file at '.$path.$filename);
 		}
 	}
 }
