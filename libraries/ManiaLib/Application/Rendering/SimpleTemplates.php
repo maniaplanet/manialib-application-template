@@ -60,8 +60,7 @@ class SimpleTemplates implements RendererInterface
 
 	static function header()
 	{
-		header('Content-Type: text/html');
-		header('X-Powered-By: ManiaLib 2');
+		header('Content-Type: text/html; charset=UTF-8');
 	}
 
 }
