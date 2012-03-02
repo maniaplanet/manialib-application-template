@@ -209,6 +209,18 @@ class Connection
 		return $query;
 	}
 
+	function delete($table, $identifier)
+	{
+		$criteria = array();
+		foreach($identifier as $key => $value)
+		{
+			$criteria[] = sprintf('%s = %s', $key, $value);
+		}
+		$criteria = implode(' AND ', $criteria);
+		$query = sprintf('DELETE FROM %s WHERE %s', $table, $criteria);
+		return $this->execute($query);
+	}
+
 	function affectedRows()
 	{
 		return mysql_affected_rows($this->connection);
