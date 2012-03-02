@@ -20,7 +20,7 @@ abstract class Bootstrapper
 	static $errorHandler = 'exceptionErrorHandler';
 	static $fatalExceptionHandler = 'fatalExceptionHandler';
 
-	final static function run()
+	static function run()
 	{
 		error_reporting(static::$errorReporting);
 		set_error_handler(array(static::$errorHandlingClass, static::$errorHandler));
