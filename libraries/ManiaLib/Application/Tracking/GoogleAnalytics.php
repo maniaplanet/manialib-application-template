@@ -12,6 +12,8 @@
 
 namespace ManiaLib\Application\Tracking;
 
+use ManiaLib\Utils\Arrays;
+
 /**
  * Google Analytics tracking in Manialinks
  */
@@ -143,13 +145,10 @@ class GoogleAnalytics
 		$this->cookieNameSuffix = $cookieNameSuffix;
 		$this->utmhid = rand(1000000000, 9999999999);
 		$this->utmn = rand(1000000000, 9999999999);
-		$this->utmul = 'en';
-		if(array_key_exists('HTTP_REFERER', $_SERVER))
-		{
-			$this->utmr = $_SERVER['HTTP_REFERER'];
-		}
-		$this->utmhn = \ManiaLib\Utils\Arrays::get($_SERVER, 'HTTP_HOST');
-		$this->utmp = \ManiaLib\Utils\Arrays::get($_SERVER, 'REQUEST_URI');
+		$this->utmul = Arrays::get($_SERVER, 'HTTP_ACCEPT_LANGUAGE');
+		$this->utmr = Arrays::get($_SERVER, 'HTTP_REFERER');
+		$this->utmhn = Arrays::get($_SERVER, 'HTTP_HOST');
+		$this->utmp = Arrays::get($_SERVER, 'REQUEST_URI');
 	}
 
 	/**
@@ -175,23 +174,23 @@ class GoogleAnalytics
 		$cookieUtmc = '__utmc'.$this->cookieNameSuffix;
 		$cookieUtmz = '__utmz'.$this->cookieNameSuffix;
 
-		$utma = \ManiaLib\Utils\Arrays::get($_COOKIE, $cookieUtma, '');
+		$utma = Arrays::get($_COOKIE, $cookieUtma, '');
 		$utma = $utma ? explode('.', $utma) : array();
 
-		$utmb = \ManiaLib\Utils\Arrays::get($_COOKIE, $cookieUtmb, '');
+		$utmb = Arrays::get($_COOKIE, $cookieUtmb, '');
 		$utmb = $utmb ? explode('.', $utmb) : array();
 
-		$utmc = \ManiaLib\Utils\Arrays::get($_COOKIE, $cookieUtmc, '');
+		$utmc = Arrays::get($_COOKIE, $cookieUtmc, '');
 		$utmc = $utmc ? explode('.', $utmc) : array();
 
 		$utmz = array();
 
 		$utma[0] = $domainHash; // Domain hash
-		$utma[1] = \ManiaLib\Utils\Arrays::get($utma, 1, $cookieRandom); // Random unique ID
-		$utma[2] = \ManiaLib\Utils\Arrays::get($utma, 2, time()); // Time of initial visit
-		$utma[3] = \ManiaLib\Utils\Arrays::get($utma, 3, time()); // Begining of previous session
-		$utma[4] = \ManiaLib\Utils\Arrays::get($utma, 4, time()); // Begining of current session
-		$utma[5] = \ManiaLib\Utils\Arrays::get($utma, 5, 0); // Session counter
+		$utma[1] = Arrays::get($utma, 1, $cookieRandom); // Random unique ID
+		$utma[2] = Arrays::get($utma, 2, time()); // Time of initial visit
+		$utma[3] = Arrays::get($utma, 3, time()); // Begining of previous session
+		$utma[4] = Arrays::get($utma, 4, time()); // Begining of current session
+		$utma[5] = Arrays::get($utma, 5, 0); // Session counter
 
 		if(!$utmb || !$utmc)
 		{
