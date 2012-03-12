@@ -43,11 +43,8 @@ class Filter implements \ManiaLib\Application\Filterable
 		if($this->account)
 		{
 			$this->tracker = new GoogleAnalytics($this->account, $this->cookieNameSuffix);
-			$this->tracker->loadFromConfig();
 			$this->tracker->loadCookie();
 			$this->tracking = true;
-			$session = \ManiaLib\Application\Session::getInstance();
-			$this->tracker->utmul = $session->get('lang', 'en');
 		}
 	}
 
