@@ -105,7 +105,7 @@ class ManiaConnectFilter extends \ManiaLib\Application\AdvancedFilter
 		}
 
 		$this->request->delete('code');
-		$this->request->delete('state');
+		$this->request->delete(self::SESS_NONCE_KEY);
 
 		$this->session->set('login', $player->login);
 		$this->session->set('nickname', $player->nickname);
