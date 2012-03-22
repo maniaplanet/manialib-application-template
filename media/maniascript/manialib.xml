@@ -4,20 +4,20 @@
  * ManiaLib for ManiaScript
  *
  * Minimum Maniaplanet version: 2011-10-19_11_55
- * 
+ *
  * This framework was specifically designed for use in Manialinks; it provides
- * classic features as you can find in JavaScript frameworks (manipulation 
- * primitives, utilities, event listening architecture, etc.). 
- 
- * It also provides some simple UI primitives (only dialogs and tooltips for 
- * now). It still an early version so it's not documented, not extremely useful, 
- * and quite possibly full of bugs. However it's LGPL so use it at your own 
+ * classic features as you can find in JavaScript frameworks (manipulation
+ * primitives, utilities, event listening architecture, etc.).
+
+ * It also provides some simple UI primitives (only dialogs and tooltips for
+ * now). It still an early version so it's not documented, not extremely useful,
+ * and quite possibly full of bugs. However it's LGPL so use it at your own
  * risk :)
  *
- * And don't hesitate to come ask questions in the dedicated forum, we'll be 
+ * And don't hesitate to come ask questions in the dedicated forum, we'll be
  * happy to help:
  * http://forum.maniaplanet.com/viewforum.php?f=40
- * 
+ *
  * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
@@ -25,7 +25,8 @@
  * @author      $Author: maximeraoust $:
  * @date        $Date: 2011-10-26 12:41:57 +0200 (mer., 26 oct. 2011) $:
  */
- 
+
+#Include "MathLib" as MathLib
 #Include "TextLib" as TextLib
 #RequireContext CGameManialinkScriptHandler
 
@@ -41,6 +42,11 @@ declare Text[Text] _manialib_values;
 declare Text[][Text] _manialib_actions;
 declare Text[][][Text][Text] _manialib_event_listeners;
 
+// UI specific
+
+declare Integer _manialib_ui_month;
+declare Integer _manialib_ui_year;
+
 ////////////////////////////////////////////////////////////////////////////////
 //
 // Utils
@@ -49,50 +55,164 @@ declare Text[][][Text][Text] _manialib_event_listeners;
 
 Real manialib_max(Real real1, Real real2)
 {
-	if(real1 > real2)
-	{
-		return real1;
-	}
-	return real2;
+        if(real1 > real2)
+        {
+                return real1;
+        }
+        return real2;
 }
 
 Real manialib_min(Real real1, Real real2)
 {
-	if(real1 < real2)
-	{
-		return real1;
-	}
-	return real2;
+        if(real1 < real2)
+        {
+                return real1;
+        }
+        return real2;
 }
 
 Text manialib_event2text(CGameManialinkScriptEvent::Type eventType)
 {
-	declare _bindings = [
-		"mouseclick" => CGameManialinkScriptEvent::Type::MouseClick,
-		"mouseover" => CGameManialinkScriptEvent::Type::MouseOver,
-		"mouseout" => CGameManialinkScriptEvent::Type::MouseOut,
-		"keypress" => CGameManialinkScriptEvent::Type::KeyPress
-	];
-	if(_bindings.exists(eventType))
-	{
-		return _bindings.keyof(eventType);
-	}
-	log("[WARNING] Unkown event type: "^eventType);
-	return "";
+        declare _bindings = [
+                "mouseclick" => CGameManialinkScriptEvent::Type::MouseClick,
+                "mouseover" => CGameManialinkScriptEvent::Type::MouseOver,
+                "mouseout" => CGameManialinkScriptEvent::Type::MouseOut,
+                "keypress" => CGameManialinkScriptEvent::Type::KeyPress
+        ];
+        if(_bindings.exists(eventType))
+        {
+                return _bindings.keyof(eventType);
+        }
+        log("[WARNING] Unkown event type: "^eventType);
+        return "";
 }
 
 Void manialib_set_value(Text name, Text value)
 {
-	_manialib_values[name] = value;
+        _manialib_values[name] = value;
 }
 
 Text manialib_get_value(Text name)
 {
-	if(_manialib_values.existskey(name))
+        if(_manialib_values.existskey(name))
+        {
+                return _manialib_values[name];
+        }
+        return "";
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// DateLib
+//
+////////////////////////////////////////////////////////////////////////////////
+Boolean isLeapYear(Integer year)
+{
+	if (year % 4 == 0)
 	{
-		return _manialib_values[name];
+		if (year % 100 == 0)
+		{
+			if (year % 400 == 0)
+			{
+				return True;
+			}
+		}
+		else
+		{
+			return True;
+		}
 	}
-	return "";
+	return False;
+
+}
+Integer fromWeekDayToInteger(Text day)
+{
+	declare Integer[Text] Days = ["Monday" => 1, "Tuesday" => 2, "Wednesday" => 3, "Thursday" => 4, "Friday" => 5, "Saturday" => 6, "Sunday" => 7];
+
+	return Days[day];
+}
+Text fromWeekDayToStr(Integer day)
+{
+	declare Text[Integer] Days = [1 => "Sunday", 2 => "Monday", 3 => "Tuesday", 4 => "Wednesday", 5 => "Thursday", 6 => "Friday", 0 => "Saturday"];
+
+	return Days[day];
+}
+Text fromMonthToStr(Integer month)
+{
+	declare Text[Integer] Months = [1 => "January", 2 => "February", 3 => "March", 4 => "April", 5 => "May", 6 => "June", 7 => "July", 8 => "August", 9 => "September", 10 => "October", 11 => "November", 12 => "December"];
+
+	return Months[month];
+}
+Integer[Text] parseCurrentDateTime(Text curDate)
+{
+	declare Integer[Text] result = ["year"	=> TextLib::ToInteger(TextLib::SubString(curDate,0,4)),"month" => TextLib::ToInteger(TextLib::SubString(curDate,5,2)),"day"	=> TextLib::ToInteger(TextLib::SubString(curDate,8,2)),"hours" => TextLib::ToInteger(TextLib::SubString(curDate,12,2)),"minutes" => TextLib::ToInteger(TextLib::SubString(curDate,15,2)),"seconds" => TextLib::ToInteger(TextLib::SubString(curDate,18,2))];
+
+	return result;
+}
+Integer[Text] getCurrentDateTime()
+{
+	declare Text curDate = CurrentLocalDateText;
+
+	return parseCurrentDateTime(curDate);
+}
+Integer numberOfDays(Integer year, Integer month)
+{
+	declare months = [4, 6, 9, 11];
+	if (months.exists(month))
+	{
+		return 30;
+	}
+	else if (month == 2)
+	{
+		if (isLeapYear(year))
+		{
+			return 29;
+		}
+		else
+		{
+			return 28;
+		}
+	}
+	return 31;
+}
+Text weekDayFromDate(Integer year, Integer month, Integer day)
+{
+	// Method from http://fr.wikibooks.org/wiki/Trouver_le_jour_de_la_semaine_avec_une_date_donn%C3%A9e
+	declare Integer[Integer] Months = [1 => 1, 2 => 4, 3 => 4, 4 => 0, 5 => 2, 6 => 5, 7 => 0, 8 => 3, 9 => 6, 10 => 1, 11 => 4, 12 => 6];
+
+	declare Integer calc;
+	declare Integer lastDigitsYear = TextLib::ToInteger(TextLib::SubString(TextLib::ToText(year), 2, 4));
+
+	calc = lastDigitsYear;						// Step 1
+	calc = calc + lastDigitsYear/4; 			// step 2
+	calc = calc + day; 							// step 3
+	calc = calc + Months[month]; 				// step 4
+	if (isLeapYear(year) && (month == 2))		// step 5
+	{
+		calc = calc - 1;
+	}
+	if ((year >= 1700) && (year <= 1799))		// step 6
+	{
+		calc = calc + 4;
+	}
+	else if ((year >= 1800) && (year <= 1899))
+	{
+		calc = calc + 2;
+	}
+	else if ((year >= 1900) && (year <= 1999))
+	{
+		calc = calc + 0;
+	}
+	else if ((year >= 2000) && (year <= 2099))
+	{
+		calc = calc + 6;
+	}
+	else if ((year >= 2100) && (year <= 2199))
+	{
+		calc = calc + 4;
+	}
+
+	return fromWeekDayToStr(calc % 7);				// step 7
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -103,134 +223,220 @@ Text manialib_get_value(Text name)
 
 Void manialib_hide(Text controlId)
 {
-	declare CGameManialinkControl control = Page.MainFrame.GetFirstChild(controlId);
-	if(control != Null)
-	{
-		control.Hide();
-		_manialib_visibility[controlId] = False;
-	}
-	else
-	{
-		log("[WARNING] Trying to access an unkown element: " ^ controlId);
-	}
+        declare CGameManialinkControl control = Page.MainFrame.GetFirstChild(controlId);
+        if(control != Null)
+        {
+                control.Hide();
+                _manialib_visibility[controlId] = False;
+        }
+        else
+        {
+                log("[WARNING] Trying to access an unkown element: " ^ controlId);
+        }
 }
 
 Void manialib_show(Text controlId)
 {
-	declare CGameManialinkControl control = Page.MainFrame.GetFirstChild(controlId);
-	if(control != Null)
-	{
-		control.Show();
-		_manialib_visibility[controlId] = True;
-	}
-	else
-	{
-		log("[WARNING] Trying to access an unkown element: " ^ controlId);
-	}
+        declare CGameManialinkControl control = Page.MainFrame.GetFirstChild(controlId);
+        if(control != Null)
+        {
+                control.Show();
+                _manialib_visibility[controlId] = True;
+        }
+        else
+        {
+                log("[WARNING] Trying to access an unkown element: " ^ controlId);
+        }
 }
 
 Boolean manialib_visible(Text controlId)
 {
-	if(_manialib_visibility.existskey(controlId))
-	{
-		return _manialib_visibility[controlId];
-	}
-	return True;
+        if(_manialib_visibility.existskey(controlId))
+        {
+                return _manialib_visibility[controlId];
+        }
+        return True;
 }
 
 Void manialib_toggle(Text controlId)
 {
-	if(manialib_visible(controlId))
-	{
-		manialib_hide(controlId);
-	}
-	else
-	{
-		manialib_show(controlId);
-	}
+        if(manialib_visible(controlId))
+        {
+                manialib_hide(controlId);
+        }
+        else
+        {
+                manialib_show(controlId);
+        }
 }
 
 Void manialib_posx(Text controlId, Real posx)
 {
-	declare CGameManialinkControl control = Page.MainFrame.GetFirstChild(controlId);
-	if(control != Null)
-	{
-		control.PosnX = posx;
-	}
-	else
-	{
-		log("[WARNING] Trying to access an unkown element: " ^ controlId);
-	}
+        declare CGameManialinkControl control = Page.MainFrame.GetFirstChild(controlId);
+        if(control != Null)
+        {
+                control.PosnX = posx;
+        }
+        else
+        {
+                log("[WARNING] Trying to access an unkown element: " ^ controlId);
+        }
 }
 
 Void manialib_posy(Text controlId, Real posy)
 {
-	declare CGameManialinkControl control = Page.MainFrame.GetFirstChild(controlId);
-	if(control != Null)
-	{
-		control.PosnY = posy;
-	}
-	else
-	{
-		log("[WARNING] Trying to access an unkown element: " ^ controlId);
-	}
+        declare CGameManialinkControl control = Page.MainFrame.GetFirstChild(controlId);
+        if(control != Null)
+        {
+                control.PosnY = posy;
+        }
+        else
+        {
+                log("[WARNING] Trying to access an unkown element: " ^ controlId);
+        }
 }
 
 Void manialib_posz(Text controlId, Real posz)
 {
-	declare CGameManialinkControl control = Page.MainFrame.GetFirstChild(controlId);
-	if(control != Null)
-	{
-		control.PosnZ = posz;
-	}
-	else
-	{
-		log("[WARNING] Trying to access an unkown element: " ^ controlId);
-	}
+        declare CGameManialinkControl control = Page.MainFrame.GetFirstChild(controlId);
+        if(control != Null)
+        {
+                control.PosnZ = posz;
+        }
+        else
+        {
+                log("[WARNING] Trying to access an unkown element: " ^ controlId);
+        }
 }
 
 // Weird function/hack for the tooltip feature
 Void manialib_move_to_mouse(Text controlId, Real offsetX, Real offsetY, Real boundingBoxX, Real boundingBoxY)
 {
-	declare CGameManialinkControl control = Page.MainFrame.GetFirstChild(controlId);
-	control.PosnX = manialib_min(MouseX + offsetX, 160.0 - boundingBoxX);
-	control.PosnY = manialib_max(MouseY + offsetY, -90.0 + boundingBoxY);
+        declare CGameManialinkControl control = Page.MainFrame.GetFirstChild(controlId);
+        control.PosnX = manialib_min(MouseX + offsetX, 160.0 - boundingBoxX);
+        control.PosnY = manialib_max(MouseY + offsetY, -90.0 + boundingBoxY);
 }
 
 Void manialib_set_text(Text controlId, Text newtext)
 {
-	declare CGameManialinkLabel control <=> (Page.MainFrame.GetFirstChild(controlId) as CGameManialinkLabel);
-	if(control != Null)
-	{
-		control.SetText(newtext);
-	}
-	else
-	{
-		log("[WARNING] Trying to access an unkown element: " ^ controlId);
-	}
+        declare CGameManialinkLabel control <=> (Page.MainFrame.GetFirstChild(controlId) as CGameManialinkLabel);
+        if(control != Null)
+        {
+                control.SetText(newtext);
+        }
+        else
+        {
+                log("[WARNING] Trying to access an unkown element: " ^ controlId);
+        }
 }
 
 Void manialib_set_entry_value(Text controlId, Text value)
 {
-	declare CGameManialinkEntry control <=> (Page.MainFrame.GetFirstChild(controlId) as CGameManialinkEntry);
-	if(control != Null)
-	{
-		control.Value = value;
-	}
-	else
-	{
-		log("[WARNING] Trying to access an unkown element: " ^ controlId);
-	}
+        declare CGameManialinkEntry control <=> (Page.MainFrame.GetFirstChild(controlId) as CGameManialinkEntry);
+        if(control != Null)
+        {
+                control.Value = value;
+        }
+        else
+        {
+                log("[WARNING] Trying to access an unkown element: " ^ controlId);
+        }
 }
 
 Void manialib_disable_links()
 {
-	// TODO feature in the next update of Maniaplanet ?
+        // TODO feature in the next update of Maniaplanet ?
 }
 
 Void manialib_enable_links()
 {
-	// TODO feature in the next update of Maniaplanet ?
+        // TODO feature in the next update of Maniaplanet ?
+}
+// Date Picker
+Void manialib_ui_datepicker_update()
+{
+	declare Integer startDay = fromWeekDayToInteger(weekDayFromDate(_manialib_ui_year,_manialib_ui_month,1));
+	declare Integer numberOfDays = numberOfDays(_manialib_ui_year,_manialib_ui_month);
+
+	declare CGameManialinkLabel label;
+	declare CGameManialinkFrame container = (Page.GetFirstChild("datepicker-days") as CGameManialinkFrame);
+	declare CGameManialinkLabel header_label = (Page.GetFirstChild("datepicker-header-label") as CGameManialinkLabel);
+
+	header_label.SetText(fromMonthToStr(_manialib_ui_month)^" "^_manialib_ui_year);
+
+	declare Integer i = 1;
+	declare Integer numDay = 1;
+
+	foreach(dayLabel in container.Controls) {
+		label = (dayLabel as CGameManialinkLabel);
+
+		if (i < startDay)
+		{
+			label.SetText("");
+		}
+		else
+		{
+			if (numDay <= numberOfDays)
+			{
+				label.SetText("$000"^(numDay));
+				numDay = numDay + 1;
+			}
+			else
+			{
+				label.SetText("");
+			}
+		}
+		i = i + 1;
+	}
+}
+Void manialib_ui_datepicker_event(Text action, Text content)
+{
+	if (action == "update")
+	{
+		if (content == "+1")
+		{
+			if (_manialib_ui_month == 12)
+			{
+				_manialib_ui_month = 1;
+				_manialib_ui_year = _manialib_ui_year + 1;
+			}
+			else
+			{
+				_manialib_ui_month = _manialib_ui_month + 1;
+			}
+			manialib_ui_datepicker_update();
+		}
+		else if (content == "-1")
+		{
+			if (_manialib_ui_month == 1)
+			{
+				_manialib_ui_month = 12;
+				_manialib_ui_year = _manialib_ui_year - 1;
+			}
+			else
+			{
+				_manialib_ui_month = _manialib_ui_month - 1;
+			}
+			manialib_ui_datepicker_update();
+		}
+		else if (content == "0")
+		{
+			manialib_ui_datepicker_update();
+		}
+	}
+	else if (action == "click")
+	{
+		declare CGameManialinkEntry entry = (Page.GetFirstChild("datepicker-result") as CGameManialinkEntry);
+		declare Integer startDay = fromWeekDayToInteger(weekDayFromDate(_manialib_ui_year,_manialib_ui_month,1));
+
+		declare Integer realDay = TextLib::ToInteger(content) - startDay + 1;
+
+		// Because the value of the ID is not correct
+		// We have to substract with the real begining of the week
+		entry.Value = _manialib_ui_year^"/"^_manialib_ui_month^"/"^realDay;
+
+		manialib_posx("datepicker",320.0);
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -241,95 +447,98 @@ Void manialib_enable_links()
 
 Void manialib_action_register(Text id, Text[] action)
 {
-	_manialib_actions[id] = action;
+        _manialib_actions[id] = action;
 }
 
 Void manialib_action_execute(Text[] action)
 {
-	if(action.count == 0)
-	{
-		return;
-	}
-	switch(action[0])
-	{
-		case "set_value":
-			manialib_set_value(action[1], action[2]);
-			
-		case "manialink":
-			OpenLink(action[1], ::LinkType::ManialinkBrowser);
-			
-		case "manialinkid":
-			OpenLink(action[1], ::LinkType::ManialinkFromId);
+        if(action.count == 0)
+        {
+                return;
+        }
+        switch(action[0])
+        {
+                case "set_value":
+                        manialib_set_value(action[1], action[2]);
 
-		case "external":
-			OpenLink(action[1], ::LinkType::ExternalBrowser);
-			
-		case "externalid":
-			OpenLink(action[1], ::LinkType::ExternalFromId);
+                case "manialink":
+                        OpenLink(action[1], ::LinkType::ManialinkBrowser);
 
-		case "goto":
-			OpenLink(action[1], ::LinkType::Goto);
-			
-		case "goto":
-			OpenLink(action[1], ::LinkType::GotoFromId);
+                case "manialinkid":
+                        OpenLink(action[1], ::LinkType::ManialinkFromId);
 
-		case "hide":
-			manialib_hide(action[1]);
-			
-		case "show":
-			manialib_show(action[1]);
-			
-		case "toggle":
-			manialib_toggle(action[1]);
-			
-		case "posx":
-			// FIXME Because of a bug in TextLib::ToReal() this won't work for now
-			manialib_posx(action[1], TextLib::ToReal(action[2]));
-			
-		case "posy":
-			// FIXME Because of a bug in TextLib::ToReal() this won't work for now
-			manialib_posy(action[1], TextLib::ToReal(action[2]));
-			
-		case "posz":
-			// FIXME Because of a bug in TextLib::ToReal() this won't work for now
-			manialib_posz(action[1], TextLib::ToReal(action[2]));
-			
-		case "set_text":
-			manialib_set_text(action[1], action[2]);
-			
-		case "set_entry_value":
-			manialib_set_entry_value(action[1], action[2]);
+                case "external":
+                        OpenLink(action[1], ::LinkType::ExternalBrowser);
 
-		case "move_to_mouse":
-			// FIXME Because of a bug in TextLib::ToReal(), we cannot use the params
-			manialib_move_to_mouse(action[1], 0.0, -2.0, 75.0, 11.0);
-			
-		case "disable_links":
-			manialib_disable_links();
-			
-		case "enable_links":
-			manialib_enable_links();
+                case "externalid":
+                        OpenLink(action[1], ::LinkType::ExternalFromId);
 
-		// special case...	
-		case "action_execute_id_from_values":
-		{
-			declare id = manialib_get_value(action[1]);
-			if(_manialib_actions.existskey(id))
-			{
-				manialib_action_execute(_manialib_actions[id]);
-			}
-		}
+                case "goto":
+                        OpenLink(action[1], ::LinkType::Goto);
 
-		// You can also just pass an empty array
-		case "":
-			True;
-			
-		case "none":
-			True;
-			
-		default:
-			log("[WARNING] Unkown action name: " ^ action[1]);
-	}
+                case "goto":
+                        OpenLink(action[1], ::LinkType::GotoFromId);
+
+                case "hide":
+                        manialib_hide(action[1]);
+
+                case "show":
+                        manialib_show(action[1]);
+
+                case "toggle":
+                        manialib_toggle(action[1]);
+
+                case "posx":
+                        // FIXME Because of a bug in TextLib::ToReal() this won't work for now
+                        manialib_posx(action[1], TextLib::ToReal(action[2]));
+
+                case "posy":
+                        // FIXME Because of a bug in TextLib::ToReal() this won't work for now
+                        manialib_posy(action[1], TextLib::ToReal(action[2]));
+
+                case "posz":
+                        // FIXME Because of a bug in TextLib::ToReal() this won't work for now
+                        manialib_posz(action[1], TextLib::ToReal(action[2]));
+
+                case "set_text":
+                        manialib_set_text(action[1], action[2]);
+
+                case "set_entry_value":
+                        manialib_set_entry_value(action[1], action[2]);
+
+                case "move_to_mouse":
+                        // FIXME Because of a bug in TextLib::ToReal(), we cannot use the params
+                        manialib_move_to_mouse(action[1], 0.0, -2.0, 75.0, 11.0);
+
+                case "disable_links":
+                        manialib_disable_links();
+
+                case "enable_links":
+                        manialib_enable_links();
+
+                // special case...
+                case "action_execute_id_from_values":
+                {
+                        declare id = manialib_get_value(action[1]);
+                        if(_manialib_actions.existskey(id))
+                        {
+                                manialib_action_execute(_manialib_actions[id]);
+                        }
+                }
+
+				case "date_picker":
+					manialib_ui_datepicker_event(action[1], action[2]);
+
+                // You can also just pass an empty array
+                case "":
+                        True;
+
+                case "none":
+                        True;
+
+                default:
+                        log("[WARNING] Unkown action name: " ^ action[1]);
+        }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -340,42 +549,42 @@ Void manialib_action_execute(Text[] action)
 
 Void manialib_event_add_listener(Text controlId, CGameManialinkScriptEvent::Type eventType, Text[] action)
 {
-	if(!_manialib_event_listeners.existskey(controlId))
-	{
-		_manialib_event_listeners[controlId] = Text[][][Text];
-	}
-	if(!_manialib_event_listeners[controlId].existskey(manialib_event2text(eventType)))
-	{
-		_manialib_event_listeners[controlId][manialib_event2text(eventType)] = Text[][];
-	}
-	_manialib_event_listeners[controlId][manialib_event2text(eventType)].add(action);
+        if(!_manialib_event_listeners.existskey(controlId))
+        {
+                _manialib_event_listeners[controlId] = Text[][][Text];
+        }
+        if(!_manialib_event_listeners[controlId].existskey(manialib_event2text(eventType)))
+        {
+                _manialib_event_listeners[controlId][manialib_event2text(eventType)] = Text[][];
+        }
+        _manialib_event_listeners[controlId][manialib_event2text(eventType)].add(action);
 }
 
 Void manialib_event_listener(CGameManialinkScriptEvent event)
 {
-	if(_manialib_event_listeners.existskey(event.ControlId))
-	{
-		declare eventTypeName = manialib_event2text(event.Type);
-		if(_manialib_event_listeners[event.ControlId].existskey(eventTypeName))
-		{
-			foreach(action in _manialib_event_listeners[event.ControlId][eventTypeName])
-			{
-				manialib_action_execute(action);
-			}
-		}
-	}
+        if(_manialib_event_listeners.existskey(event.ControlId))
+        {
+                declare eventTypeName = manialib_event2text(event.Type);
+                if(_manialib_event_listeners[event.ControlId].existskey(eventTypeName))
+                {
+                        foreach(action in _manialib_event_listeners[event.ControlId][eventTypeName])
+                        {
+                                manialib_action_execute(action);
+                        }
+                }
+        }
 }
 
 Void manialib_main_loop()
 {
-	while(True)
-	{
-		foreach(Event in PendingEvents)
-		{
-			manialib_event_listener(Event);
-		}
-		yield;		 
-	}
+        while(True)
+        {
+                foreach(Event in PendingEvents)
+                {
+                        manialib_event_listener(Event);
+                }
+                yield;
+        }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -383,11 +592,60 @@ Void manialib_main_loop()
 // UI Primitives
 //
 ////////////////////////////////////////////////////////////////////////////////
+Void manialib_ui_datepicker_init() {
+	_manialib_ui_year = 2012;
+	_manialib_ui_month = 3;
+	manialib_event_add_listener("datepicker-header-next", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker", "update", "+1"]);
+	manialib_event_add_listener("datepicker-header-previous", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker", "update", "-1"]);
+
+	manialib_ui_datepicker_event("update", "0");
+
+	//manialib_posx("manialib-dialog", 0.0);
+
+	//TODO: generate it with script ?
+	manialib_event_add_listener("datepicker-day-1", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","1"]);
+	manialib_event_add_listener("datepicker-day-2", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","2"]);
+	manialib_event_add_listener("datepicker-day-3", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","3"]);
+	manialib_event_add_listener("datepicker-day-4", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","4"]);
+	manialib_event_add_listener("datepicker-day-5", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","5"]);
+	manialib_event_add_listener("datepicker-day-6", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","6"]);
+	manialib_event_add_listener("datepicker-day-7", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","7"]);
+	manialib_event_add_listener("datepicker-day-8", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","8"]);
+	manialib_event_add_listener("datepicker-day-9", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","9"]);
+	manialib_event_add_listener("datepicker-day-10", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","10"]);
+	manialib_event_add_listener("datepicker-day-11", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","11"]);
+	manialib_event_add_listener("datepicker-day-12", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","12"]);
+	manialib_event_add_listener("datepicker-day-13", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","13"]);
+	manialib_event_add_listener("datepicker-day-14", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","14"]);
+	manialib_event_add_listener("datepicker-day-15", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","15"]);
+	manialib_event_add_listener("datepicker-day-16", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","16"]);
+	manialib_event_add_listener("datepicker-day-17", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","17"]);
+	manialib_event_add_listener("datepicker-day-18", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","18"]);
+	manialib_event_add_listener("datepicker-day-19", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","19"]);
+	manialib_event_add_listener("datepicker-day-20", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","20"]);
+	manialib_event_add_listener("datepicker-day-21", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","21"]);
+	manialib_event_add_listener("datepicker-day-22", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","22"]);
+	manialib_event_add_listener("datepicker-day-23", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","23"]);
+	manialib_event_add_listener("datepicker-day-24", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","24"]);
+	manialib_event_add_listener("datepicker-day-25", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","25"]);
+	manialib_event_add_listener("datepicker-day-26", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","26"]);
+	manialib_event_add_listener("datepicker-day-27", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","27"]);
+	manialib_event_add_listener("datepicker-day-28", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","28"]);
+	manialib_event_add_listener("datepicker-day-29", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","29"]);
+	manialib_event_add_listener("datepicker-day-30", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","30"]);
+	manialib_event_add_listener("datepicker-day-31", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","31"]);
+	manialib_event_add_listener("datepicker-day-32", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","32"]);
+	manialib_event_add_listener("datepicker-day-33", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","33"]);
+	manialib_event_add_listener("datepicker-day-34", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","34"]);
+	manialib_event_add_listener("datepicker-day-35", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","35"]);
+	manialib_event_add_listener("datepicker-day-36", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","36"]);
+	manialib_event_add_listener("datepicker-day-37", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","37"]);
+}
 
 Void manialib_ui_dialog(Text controlId, Text message, Text[] action)
 {
 	manialib_action_register(controlId, action);
-	
+
 	manialib_hide("manialib-dialog");
 	manialib_posx("manialib-dialog", 0.0);
 
@@ -397,7 +655,7 @@ Void manialib_ui_dialog(Text controlId, Text message, Text[] action)
 	manialib_event_add_listener("manialib-dialog-yes", CGameManialinkScriptEvent::Type::MouseClick, ["hide", "manialib-dialog"]);
 	manialib_event_add_listener("manialib-dialog-yes", CGameManialinkScriptEvent::Type::MouseClick, ["enable_links"]);
 	manialib_event_add_listener("manialib-dialog-yes", CGameManialinkScriptEvent::Type::MouseClick, ["action_execute_id_from_values", "manialib-dialog-yes"]);
-	
+
 	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseClick, ["set_text", "manialib-dialog-text", message]);
 	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseClick, ["show", "manialib-dialog"]);
 	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseClick, ["disable_links"]);
@@ -413,21 +671,77 @@ Void manialib_ui_tooltip(Text controlId, Text message)
 	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseOver, ["move_to_mouse", "manialib-tooltip", "0.0", "-2.0", "75.0", "11.0"]);
 	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseOut, ["hide", "manialib-tooltip"]);
 }
-
 -->
 </script>
 <frame posn="320 0 4" id="manialib-dialog">
-	<quad sizen="320 200" halign="center" valign="center" style="Bgs1" substyle="BgDialogBlur" scriptevents="1"/>
-	<frame posn="-60 35 0.1">
-		<quad sizen="123 63" style="Bgs1InRace" substyle="Shadow"/>
-		<quad posn="1.5 -1.5 0.1" sizen="120 60" bgcolor="fffe"/>
-		<label id="manialib-dialog-text" posn="60 -25 0.8" sizen="110 7" halign="center" valign="center" style="TextTips" text="-" autonewline="1"/>
-		<label id="manialib-dialog-yes" posn="55 -47 0.8" sizen="35 7" halign="right" style="CardButtonMedium" scriptevents="1" text="Yes"/>
-		<label id="manialib-dialog-no" posn="65 -47 0.8" sizen="35 7" style="CardButtonMedium" scriptevents="1" text="No"/>
-	</frame>
+        <quad sizen="320 200" halign="center" valign="center" style="Bgs1" substyle="BgDialogBlur" scriptevents="1"/>
+        <frame posn="-60 35 0.1">
+                <quad sizen="123 63" style="Bgs1InRace" substyle="Shadow"/>
+                <quad posn="1.5 -1.5 0.1" sizen="120 60" bgcolor="fffe"/>
+                <label id="manialib-dialog-text" posn="60 -25 0.8" sizen="110 7" halign="center" valign="center" style="TextTips" text="-" autonewline="1"/>
+                <label id="manialib-dialog-yes" posn="55 -47 0.8" sizen="35 7" halign="right" style="CardButtonMedium" scriptevents="1" text="Yes"/>
+                <label id="manialib-dialog-no" posn="65 -47 0.8" sizen="35 7" style="CardButtonMedium" scriptevents="1" text="No"/>
+        </frame>
 </frame>
 <frame posn="300 0 4.9" id="manialib-tooltip">
-	<quad sizen="75 11" id="manialib-tooltip-box" style="Bgs1InRace" substyle="BgTitle3_3"/>
-	<label id="manialib-tooltip-text" posn="4 -5.5 0.1" sizen="67 7" valign="center2" style="TextTips"/>
+        <quad sizen="75 11" id="manialib-tooltip-box" style="Bgs1InRace" substyle="BgTitle3_3"/>
+        <label id="manialib-tooltip-text" posn="4 -5.5 0.1" sizen="67 7" valign="center2" style="TextTips"/>
+</frame>
+<frame id="datepicker" posn="320 0 4">
+	<quad sizen="70 50" style="Bgs1" substyle="BgCard1"/>
+	<frame id="datepicker-header">
+		<quad posn="2 -2 1" sizen="66 6" style="Bgs1" substyle="BgWindow2"/>
+		<quad id="datepicker-header-previous" posn="2 -1 2" sizen="8 8" style="Icons64x64_1" substyle="ArrowPrev" scriptevents="1"/>
+		<quad id="datepicker-header-next" posn="60 -1 2" sizen="8 8" style="Icons64x64_1" substyle="ArrowNext" scriptevents="1"/>
+		<label id="datepicker-header-label" posn="35 -5 2" sizen="70 7" halign="center" valign="center" style="TextButtonMedium"/>
+	</frame>
+	<frame posn="5 -10 0" scale="1">
+		<label sizen="4 7" style="TextStaticSmall" text="Mo"/>
+		<label posn="9 0 0" sizen="4 7" style="TextStaticSmall" text="Tu"/>
+		<label posn="18 0 0" sizen="4 7" style="TextStaticSmall" text="We"/>
+		<label posn="27 0 0" sizen="4 7" style="TextStaticSmall" text="Th"/>
+		<label posn="36 0 0" sizen="4 7" style="TextStaticSmall" text="Fr"/>
+		<label posn="45 0 0" sizen="4 7" style="TextStaticSmall" text="Sa"/>
+		<label posn="54 0 0" sizen="4 7" style="TextStaticSmall" text="Sun"/>
+	</frame>
+	<frame posn="5 -15 0" scale="1" id="datepicker-days">
+		<label id="datepicker-day-1" posn="2 0 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$0001"/>
+		<label id="datepicker-day-2" posn="11 0 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$0002"/>
+		<label id="datepicker-day-3" posn="20 0 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$0003"/>
+		<label id="datepicker-day-4" posn="29 0 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$0004"/>
+		<label id="datepicker-day-5" posn="38 0 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$0005"/>
+		<label id="datepicker-day-6" posn="47 0 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$0006"/>
+		<label id="datepicker-day-7" posn="56 0 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$0007"/>
+		<label id="datepicker-day-8" posn="2 -6 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$0008"/>
+		<label id="datepicker-day-9" posn="11 -6 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$0009"/>
+		<label id="datepicker-day-10" posn="20 -6 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00010"/>
+		<label id="datepicker-day-11" posn="29 -6 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00011"/>
+		<label id="datepicker-day-12" posn="38 -6 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00012"/>
+		<label id="datepicker-day-13" posn="47 -6 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00013"/>
+		<label id="datepicker-day-14" posn="56 -6 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00014"/>
+		<label id="datepicker-day-15" posn="2 -12 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00015"/>
+		<label id="datepicker-day-16" posn="11 -12 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00016"/>
+		<label id="datepicker-day-17" posn="20 -12 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00017"/>
+		<label id="datepicker-day-18" posn="29 -12 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00018"/>
+		<label id="datepicker-day-19" posn="38 -12 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00019"/>
+		<label id="datepicker-day-20" posn="47 -12 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00020"/>
+		<label id="datepicker-day-21" posn="56 -12 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00021"/>
+		<label id="datepicker-day-22" posn="2 -18 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00022"/>
+		<label id="datepicker-day-23" posn="11 -18 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00023"/>
+		<label id="datepicker-day-24" posn="20 -18 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00024"/>
+		<label id="datepicker-day-25" posn="29 -18 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00025"/>
+		<label id="datepicker-day-26" posn="38 -18 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00026"/>
+		<label id="datepicker-day-27" posn="47 -18 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00027"/>
+		<label id="datepicker-day-28" posn="56 -18 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00028"/>
+		<label id="datepicker-day-29" posn="2 -24 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00029"/>
+		<label id="datepicker-day-30" posn="11 -24 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00030"/>
+		<label id="datepicker-day-31" posn="20 -24 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00031"/>
+		<label id="datepicker-day-32" posn="29 -24 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00032"/>
+		<label id="datepicker-day-33" posn="38 -24 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00033"/>
+		<label id="datepicker-day-34" posn="47 -24 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00034"/>
+		<label id="datepicker-day-35" posn="56 -24 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00035"/>
+		<label id="datepicker-day-36" posn="2 -30 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00036"/>
+		<label id="datepicker-day-37" posn="11 -30 0" sizen="4 7" halign="center" style="TextStaticSmall" scriptevents="1" text="$00037"/>
+	</frame>
 </frame>
 </frame>
