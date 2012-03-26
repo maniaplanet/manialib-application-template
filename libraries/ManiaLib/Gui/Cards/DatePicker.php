@@ -12,6 +12,7 @@
 
 namespace ManiaLib\Gui\Cards;
 
+use ManiaLib\Gui\Manialink;
 use ManiaLib\Gui\Elements\Entry;
 use ManiaLib\Gui\Elements\Button;
 
@@ -47,9 +48,7 @@ class DatePicker extends \ManiaLib\Gui\Component
 		$this->entry->save();
 		$this->button->save();
 
-		Manialink::appendScript('manialib_ui_datepicker_init();');
-
-		Event::addListener('datepicker-button', Event::mouseClick, array('move_to_mouse', 'datepicker'));
+		Manialink::appendScript('manialib_ui_datepicker_init("'.$this->entry->getId().'", "'.$this->button->getId().'");');
 	}
 }
 ?>

@@ -46,6 +46,8 @@ declare Text[][][Text][Text] _manialib_event_listeners;
 
 declare Integer _manialib_ui_month;
 declare Integer _manialib_ui_year;
+declare Text _manialib_datepicker_result;
+declare Text _manialib_datepicker_button;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -108,19 +110,9 @@ Text manialib_get_value(Text name)
 ////////////////////////////////////////////////////////////////////////////////
 Boolean isLeapYear(Integer year)
 {
-	if (year % 4 == 0)
+	if ((year % 400 == 0) || ((year % 100 != 0) && (year % 4 == 0)))
 	{
-		if (year % 100 == 0)
-		{
-			if (year % 400 == 0)
-			{
-				return True;
-			}
-		}
-		else
-		{
-			return True;
-		}
+		return True;
 	}
 	return False;
 
@@ -426,14 +418,13 @@ Void manialib_ui_datepicker_event(Text action, Text content)
 	}
 	else if (action == "click")
 	{
-		declare CGameManialinkEntry entry = (Page.GetFirstChild("datepicker-result") as CGameManialinkEntry);
 		declare Integer startDay = fromWeekDayToInteger(weekDayFromDate(_manialib_ui_year,_manialib_ui_month,1));
 
 		declare Integer realDay = TextLib::ToInteger(content) - startDay + 1;
 
 		// Because the value of the ID is not correct
 		// We have to substract with the real begining of the week
-		entry.Value = _manialib_ui_year^"/"^_manialib_ui_month^"/"^realDay;
+		manialib_set_entry_value(_manialib_datepicker_result, _manialib_ui_year^"/"^_manialib_ui_month^"/"^realDay);
 
 		manialib_posx("datepicker",320.0);
 	}
@@ -592,54 +583,28 @@ Void manialib_main_loop()
 // UI Primitives
 //
 ////////////////////////////////////////////////////////////////////////////////
-Void manialib_ui_datepicker_init() {
+Void manialib_ui_datepicker_init(Text date_picker_result_id, Text date_picker_button_id) {
+	_manialib_datepicker_result = date_picker_result_id;
+	_manialib_datepicker_button = date_picker_button_id;
+
 	_manialib_ui_year = 2012;
 	_manialib_ui_month = 3;
+
+	declare Integer i;
+
 	manialib_event_add_listener("datepicker-header-next", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker", "update", "+1"]);
 	manialib_event_add_listener("datepicker-header-previous", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker", "update", "-1"]);
+
+	manialib_event_add_listener(date_picker_button_id, CGameManialinkScriptEvent::Type::MouseClick, ["move_to_mouse", "datepicker"]);
 
 	manialib_ui_datepicker_event("update", "0");
 
 	//manialib_posx("manialib-dialog", 0.0);
 
-	//TODO: generate it with script ?
-	manialib_event_add_listener("datepicker-day-1", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","1"]);
-	manialib_event_add_listener("datepicker-day-2", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","2"]);
-	manialib_event_add_listener("datepicker-day-3", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","3"]);
-	manialib_event_add_listener("datepicker-day-4", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","4"]);
-	manialib_event_add_listener("datepicker-day-5", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","5"]);
-	manialib_event_add_listener("datepicker-day-6", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","6"]);
-	manialib_event_add_listener("datepicker-day-7", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","7"]);
-	manialib_event_add_listener("datepicker-day-8", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","8"]);
-	manialib_event_add_listener("datepicker-day-9", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","9"]);
-	manialib_event_add_listener("datepicker-day-10", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","10"]);
-	manialib_event_add_listener("datepicker-day-11", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","11"]);
-	manialib_event_add_listener("datepicker-day-12", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","12"]);
-	manialib_event_add_listener("datepicker-day-13", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","13"]);
-	manialib_event_add_listener("datepicker-day-14", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","14"]);
-	manialib_event_add_listener("datepicker-day-15", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","15"]);
-	manialib_event_add_listener("datepicker-day-16", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","16"]);
-	manialib_event_add_listener("datepicker-day-17", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","17"]);
-	manialib_event_add_listener("datepicker-day-18", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","18"]);
-	manialib_event_add_listener("datepicker-day-19", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","19"]);
-	manialib_event_add_listener("datepicker-day-20", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","20"]);
-	manialib_event_add_listener("datepicker-day-21", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","21"]);
-	manialib_event_add_listener("datepicker-day-22", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","22"]);
-	manialib_event_add_listener("datepicker-day-23", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","23"]);
-	manialib_event_add_listener("datepicker-day-24", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","24"]);
-	manialib_event_add_listener("datepicker-day-25", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","25"]);
-	manialib_event_add_listener("datepicker-day-26", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","26"]);
-	manialib_event_add_listener("datepicker-day-27", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","27"]);
-	manialib_event_add_listener("datepicker-day-28", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","28"]);
-	manialib_event_add_listener("datepicker-day-29", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","29"]);
-	manialib_event_add_listener("datepicker-day-30", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","30"]);
-	manialib_event_add_listener("datepicker-day-31", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","31"]);
-	manialib_event_add_listener("datepicker-day-32", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","32"]);
-	manialib_event_add_listener("datepicker-day-33", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","33"]);
-	manialib_event_add_listener("datepicker-day-34", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","34"]);
-	manialib_event_add_listener("datepicker-day-35", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","35"]);
-	manialib_event_add_listener("datepicker-day-36", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","36"]);
-	manialib_event_add_listener("datepicker-day-37", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click","37"]);
+	for (i, 1, 37)
+	{
+		manialib_event_add_listener("datepicker-day-"^TextLib::ToText(i), CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click",TextLib::ToText(i)]);
+	}
 }
 
 Void manialib_ui_dialog(Text controlId, Text message, Text[] action)
