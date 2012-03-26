@@ -108,7 +108,7 @@ Text manialib_get_value(Text name)
 // DateLib
 //
 ////////////////////////////////////////////////////////////////////////////////
-Boolean isLeapYear(Integer year)
+Boolean manialib_date_is_leap_year(Integer year)
 {
 	if ((year % 400 == 0) || ((year % 100 != 0) && (year % 4 == 0)))
 	{
@@ -117,37 +117,37 @@ Boolean isLeapYear(Integer year)
 	return False;
 
 }
-Integer fromWeekDayToInteger(Text day)
+Integer manialib_date_weekday2int(Text day)
 {
 	declare Integer[Text] Days = ["Monday" => 1, "Tuesday" => 2, "Wednesday" => 3, "Thursday" => 4, "Friday" => 5, "Saturday" => 6, "Sunday" => 7];
 
 	return Days[day];
 }
-Text fromWeekDayToStr(Integer day)
+Text manialib_date_weekday2str(Integer day)
 {
 	declare Text[Integer] Days = [1 => "Sunday", 2 => "Monday", 3 => "Tuesday", 4 => "Wednesday", 5 => "Thursday", 6 => "Friday", 0 => "Saturday"];
 
 	return Days[day];
 }
-Text fromMonthToStr(Integer month)
+Text manialib_date_month2str(Integer month)
 {
 	declare Text[Integer] Months = [1 => "January", 2 => "February", 3 => "March", 4 => "April", 5 => "May", 6 => "June", 7 => "July", 8 => "August", 9 => "September", 10 => "October", 11 => "November", 12 => "December"];
 
 	return Months[month];
 }
-Integer[Text] parseCurrentDateTime(Text curDate)
+Integer[Text] manialib_date_parse_date(Text curDate)
 {
 	declare Integer[Text] result = ["year"	=> TextLib::ToInteger(TextLib::SubString(curDate,0,4)),"month" => TextLib::ToInteger(TextLib::SubString(curDate,5,2)),"day"	=> TextLib::ToInteger(TextLib::SubString(curDate,8,2)),"hours" => TextLib::ToInteger(TextLib::SubString(curDate,12,2)),"minutes" => TextLib::ToInteger(TextLib::SubString(curDate,15,2)),"seconds" => TextLib::ToInteger(TextLib::SubString(curDate,18,2))];
 
 	return result;
 }
-Integer[Text] getCurrentDateTime()
+Integer[Text] manialib_date_get_date_time()
 {
 	declare Text curDate = CurrentLocalDateText;
 
-	return parseCurrentDateTime(curDate);
+	return manialib_date_parse_date(curDate);
 }
-Integer numberOfDays(Integer year, Integer month)
+Integer manialib_date_month_to_days(Integer year, Integer month)
 {
 	declare months = [4, 6, 9, 11];
 	if (months.exists(month))
@@ -156,7 +156,7 @@ Integer numberOfDays(Integer year, Integer month)
 	}
 	else if (month == 2)
 	{
-		if (isLeapYear(year))
+		if (manialib_date_is_leap_year(year))
 		{
 			return 29;
 		}
@@ -179,7 +179,7 @@ Text weekDayFromDate(Integer year, Integer month, Integer day)
 	calc = calc + lastDigitsYear/4; 			// step 2
 	calc = calc + day; 							// step 3
 	calc = calc + Months[month]; 				// step 4
-	if (isLeapYear(year) && (month == 2))		// step 5
+	if (manialib_date_is_leap_year(year) && (month == 2))		// step 5
 	{
 		calc = calc - 1;
 	}
@@ -204,7 +204,7 @@ Text weekDayFromDate(Integer year, Integer month, Integer day)
 		calc = calc + 4;
 	}
 
-	return fromWeekDayToStr(calc % 7);				// step 7
+	return manialib_date_weekday2str(calc % 7);				// step 7
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -347,14 +347,14 @@ Void manialib_enable_links()
 // Date Picker
 Void manialib_ui_datepicker_update()
 {
-	declare Integer startDay = fromWeekDayToInteger(weekDayFromDate(_manialib_ui_year,_manialib_ui_month,1));
-	declare Integer numberOfDays = numberOfDays(_manialib_ui_year,_manialib_ui_month);
+	declare Integer startDay = manialib_date_weekday2int(weekDayFromDate(_manialib_ui_year,_manialib_ui_month,1));
+	declare Integer manialib_date_month_to_days = manialib_date_month_to_days(_manialib_ui_year,_manialib_ui_month);
 
 	declare CGameManialinkLabel label;
 	declare CGameManialinkFrame container = (Page.GetFirstChild("datepicker-days") as CGameManialinkFrame);
 	declare CGameManialinkLabel header_label = (Page.GetFirstChild("datepicker-header-label") as CGameManialinkLabel);
 
-	header_label.SetText(fromMonthToStr(_manialib_ui_month)^" "^_manialib_ui_year);
+	header_label.SetText(manialib_date_month2str(_manialib_ui_month)^" "^_manialib_ui_year);
 
 	declare Integer i = 1;
 	declare Integer numDay = 1;
@@ -368,7 +368,7 @@ Void manialib_ui_datepicker_update()
 		}
 		else
 		{
-			if (numDay <= numberOfDays)
+			if (numDay <= manialib_date_month_to_days)
 			{
 				label.SetText("$000"^(numDay));
 				numDay = numDay + 1;
@@ -418,7 +418,7 @@ Void manialib_ui_datepicker_event(Text action, Text content)
 	}
 	else if (action == "click")
 	{
-		declare Integer startDay = fromWeekDayToInteger(weekDayFromDate(_manialib_ui_year,_manialib_ui_month,1));
+		declare Integer startDay = manialib_date_weekday2int(weekDayFromDate(_manialib_ui_year,_manialib_ui_month,1));
 
 		declare Integer realDay = TextLib::ToInteger(content) - startDay + 1;
 
