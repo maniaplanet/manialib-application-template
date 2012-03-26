@@ -52,6 +52,15 @@ abstract class UI
 		Manialink::appendScript($script);
 	}
 
+	static function datePicker($entryId, $openControlId)
+	{
+		$script = 'manialib_ui_datepicker_init("%s", "%s");';
+		$entryId = Tools::escapeString($entryId);
+		$openControlId = Tools::escapeString($openControlId);
+		$script = sprintf($script, $entryId, $openControlId);
+		Manialink::appendScript($script);
+	}
+
 }
 
 ?>
