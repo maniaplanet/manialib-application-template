@@ -659,63 +659,63 @@ Void manialib_ui_tooltip(Text controlId, Text message)
         <label id="manialib-tooltip-text" posn="4 -5.5 0.1" sizen="67 7" valign="center2" style="TextTips"/>
 </frame>
 <frame id="datepicker" posn="640 0 4">
-	<frame posn="0 0 -10">
+	<frame posn="0 0 -0.1">
 		<quad sizen="640 360" id="datepicker-close" halign="center" valign="center" scriptevents="1"/>
 	</frame>
 	<quad sizen="70 52" style="Bgs1" substyle="BgCard1"/>
-	<frame id="datepicker-header">
-		<quad posn="2 -2 1" sizen="66 6" style="Bgs1" substyle="BgWindow2"/>
-		<quad id="datepicker-header-previous" posn="2 -1 2" sizen="8 8" style="Icons64x64_1" substyle="ArrowPrev" scriptevents="1"/>
-		<quad id="datepicker-header-next" posn="60 -1 2" sizen="8 8" style="Icons64x64_1" substyle="ArrowNext" scriptevents="1"/>
-		<label id="datepicker-header-label" posn="35 -5 2" sizen="70 7" halign="center" valign="center" style="TextButtonMedium"/>
+	<frame id="datepicker-header" posn="0 0 0.1">
+		<quad posn="2 -2" sizen="66 6" style="Bgs1" substyle="BgWindow2"/>
+		<quad id="datepicker-header-previous" posn="2 -1 0.2" sizen="8 8" style="Icons64x64_1" substyle="ArrowPrev" scriptevents="1"/>
+		<quad id="datepicker-header-next" posn="60 -1 0.2" sizen="8 8" style="Icons64x64_1" substyle="ArrowNext" scriptevents="1"/>
+		<label id="datepicker-header-label" posn="35 -5 0.2" sizen="70 7" halign="center" valign="center" style="TextButtonMedium"/>
 	</frame>
-	<frame posn="5 -10 0" scale="1">
+	<frame posn="5 -10 0.1" scale="1">
 		<label sizen="4 4" style="TextStaticSmall" text="Mo"/>
-		<label posn="9 0 0" sizen="4 4" style="TextStaticSmall" text="Tu"/>
-		<label posn="18 0 0" sizen="4 4" style="TextStaticSmall" text="We"/>
-		<label posn="27 0 0" sizen="4 4" style="TextStaticSmall" text="Th"/>
-		<label posn="36 0 0" sizen="4 4" style="TextStaticSmall" text="Fr"/>
-		<label posn="45 0 0" sizen="4 4" style="TextStaticSmall" text="Sa"/>
-		<label posn="54 0 0" sizen="4 4" style="TextStaticSmall" text="Sun"/>
+		<label posn="9 0" sizen="4 4" style="TextStaticSmall" text="Tu"/>
+		<label posn="18 0" sizen="4 4" style="TextStaticSmall" text="We"/>
+		<label posn="27 0" sizen="4 4" style="TextStaticSmall" text="Th"/>
+		<label posn="36 0" sizen="4 4" style="TextStaticSmall" text="Fr"/>
+		<label posn="45 0" sizen="4 4" style="TextStaticSmall" text="Sa"/>
+		<label posn="54 0" sizen="4 4" style="TextStaticSmall" text="Sun"/>
 	</frame>
-	<frame posn="5 -17 4" scale="1" id="datepicker-days">
-		<label id="datepicker-day-1" posn="2 0 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$0001"/>
-		<label id="datepicker-day-2" posn="11 0 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$0002"/>
-		<label id="datepicker-day-3" posn="20 0 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$0003"/>
-		<label id="datepicker-day-4" posn="29 0 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$0004"/>
-		<label id="datepicker-day-5" posn="38 0 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$0005"/>
-		<label id="datepicker-day-6" posn="47 0 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$0006"/>
-		<label id="datepicker-day-7" posn="56 0 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$0007"/>
-		<label id="datepicker-day-8" posn="2 -6 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$0008"/>
-		<label id="datepicker-day-9" posn="11 -6 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$0009"/>
-		<label id="datepicker-day-10" posn="20 -6 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00010"/>
-		<label id="datepicker-day-11" posn="29 -6 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00011"/>
-		<label id="datepicker-day-12" posn="38 -6 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00012"/>
-		<label id="datepicker-day-13" posn="47 -6 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00013"/>
-		<label id="datepicker-day-14" posn="56 -6 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00014"/>
-		<label id="datepicker-day-15" posn="2 -12 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00015"/>
-		<label id="datepicker-day-16" posn="11 -12 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00016"/>
-		<label id="datepicker-day-17" posn="20 -12 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00017"/>
-		<label id="datepicker-day-18" posn="29 -12 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00018"/>
-		<label id="datepicker-day-19" posn="38 -12 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00019"/>
-		<label id="datepicker-day-20" posn="47 -12 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00020"/>
-		<label id="datepicker-day-21" posn="56 -12 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00021"/>
-		<label id="datepicker-day-22" posn="2 -18 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00022"/>
-		<label id="datepicker-day-23" posn="11 -18 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00023"/>
-		<label id="datepicker-day-24" posn="20 -18 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00024"/>
-		<label id="datepicker-day-25" posn="29 -18 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00025"/>
-		<label id="datepicker-day-26" posn="38 -18 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00026"/>
-		<label id="datepicker-day-27" posn="47 -18 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00027"/>
-		<label id="datepicker-day-28" posn="56 -18 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00028"/>
-		<label id="datepicker-day-29" posn="2 -24 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00029"/>
-		<label id="datepicker-day-30" posn="11 -24 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00030"/>
-		<label id="datepicker-day-31" posn="20 -24 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00031"/>
-		<label id="datepicker-day-32" posn="29 -24 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00032"/>
-		<label id="datepicker-day-33" posn="38 -24 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00033"/>
-		<label id="datepicker-day-34" posn="47 -24 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00034"/>
-		<label id="datepicker-day-35" posn="56 -24 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00035"/>
-		<label id="datepicker-day-36" posn="2 -30 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00036"/>
-		<label id="datepicker-day-37" posn="11 -30 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00037"/>
+	<frame posn="5 -17 0.1" scale="1" id="datepicker-days">
+		<label id="datepicker-day-1" posn="2 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$0001"/>
+		<label id="datepicker-day-2" posn="11 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$0002"/>
+		<label id="datepicker-day-3" posn="20 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$0003"/>
+		<label id="datepicker-day-4" posn="29 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$0004"/>
+		<label id="datepicker-day-5" posn="38 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$0005"/>
+		<label id="datepicker-day-6" posn="47 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$0006"/>
+		<label id="datepicker-day-7" posn="56 0" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$0007"/>
+		<label id="datepicker-day-8" posn="2 -6" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$0008"/>
+		<label id="datepicker-day-9" posn="11 -6" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$0009"/>
+		<label id="datepicker-day-10" posn="20 -6" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00010"/>
+		<label id="datepicker-day-11" posn="29 -6" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00011"/>
+		<label id="datepicker-day-12" posn="38 -6" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00012"/>
+		<label id="datepicker-day-13" posn="47 -6" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00013"/>
+		<label id="datepicker-day-14" posn="56 -6" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00014"/>
+		<label id="datepicker-day-15" posn="2 -12" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00015"/>
+		<label id="datepicker-day-16" posn="11 -12" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00016"/>
+		<label id="datepicker-day-17" posn="20 -12" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00017"/>
+		<label id="datepicker-day-18" posn="29 -12" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00018"/>
+		<label id="datepicker-day-19" posn="38 -12" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00019"/>
+		<label id="datepicker-day-20" posn="47 -12" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00020"/>
+		<label id="datepicker-day-21" posn="56 -12" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00021"/>
+		<label id="datepicker-day-22" posn="2 -18" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00022"/>
+		<label id="datepicker-day-23" posn="11 -18" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00023"/>
+		<label id="datepicker-day-24" posn="20 -18" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00024"/>
+		<label id="datepicker-day-25" posn="29 -18" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00025"/>
+		<label id="datepicker-day-26" posn="38 -18" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00026"/>
+		<label id="datepicker-day-27" posn="47 -18" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00027"/>
+		<label id="datepicker-day-28" posn="56 -18" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00028"/>
+		<label id="datepicker-day-29" posn="2 -24" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00029"/>
+		<label id="datepicker-day-30" posn="11 -24" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00030"/>
+		<label id="datepicker-day-31" posn="20 -24" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00031"/>
+		<label id="datepicker-day-32" posn="29 -24" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00032"/>
+		<label id="datepicker-day-33" posn="38 -24" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00033"/>
+		<label id="datepicker-day-34" posn="47 -24" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00034"/>
+		<label id="datepicker-day-35" posn="56 -24" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00035"/>
+		<label id="datepicker-day-36" posn="2 -30" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00036"/>
+		<label id="datepicker-day-37" posn="11 -30" sizen="9 6" valign="center" halign="center" style="TextValueSmall" focusareacolor1="FFF0" focusareacolor2="FFF0"  scriptevents="1" text="$00037"/>
 	</frame>
 </frame>
 </frame>
