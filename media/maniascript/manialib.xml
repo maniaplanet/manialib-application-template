@@ -426,7 +426,11 @@ Void manialib_ui_datepicker_event(Text action, Text content)
 		// We have to substract with the real begining of the week
 		manialib_set_entry_value(_manialib_datepicker_result, _manialib_ui_year^"/"^_manialib_ui_month^"/"^realDay);
 
-		manialib_posx("datepicker",320.0);
+		manialib_ui_datepicker_event("hide", "none");
+	}
+	else if (action == "hide")
+	{
+		manialib_posx("datepicker",640.0);
 	}
 }
 
@@ -592,6 +596,8 @@ Void manialib_ui_datepicker_init(Text date_picker_result_id, Text date_picker_bu
 
 	declare Integer i;
 
+	manialib_event_add_listener("datepicker-close", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker", "hide", "none"]);
+
 	manialib_event_add_listener("datepicker-header-next", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker", "update", "+1"]);
 	manialib_event_add_listener("datepicker-header-previous", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker", "update", "-1"]);
 
@@ -652,7 +658,10 @@ Void manialib_ui_tooltip(Text controlId, Text message)
         <quad sizen="75 11" id="manialib-tooltip-box" style="Bgs1InRace" substyle="BgTitle3_3"/>
         <label id="manialib-tooltip-text" posn="4 -5.5 0.1" sizen="67 7" valign="center2" style="TextTips"/>
 </frame>
-<frame id="datepicker" posn="320 0 4">
+<frame id="datepicker" posn="640 0 4">
+	<frame posn="0 0 -10">
+		<quad sizen="640 360" id="datepicker-close" halign="center" valign="center" scriptevents="1"/>
+	</frame>
 	<quad sizen="70 50" style="Bgs1" substyle="BgCard1"/>
 	<frame id="datepicker-header">
 		<quad posn="2 -2 1" sizen="66 6" style="Bgs1" substyle="BgWindow2"/>
