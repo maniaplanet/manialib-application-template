@@ -117,6 +117,19 @@ Boolean manialib_date_is_leap_year(Integer year)
 	return False;
 
 }
+Text manialib_date_add_leading_zero(Integer int)
+{
+	if (int < 10)
+	{
+		return "0"^int;
+	}
+	return TextLib::ToText(int);
+}
+Text manialib_date_iso8601_format(Integer year, Integer month, Integer day, Integer hours, Integer minutes)
+{
+	// Add leading 0 to month, day, hours, minutes.
+	return manialib_date_add_leading_zero(year)^"-"^manialib_date_add_leading_zero(month)^"-"^manialib_date_add_leading_zero(day)^" "^manialib_date_add_leading_zero(hours)^":"^manialib_date_add_leading_zero(minutes);
+}
 Integer manialib_date_weekday2int(Text day)
 {
 	declare Integer[Text] Days = ["Monday" => 1, "Tuesday" => 2, "Wednesday" => 3, "Thursday" => 4, "Friday" => 5, "Saturday" => 6, "Sunday" => 7];
@@ -424,7 +437,7 @@ Void manialib_ui_datepicker_event(Text action, Text content)
 
 		// Because the value of the ID is not correct
 		// We have to substract with the real begining of the week
-		manialib_set_entry_value(_manialib_datepicker_result, _manialib_ui_year^"-"^_manialib_ui_month^"-"^realDay^" 00:00");
+		manialib_set_entry_value(_manialib_datepicker_result, manialib_date_iso8601_format(_manialib_ui_year, _manialib_ui_month, realDay, 0, 0));
 
 		manialib_ui_datepicker_event("hide", "none");
 	}
