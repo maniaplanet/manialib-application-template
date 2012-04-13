@@ -438,7 +438,7 @@ abstract class Element extends Component implements Drawable
 	 */
 	function hasLink()
 	{
-		return $this->manialink || $this->url || $this->action || $this->maniazone;
+		return $this->manialink || $this->url || $this->action || $this->maniazone || $this->scriptevents;
 	}
 
 	function setCardElementPosition($posX=0, $posY=0, $posZ=0)
