@@ -65,6 +65,20 @@ abstract class Formatting
 		$string = self::stripColors($string);
 		return $string;
 	}
+	
+	static function contrastColors($string, $background)
+	{
+		$background = Color::StringToRgb24($background);
+		return preg_replace_callback('/(?<!\$)((?:\$\$)*)(\$[0-9a-f][^\$]{0,2})/iu',
+				function($matches) use ($background)
+				{
+					$color = Color::StringToRgb24($matches[2]);
+					$color = Color::Contrast($color, $background);
+					$color = Color::Rgb24ToRgb12($color);
+					$color = Color::Rgb12ToString($color);
+					return $matches[1].'$'.$color;
+				}, $string);
+	}
 }
 
 ?>
