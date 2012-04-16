@@ -105,13 +105,13 @@ class PageNavigator extends \ManiaLib\Gui\Component
 	{
 		foreach($this as $name => $property)
 		{
-			if($property instanceof Element)
+			if($property instanceof \ManiaLib\Gui\Element)
 			{
 				$this->$name = clone $property;
 			}
 		}
 	}
-	
+
 	/**
 	 * Sets the size of the navigation icons
 	 */
