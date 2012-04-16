@@ -99,6 +99,20 @@ class PageNavigator extends \ManiaLib\Gui\Component
 	}
 
 	/**
+	 * Cloning behaviour: if you clone this, it also clones sub-Elements
+	 */
+	function __clone()
+	{
+		foreach($this as $name => $property)
+		{
+			if($property instanceof Element)
+			{
+				$this->$name = clone $property;
+			}
+		}
+	}
+	
+	/**
 	 * Sets the size of the navigation icons
 	 */
 	function setSize($iconSize = 5, $nullValue=null)
