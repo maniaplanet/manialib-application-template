@@ -20,7 +20,6 @@ class Filter implements \ManiaLib\Application\Filterable
 	 */
 	protected $tracker;
 	protected $account;
-	protected $tracking = false;
 	protected $cookieNameSuffix;
 
 	function __construct($trackingAccount = null, $cookieNameSuffix=null)
@@ -44,18 +43,17 @@ class Filter implements \ManiaLib\Application\Filterable
 		{
 			$this->tracker = new GoogleAnalytics($this->account, $this->cookieNameSuffix);
 			$this->tracker->loadCookie();
-			$this->tracking = true;
 		}
 	}
 
 	function postFilter()
 	{
-		if($this->tracking)
+		$response = \ManiaLib\Application\Response::getInstance();
+		if($this->account)
 		{
-			$response = \ManiaLib\Application\Response::getInstance();
 			$response->trackingURL = $this->tracker->getTrackingURL();
-			$response->registerView('\ManiaLib\Application\Tracking\View');
 		}
+		$response->registerView('\ManiaLib\Application\Tracking\View');
 	}
 
 }

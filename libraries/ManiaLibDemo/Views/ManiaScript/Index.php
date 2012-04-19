@@ -16,6 +16,8 @@ use ManiaLib\Gui\Manialink;
 use ManiaLib\ManiaScript\UI;
 use ManiaLib\ManiaScript\Action;
 use ManiaLib\ManiaScript\Main;
+use ManiaLib\ManiaScript\Event;
+use ManiaLib\Application\Tracking\EventTracker;
 
 class Index extends \ManiaLib\Application\View
 {
@@ -30,6 +32,10 @@ class Index extends \ManiaLib\Application\View
 
 		Manialink::beginFrame(0, 0, 0, 1, new \ManiaLib\Gui\Layouts\Column());
 		{
+			EventTracker::trackNow('ManiaHomeButton', 'Displayed', 'Go to maniahome');
+			EventTracker::trackAsnyc('ManiaHomeButton', 'Clicked', 'Go to maniahome',
+				'maniahome-button', Event::mouseClick);
+
 			$ui = new \ManiaLib\Gui\Elements\Button();
 			$ui->setAlign('center', 'center');
 			$ui->setText('Go to ManiaHome');

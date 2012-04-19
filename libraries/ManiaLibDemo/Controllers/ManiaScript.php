@@ -18,6 +18,7 @@ class ManiaScript extends \ManiaLib\Application\Controller
 	protected function onConstruct()
 	{
 		parent::onConstruct();
+		$this->addFilter(new \ManiaLib\Application\Tracking\Filter());
 		// This is to check that visitors have the latest update of Maniaplanet
 		$this->addFilter(new \ManiaLib\ManiaScript\VersionCheck());
 	}

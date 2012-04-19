@@ -22,11 +22,6 @@ class GoogleAnalytics
 	const GA_TRACKING_URL = 'http://www.google-analytics.com/__utm.gif';
 
 	/**
-	 * @var string
-	 */
-	public $trackingURL;
-
-	/**
 	 * @var \ManiaLib\Gui\Elements\Quad
 	 */
 	public $trackingQuad;
@@ -97,9 +92,9 @@ class GoogleAnalytics
 	public $utmn;
 
 	/**
-	 * ?
+	 * @see http://stackoverflow.com/questions/6236895/what-is-utmu-parameter-in-google-analytics-utm-gif-request
 	 */
-	public $utmu = 'q';
+	public $utmu = null;
 
 	/**
 	 * Carriage return (?)
@@ -135,6 +130,11 @@ class GoogleAnalytics
 	 * Cookie var
 	 */
 	public $__utmz;
+
+	/**
+	 * Event tracking
+	 */
+	public $utme;
 	protected $domainHash;
 	protected $visitorId;
 	protected $cookieNameSuffix;
@@ -149,15 +149,6 @@ class GoogleAnalytics
 		$this->utmr = Arrays::get($_SERVER, 'HTTP_REFERER');
 		$this->utmhn = Arrays::get($_SERVER, 'HTTP_HOST');
 		$this->utmp = Arrays::get($_SERVER, 'REQUEST_URI');
-	}
-
-	/**
-	 * Loads the parameters from the application config
-	 * @deprecated
-	 */
-	function loadFromConfig()
-	{
-		
 	}
 
 	/**
@@ -236,35 +227,74 @@ class GoogleAnalytics
 	 */
 	function getTrackingURL()
 	{
-		if(!$this->trackingURL)
-		{
-			$params = array(
-				'utmwv' => $this->utmwv,
-				'utmhn' => $this->utmhn,
-				'utmcs' => $this->utmcs,
-				'utmsr' => $this->utmsr,
-				'utmsc' => $this->utmsc,
-				'utmul' => $this->utmul,
-				'utmje' => $this->utmje,
-				'utmfl' => $this->utmfl,
-				'utmhid' => $this->utmhid,
-				'utmr' => $this->utmr,
-				'utmp' => $this->utmp,
-				'utmac' => $this->utmac,
-				'utmn' => $this->utmn,
-				'utmu' => $this->utmu,
-				'utmcr' => $this->utmcr,
-				'utmdt' => $this->utmdt,
-				'utmcc' =>
-				'__utma='.$this->__utma.'+'.
+		$params = array(
+			'utmwv' => $this->utmwv,
+			'utmhn' => $this->utmhn,
+			'utmcs' => $this->utmcs,
+			'utmsr' => $this->utmsr,
+			'utmsc' => $this->utmsc,
+			'utmul' => $this->utmul,
+			'utmje' => $this->utmje,
+			'utmfl' => $this->utmfl,
+			'utmhid' => $this->utmhid,
+			'utmr' => $this->utmr,
+			'utmp' => $this->utmp,
+			'utmac' => $this->utmac,
+			'utmn' => $this->utmn,
+			'utmu' => $this->utmu,
+			'utmcr' => $this->utmcr,
+			'utmdt' => $this->utmdt,
+			'utmcc' =>
+			'__utma='.$this->__utma.'+'.
 //					'__utmb='.$this->__utmb.'+'.
 //					'__utmc='.$this->__utmc.'+'.
-				'__utmz='.$this->__utmz
-			);
+			'__utmz='.$this->__utmz
+		);
 
-			$this->trackingURL = self::GA_TRACKING_URL.'?'.http_build_query($params);
-		}
-		return $this->trackingURL;
+		return self::GA_TRACKING_URL.'?'.http_build_query($params);
+	}
+
+	// FIXME ManiaLib If anyone knows how to encode data in Google Analytics's utme param' we'd be glad to hear :)
+	/**
+	 * Experimentation about using Event Tracking in manialinks.
+	 * Because I don't know the exact algorithm to encode data in utme, you should
+	 * only use alphanumeric chars in the parameters for now.
+	 * To quote official doc: "Value is encoded. Used for events and custom variables."
+	 * 
+	 * @see https://developers.google.com/analytics/resources/articles/gaTrackingTroubleshooting#gifParameters 
+	 * @beta
+	 */
+	function getEventTrackingURL($category, $action, $label)
+	{
+		$this->utme = sprintf('5(%s*%s*%s)', $category, $action, $label);
+
+		$params = array(
+			'utmwv' => $this->utmwv,
+			//'utms' => null ?
+			'utmn' => $this->utmn,
+			'utmhn' => $this->utmhn,
+			'utmt' => 'event',
+			'utme' => $this->utme,
+			'utmcs' => $this->utmcs,
+			'utmsr' => $this->utmsr,
+			//'utmvp' => $this->utmvp, view port resolution
+			'utmsc' => $this->utmsc,
+			'utmul' => $this->utmul,
+			'utmje' => $this->utmje,
+			'utmfl' => $this->utmfl,
+			'utmdt' => $this->utmdt,
+			'utmhid' => $this->utmhid,
+			'utmr' => $this->utmr,
+			'utmp' => $this->utmp,
+			'utmac' => $this->utmac,
+			'utmcc' =>
+			'__utma='.$this->__utma.'+'.
+//					'__utmb='.$this->__utmb.'+'.
+//					'__utmc='.$this->__utmc.'+'.
+			'__utmz='.$this->__utmz,
+		);
+
+		return self::GA_TRACKING_URL.'?'.http_build_query($params);
 	}
 
 	protected function getDomainHash()

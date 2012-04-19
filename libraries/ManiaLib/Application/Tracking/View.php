@@ -17,15 +17,22 @@ use ManiaLib\Gui\Elements\Quad;
 class View extends \ManiaLib\Application\View
 {
 
+	const PAGEVIEW_QUAD_ID = 'manialib-ga-pageview';
+	const EVENT_QUAD_ID = 'manialib-ga-event';
+	
 	function display()
 	{
-		if($this->response->trackingURL)
-		{
-			$ui = new Quad(0.1, 0.1);
-			$ui->setPosition(400, 300);
-			$ui->setImage($this->response->trackingURL, true);
-			$ui->save();
-		}
+		$ui = new Quad(0.1, 0.1);
+		$ui->setPosition(400, 300);
+		$ui->setImage($this->response->trackingURL, true);
+		$ui->setId(self::PAGEVIEW_QUAD_ID);
+		$ui->save();
+
+		$ui = new Quad(0.1, 0.1);
+		$ui->setPosition(400, 300);
+		$ui->setImage('', true);
+		$ui->setId(self::EVENT_QUAD_ID);
+		$ui->save();
 	}
 
 }
