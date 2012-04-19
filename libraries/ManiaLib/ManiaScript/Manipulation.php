@@ -86,6 +86,15 @@ abstract class Manipulation
 		Manialink::appendScript($script);
 	}
 	
+	static function setImage($controlId, $URL)
+	{
+		$script = 'manialib_set_image("%s", "%s"); ';
+		$controlId = Tools::escapeString($controlId);
+		$URL = Tools::escapeString($URL);
+		$script = sprintf($script, $controlId, $URL);
+		Manialink::appendScript($script);
+	}
+	
 	static function disableLinks()
 	{
 		$script = 'manialib_disable_links(); ';

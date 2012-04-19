@@ -33,6 +33,7 @@ abstract class Action
 	const posz = 'posz';
 	const set_text = 'set_text';
 	const set_entry_value = 'set_entry_value';
+	const set_image = 'set_image';
 	const disable_links = 'disable_links';
 	const enable_links = 'enable_links';
 	const none = 'none';
