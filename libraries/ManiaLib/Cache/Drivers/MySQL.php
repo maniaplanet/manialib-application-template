@@ -65,19 +65,17 @@ class MySQL extends \ManiaLib\Utils\Singleton implements \ManiaLib\Cache\CacheIn
 	{
 		$ttl = intval($ttl);
 		$this->db()->execute(
-			'INSERT manialib_cache VALUES (%s, %s, %s) ON DUPLICATE KEY UPDATE '.
+			'INSERT manialib_cache VALUES (%s, %s, DATE_ADD(NOW(), INTERVAL %d SECOND)) ON DUPLICATE KEY UPDATE '.
 			'value=IF(ttl=0 OR ttl>=NOW(), value, VALUES(value)), '.
 			'ttl=IF(ttl=0 OR ttl>=NOW(), ttl, VALUES(ttl))', $this->db()->quote($key),
-			$this->db()->quote(serialize($value)), $ttl == 0 ? '0' : 'NOW()+'.$ttl);
-	}
+			$this->db()->quote(serialize($value)), $ttl == 0 ? 0 : $ttl);	}
 
 	function replace($key, $value, $ttl=0)
 	{
 		$ttl = intval($ttl);
 		$this->db()->execute(
-			'UPDATE manialib_cache SET value=%s, ttl=%s WHERE name=%s',
-			$this->db()->quote(serialize($value)), $ttl == 0 ? '0' : 'NOW()+'.$ttl,
-			$this->db()->quote($key));
+			'UPDATE manialib_cache SET value=DATE_ADD(NOW(), INTERVAL %d SECOND), ttl=%s WHERE name=%s',
+			$this->db()->quote(serialize($value)), $ttl == 0 ? 0 : $ttl,			$this->db()->quote($key));
 	}
 
 	function delete($key)
