@@ -23,6 +23,7 @@ class Quad extends \ManiaLib\Gui\Element
 	const Icons128x128_1 = 'Icons128x128_1';
 	const Icons128x128_Blink = 'Icons128x128_Blink';
 	const Icons128x32_1 = 'Icons128x32_1';
+	const Icons321Go = '321Go';
 	const Icons64x64_1 = 'Icons64x64_1';
 	const ManiaPlanetLogos = 'ManiaPlanetLogos';
 	const MedalsBig = 'MedalsBig';

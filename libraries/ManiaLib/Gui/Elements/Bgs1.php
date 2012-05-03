@@ -20,7 +20,9 @@ class Bgs1 extends Quad
 
 	const BgButton = 'BgButton';
 	const BgButtonBig = 'BgButtonBig';
+	const BgButtonGlow = 'BgButtonGlow';
 	const BgButtonGrayed = 'BgButtonGrayed';
+	const BgButtonShadow = 'BgButtonShadow';
 	const BgButtonSmall = 'BgButtonSmall';
 	const BgCard = 'BgCard';
 	const BgCard1 = 'BgCard1';
@@ -36,6 +38,10 @@ class Bgs1 extends Quad
 	const BgCardZone = 'BgCardZone';
 	const BgDialogBlur = 'BgDialogBlur';
 	const BgEmpty = 'BgEmpty';
+	const BgGradBottom = 'BgGradBottom';
+	const BgGradLeft = 'BgGradLeft';
+	const BgGradRight = 'BgGradRight';
+	const BgGradTop = 'BgGradTop';
 	const BgGradV = 'BgGradV';
 	const BgHealthBar = 'BgHealthBar';
 	const BgIconBorder = 'BgIconBorder';
@@ -54,6 +60,8 @@ class Bgs1 extends Quad
 	const BgTitle3_4 = 'BgTitle3_4';
 	const BgTitle3_5 = 'BgTitle3_5';
 	const BgTitlePage = 'BgTitlePage';
+	const BgTitleGlow = 'BgTitleGlow';
+	const BgTitleShadow = 'BgTitleShadow';
 	const BgWindow1 = 'BgWindow1';
 	const BgWindow2 = 'BgWindow2';
 	const BgWindow3 = 'BgWindow3';
@@ -65,13 +73,6 @@ class Bgs1 extends Quad
 	const ProgressBar = 'ProgressBar';
 	const ProgressBarSmall = 'ProgressBarSmall';
 	const Shadow = 'Shadow';
-	/**
-	 * Following substyles will maybe disappear
-	 */
-	const BgButtonGlow = 'BgButtonGlow';
-	const BgButtonShadow = 'BgButtonShadow';
-	const BgTitleGlow = 'BgTitleGlow';
-	const BgTitleShadow = 'BgTitleShadow';
 }
 
 ?>

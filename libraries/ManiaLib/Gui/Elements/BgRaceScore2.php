@@ -26,6 +26,7 @@ class BgRaceScore2 extends Quad
 	const Handle = 'Handle';
 	const HandleBlue = 'HandleBlue';
 	const HandleRed = 'HandleRed';
+	const HandleSelectable = 'HandleSelectable';
 	const IsLadderDisabled = 'IsLadderDisabled';
 	const IsLocalPlayer = 'IsLocalPlayer';
 	const LadderRank = 'LadderRank';

@@ -16,6 +16,7 @@ class Format extends \ManiaLib\Gui\Element
 {
 	const AvatarButtonNormal = 'AvatarButtonNormal';
 	const StyleTextScriptEditor = 'StyleTextScriptEditor';
+	const StyleValueYellowSmall = 'StyleValueYellowSmall';
 	const TextButtonBig = 'TextButtonBig';
 	const TextButtonMedium = 'TextButtonMedium';
 	const TextButtonNav = 'TextButtonNav';
@@ -37,15 +38,20 @@ class Format extends \ManiaLib\Gui\Element
 	const TextInfoMedium = 'TextInfoMedium';
 	const TextInfoSmall = 'TextInfoSmall';
 	const TextPlayerCardName = 'TextPlayerCardName';
+	const TextPlayerCardScore = 'TextPlayerCardScore';
 	const TextRaceChat = 'TextRaceChat';
 	const TextRaceChrono = 'TextRaceChrono';
 	const TextRaceChronoError = 'TextRaceChronoError';
+	const TextRaceChronoOfficial = 'TextRaceChronoOfficial';
 	const TextRaceChronoWarning = 'TextRaceChronoWarning';
 	const TextRaceMessage = 'TextRaceMessage';
 	const TextRaceMessageBig = 'TextRaceMessageBig';
 	const TextRaceStaticSmall = 'TextRaceStaticSmall';
 	const TextRaceValueSmall = 'TextRaceValueSmall';
 	const TextRankingsBig = 'TextRankingsBig';
+	const TextSPScoreBig = 'TextSPScoreBig';
+	const TextSPScoreMedium = 'TextSPScoreMedium';
+	const TextSPScoreSmall = 'TextSPScoreSmall';
 	const TextStaticMedium = 'TextStaticMedium';
 	const TextStaticSmall = 'TextStaticSmall';
 	const TextStaticVerySmall = 'TextStaticVerySmall';
@@ -56,6 +62,7 @@ class Format extends \ManiaLib\Gui\Element
 	const TextTitle2 = 'TextTitle2';
 	const TextTitle2Blink = 'TextTitle2Blink';
 	const TextTitle3 = 'TextTitle3';
+	const TextTitle3Header = 'TextTitle3Header';
 	const TextTitleError = 'TextTitleError';
 	const TextValueBig = 'TextValueBig';
 	const TextValueMedium = 'TextValueMedium';
