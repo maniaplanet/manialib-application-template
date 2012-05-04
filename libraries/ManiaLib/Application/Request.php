@@ -59,10 +59,6 @@ class Request extends \ManiaLib\Utils\Singleton
 		{
 			$this->referer = rawurldecode($this->referer);
 		}
-		else
-		{
-			$this->referer = $this->appURL;
-		}
 	}
 
 	function __destruct()
@@ -195,7 +191,7 @@ class Request extends \ManiaLib\Utils\Singleton
 	 */
 	function getReferer($default=null)
 	{
-		return $this->referer ? : $default;
+		return $this->referer ?: ($default ?: $this->appURL);
 	}
 
 	/**
