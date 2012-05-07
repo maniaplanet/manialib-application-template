@@ -168,16 +168,16 @@ class Connection
 		}
 		if($this->config->queryLog)
 		{
-			$mtime = (microtime(true) - $mtime) * 1000;
-			$message = str_pad(round($mtime).' ms', 10, ' ').$query;
+			$mtime2 = round((microtime(true) - $mtime) * 1000);
+			$message = str_pad($mtime2.' ms', 10, ' ').$query;
 			\ManiaLib\Utils\Logger::info($message);
 		}
 		if($this->config->slowQueryLog)
 		{
-			$mtime = (microtime(true) - $mtime) * 1000;
-			if($mtime > $this->config->slowQueryThreshold)
+			$mtime2 = round((microtime(true) - $mtime) * 1000);
+			if($mtime2 > $this->config->slowQueryThreshold)
 			{
-				$message = str_pad(round($mtime).' ms', 10, ' ').$query;
+				$message = str_pad($mtime2.' ms', 10, ' ').$query;
 				\ManiaLib\Utils\Logger::info($message);
 			}
 		}
