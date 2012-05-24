@@ -536,7 +536,7 @@ Void manialib_action_execute(Text[] action)
 
                 case "set_entry_value":
                         manialib_set_entry_value(action[1], action[2]);
-				
+
 				case "set_image":
 					manialib_set_image(action[1], action[2]);
 
@@ -630,8 +630,10 @@ Void manialib_ui_datepicker_init(Text date_picker_result_id, Text date_picker_bu
 	_manialib_datepicker_result = date_picker_result_id;
 	_manialib_datepicker_button = date_picker_button_id;
 
-	_manialib_ui_year = 2012;
-	_manialib_ui_month = 3;
+	declare _manialib_datepicker_current_date = manialib_date_get_date_time();
+
+	_manialib_ui_year = _manialib_datepicker_current_date["year"];
+	_manialib_ui_month = _manialib_datepicker_current_date["month"];
 
 	declare Integer i;
 
