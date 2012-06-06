@@ -290,7 +290,7 @@ class PageNavigator extends \ManiaLib\Gui\Component
 			$this->arrowPrev->getSizeX(), 0, 1);
 
 		// Save the gui
-		\ManiaLib\Gui\Manialink::beginFrame($this->posX, $this->posY, $this->posZ);
+		\ManiaLib\Gui\Manialink::beginFrame($this->posX, $this->posY, $this->posZ, $this->scale);
 		{
 			if($this->showText)
 			{
