@@ -31,6 +31,9 @@ abstract class Action
 	const posx = 'posx';
 	const posy = 'posy';
 	const posz = 'posz';
+	const absolute_posx = 'posx';
+	const absolute_posy = 'posy';
+	const absolute_posz = 'posz';
 	const set_text = 'set_text';
 	const set_entry_value = 'set_entry_value';
 	const set_image = 'set_image';

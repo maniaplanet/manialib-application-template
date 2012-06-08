@@ -43,7 +43,31 @@ abstract class Manipulation
 		$script = sprintf($script, $controlId);
 		Manialink::appendScript($script);
 	}
-	
+
+	static function absolutePosx($controlId, $posx)
+	{
+		$script = 'manialib_absolute_posx("%s", %f); ';
+		$controlId = Tools::escapeString($controlId);
+		$script = sprintf($script, $controlId, $posx);
+		Manialink::appendScript($script);
+	}
+
+	static function absolutePosy($controlId, $posy)
+	{
+		$script = 'manialib_absolute_posy("%s", %f); ';
+		$controlId = Tools::escapeString($controlId);
+		$script = sprintf($script, $controlId, $posy);
+		Manialink::appendScript($script);
+	}
+
+	static function absolutePosz($controlId, $posz)
+	{
+		$script = 'manialib_absolute_posz("%s", %f); ';
+		$controlId = Tools::escapeString($controlId);
+		$script = sprintf($script, $controlId, $posz);
+		Manialink::appendScript($script);
+	}
+
 	static function posx($controlId, $posx)
 	{
 		$script = 'manialib_posx("%s", %f); ';
@@ -51,7 +75,7 @@ abstract class Manipulation
 		$script = sprintf($script, $controlId, $posx);
 		Manialink::appendScript($script);
 	}
-	
+
 	static function posy($controlId, $posy)
 	{
 		$script = 'manialib_posy("%s", %f); ';
@@ -59,7 +83,7 @@ abstract class Manipulation
 		$script = sprintf($script, $controlId, $posy);
 		Manialink::appendScript($script);
 	}
-	
+
 	static function posz($controlId, $posz)
 	{
 		$script = 'manialib_posz("%s", %f); ';
@@ -67,7 +91,7 @@ abstract class Manipulation
 		$script = sprintf($script, $controlId, $posz);
 		Manialink::appendScript($script);
 	}
-	
+
 	static function setText($controlId, $text)
 	{
 		$script = 'manialib_set_text("%s", "%s"); ';
@@ -76,7 +100,7 @@ abstract class Manipulation
 		$script = sprintf($script, $controlId, $text);
 		Manialink::appendScript($script);
 	}
-	
+
 	static function setEntryValue($controlId, $value)
 	{
 		$script = 'manialib_set_entry_value("%s", "%s"); ';
@@ -85,7 +109,7 @@ abstract class Manipulation
 		$script = sprintf($script, $controlId, $value);
 		Manialink::appendScript($script);
 	}
-	
+
 	static function setImage($controlId, $URL)
 	{
 		$script = 'manialib_set_image("%s", "%s"); ';
@@ -94,13 +118,13 @@ abstract class Manipulation
 		$script = sprintf($script, $controlId, $URL);
 		Manialink::appendScript($script);
 	}
-	
+
 	static function disableLinks()
 	{
 		$script = 'manialib_disable_links(); ';
 		Manialink::appendScript($script);
 	}
-	
+
 	static function enableLinks()
 	{
 		$script = 'manialib_enable_links(); ';

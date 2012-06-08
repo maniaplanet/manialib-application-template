@@ -23,7 +23,7 @@ class Config extends \ManiaLib\Utils\Singleton
 	 * Min version to use with the VersionCheck filter
 	 * @var string eg. "2011-10-19_11_55" 
 	 */
-	public $minVersion = '2011-10-19_11_55';
+	public $minVersion = '2012-06-07_20_26';
 
 }
 

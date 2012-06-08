@@ -3,7 +3,7 @@
 /**
  * ManiaLib for ManiaScript
  *
- * Minimum Maniaplanet version: 2011-10-19_11_55
+ * Minimum Maniaplanet version: 2012-06-07_20_26
  *
  * This framework was specifically designed for use in Manialinks; it provides
  * classic features as you can find in JavaScript frameworks (manipulation
@@ -324,6 +324,45 @@ Void manialib_posz(Text controlId, Real posz)
         }
 }
 
+Void manialib_absolute_posx(Text controlId, Real posx)
+{
+	declare CGameManialinkControl control = Page.MainFrame.GetFirstChild(controlId);
+	if(control != Null)
+	{
+		control.PosnX = control.PosnX + (posx - control.AbsolutePosition[0]);
+	}
+	else
+	{
+		log("[WARNING] Trying to access an unkown element: " ^ controlId);
+	}
+}
+
+Void manialib_absolute_posy(Text controlId, Real posy)
+{
+	declare CGameManialinkControl control = Page.MainFrame.GetFirstChild(controlId);
+	if(control != Null)
+	{
+		control.PosnY = control.PosnY + (posy - control.AbsolutePosition[1]);
+	}
+	else
+	{
+		log("[WARNING] Trying to access an unkown element: " ^ controlId);
+	}
+}
+
+Void manialib_absolute_posz(Text controlId, Real posz)
+{
+	declare CGameManialinkControl control = Page.MainFrame.GetFirstChild(controlId);
+	if(control != Null)
+	{
+		control.PosnZ = control.PosnZ + (posz - control.AbsolutePosition[2]);
+	}
+	else
+	{
+		log("[WARNING] Trying to access an unkown element: " ^ controlId);
+	}
+}
+
 // Weird function/hack for the tooltip feature
 Void manialib_move_to_mouse(Text controlId, Real offsetX, Real offsetY, Real boundingBoxX, Real boundingBoxY)
 {
@@ -373,13 +412,14 @@ Void manialib_set_image(Text controlId, Text URL)
 
 Void manialib_disable_links()
 {
-        // TODO feature in the next update of Maniaplanet ?
+	Page.LinksInhibited = True;
 }
 
 Void manialib_enable_links()
 {
-        // TODO feature in the next update of Maniaplanet ?
+	Page.LinksInhibited = False;
 }
+
 // Date Picker
 Void manialib_ui_datepicker_update()
 {
@@ -417,6 +457,7 @@ Void manialib_ui_datepicker_update()
 		i = i + 1;
 	}
 }
+
 Void manialib_ui_datepicker_event(Text action, Text content)
 {
 	if (action == "update")
@@ -520,16 +561,22 @@ Void manialib_action_execute(Text[] action)
                         manialib_toggle(action[1]);
 
                 case "posx":
-					// FIXME Because of a bug in TextLib::ToReal() this won't work for now
 					manialib_posx(action[1], TextLib::ToReal(action[2]));
 
                 case "posy":
-                        // FIXME Because of a bug in TextLib::ToReal() this won't work for now
-                        manialib_posy(action[1], TextLib::ToReal(action[2]));
+					manialib_posy(action[1], TextLib::ToReal(action[2]));
 
                 case "posz":
-                        // FIXME Because of a bug in TextLib::ToReal() this won't work for now
-                        manialib_posz(action[1], TextLib::ToReal(action[2]));
+					manialib_posz(action[1], TextLib::ToReal(action[2]));
+
+				case "absolute_posx":
+					manialib_absolute_posx(action[1], TextLib::ToReal(action[2]));
+
+				case "absolute_posy":
+					manialib_absolute_posy(action[1], TextLib::ToReal(action[2]));
+
+				case "absolute_posz":
+					manialib_absolute_posz(action[1], TextLib::ToReal(action[2]));
 
                 case "set_text":
                         manialib_set_text(action[1], action[2]);
