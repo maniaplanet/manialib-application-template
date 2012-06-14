@@ -206,7 +206,7 @@ abstract class Element extends Component implements Drawable
 		$this->setSubStyle(null);
 		if(!$absoluteUrl)
 		{
-			$this->image = \ManiaLib\Gui\Manialink::$imagesURL.$image;
+			$this->image = Manialink::$imagesURL.$image;
 		}
 		else
 		{
@@ -235,7 +235,7 @@ abstract class Element extends Component implements Drawable
 		$this->setSubStyle(null);
 		if(!$absoluteUrl)
 		{
-			$this->imageFocus = \ManiaLib\Gui\Manialink::$imagesURL.$imageFocus;
+			$this->imageFocus = Manialink::$imagesURL.$imageFocus;
 		}
 		else
 		{
@@ -490,31 +490,20 @@ abstract class Element extends Component implements Drawable
 		$this->preFilter();
 
 		// Layout handling
-		$layout = end(\ManiaLib\Gui\Manialink::$parentLayouts);
-		if($layout instanceof \ManiaLib\Gui\Layouts\AbstractLayout)
+		$layout = end(Manialink::$parentLayouts);
+		if($layout instanceof Layouts\AbstractLayout)
 		{
 			$layout->preFilter($this);
 			$this->posX += $layout->xIndex;
-
-			// if we swap positioning in ManiaLive, then we
-			// need to check that before positioning.
-			if(Manialink::isYSwapped())
-			{
-				$this->posY -= $layout->yIndex;
-			}
-			else
-			{
-				$this->posY += $layout->yIndex;
-			}
-
+			$this->posY += $layout->yIndex;
 			$this->posZ += $layout->zIndex;
 		}
 
 		// DOM element creation
 		if($this->xmlTagName)
 		{
-			$this->xml = \ManiaLib\Gui\Manialink::$domDocument->createElement($this->xmlTagName);
-			end(\ManiaLib\Gui\Manialink::$parentNodes)->appendChild($this->xml);
+			$this->xml = Manialink::$domDocument->createElement($this->xmlTagName);
+			end(Manialink::$parentNodes)->appendChild($this->xml);
 
 			// Add id
 			if($this->id !== null)
@@ -523,17 +512,7 @@ abstract class Element extends Component implements Drawable
 			// Add pos
 			if($this->posX || $this->posY || $this->posZ)
 			{
-				// ManiaLive check whether position is swapped.
-				if(Manialink::isYSwapped())
-				{
-					$this->xml->setAttribute('posn',
-						$this->posX.' '.(-$this->posY).' '.$this->posZ);
-				}
-				else
-				{
-					$this->xml->setAttribute('posn',
-						$this->posX.' '.$this->posY.' '.$this->posZ);
-				}
+				$this->xml->setAttribute('posn', $this->posX.' '.$this->posY.' '.$this->posZ);
 			}
 
 			// Add size
@@ -559,7 +538,7 @@ abstract class Element extends Component implements Drawable
 				$this->xml->setAttribute('bgcolor', $this->bgcolor);
 
 			// Add links
-			if(\ManiaLib\Gui\Manialink::$linksEnabled)
+			if(Manialink::$linksEnabled)
 			{
 				if($this->addPlayerId !== null)
 					$this->xml->setAttribute('addplayerid', $this->addPlayerId);
@@ -601,7 +580,7 @@ abstract class Element extends Component implements Drawable
 		}
 
 		// Layout post filtering
-		if($layout instanceof \ManiaLib\Gui\Layouts\AbstractLayout)
+		if($layout instanceof Layouts\AbstractLayout)
 		{
 			$layout->postFilter($this);
 		}
@@ -610,25 +589,23 @@ abstract class Element extends Component implements Drawable
 		if($this->cardElements)
 		{
 			// Algin the title and its bg at the top center of the main quad		
-			$arr = \ManiaLib\Gui\Tools::getAlignedPos(
-					$this, $this->cardElementsHalign, $this->cardElementsValign);
+			$arr = Tools::getAlignedPos($this, $this->cardElementsHalign, $this->cardElementsValign);
 			$x = $arr["x"];
 			$y = $arr["y"];
 
-
 			// Draw them
-			\ManiaLib\Gui\Manialink::beginFrame(
+			Manialink::beginFrame(
 				$x + $this->cardElementsPosX, $y + $this->cardElementsPosY,
 				$this->posZ + $this->cardElementsPosZ, $this->scale);
-			\ManiaLib\Gui\Manialink::beginFrame(0, 0, 0, null, $this->cardElementsLayout);
+			Manialink::beginFrame(0, 0, 0, null, $this->cardElementsLayout);
 
 			foreach($this->cardElements as $element)
 			{
 				$element->save();
 			}
 
-			\ManiaLib\Gui\Manialink::endFrame();
-			\ManiaLib\Gui\Manialink::endFrame();
+			Manialink::endFrame();
+			Manialink::endFrame();
 		}
 
 		// Post filtering

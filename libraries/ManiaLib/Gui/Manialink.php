@@ -25,15 +25,13 @@ abstract class Manialink
 	public static $langsURL;
 	public static $imagesURL;
 	public static $mediaURL;
-	protected static $swapPosY = false;
 
 	/**
 	 * Loads the Manialink GUI toolkit. This should be called before doing
 	 * anything with the toolkit.
 	 * @param bool Whether you want to create the root "<manialink>" element in the XML
 	 */
-	final public static function load($root = true, $timeout=0, $version=1,
-		$background = 1)
+	final public static function load($root = true, $timeout = 0, $version = 1, $background = 1)
 	{
 		if(class_exists('\ManiaLib\Application\Config'))
 		{
@@ -99,8 +97,8 @@ abstract class Manialink
 	 * you pass a layout object, all the items inside the frame will be
 	 * positionned using constraints defined by the layout
 	 */
-	final public static function beginFrame($x=0, $y=0, $z=0, $scale=null,
-		\ManiaLib\Gui\Layouts\AbstractLayout $layout=null)
+	final public static function beginFrame($x = 0, $y = 0, $z = 0, $scale = null,
+		\ManiaLib\Gui\Layouts\AbstractLayout $layout = null)
 	{
 		// Update parent layout
 		$parentLayout = end(self::$parentLayouts);
@@ -124,10 +122,7 @@ abstract class Manialink
 		$frame = self::$domDocument->createElement('frame');
 		if($x || $y || $z)
 		{
-			if(self::$swapPosY)
-				$frame->setAttribute('posn', $x.' '.(-$y).' '.$z);
-			else
-				$frame->setAttribute('posn', $x.' '.$y.' '.$z);
+			$frame->setAttribute('posn', $x.' '.$y.' '.$z);
 		}
 		end(self::$parentNodes)->appendChild($frame);
 		if($scale)
@@ -229,36 +224,6 @@ abstract class Manialink
 	static function enableLinks()
 	{
 		self::$linksEnabled = true;
-	}
-
-	/**
-	 * Normal Manialink behavior for the Y positioning of Elements.
-	 * This will decrease Y coordinates from top to bottom.
-	 * This method is mainly used by ManiaLive.
-	 */
-	final public static function setNormalPositioning()
-	{
-		self::$swapPosY = false;
-	}
-
-	/**
-	 * Swapped Manialink behavior for the Y positioning of Elements.
-	 * This will increase from top to bottom.
-	 * This method is mainly used by ManiaLive.
-	 */
-	final public static function setSwappedPositioning()
-	{
-		self::$swapPosY = true;
-	}
-
-	/**
-	 * Returns whether Y-Positioning is swapped for all
-	 * Elements currently drawn.
-	 * This method is mainly used by ManiaLive.
-	 */
-	final public static function isYSwapped()
-	{
-		return self::$swapPosY;
 	}
 
 }
