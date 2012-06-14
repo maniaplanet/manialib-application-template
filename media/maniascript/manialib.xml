@@ -3,7 +3,7 @@
 /**
  * ManiaLib for ManiaScript
  *
- * Minimum Maniaplanet version: 2012-06-07_20_26
+ * Minimum Maniaplanet version: 2011-10-19_11_55
  *
  * This framework was specifically designed for use in Manialinks; it provides
  * classic features as you can find in JavaScript frameworks (manipulation
@@ -41,6 +41,7 @@ declare Boolean[Text] _manialib_visibility;
 declare Text[Text] _manialib_values;
 declare Text[][Text] _manialib_actions;
 declare Text[][][Text][Text] _manialib_event_listeners;
+declare Text[][][Text][Text] _manialib_event_listeners_dynamic;
 
 // UI specific
 
@@ -275,14 +276,14 @@ Boolean manialib_visible(Text controlId)
 
 Void manialib_toggle(Text controlId)
 {
-        if(manialib_visible(controlId))
-        {
-                manialib_hide(controlId);
-        }
-        else
-        {
-                manialib_show(controlId);
-        }
+	if(manialib_visible(controlId))
+	{
+		manialib_hide(controlId);
+	}
+	else
+	{
+		manialib_show(controlId);
+	}
 }
 
 Void manialib_posx(Text controlId, Real posx)
@@ -522,12 +523,67 @@ Void manialib_action_register(Text id, Text[] action)
         _manialib_actions[id] = action;
 }
 
+CGameManialinkControl[] manialib_action_get_sub_controls(CGameManialinkFrame frame)
+{
+	declare CGameManialinkControl[] controls;
+	foreach(control in frame.Controls)
+	{
+		switchtype(control as _control)
+		{
+			case CGameManialinkControl:
+				controls.add(_control);
+		}
+	}
+	return controls;
+}
+
+CGameManialinkControl[] manialib_action_get_matching_controls(Text selector, CGameManialinkControl[] controls)
+{
+	declare CGameManialinkControl[] _controls;
+	declare _selector = TextLib::SubString(selector, 0, TextLib::Length(selector)-1);
+	foreach(control in controls) 
+	{
+		switchtype(control as _control)
+		{
+			case CGameManialinkFrame:
+			{
+				declare _subcontrols = manialib_action_get_matching_controls(selector, manialib_action_get_sub_controls(_control));
+				foreach(_subcontrol in _subcontrols)
+				{
+					_controls.add(_subcontrol);
+				}
+			}
+		}
+		if(TextLib::SubText(control.ControlId, 0, TextLib::Length(_selector)) == _selector)
+		{
+			_controls.add(control);
+		}
+	}
+	return _controls;
+}
+
 Void manialib_action_execute(Text[] action)
 {
-        if(action.count == 0)
+		if(action.count == 0)
         {
-                return;
+			return;
         }
+		if(action.existskey(1))
+		{
+			if(TextLib::SubString(action[1], TextLib::Length(action[1])-1, 1)=="*")
+			{
+				
+				declare __controls = manialib_action_get_sub_controls(Page.MainFrame);
+				declare _controls = manialib_action_get_matching_controls(action[1], __controls);
+				foreach(control in _controls) 
+				{
+					declare _action = action;
+					_action[1] = control.ControlId;
+					manialib_action_execute(_action);
+				}
+				return;
+			}
+		}
         switch(action[0])
         {
                 case "set_value":
@@ -564,10 +620,10 @@ Void manialib_action_execute(Text[] action)
 					manialib_posx(action[1], TextLib::ToReal(action[2]));
 
                 case "posy":
-					manialib_posy(action[1], TextLib::ToReal(action[2]));
+                        manialib_posy(action[1], TextLib::ToReal(action[2]));
 
                 case "posz":
-					manialib_posz(action[1], TextLib::ToReal(action[2]));
+                        manialib_posz(action[1], TextLib::ToReal(action[2]));
 
 				case "absolute_posx":
 					manialib_absolute_posx(action[1], TextLib::ToReal(action[2]));
@@ -620,6 +676,7 @@ Void manialib_action_execute(Text[] action)
                 default:
                         log("[WARNING] Unkown action name: " ^ action[1]);
         }
+		return;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -630,7 +687,22 @@ Void manialib_action_execute(Text[] action)
 
 Void manialib_event_add_listener(Text controlId, CGameManialinkScriptEvent::Type eventType, Text[] action)
 {
-        if(!_manialib_event_listeners.existskey(controlId))
+	if(TextLib::SubString(controlId, TextLib::Length(controlId)-1, 1) == "*")
+	{
+		declare controlIdDynamic = TextLib::SubString(controlId, 0, TextLib::Length(controlId)-1);
+		if(!_manialib_event_listeners_dynamic.existskey(controlIdDynamic))
+        {
+                _manialib_event_listeners_dynamic[controlIdDynamic] = Text[][][Text];
+        }
+        if(!_manialib_event_listeners_dynamic[controlIdDynamic].existskey(manialib_event2text(eventType)))
+        {
+                _manialib_event_listeners_dynamic[controlIdDynamic][manialib_event2text(eventType)] = Text[][];
+        }
+        _manialib_event_listeners_dynamic[controlIdDynamic][manialib_event2text(eventType)].add(action);
+	}
+	else
+	{
+		if(!_manialib_event_listeners.existskey(controlId))
         {
                 _manialib_event_listeners[controlId] = Text[][][Text];
         }
@@ -639,21 +711,36 @@ Void manialib_event_add_listener(Text controlId, CGameManialinkScriptEvent::Type
                 _manialib_event_listeners[controlId][manialib_event2text(eventType)] = Text[][];
         }
         _manialib_event_listeners[controlId][manialib_event2text(eventType)].add(action);
+	}
 }
 
 Void manialib_event_listener(CGameManialinkScriptEvent event)
 {
-        if(_manialib_event_listeners.existskey(event.ControlId))
-        {
-                declare eventTypeName = manialib_event2text(event.Type);
-                if(_manialib_event_listeners[event.ControlId].existskey(eventTypeName))
-                {
-                        foreach(action in _manialib_event_listeners[event.ControlId][eventTypeName])
-                        {
-                                manialib_action_execute(action);
-                        }
-                }
-        }
+		foreach(dynamicControlId => __unused__ in _manialib_event_listeners_dynamic)
+		{
+			if(TextLib::SubString(event.ControlId, 0, TextLib::Length(dynamicControlId)) == dynamicControlId)
+			{
+				declare eventTypeName = manialib_event2text(event.Type);
+				if(_manialib_event_listeners_dynamic[dynamicControlId].existskey(eventTypeName))
+				{
+						foreach(action in _manialib_event_listeners_dynamic[dynamicControlId][eventTypeName])
+						{
+								manialib_action_execute(action);
+						}
+				}
+			}
+		}
+		if(_manialib_event_listeners.existskey(event.ControlId))
+		{
+				declare eventTypeName = manialib_event2text(event.Type);
+				if(_manialib_event_listeners[event.ControlId].existskey(eventTypeName))
+				{
+						foreach(action in _manialib_event_listeners[event.ControlId][eventTypeName])
+						{
+								manialib_action_execute(action);
+						}
+				}
+		}
 }
 
 Void manialib_main_loop()
