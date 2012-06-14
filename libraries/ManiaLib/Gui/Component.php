@@ -168,7 +168,9 @@ abstract class Component
 	 */
 	function setValign($valign)
 	{
+		$old = $this->valign;
 		$this->valign = $valign;
+		$this->onAlign($this->halign, $old);
 	}
 
 	/**
@@ -178,7 +180,9 @@ abstract class Component
 	 */
 	function setHalign($halign)
 	{
+		$old = $this->halign;
 		$this->halign = $halign;
+		$this->onAlign($old, $this->valign);
 	}
 
 	/**
@@ -190,8 +194,11 @@ abstract class Component
 	 */
 	function setAlign($halign = null, $valign = null)
 	{
-		$this->setHalign($halign);
-		$this->setValign($valign);
+		$oldHalign = $this->halign;
+		$oldValign = $this->valign;
+		$this->valign = $valign;
+		$this->halign = $halign;
+		$this->onAlign($oldHalign, $oldValign);
 	}
 
 	/**
@@ -244,7 +251,9 @@ abstract class Component
 	 */
 	function setScale($scale)
 	{
+		$oldScale = $this->scale;
 		$this->scale = $scale;
+		$this->onScale($oldScale);
 	}
 
 	/**
@@ -415,14 +424,33 @@ abstract class Component
 	}
 
 	/**
-	 * Overwriteable functions. Used by ManiaLive.
+	 * Overridable callback on component change
 	 */
 	protected function onResize($oldX, $oldY)
 	{
 		
 	}
 
+	/**
+	 * Overridable callback on component change
+	 */
 	protected function onMove($oldX, $oldY, $oldZ)
+	{
+		
+	}
+	
+	/**
+	 * Overridable callback on component change
+	 */
+	protected function onScale($oldScale)
+	{
+		
+	}
+	
+	/**
+	 * Overridable callback on component change
+	 */
+	protected function onAlign($oldHalign, $oldValign)
 	{
 		
 	}
