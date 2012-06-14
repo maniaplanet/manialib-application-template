@@ -28,15 +28,15 @@ class EventTracker
 		return $t;
 	}
 
-	static function trackNow($category, $action, $label)
+	static function trackNow($category, $action, $label, $value = null)
 	{
-		$URL = self::getTracker()->getEventTrackingURL($category, $action, $label);
+		$URL = self::getTracker()->getEventTrackingURL($category, $action, $label, $value);
 		\ManiaLib\ManiaScript\Manipulation::setImage(View::EVENT_QUAD_ID, $URL);
 	}
 
-	static function trackAsnyc($category, $action, $label, $controlId, $eventType)
+	static function trackAsnyc($category, $action, $label, $controlId, $eventType, $value = null)
 	{
-		$URL = self::getTracker()->getEventTrackingURL($category, $action, $label);
+		$URL = self::getTracker()->getEventTrackingURL($category, $action, $label, $value);
 		\ManiaLib\ManiaScript\Event::addListener($controlId, $eventType,
 			array(\ManiaLib\ManiaScript\Action::set_image, View::EVENT_QUAD_ID, $URL));
 	}

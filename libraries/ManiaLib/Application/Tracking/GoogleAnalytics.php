@@ -19,6 +19,7 @@ use ManiaLib\Utils\Arrays;
  */
 class GoogleAnalytics
 {
+
 	const GA_TRACKING_URL = 'http://www.google-analytics.com/__utm.gif';
 
 	/**
@@ -139,7 +140,7 @@ class GoogleAnalytics
 	protected $visitorId;
 	protected $cookieNameSuffix;
 
-	function __construct($account, $cookieNameSuffix=null)
+	function __construct($account, $cookieNameSuffix = null)
 	{
 		$this->utmac = $account;
 		$this->cookieNameSuffix = $cookieNameSuffix;
@@ -264,9 +265,13 @@ class GoogleAnalytics
 	 * @see https://developers.google.com/analytics/resources/articles/gaTrackingTroubleshooting#gifParameters 
 	 * @beta
 	 */
-	function getEventTrackingURL($category, $action, $label)
+	function getEventTrackingURL($category, $action, $label, $value = null)
 	{
 		$this->utme = sprintf('5(%s*%s*%s)', $category, $action, $label);
+		if($value !== null)
+		{
+			$this->utme .= sprintf('(%d)', $value);
+		}
 
 		$params = array(
 			'utmwv' => $this->utmwv,
@@ -314,8 +319,7 @@ class GoogleAnalytics
 				$c = (int) (ord($domain[$i]));
 				$h = (($h << 6) & 0xfffffff) + $c + ($c << 14);
 				$g = ($h & 0xfe00000);
-				if($g != 0)
-					$h = ($h ^ ($g >> 21));
+				if($g != 0) $h = ($h ^ ($g >> 21));
 			}
 			$this->domainHash = $h;
 		}
