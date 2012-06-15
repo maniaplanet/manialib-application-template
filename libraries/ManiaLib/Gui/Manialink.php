@@ -145,8 +145,7 @@ abstract class Manialink
 
 	final static function setFrameId($id)
 	{
-		$frame = end(self::$parentNodes);
-		$frame->setAttribute('id', $id);
+		end(self::$parentFrames)->setId($id);
 	}
 
 	final static function setFrameScriptEvents($scriptEvents = 1)

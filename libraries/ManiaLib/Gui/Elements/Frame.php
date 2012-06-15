@@ -79,21 +79,15 @@ class Frame extends \ManiaLib\Gui\Component implements \ManiaLib\Gui\Drawable
 		{
 			$this->xml = \ManiaLib\Gui\Manialink::createElement('frame');
 			$this->getParentNode()->appendChild($this->xml);
-			$updateStack = true;
 		}
 
-		// Add pos
+		if($this->id !== null) $this->xml->setAttribute('id', $this->id);
+		
 		if($this->posX || $this->posY || $this->posZ)
 		{
 			$this->xml->setAttribute('posn', $this->posX.' '.$this->posY.' '.$this->posZ);
 		}
 		if($this->scale !== null) $this->xml->setAttribute('scale', $this->scale);
-
-		if(isset($updateStack))
-		{
-			\ManiaLib\Gui\Manialink::$parentNodes[] = $this->xml;
-			\ManiaLib\Gui\Manialink::$parentLayouts[] = $this->layout;
-		}
 	}
 
 	function getDOMElement()
