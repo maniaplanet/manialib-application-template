@@ -28,6 +28,16 @@ abstract class Component
 	protected $scriptEvents;
 
 	/**
+	 * @var \DOMNode
+	 */
+	protected $parentNode;
+
+	/**
+	 * @var Layouts\AbstractLayout
+	 */
+	protected $parentLayout;
+
+	/**
 	 * Set the id of the element
 	 * @param int
 	 */
@@ -149,14 +159,11 @@ abstract class Component
 
 		$args = func_get_args();
 
-		if(!empty($args))
-			$this->posX = array_shift($args);
+		if(!empty($args)) $this->posX = array_shift($args);
 
-		if(!empty($args))
-			$this->posY = array_shift($args);
+		if(!empty($args)) $this->posY = array_shift($args);
 
-		if(!empty($args))
-			$this->posZ = array_shift($args);
+		if(!empty($args)) $this->posZ = array_shift($args);
 
 		$this->onMove($oldX, $oldY, $oldZ);
 	}
@@ -235,11 +242,9 @@ abstract class Component
 
 		$args = func_get_args();
 
-		if(!empty($args))
-			$this->sizeX = array_shift($args);
+		if(!empty($args)) $this->sizeX = array_shift($args);
 
-		if(!empty($args))
-			$this->sizeY = array_shift($args);
+		if(!empty($args)) $this->sizeY = array_shift($args);
 
 		$this->onResize($oldX, $oldY);
 	}
@@ -423,6 +428,32 @@ abstract class Component
 		return $this->scriptEvents;
 	}
 
+	final function setParentNode(\DOMNode $node)
+	{
+		$this->parentNode = $node;
+	}
+
+	final function setParentLayout($layout)
+	{
+		$this->parentLayout = $layout;
+	}
+
+	/**
+	 * @return \DOMNode
+	 */
+	final function getParentNode()
+	{
+		return $this->parentNode ? : end(Manialink::$parentNodes);
+	}
+
+	/**
+	 * @return Layouts\AbstractLayout
+	 */
+	final function getParentLayout()
+	{
+		return $this->parentLayout ? : end(Manialink::$parentLayouts);
+	}
+
 	/**
 	 * Overridable callback on component change
 	 */
@@ -438,7 +469,7 @@ abstract class Component
 	{
 		
 	}
-	
+
 	/**
 	 * Overridable callback on component change
 	 */
@@ -446,7 +477,7 @@ abstract class Component
 	{
 		
 	}
-	
+
 	/**
 	 * Overridable callback on component change
 	 */

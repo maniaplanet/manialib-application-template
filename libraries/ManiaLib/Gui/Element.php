@@ -14,6 +14,7 @@ namespace ManiaLib\Gui;
 
 abstract class Element extends Component implements Drawable
 {
+
 	const USE_ABSOLUTE_URL = true;
 
 	protected $style;
@@ -41,6 +42,7 @@ abstract class Element extends Component implements Drawable
 	protected $imageid;
 	protected $imageFocus;
 	protected $imageFocusid;
+	// FIXME Change that to static & use late static binding
 	protected $xmlTagName = 'xmltag'; // Redeclare this for each child
 	protected $xml;
 
@@ -441,13 +443,16 @@ abstract class Element extends Component implements Drawable
 		return $this->manialink || $this->url || $this->action || $this->maniazone || $this->scriptevents;
 	}
 
-	function setCardElementPosition($posX=0, $posY=0, $posZ=0)
+	function setCardElementPosition($posX = 0, $posY = 0, $posZ = 0)
 	{
 		$this->cardElementsPosX = $posX;
 		$this->cardElementsPosY = $posY;
 		$this->cardElementsPosZ = $posZ;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	protected function addCardElement(\ManiaLib\Gui\Element $element)
 	{
 		$this->cardElements[] = $element;
@@ -473,6 +478,96 @@ abstract class Element extends Component implements Drawable
 		
 	}
 
+	final protected function buildXML()
+	{
+		if(!$this->xmlTagName)
+		{
+			return;
+		}
+
+		if(!$this->xml)
+		{
+			$this->xml = Manialink::createElement($this->xmlTagName);
+			$this->getParentNode()->appendChild($this->xml);
+		}
+
+		// Add id
+		if($this->id !== null) $this->xml->setAttribute('id', $this->id);
+
+		// Add pos
+		if($this->posX || $this->posY || $this->posZ)
+		{
+			$this->xml->setAttribute('posn', $this->posX.' '.$this->posY.' '.$this->posZ);
+		}
+
+		// Add size
+		if($this->sizeX || $this->sizeY)
+		{
+			$this->xml->setAttribute('sizen', $this->sizeX.' '.$this->sizeY);
+		}
+		if($this->scale !== null) $this->xml->setAttribute('scale', $this->scale);
+
+		// Add alignement
+		if($this->halign !== null) $this->xml->setAttribute('halign', $this->halign);
+		if($this->valign !== null) $this->xml->setAttribute('valign', $this->valign);
+
+		// Add styles
+		if($this->style !== null) $this->xml->setAttribute('style', $this->style);
+		if($this->subStyle !== null) $this->xml->setAttribute('substyle', $this->subStyle);
+		if($this->bgcolor !== null) $this->xml->setAttribute('bgcolor', $this->bgcolor);
+
+		// Add links
+		if(Manialink::$linksEnabled)
+		{
+			if($this->addPlayerId !== null) $this->xml->setAttribute('addplayerid', $this->addPlayerId);
+			if($this->manialink !== null) $this->xml->setAttribute('manialink', $this->manialink);
+			if($this->goto !== null) $this->xml->setAttribute('goto', $this->goto);
+			if($this->manialinkId !== null) $this->xml->setAttribute('manialinkId', $this->manialinkId);
+			if($this->url !== null) $this->xml->setAttribute('url', $this->url);
+			if($this->urlId !== null) $this->xml->setAttribute('urlid', $this->urlId);
+			if($this->maniazone !== null) $this->xml->setAttribute('maniazone', $this->maniazone);
+
+			// Add action
+			if($this->action !== null) $this->xml->setAttribute('action', $this->action);
+		}
+		if($this->actionKey !== null) $this->xml->setAttribute('actionkey', $this->actionKey);
+
+		// Add images
+		if($this->image !== null) $this->xml->setAttribute('image', $this->image);
+		if($this->imageid !== null) $this->xml->setAttribute('imageid', $this->imageid);
+		if($this->imageFocus !== null) $this->xml->setAttribute('imagefocus', $this->imageFocus);
+		if($this->imageFocusid !== null) $this->xml->setAttribute('imagefocusid', $this->imageFocusid);
+
+		// Add Script Attributes
+		if($this->id) $this->xml->setAttribute('id', $this->id);
+		if($this->scriptevents !== null) $this->xml->setAttribute('scriptevents', $this->scriptevents);
+	}
+
+	final protected function handleCardElements()
+	{
+		if(!$this->cardElements)
+		{
+			return;
+		}
+
+		// Align relative to the parent elements
+		$arr = Tools::getAlignedPos($this, $this->cardElementsHalign, $this->cardElementsValign);
+		$x = $arr["x"];
+		$y = $arr["y"];
+
+		Manialink::beginFrame(
+			$x + $this->cardElementsPosX, $y + $this->cardElementsPosY, $this->posZ + $this->cardElementsPosZ, $this->scale);
+		Manialink::beginFrame(0, 0, 0, null, $this->cardElementsLayout);
+
+		foreach($this->cardElements as $element)
+		{
+			$element->save();
+		}
+
+		Manialink::endFrame();
+		Manialink::endFrame();
+	}
+
 	/**
 	 * Saves the object in the Manialink object stack for further rendering.
 	 * Thanks to the use of \ManiaLib\Gui\Element::preFilter() and \ManiaLib\Gui\Element::
@@ -480,135 +575,29 @@ abstract class Element extends Component implements Drawable
 	 */
 	final function save()
 	{
-		// this check is important for ManiaLive
 		if($this->visible === false)
 		{
 			return;
 		}
 
-		// Optional pre filtering
 		$this->preFilter();
 
-		// Layout handling
-		$layout = end(Manialink::$parentLayouts);
+		$layout = $this->getParentLayout();
 		if($layout instanceof Layouts\AbstractLayout)
 		{
 			$layout->preFilter($this);
-			$this->posX += $layout->xIndex;
-			$this->posY += $layout->yIndex;
-			$this->posZ += $layout->zIndex;
+			$layout->updateComponent($this);
 		}
 
-		// DOM element creation
-		if($this->xmlTagName)
-		{
-			$this->xml = Manialink::$domDocument->createElement($this->xmlTagName);
-			end(Manialink::$parentNodes)->appendChild($this->xml);
+		$this->buildXML();
 
-			// Add id
-			if($this->id !== null)
-				$this->xml->setAttribute('id', $this->id);
-
-			// Add pos
-			if($this->posX || $this->posY || $this->posZ)
-			{
-				$this->xml->setAttribute('posn', $this->posX.' '.$this->posY.' '.$this->posZ);
-			}
-
-			// Add size
-			if($this->sizeX || $this->sizeY)
-			{
-				$this->xml->setAttribute('sizen', $this->sizeX.' '.$this->sizeY);
-			}
-
-			// Add alignement
-			if($this->halign !== null)
-				$this->xml->setAttribute('halign', $this->halign);
-			if($this->valign !== null)
-				$this->xml->setAttribute('valign', $this->valign);
-			if($this->scale !== null)
-				$this->xml->setAttribute('scale', $this->scale);
-
-			// Add styles
-			if($this->style !== null)
-				$this->xml->setAttribute('style', $this->style);
-			if($this->subStyle !== null)
-				$this->xml->setAttribute('substyle', $this->subStyle);
-			if($this->bgcolor !== null)
-				$this->xml->setAttribute('bgcolor', $this->bgcolor);
-
-			// Add links
-			if(Manialink::$linksEnabled)
-			{
-				if($this->addPlayerId !== null)
-					$this->xml->setAttribute('addplayerid', $this->addPlayerId);
-				if($this->manialink !== null)
-					$this->xml->setAttribute('manialink', $this->manialink);
-				if($this->goto !== null)
-					$this->xml->setAttribute('goto', $this->goto);
-				if($this->manialinkId !== null)
-					$this->xml->setAttribute('manialinkId', $this->manialinkId);
-				if($this->url !== null)
-					$this->xml->setAttribute('url', $this->url);
-				if($this->urlId !== null)
-					$this->xml->setAttribute('urlid', $this->urlId);
-				if($this->maniazone !== null)
-					$this->xml->setAttribute('maniazone', $this->maniazone);
-
-				// Add action
-				if($this->action !== null)
-					$this->xml->setAttribute('action', $this->action);
-			}
-			if($this->actionKey !== null)
-				$this->xml->setAttribute('actionkey', $this->actionKey);
-
-			// Add images
-			if($this->image !== null)
-				$this->xml->setAttribute('image', $this->image);
-			if($this->imageid !== null)
-				$this->xml->setAttribute('imageid', $this->imageid);
-			if($this->imageFocus !== null)
-				$this->xml->setAttribute('imagefocus', $this->imageFocus);
-			if($this->imageFocusid !== null)
-				$this->xml->setAttribute('imagefocusid', $this->imageFocusid);
-
-			// Add Script Attributes
-			if($this->id)
-				$this->xml->setAttribute('id', $this->id);
-			if($this->scriptevents !== null)
-				$this->xml->setAttribute('scriptevents', $this->scriptevents);
-		}
-
-		// Layout post filtering
 		if($layout instanceof Layouts\AbstractLayout)
 		{
 			$layout->postFilter($this);
 		}
 
-		// Card Elements
-		if($this->cardElements)
-		{
-			// Algin the title and its bg at the top center of the main quad		
-			$arr = Tools::getAlignedPos($this, $this->cardElementsHalign, $this->cardElementsValign);
-			$x = $arr["x"];
-			$y = $arr["y"];
+		$this->handleCardElements();
 
-			// Draw them
-			Manialink::beginFrame(
-				$x + $this->cardElementsPosX, $y + $this->cardElementsPosY,
-				$this->posZ + $this->cardElementsPosZ, $this->scale);
-			Manialink::beginFrame(0, 0, 0, null, $this->cardElementsLayout);
-
-			foreach($this->cardElements as $element)
-			{
-				$element->save();
-			}
-
-			Manialink::endFrame();
-			Manialink::endFrame();
-		}
-
-		// Post filtering
 		$this->postFilter();
 	}
 

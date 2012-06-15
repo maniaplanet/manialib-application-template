@@ -27,15 +27,45 @@ class Index extends \ManiaLib\Application\View
 			$ui->setHalign('center');
 			$ui->setText('Hello world!');
 			$ui->save();
-			
+
 			$manialink = $this->request->createLink('/home/some-page');
-			
+
 			$ui = new Button();
 			$ui->setHalign('center');
 			$ui->setPosition(0, -10, 0);
 			$ui->setText('Go to some page');
 			$ui->setManialink($manialink);
 			$ui->save();
+
+			Manialink::beginFrame(13, 37, 42, 1, new \ManiaLib\Gui\Layouts\Line());
+			{
+				$ui = new \ManiaLib\Gui\Elements\Quad(10, 10);
+				$ui->save();
+
+				$ui = new \ManiaLib\Gui\Elements\Quad(10, 10);
+				$ui->save();
+
+				$ui = new \ManiaLib\Gui\Elements\Quad(10, 10);
+				$ui->save();
+
+				$ui = new \ManiaLib\Gui\Elements\Quad(10, 10);
+				$ui->save();
+
+				$ui = new \ManiaLib\Gui\Elements\Quad(10, 10);
+				$ui->save();
+
+				$ui = new \ManiaLib\Gui\Elements\Quad(10, 10);
+				$ui->save();
+			}
+			Manialink::beginFrame();
+
+			$f = new \ManiaLib\Gui\Elements\Frame(0, 0);
+			$f->setPosition(42, 42, 42);
+			
+			$ui = new \ManiaLib\Gui\Elements\Bgs1();
+			$f->add($ui);
+			
+			$f->save();
 		}
 		Manialink::endFrame();
 	}

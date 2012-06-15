@@ -32,7 +32,7 @@ abstract class AbstractLayout extends \ManiaLib\Gui\Component
 	 * @param float Layout's width
 	 * @param float Layout's height
 	 */
-	function __construct($sizeX=20, $sizeY=20)
+	function __construct($sizeX = 20, $sizeY = 20)
 	{
 		$this->sizeX = $sizeX;
 		$this->sizeY = $sizeY;
@@ -134,6 +134,13 @@ abstract class AbstractLayout extends \ManiaLib\Gui\Component
 	function getBorderHeight()
 	{
 		return $this->borderHeight;
+	}
+
+	final function updateComponent(\ManiaLib\Gui\Component $item)
+	{
+		$item->incPosX($this->xIndex);
+		$item->incPosY($this->yIndex);
+		$item->incPosZ($this->zIndex);
 	}
 
 	/**
