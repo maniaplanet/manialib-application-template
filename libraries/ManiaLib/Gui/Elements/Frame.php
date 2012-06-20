@@ -12,18 +12,24 @@
 
 namespace ManiaLib\Gui\Elements;
 
-class Frame extends \ManiaLib\Gui\Component implements \ManiaLib\Gui\Drawable
+use ManiaLib\Gui\Component;
+use ManiaLib\Gui\ComponentBase;
+use ManiaLib\Gui\Drawable;
+use ManiaLib\Gui\Layouts\AbstractLayout;
+use ManiaLib\Gui\Manialink;
+
+class Frame extends ComponentBase implements Drawable
 {
 
 	protected $xml;
 
 	/**
-	 * @var \ManiaLib\Gui\Layouts\AbstractLayout
+	 * @var AbstractLayout
 	 */
 	protected $layout;
 
 	/**
-	 * @var \ManiaLib\Gui\Drawable[]
+	 * @var Component[]
 	 */
 	protected $children;
 
@@ -31,36 +37,35 @@ class Frame extends \ManiaLib\Gui\Component implements \ManiaLib\Gui\Drawable
 	{
 		$this->sizeX = $sizeX;
 		$this->sizeY = $sizeY;
-		$this->layout = new \ManiaLib\Gui\Layouts\Spacer($sizeX, $sizeY);
 		$this->children = array();
 	}
 
 	/**
-	 * @return \ManiaLib\Gui\Layouts\AbstractLayout
+	 * @return AbstractLayout
 	 */
 	function getLayout()
 	{
 		return $this->layout;
 	}
 
-	function setLayout(\ManiaLib\Gui\Layouts\AbstractLayout $layout)
+	function setLayout(AbstractLayout $layout)
 	{
 		$this->layout = $layout;
 	}
 
 	function onResize($oldX, $oldY)
 	{
-		$this->layout->setSize($this->sizeX, $this->sizeY);
+		//$this->layout->setSize($this->sizeX, $this->sizeY);
 	}
 
 	function onScale($oldScale)
 	{
-		$this->layout->setScale($this->scale);
+		//$this->layout->setScale($this->scale);
 	}
 
-	function add(\ManiaLib\Gui\Drawable $drawable)
+	function add(Component $component)
 	{
-		$this->children[] = $drawable;
+		$this->children[] = $component;
 	}
 
 	function preFilter()
@@ -77,12 +82,12 @@ class Frame extends \ManiaLib\Gui\Component implements \ManiaLib\Gui\Drawable
 	{
 		if(!$this->xml)
 		{
-			$this->xml = \ManiaLib\Gui\Manialink::createElement('frame');
+			$this->xml = Manialink::createElement('frame');
 			$this->getParentNode()->appendChild($this->xml);
 		}
 
 		if($this->id !== null) $this->xml->setAttribute('id', $this->id);
-		
+
 		if($this->posX || $this->posY || $this->posZ)
 		{
 			$this->xml->setAttribute('posn', $this->posX.' '.$this->posY.' '.$this->posZ);
@@ -104,23 +109,35 @@ class Frame extends \ManiaLib\Gui\Component implements \ManiaLib\Gui\Drawable
 
 		$this->preFilter();
 
-		$layout = $this->getParentLayout();
-		if($layout instanceof Layouts\AbstractLayout)
+		if($this->layout instanceof AbstractLayout)
 		{
-			$layout->preFilter($this);
-			$layout->updateComponent($this);
+			$layout = $this->getParentLayout();
+			if($layout instanceof AbstractLayout)
+			{
+				$layout->preFilter($this->layout);
+				$layout->updateComponent($this);
+			}
 		}
 
 		$this->buildXML();
 
 		foreach($this->children as $child)
 		{
-			$child->save();
+			$child->setParentNode($this->xml);
+			$child->setParentLayout($this->layout);
+			$child->incPosZ(0.1);
+			if($child instanceof Drawable)
+			{
+				$child->save();
+			}
 		}
 
-		if($layout instanceof Layouts\AbstractLayout)
+		if($this->layout instanceof AbstractLayout)
 		{
-			$layout->postFilter($this);
+			if($layout instanceof AbstractLayout)
+			{
+				$layout->postFilter($this->layout);
+			}
 		}
 
 		$this->postFilter();

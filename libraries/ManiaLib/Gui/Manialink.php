@@ -115,7 +115,7 @@ abstract class Manialink
 		\ManiaLib\Gui\Layouts\AbstractLayout $layout = null)
 	{
 		$frame = new Elements\Frame();
-		$frame->setPosition($x, $y ,$z);
+		$frame->setPosition($x, $y, $z);
 		$frame->setScale($scale);
 		if($layout instanceof Layouts\AbstractLayout)
 		{
@@ -186,6 +186,11 @@ abstract class Manialink
 	static function createElement($tagName)
 	{
 		return self::$domDocument->createElement($tagName);
+	}
+
+	static function createComment($comment)
+	{
+		end(self::$parentNodes)->appendChild(self::$domDocument->createComment($comment));
 	}
 
 	/**

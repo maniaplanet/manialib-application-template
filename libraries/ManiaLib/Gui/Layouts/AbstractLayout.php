@@ -136,7 +136,7 @@ abstract class AbstractLayout extends \ManiaLib\Gui\Component
 		return $this->borderHeight;
 	}
 
-	final function updateComponent(\ManiaLib\Gui\Component $item)
+	final function updateComponent(\ManiaLib\Gui\ComponentBase $item)
 	{
 		$item->incPosX($this->xIndex);
 		$item->incPosY($this->yIndex);
