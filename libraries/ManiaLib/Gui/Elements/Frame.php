@@ -13,12 +13,11 @@
 namespace ManiaLib\Gui\Elements;
 
 use ManiaLib\Gui\Component;
-use ManiaLib\Gui\ComponentBase;
 use ManiaLib\Gui\Drawable;
 use ManiaLib\Gui\Layouts\AbstractLayout;
 use ManiaLib\Gui\Manialink;
 
-class Frame extends ComponentBase implements Drawable
+class Frame extends Component implements Drawable
 {
 
 	protected $xml;
@@ -55,12 +54,18 @@ class Frame extends ComponentBase implements Drawable
 
 	function onResize($oldX, $oldY)
 	{
-		//$this->layout->setSize($this->sizeX, $this->sizeY);
+		if($this->layout instanceof AbstractLayout)
+		{
+			$this->layout->setSize($this->sizeX, $this->sizeY);
+		}
 	}
 
 	function onScale($oldScale)
 	{
-		//$this->layout->setScale($this->scale);
+		if($this->layout instanceof AbstractLayout)
+		{
+			$this->layout->setScale($this->scale);
+		}
 	}
 
 	function add(Component $component)
@@ -118,6 +123,12 @@ class Frame extends ComponentBase implements Drawable
 				$layout->updateComponent($this);
 			}
 		}
+
+		$x = \ManiaLib\Gui\Tools::getAlignedPosX(0, $this->sizeX, $this->getHalign() ? : 'left', 'left');
+		$y = \ManiaLib\Gui\Tools::getAlignedPosY(0, $this->sizeY, $this->getValign() ? : 'top', 'top');
+
+		$this->incPosX($x);
+		$this->incPosY($y);
 
 		$this->buildXML();
 
