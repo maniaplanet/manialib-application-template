@@ -485,11 +485,8 @@ abstract class Element extends Component implements Drawable
 			return;
 		}
 
-		if(!$this->xml)
-		{
-			$this->xml = Manialink::createElement($this->xmlTagName);
-			$this->getParentNode()->appendChild($this->xml);
-		}
+		$this->xml = Manialink::createElement($this->xmlTagName);
+		$this->getParentNode()->appendChild($this->xml);
 
 		// Add id
 		if($this->id !== null) $this->xml->setAttribute('id', $this->id);
