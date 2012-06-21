@@ -188,7 +188,7 @@ abstract class Manialink
 		return self::$domDocument->createElement($tagName);
 	}
 
-	static function createComment($comment)
+	static function comment($comment)
 	{
 		end(self::$parentNodes)->appendChild(self::$domDocument->createComment($comment));
 	}
