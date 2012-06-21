@@ -207,10 +207,8 @@ abstract class Manialink
 
 	static function appendScript($maniaScript)
 	{
-		// TODO ManiaLib Use text node when Maniaplanet 2012-01-09 is pushed to GA
-		// see http://forum.maniaplanet.com/viewtopic.php?f=293&t=8087
 		$script = self::$domDocument->createElement('script');
-		$script->appendChild(self::$domDocument->createComment(' '.$maniaScript.' '));
+		$script->appendChild(self::$domDocument->createTextNode($maniaScript));
 		end(self::$parentNodes)->appendChild($script);
 	}
 
