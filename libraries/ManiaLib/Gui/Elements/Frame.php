@@ -124,8 +124,8 @@ class Frame extends Component implements Drawable
 			}
 		}
 
-		$x = \ManiaLib\Gui\Tools::getAlignedPosX(0, $this->sizeX, $this->getHalign() ? : 'left', 'left');
-		$y = \ManiaLib\Gui\Tools::getAlignedPosY(0, $this->sizeY, $this->getValign() ? : 'top', 'top');
+		$x = \ManiaLib\Gui\Tools::getAlignedPosX(0, $this->sizeX, $this->getHalign('left'), 'left');
+		$y = \ManiaLib\Gui\Tools::getAlignedPosY(0, $this->sizeY, $this->getValign('top'), 'top');
 
 		$this->incPosX($x);
 		$this->incPosY($y);
@@ -136,6 +136,7 @@ class Frame extends Component implements Drawable
 		{
 			$child->setParentNode($this->xml);
 			$child->setParentLayout($this->layout);
+			$child->setParentFrame($this);
 			$child->incPosZ(0.1);
 			if($child instanceof Drawable)
 			{

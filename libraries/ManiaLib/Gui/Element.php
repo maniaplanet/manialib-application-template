@@ -586,6 +586,23 @@ abstract class Element extends Component implements Drawable
 			$layout->updateComponent($this);
 		}
 
+		$frame = $this->getParentFrame();
+		if($frame instanceof Elements\Frame)
+		{
+			if($frame->getSizeX())
+			{
+				$x = Tools::getAlignedPosX($frame->getPosX(), $frame->getSizeX(), $frame->getHalign('left'),
+						$this->getRelativeHalign('left'));
+				$this->incPosX($x);
+			}
+			if($frame->getSizeY())
+			{
+				$y = Tools::getAlignedPosY($frame->getPosY(), $frame->getSizeY(), $frame->getValign('top'),
+						$this->getRelativeValign('top'));
+				$this->incPosY($y);
+			}
+		}
+
 		$this->buildXML();
 
 		if($layout instanceof Layouts\AbstractLayout)

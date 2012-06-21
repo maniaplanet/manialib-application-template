@@ -23,8 +23,10 @@ abstract class Component
 	protected $sizeX;
 	protected $sizeY;
 	protected $scale;
-	protected $valign = null;
-	protected $halign = null;
+	protected $valign;
+	protected $halign;
+	protected $relativeHalign;
+	protected $relativeValign;
 	protected $scriptEvents;
 
 	/**
@@ -36,6 +38,11 @@ abstract class Component
 	 * @var Layouts\AbstractLayout
 	 */
 	protected $parentLayout = false;
+
+	/**
+	 * @var Elements\Frame
+	 */
+	protected $parentFrame = false;
 
 	/**
 	 * Set the id of the element
@@ -281,6 +288,22 @@ abstract class Component
 		$this->onAlign($oldHalign, $oldValign);
 	}
 
+	function setRelativeHalign($halign)
+	{
+		$this->relativeHalign = $halign;
+	}
+
+	function setRelativeValign($valign)
+	{
+		$this->relativeValign = $valign;
+	}
+
+	function setRelativeAlign($halign = null, $valign = null)
+	{
+		$this->relativeHalign = $halign;
+		$this->relativeValign = $valign;
+	}
+
 	/**
 	 * Sets the width of the element
 	 * @param float
@@ -409,18 +432,28 @@ abstract class Component
 	 * Returns the horizontal alignment of the element
 	 * @return string
 	 */
-	function getHalign()
+	function getHalign($default = null)
 	{
-		return $this->halign;
+		return $this->halign ? : $default;
 	}
 
 	/**
 	 * Returns the vertical alignment of the element
 	 * @return string
 	 */
-	function getValign()
+	function getValign($default = null)
 	{
-		return $this->valign;
+		return $this->valign ? : $default;
+	}
+
+	function getRelativeHalign($default = null)
+	{
+		return $this->relativeHalign ? : $default;
+	}
+
+	function getRelativeValign($default = null)
+	{
+		return $this->relativeValign ? : $default;
 	}
 
 	function getScriptEvents()
@@ -428,20 +461,25 @@ abstract class Component
 		return $this->scriptEvents;
 	}
 
-	final function setParentNode(\DOMNode $node)
+	function setParentNode(\DOMNode $node)
 	{
 		$this->parentNode = $node;
 	}
 
-	final function setParentLayout($layout)
+	function setParentLayout($layout)
 	{
 		$this->parentLayout = $layout;
+	}
+
+	function setParentFrame(Elements\Frame $frame)
+	{
+		$this->parentFrame = $frame;
 	}
 
 	/**
 	 * @return \DOMNode
 	 */
-	final function getParentNode()
+	function getParentNode()
 	{
 		return $this->parentNode !== false ? $this->parentNode : end(Manialink::$parentNodes);
 	}
@@ -449,9 +487,17 @@ abstract class Component
 	/**
 	 * @return Layouts\AbstractLayout
 	 */
-	final function getParentLayout()
+	function getParentLayout()
 	{
 		return $this->parentLayout !== false ? $this->parentLayout : end(Manialink::$parentLayouts);
+	}
+
+	/**
+	 * @return Elements\Frame
+	 */
+	function getParentFrame()
+	{
+		return $this->parentFrame !== false ? $this->parentFrame : end(Manialink::$parentFrames);
 	}
 
 	/**
