@@ -591,14 +591,12 @@ abstract class Element extends Component implements Drawable
 		{
 			if($frame->getSizeX())
 			{
-				$x = Tools::getAlignedPosX($frame->getPosX(), $frame->getSizeX(), $frame->getHalign('left'),
-						$this->getRelativeHalign('left'));
+				$x = Tools::getAlignedPosX(0, $frame->getSizeX(), $frame->getHalign('left'), $this->getRelativeHalign('left'));
 				$this->incPosX($x);
 			}
 			if($frame->getSizeY())
 			{
-				$y = Tools::getAlignedPosY($frame->getPosY(), $frame->getSizeY(), $frame->getValign('top'),
-						$this->getRelativeValign('top'));
+				$y = Tools::getAlignedPosY(0, $frame->getSizeY(), $frame->getValign('top'), $this->getRelativeValign('top'));
 				$this->incPosY($y);
 			}
 		}
