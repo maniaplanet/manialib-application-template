@@ -194,6 +194,11 @@ class Response extends \ManiaLib\Utils\Singleton
 			}
 		}
 	}
+	
+	function registerException(\Exception $e)
+	{
+		$this->renderer->registerException($e);
+	}
 
 	public function render()
 	{

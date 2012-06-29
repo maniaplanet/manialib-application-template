@@ -12,6 +12,9 @@
 
 namespace ManiaLib\Application\Rendering;
 
+use ManiaLib\Application\ActionNotFoundException;
+use ManiaLib\Application\ControllerNotFoundException;
+
 class SimpleTemplates implements RendererInterface
 {
 
@@ -61,6 +64,14 @@ class SimpleTemplates implements RendererInterface
 	static function header()
 	{
 		header('Content-Type: text/html; charset=UTF-8');
+	}
+
+	static function registerException(\Exception $e)
+	{
+		if($e instanceof ControllerNotFoundException || $e instanceof ActionNotFoundException || $e instanceof ViewNotFoundException)
+		{
+			header('HTTP/1.0 404 Not Found');
+		}
 	}
 
 }

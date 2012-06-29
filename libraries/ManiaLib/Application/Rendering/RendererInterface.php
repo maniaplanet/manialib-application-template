@@ -17,5 +17,6 @@ interface RendererInterface
 	static function exists($viewName);
 	static function render($viewName);
 	static function redirect($URL);
+	static function registerException(\Exception $e);
 	static function header();
 }

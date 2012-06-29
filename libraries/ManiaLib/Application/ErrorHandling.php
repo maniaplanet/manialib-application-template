@@ -83,6 +83,7 @@ abstract class ErrorHandling
 		}
 		$response->backLink = $refererURL;
 		$response->registerErrorView();
+		$response->registerException($exception);
 	}
 
 	static function logException(\Exception $e)
