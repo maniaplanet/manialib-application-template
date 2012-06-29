@@ -16,6 +16,7 @@ use ManiaLib\Gui\Component;
 use ManiaLib\Gui\Drawable;
 use ManiaLib\Gui\Layouts\AbstractLayout;
 use ManiaLib\Gui\Manialink;
+use ManiaLib\Gui\Tools;
 
 class Frame extends Component implements Drawable
 {
@@ -124,7 +125,23 @@ class Frame extends Component implements Drawable
 			}
 		}
 
+		$frame = $this->getParentFrame();
+		if($frame instanceof Frame)
+		{
+			if($frame->getSizeX())
+			{
+				$x = Tools::getAlignedPosX(0, $frame->getSizeX(), $frame->getHalign('left'), $this->getRelativeHalign('left'));
+				$this->incPosX($x);
+			}
+			if($frame->getSizeY())
+			{
+				$y = Tools::getAlignedPosY(0, $frame->getSizeY(), $frame->getValign('top'), $this->getRelativeValign('top'));
+				$this->incPosY($y);
+			}
+		}
+
 		$this->buildXML();
+
 
 		foreach($this->children as $child)
 		{
