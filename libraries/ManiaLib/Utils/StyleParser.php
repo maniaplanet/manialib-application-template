@@ -21,8 +21,9 @@ class StyleParser
 	const ITALIC      = 0x2000;
 	const BOLD        = 0x4000;
 	const SHADOWED    = 0x8000;
-	const WIDE        = 0x10000;
-	const NARROW      = 0x20000;
+	const CAPITALIZED = 0x10000;
+	const WIDE        = 0x20000;
+	const NARROW      = 0x40000;
 	
 	static private $gameProtocol = 'maniaplanet';
 	static private $contrast = Color::CONTRAST_AUTO;
@@ -202,7 +203,6 @@ class StyleParser
 
 		$stylesStack = array();
 		$style = 0;
-		$capitalized = false;
 		$linkToken = null;
 		$linkStartLevel = 0;
 		$isManialink = false;
@@ -239,7 +239,7 @@ class StyleParser
 						$style &= ~(self::NARROW | self::WIDE);
 						break;
 					case 't':
-						$capitalized = !$capitalized;
+						$style ^= self::CAPITALIZED;
 						break;
 					case 'g':
 						$style &= empty($stylesStack) ? ~0x1fff : (end($stylesStack) | ~0x1fff);
@@ -368,7 +368,7 @@ class StyleParser
 				}
 			}
 			else
-				$newToken->text .= $capitalized ? strtoupper($rawToken) : $rawToken;
+				$newToken->text .= $rawToken;
 		}
 
 		if($newToken->text !== '')
@@ -419,6 +419,8 @@ class TextToken
 				$styles .= 'font-weight:bold;';
 			if($this->style & StyleParser::SHADOWED)
 				$styles .= 'text-shadow:1px 1px 1px rgba(0, 0, 0, 0.5);';
+			if($this->style & StyleParser::CAPITALIZED)
+				$this->text = strtoupper($this->text);
 			if($this->style & StyleParser::WIDE)
 				$styles .= 'letter-spacing:.1em;font-size:105%;';
 			else if($this->style & StyleParser::NARROW)
@@ -518,7 +520,7 @@ class LinkToken
 		}
 		$link = htmlentities($link, ENT_QUOTES, 'UTF-8');
 		$target = $this->isManialink ? '' : 'target="_blank"';
-		return sprintf('<a href="%s" %s>', $link, $target);
+		return sprintf('<a href="%s" %s style="color:inherit">', $link, $target);
 	}
 
 	function onImage($image, Font $font, $x, $y, $size, $color, $shadowOffset)
