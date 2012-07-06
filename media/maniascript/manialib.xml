@@ -28,7 +28,7 @@
 
 #Include "MathLib" as MathLib
 #Include "TextLib" as TextLib
-#RequireContext CGameManialinkScriptHandler
+#RequireContext CMlScript
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -42,6 +42,8 @@ declare Text[Text] _manialib_values;
 declare Text[][Text] _manialib_actions;
 declare Text[][][Text][Text] _manialib_event_listeners;
 declare Text[][][Text][Text] _manialib_event_listeners_dynamic;
+declare Text[] _manialib_action_all_ids;
+declare Boolean _manialib_action_all_ids_loaded;
 
 // UI specific
 
@@ -74,13 +76,13 @@ Real manialib_min(Real real1, Real real2)
         return real2;
 }
 
-Text manialib_event2text(CGameManialinkScriptEvent::Type eventType)
+Text manialib_event2text(CMlEvent::Type eventType)
 {
         declare _bindings = [
-                "mouseclick" => CGameManialinkScriptEvent::Type::MouseClick,
-                "mouseover" => CGameManialinkScriptEvent::Type::MouseOver,
-                "mouseout" => CGameManialinkScriptEvent::Type::MouseOut,
-                "keypress" => CGameManialinkScriptEvent::Type::KeyPress
+                "mouseclick" => CMlEvent::Type::MouseClick,
+                "mouseover" => CMlEvent::Type::MouseOver,
+                "mouseout" => CMlEvent::Type::MouseOut,
+                "keypress" => CMlEvent::Type::KeyPress
         ];
         if(_bindings.exists(eventType))
         {
@@ -239,7 +241,7 @@ Text weekDayFromDate(Integer year, Integer month, Integer day)
 
 Void manialib_hide(Text controlId)
 {
-        declare CGameManialinkControl control <=> Page.MainFrame.GetFirstChild(controlId);
+        declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
         if(control != Null)
         {
                 control.Hide();
@@ -253,7 +255,7 @@ Void manialib_hide(Text controlId)
 
 Void manialib_show(Text controlId)
 {
-        declare CGameManialinkControl control <=> Page.MainFrame.GetFirstChild(controlId);
+        declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
         if(control != Null)
         {
                 control.Show();
@@ -288,7 +290,7 @@ Void manialib_toggle(Text controlId)
 
 Void manialib_posx(Text controlId, Real posx)
 {
-        declare CGameManialinkControl control <=> Page.MainFrame.GetFirstChild(controlId);
+        declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
         if(control != Null)
         {
                 control.PosnX = posx;
@@ -301,7 +303,7 @@ Void manialib_posx(Text controlId, Real posx)
 
 Void manialib_posy(Text controlId, Real posy)
 {
-        declare CGameManialinkControl control <=> Page.MainFrame.GetFirstChild(controlId);
+        declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
         if(control != Null)
         {
                 control.PosnY = posy;
@@ -314,7 +316,7 @@ Void manialib_posy(Text controlId, Real posy)
 
 Void manialib_posz(Text controlId, Real posz)
 {
-        declare CGameManialinkControl control <=> Page.MainFrame.GetFirstChild(controlId);
+        declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
         if(control != Null)
         {
                 control.PosnZ = posz;
@@ -327,7 +329,7 @@ Void manialib_posz(Text controlId, Real posz)
 
 Void manialib_absolute_posx(Text controlId, Real posx)
 {
-	declare CGameManialinkControl control = Page.MainFrame.GetFirstChild(controlId);
+	declare CMlControl control = Page.MainFrame.GetFirstChild(controlId);
 	if(control != Null)
 	{
 		control.PosnX = control.PosnX + (posx - control.AbsolutePosition[0]);
@@ -340,7 +342,7 @@ Void manialib_absolute_posx(Text controlId, Real posx)
 
 Void manialib_absolute_posy(Text controlId, Real posy)
 {
-	declare CGameManialinkControl control = Page.MainFrame.GetFirstChild(controlId);
+	declare CMlControl control = Page.MainFrame.GetFirstChild(controlId);
 	if(control != Null)
 	{
 		control.PosnY = control.PosnY + (posy - control.AbsolutePosition[1]);
@@ -353,7 +355,7 @@ Void manialib_absolute_posy(Text controlId, Real posy)
 
 Void manialib_absolute_posz(Text controlId, Real posz)
 {
-	declare CGameManialinkControl control = Page.MainFrame.GetFirstChild(controlId);
+	declare CMlControl control = Page.MainFrame.GetFirstChild(controlId);
 	if(control != Null)
 	{
 		control.PosnZ = control.PosnZ + (posz - control.AbsolutePosition[2]);
@@ -367,14 +369,14 @@ Void manialib_absolute_posz(Text controlId, Real posz)
 // Weird function/hack for the tooltip feature
 Void manialib_move_to_mouse(Text controlId, Real offsetX, Real offsetY, Real boundingBoxX, Real boundingBoxY)
 {
-        declare CGameManialinkControl control <=> Page.MainFrame.GetFirstChild(controlId);
+        declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
         control.PosnX = manialib_min(MouseX + offsetX, 160.0 - boundingBoxX);
         control.PosnY = manialib_max(MouseY + offsetY, -90.0 + boundingBoxY);
 }
 
 Void manialib_set_text(Text controlId, Text newtext)
 {
-        declare CGameManialinkLabel control <=> (Page.MainFrame.GetFirstChild(controlId) as CGameManialinkLabel);
+        declare CMlLabel control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlLabel);
         if(control != Null)
         {
                 control.SetText(newtext);
@@ -387,7 +389,7 @@ Void manialib_set_text(Text controlId, Text newtext)
 
 Void manialib_set_entry_value(Text controlId, Text value)
 {
-        declare CGameManialinkEntry control <=> (Page.MainFrame.GetFirstChild(controlId) as CGameManialinkEntry);
+        declare CMlEntry control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlEntry);
         if(control != Null)
         {
                 control.Value = value;
@@ -400,7 +402,7 @@ Void manialib_set_entry_value(Text controlId, Text value)
 
 Void manialib_set_image(Text controlId, Text URL)
 {
-	declare CGameManialinkQuad control <=> (Page.MainFrame.GetFirstChild(controlId) as CGameManialinkQuad);
+	declare CMlQuad control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlQuad);
 	if(control != Null)
 	{
 		control.ImageUrl = URL;
@@ -427,9 +429,9 @@ Void manialib_ui_datepicker_update()
 	declare Integer startDay = manialib_date_weekday2int(weekDayFromDate(_manialib_ui_year,_manialib_ui_month,1));
 	declare Integer manialib_date_month_to_days = manialib_date_month_to_days(_manialib_ui_year,_manialib_ui_month);
 
-	declare CGameManialinkLabel label;
-	declare CGameManialinkFrame container <=> (Page.GetFirstChild("datepicker-days") as CGameManialinkFrame);
-	declare CGameManialinkLabel header_label <=> (Page.GetFirstChild("datepicker-header-label") as CGameManialinkLabel);
+	declare CMlLabel label;
+	declare CMlFrame container <=> (Page.GetFirstChild("datepicker-days") as CMlFrame);
+	declare CMlLabel header_label <=> (Page.GetFirstChild("datepicker-header-label") as CMlLabel);
 
 	header_label.SetText(manialib_date_month2str(_manialib_ui_month)^" "^_manialib_ui_year);
 
@@ -437,7 +439,7 @@ Void manialib_ui_datepicker_update()
 	declare Integer numDay = 1;
 
 	foreach(dayLabel in container.Controls) {
-		label <=> (dayLabel as CGameManialinkLabel);
+		label <=> (dayLabel as CMlLabel);
 
 		if (i < startDay)
 		{
@@ -523,43 +525,56 @@ Void manialib_action_register(Text id, Text[] action)
         _manialib_actions[id] = action;
 }
 
-CGameManialinkControl[] manialib_action_get_sub_controls(CGameManialinkFrame frame)
+Void manialib_action_load_all_ids()
 {
-	declare CGameManialinkControl[] controls;
-	foreach(control in frame.Controls)
+	if(_manialib_action_all_ids_loaded != True)
 	{
-		switchtype(control as _control)
+		declare CMlFrame[] _frame_stack;
+		_frame_stack.add(Page.MainFrame);
+		while(_frame_stack.count > 0)
 		{
-			case CGameManialinkControl:
-				controls.add(_control);
-		}
-	}
-	return controls;
-}
-
-CGameManialinkControl[] manialib_action_get_matching_controls(Text selector, CGameManialinkControl[] controls)
-{
-	declare CGameManialinkControl[] _controls;
-	declare _selector = TextLib::SubString(selector, 0, TextLib::Length(selector)-1);
-	foreach(control in controls) 
-	{
-		switchtype(control as _control)
-		{
-			case CGameManialinkFrame:
+			declare _currindex = _frame_stack.count - 1;
+			declare _frame = _frame_stack[_currindex];
+			_frame_stack.removekey(_currindex);
+			if(_frame.ControlId != "")
 			{
-				declare _subcontrols = manialib_action_get_matching_controls(selector, manialib_action_get_sub_controls(_control));
-				foreach(_subcontrol in _subcontrols)
+				_manialib_action_all_ids.add(_frame.ControlId);
+			}
+			foreach(_control in _frame.Controls)
+			{
+				switchtype(_control as __control)
 				{
-					_controls.add(_subcontrol);
+					case CMlFrame:
+					{
+						_frame_stack.add( __control);
+					}
+					default:
+					{
+						if(__control.ControlId != "")
+						{
+							_manialib_action_all_ids.add(__control.ControlId);
+						}
+					}
 				}
 			}
 		}
-		if(TextLib::SubText(control.ControlId, 0, TextLib::Length(_selector)) == _selector)
+	}
+	_manialib_action_all_ids_loaded = True;
+}
+
+Text[] manialib_action_get_matching_ids(Text selector)
+{
+	declare Text[] _ids;
+	declare _selector = TextLib::SubString(selector, 0, TextLib::Length(selector)-1);
+	manialib_action_load_all_ids();
+	foreach(controlId in _manialib_action_all_ids) 
+	{
+		if(TextLib::SubText(controlId, 0, TextLib::Length(_selector)) == _selector)
 		{
-			_controls.add(control);
+			_ids.add(controlId);
 		}
 	}
-	return _controls;
+	return _ids;
 }
 
 Void manialib_action_execute(Text[] action)
@@ -572,13 +587,11 @@ Void manialib_action_execute(Text[] action)
 		{
 			if(TextLib::SubString(action[1], TextLib::Length(action[1])-1, 1)=="*")
 			{
-				
-				declare __controls = manialib_action_get_sub_controls(Page.MainFrame);
-				declare _controls = manialib_action_get_matching_controls(action[1], __controls);
-				foreach(control in _controls) 
+				declare _ids = manialib_action_get_matching_ids(action[1]);
+				foreach(controlId in _ids) 
 				{
 					declare _action = action;
-					_action[1] = control.ControlId;
+					_action[1] = controlId;
 					manialib_action_execute(_action);
 				}
 				return;
@@ -685,7 +698,7 @@ Void manialib_action_execute(Text[] action)
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-Void manialib_event_add_listener(Text controlId, CGameManialinkScriptEvent::Type eventType, Text[] action)
+Void manialib_event_add_listener(Text controlId, CMlEvent::Type eventType, Text[] action)
 {
 	if(TextLib::SubString(controlId, TextLib::Length(controlId)-1, 1) == "*")
 	{
@@ -714,7 +727,7 @@ Void manialib_event_add_listener(Text controlId, CGameManialinkScriptEvent::Type
 	}
 }
 
-Void manialib_event_listener(CGameManialinkScriptEvent event)
+Void manialib_event_listener(CMlEvent event)
 {
 		foreach(dynamicControlId => __unused__ in _manialib_event_listeners_dynamic)
 		{
@@ -771,12 +784,12 @@ Void manialib_ui_datepicker_init(Text date_picker_result_id, Text date_picker_bu
 
 	declare Integer i;
 
-	manialib_event_add_listener("datepicker-close", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker", "hide", "none"]);
+	manialib_event_add_listener("datepicker-close", CMlEvent::Type::MouseClick, ["date_picker", "hide", "none"]);
 
-	manialib_event_add_listener("datepicker-header-next", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker", "update", "+1"]);
-	manialib_event_add_listener("datepicker-header-previous", CGameManialinkScriptEvent::Type::MouseClick, ["date_picker", "update", "-1"]);
+	manialib_event_add_listener("datepicker-header-next", CMlEvent::Type::MouseClick, ["date_picker", "update", "+1"]);
+	manialib_event_add_listener("datepicker-header-previous", CMlEvent::Type::MouseClick, ["date_picker", "update", "-1"]);
 
-	manialib_event_add_listener(date_picker_button_id, CGameManialinkScriptEvent::Type::MouseClick, ["move_to_mouse", "datepicker"]);
+	manialib_event_add_listener(date_picker_button_id, CMlEvent::Type::MouseClick, ["move_to_mouse", "datepicker"]);
 
 	manialib_ui_datepicker_event("update", "0");
 
@@ -784,7 +797,7 @@ Void manialib_ui_datepicker_init(Text date_picker_result_id, Text date_picker_bu
 
 	for (i, 1, 37)
 	{
-		manialib_event_add_listener("datepicker-day-"^TextLib::ToText(i), CGameManialinkScriptEvent::Type::MouseClick, ["date_picker","click",TextLib::ToText(i)]);
+		manialib_event_add_listener("datepicker-day-"^TextLib::ToText(i), CMlEvent::Type::MouseClick, ["date_picker","click",TextLib::ToText(i)]);
 	}
 }
 
@@ -795,27 +808,27 @@ Void manialib_ui_dialog(Text controlId, Text message, Text[] action)
 	manialib_hide("manialib-dialog");
 	manialib_posx("manialib-dialog", 0.0);
 
-	manialib_event_add_listener("manialib-dialog-no", CGameManialinkScriptEvent::Type::MouseClick, ["hide", "manialib-dialog"]);
-	manialib_event_add_listener("manialib-dialog-no", CGameManialinkScriptEvent::Type::MouseClick, ["enable_links"]);
+	manialib_event_add_listener("manialib-dialog-no", CMlEvent::Type::MouseClick, ["hide", "manialib-dialog"]);
+	manialib_event_add_listener("manialib-dialog-no", CMlEvent::Type::MouseClick, ["enable_links"]);
 
-	manialib_event_add_listener("manialib-dialog-yes", CGameManialinkScriptEvent::Type::MouseClick, ["hide", "manialib-dialog"]);
-	manialib_event_add_listener("manialib-dialog-yes", CGameManialinkScriptEvent::Type::MouseClick, ["enable_links"]);
-	manialib_event_add_listener("manialib-dialog-yes", CGameManialinkScriptEvent::Type::MouseClick, ["action_execute_id_from_values", "manialib-dialog-yes"]);
+	manialib_event_add_listener("manialib-dialog-yes", CMlEvent::Type::MouseClick, ["hide", "manialib-dialog"]);
+	manialib_event_add_listener("manialib-dialog-yes", CMlEvent::Type::MouseClick, ["enable_links"]);
+	manialib_event_add_listener("manialib-dialog-yes", CMlEvent::Type::MouseClick, ["action_execute_id_from_values", "manialib-dialog-yes"]);
 
-	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseClick, ["set_text", "manialib-dialog-text", message]);
-	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseClick, ["show", "manialib-dialog"]);
-	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseClick, ["disable_links"]);
-	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseClick, ["set_value", "manialib-dialog-yes", controlId]);
+	manialib_event_add_listener(controlId, CMlEvent::Type::MouseClick, ["set_text", "manialib-dialog-text", message]);
+	manialib_event_add_listener(controlId, CMlEvent::Type::MouseClick, ["show", "manialib-dialog"]);
+	manialib_event_add_listener(controlId, CMlEvent::Type::MouseClick, ["disable_links"]);
+	manialib_event_add_listener(controlId, CMlEvent::Type::MouseClick, ["set_value", "manialib-dialog-yes", controlId]);
 }
 
 Void manialib_ui_tooltip(Text controlId, Text message)
 {
 	manialib_hide("manialib-dialog");
 
-	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseOver, ["set_text", "manialib-tooltip-text", message]);
-	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseOver, ["show", "manialib-tooltip"]);
-	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseOver, ["move_to_mouse", "manialib-tooltip", "0.0", "-2.0", "75.0", "11.0"]);
-	manialib_event_add_listener(controlId, CGameManialinkScriptEvent::Type::MouseOut, ["hide", "manialib-tooltip"]);
+	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOver, ["set_text", "manialib-tooltip-text", message]);
+	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOver, ["show", "manialib-tooltip"]);
+	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOver, ["move_to_mouse", "manialib-tooltip", "0.0", "-2.0", "75.0", "11.0"]);
+	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOut, ["hide", "manialib-tooltip"]);
 }
 -->
 	</script>
