@@ -39,20 +39,24 @@ abstract class Tools
 	 * Converts a PHP array to a Text[] ManiaScript array (note the type!).
 	 * Usefull when used with "ManiaScript Framework Actions"
 	 */
-	static function array2maniascript(array $array)
+	static function array2maniascript(array $array, $preserveKeys = false)
 	{
-		if(!$array)
+		foreach($array as $k => $v)
 		{
-			// hack because "[]" is not supported and "Text[]" doesnt work yet
-			return '[""]';
-		}
-		$array = array_values($array);
-		$array = array_map(function($element)
+			if(is_array($v))
 			{
-				return '"'.Tools::escapeString($element).'"';
-			}, array_values($array));
-		$array = '['.implode(',', $array).']';
-		return $array;
+				$array[$k] = self::array2maniascript($v, $preserveKeys);
+			}
+			elseif($preserveKeys)
+			{
+				$array[$k] = sprintf('"%s"=>"%s"', self::escapeString($k), self::escapeString($v));
+			}
+			else
+			{
+				$array[$k] = sprintf('"%s"', self::escapeString($v));
+			}
+		}
+		return '['.implode(', ', $array).']';
 	}
 
 }
