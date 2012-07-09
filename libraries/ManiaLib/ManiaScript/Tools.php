@@ -44,7 +44,7 @@ abstract class Tools
 		if(!$array)
 		{
 			// hack because "[]" is not supported and "Text[]" doesnt work yet
-			return '[""]';
+			return $preserveKeys ? '[""=>""]' : '[""]';
 		}
 		foreach($array as $k => $v)
 		{
