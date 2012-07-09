@@ -41,6 +41,11 @@ abstract class Tools
 	 */
 	static function array2maniascript(array $array, $preserveKeys = false)
 	{
+		if(!$array)
+		{
+			// hack because "[]" is not supported and "Text[]" doesnt work yet
+			return '[""]';
+		}
 		foreach($array as $k => $v)
 		{
 			if(is_array($v))
