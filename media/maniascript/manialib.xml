@@ -329,7 +329,7 @@ Void manialib_posz(Text controlId, Real posz)
 
 Void manialib_absolute_posx(Text controlId, Real posx)
 {
-	declare CMlControl control = Page.MainFrame.GetFirstChild(controlId);
+	declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
 	if(control != Null)
 	{
 		control.PosnX = control.PosnX + (posx - control.AbsolutePosition[0]);
@@ -342,7 +342,7 @@ Void manialib_absolute_posx(Text controlId, Real posx)
 
 Void manialib_absolute_posy(Text controlId, Real posy)
 {
-	declare CMlControl control = Page.MainFrame.GetFirstChild(controlId);
+	declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
 	if(control != Null)
 	{
 		control.PosnY = control.PosnY + (posy - control.AbsolutePosition[1]);
@@ -355,7 +355,7 @@ Void manialib_absolute_posy(Text controlId, Real posy)
 
 Void manialib_absolute_posz(Text controlId, Real posz)
 {
-	declare CMlControl control = Page.MainFrame.GetFirstChild(controlId);
+	declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
 	if(control != Null)
 	{
 		control.PosnZ = control.PosnZ + (posz - control.AbsolutePosition[2]);
