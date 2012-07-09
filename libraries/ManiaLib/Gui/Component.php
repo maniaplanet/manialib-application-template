@@ -16,16 +16,33 @@ abstract class Component
 {
 
 	protected $id;
+	protected $visible = true;
 	protected $posX = 0;
 	protected $posY = 0;
 	protected $posZ = 0;
 	protected $sizeX;
 	protected $sizeY;
 	protected $scale;
-	protected $visible = true;
-	protected $valign = null;
-	protected $halign = null;
+	protected $valign;
+	protected $halign;
+	protected $relativeHalign;
+	protected $relativeValign;
 	protected $scriptEvents;
+
+	/**
+	 * @var \DOMNode
+	 */
+	protected $parentNode = false;
+
+	/**
+	 * @var Layouts\AbstractLayout
+	 */
+	protected $parentLayout = false;
+
+	/**
+	 * @var Elements\Frame
+	 */
+	protected $parentFrame = false;
 
 	/**
 	 * Set the id of the element
@@ -149,16 +166,86 @@ abstract class Component
 
 		$args = func_get_args();
 
-		if(!empty($args))
-			$this->posX = array_shift($args);
+		if(!empty($args)) $this->posX = array_shift($args);
 
-		if(!empty($args))
-			$this->posY = array_shift($args);
+		if(!empty($args)) $this->posY = array_shift($args);
 
-		if(!empty($args))
-			$this->posZ = array_shift($args);
+		if(!empty($args)) $this->posZ = array_shift($args);
 
 		$this->onMove($oldX, $oldY, $oldZ);
+	}
+
+	/**
+	 * Sets the scale factor of the element. 1=original size, 2=double size, 0.5
+	 * =half size
+	 * @param float
+	 */
+	function setScale($scale)
+	{
+		$oldScale = $this->scale;
+		$this->scale = $scale;
+		$this->onScale($oldScale);
+	}
+
+	/**
+	 * Sets the visibility of the Component.
+	 * This is used by ManiaLive.
+	 * @param bool $visible If set to false the Component (and subcomponents) is not rendered.
+	 */
+	function setVisibility($visible)
+	{
+		$this->visible = $visible;
+	}
+
+	function getId()
+	{
+		return $this->id;
+	}
+
+	/**
+	 * Returns the X position of the element
+	 * @return float
+	 */
+	function getPosX()
+	{
+		return $this->posX;
+	}
+
+	/**
+	 * Returns the Y position of the element
+	 * @return float
+	 */
+	function getPosY()
+	{
+		return $this->posY;
+	}
+
+	/**
+	 * Returns the Z position of the element
+	 * @return float
+	 */
+	function getPosZ()
+	{
+		return $this->posZ;
+	}
+
+	/**
+	 * Returns the scale of the element
+	 * @return float
+	 */
+	function getScale()
+	{
+		return $this->scale;
+	}
+
+	/**
+	 * Is the Component rendered onto the screen or not?
+	 * This is used by ManiaLive.
+	 * @return bool
+	 */
+	function isVisible()
+	{
+		return $this->visible;
 	}
 
 	/**
@@ -201,6 +288,22 @@ abstract class Component
 		$this->onAlign($oldHalign, $oldValign);
 	}
 
+	function setRelativeHalign($halign)
+	{
+		$this->relativeHalign = $halign;
+	}
+
+	function setRelativeValign($valign)
+	{
+		$this->relativeValign = $valign;
+	}
+
+	function setRelativeAlign($halign = null, $valign = null)
+	{
+		$this->relativeHalign = $halign;
+		$this->relativeValign = $valign;
+	}
+
 	/**
 	 * Sets the width of the element
 	 * @param float
@@ -235,76 +338,20 @@ abstract class Component
 
 		$args = func_get_args();
 
-		if(!empty($args))
-			$this->sizeX = array_shift($args);
+		if(!empty($args)) $this->sizeX = array_shift($args);
 
-		if(!empty($args))
-			$this->sizeY = array_shift($args);
+		if(!empty($args)) $this->sizeY = array_shift($args);
 
 		$this->onResize($oldX, $oldY);
-	}
-
-	/**
-	 * Sets the scale factor of the element. 1=original size, 2=double size, 0.5
-	 * =half size
-	 * @param float
-	 */
-	function setScale($scale)
-	{
-		$oldScale = $this->scale;
-		$this->scale = $scale;
-		$this->onScale($oldScale);
-	}
-
-	/**
-	 * Sets the visibility of the Component.
-	 * This is used by ManiaLive.
-	 * @param bool $visible If set to false the Component (and subcomponents) is not rendered.
-	 */
-	function setVisibility($visible)
-	{
-		$this->visible = $visible;
 	}
 
 	/**
 	 * Sets additional ManiaScript events to be generated for this element.
 	 * @param string
 	 */
-	function setScriptEvents($scriptEvent)
+	function setScriptEvents($scriptEvent = true)
 	{
 		$this->scriptEvents = $scriptEvent;
-	}
-
-	function getId()
-	{
-		return $this->id;
-	}
-
-	/**
-	 * Returns the X position of the element
-	 * @return float
-	 */
-	function getPosX()
-	{
-		return $this->posX;
-	}
-
-	/**
-	 * Returns the Y position of the element
-	 * @return float
-	 */
-	function getPosY()
-	{
-		return $this->posY;
-	}
-
-	/**
-	 * Returns the Z position of the element
-	 * @return float
-	 */
-	function getPosZ()
-	{
-		return $this->posZ;
 	}
 
 	/**
@@ -323,15 +370,6 @@ abstract class Component
 	function getSizeY()
 	{
 		return $this->sizeY;
-	}
-
-	/**
-	 * Returns the scale of the element
-	 * @return float
-	 */
-	function getScale()
-	{
-		return $this->scale;
 	}
 
 	/**
@@ -394,33 +432,72 @@ abstract class Component
 	 * Returns the horizontal alignment of the element
 	 * @return string
 	 */
-	function getHalign()
+	function getHalign($default = null)
 	{
-		return $this->halign;
+		return $this->halign ? : $default;
 	}
 
 	/**
 	 * Returns the vertical alignment of the element
 	 * @return string
 	 */
-	function getValign()
+	function getValign($default = null)
 	{
-		return $this->valign;
+		return $this->valign ? : $default;
 	}
 
-	/**
-	 * Is the Component rendered onto the screen or not?
-	 * This is used by ManiaLive.
-	 * @return bool
-	 */
-	function isVisible()
+	function getRelativeHalign($default = null)
 	{
-		return $this->visible;
+		return $this->relativeHalign ? : $default;
+	}
+
+	function getRelativeValign($default = null)
+	{
+		return $this->relativeValign ? : $default;
 	}
 
 	function getScriptEvents()
 	{
 		return $this->scriptEvents;
+	}
+
+	function setParentNode(\DOMNode $node)
+	{
+		$this->parentNode = $node;
+	}
+
+	function setParentLayout($layout)
+	{
+		$this->parentLayout = $layout;
+	}
+
+	function setParentFrame(Elements\Frame $frame)
+	{
+		$this->parentFrame = $frame;
+	}
+
+	/**
+	 * @return \DOMNode
+	 */
+	function getParentNode()
+	{
+		return $this->parentNode !== false ? $this->parentNode : end(Manialink::$parentNodes);
+	}
+
+	/**
+	 * @return Layouts\AbstractLayout
+	 */
+	function getParentLayout()
+	{
+		return $this->parentLayout !== false ? $this->parentLayout : end(Manialink::$parentLayouts);
+	}
+
+	/**
+	 * @return Elements\Frame
+	 */
+	function getParentFrame()
+	{
+		return $this->parentFrame !== false ? $this->parentFrame : end(Manialink::$parentFrames);
 	}
 
 	/**
@@ -434,23 +511,23 @@ abstract class Component
 	/**
 	 * Overridable callback on component change
 	 */
+	protected function onAlign($oldHalign, $oldValign)
+	{
+		
+	}
+
+	/**
+	 * Overridable callback on component change
+	 */
 	protected function onMove($oldX, $oldY, $oldZ)
 	{
 		
 	}
-	
+
 	/**
 	 * Overridable callback on component change
 	 */
 	protected function onScale($oldScale)
-	{
-		
-	}
-	
-	/**
-	 * Overridable callback on component change
-	 */
-	protected function onAlign($oldHalign, $oldValign)
 	{
 		
 	}

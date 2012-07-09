@@ -19,8 +19,21 @@ abstract class Manialink
 	 * @var \DOMDocument 
 	 */
 	public static $domDocument;
+
+	/**
+	 * @var \DOMNode[]
+	 */
 	public static $parentNodes;
+
+	/**
+	 * @var Layouts\AbstractLayout[]
+	 */
 	public static $parentLayouts;
+
+	/**
+	 * @var Elements\Frame[]
+	 */
+	public static $parentFrames;
 	public static $linksEnabled = true;
 	public static $langsURL;
 	public static $imagesURL;
@@ -45,6 +58,7 @@ abstract class Manialink
 		self::$domDocument = new \DOMDocument('1.0', 'utf-8');
 		self::$parentNodes = array();
 		self::$parentLayouts = array();
+		self::$parentFrames = array();
 
 		if($root)
 		{
@@ -100,39 +114,18 @@ abstract class Manialink
 	final public static function beginFrame($x = 0, $y = 0, $z = 0, $scale = null,
 		\ManiaLib\Gui\Layouts\AbstractLayout $layout = null)
 	{
-		// Update parent layout
-		$parentLayout = end(self::$parentLayouts);
-		if($parentLayout instanceof \ManiaLib\Gui\Layouts\AbstractLayout)
+		$frame = new Elements\Frame();
+		$frame->setPosition($x, $y, $z);
+		$frame->setScale($scale);
+		if($layout instanceof Layouts\AbstractLayout)
 		{
-			// If we have a current layout, we have a container size to deal with
-			if($layout instanceof \ManiaLib\Gui\Layouts\AbstractLayout)
-			{
-				$ui = new \ManiaLib\Gui\Elements\Spacer($layout->getSizeX(), $layout->getSizeY());
-				$ui->setPosition($x, $y, $z);
-
-				$parentLayout->preFilter($ui);
-				$x += $parentLayout->xIndex;
-				$y += $parentLayout->yIndex;
-				$z += $parentLayout->zIndex;
-				$parentLayout->postFilter($ui);
-			}
+			$frame->setLayout($layout);
 		}
+		$frame->buildXML();
 
-		// Create DOM element
-		$frame = self::$domDocument->createElement('frame');
-		if($x || $y || $z)
-		{
-			$frame->setAttribute('posn', $x.' '.$y.' '.$z);
-		}
-		end(self::$parentNodes)->appendChild($frame);
-		if($scale)
-		{
-			$frame->setAttribute('scale', $scale);
-		}
-
-		// Update stacks
-		self::$parentNodes[] = $frame;
-		self::$parentLayouts[] = $layout;
+		self::$parentFrames[] = $frame;
+		self::$parentNodes[] = $frame->getDOMElement();
+		self::$parentLayouts[] = $frame->getLayout();
 	}
 
 	/**
@@ -146,12 +139,13 @@ abstract class Manialink
 		}
 		array_pop(self::$parentNodes);
 		array_pop(self::$parentLayouts);
+		$frame = array_pop(self::$parentFrames);
+		$frame->save();
 	}
 
 	final static function setFrameId($id)
 	{
-		$frame = end(self::$parentNodes);
-		$frame->setAttribute('id', $id);
+		end(self::$parentFrames)->setId($id);
 	}
 
 	final static function setFrameScriptEvents($scriptEvents = 1)
@@ -189,6 +183,16 @@ abstract class Manialink
 		}
 	}
 
+	static function createElement($tagName)
+	{
+		return self::$domDocument->createElement($tagName);
+	}
+
+	static function comment($comment)
+	{
+		end(self::$parentNodes)->appendChild(self::$domDocument->createComment($comment));
+	}
+
 	/**
 	 * Append some XML code to the document
 	 * @param string Some XML code
@@ -203,10 +207,8 @@ abstract class Manialink
 
 	static function appendScript($maniaScript)
 	{
-		// TODO ManiaLib Use text node when Maniaplanet 2012-01-09 is pushed to GA
-		// see http://forum.maniaplanet.com/viewtopic.php?f=293&t=8087
 		$script = self::$domDocument->createElement('script');
-		$script->appendChild(self::$domDocument->createComment(' '.$maniaScript.' '));
+		$script->appendChild(self::$domDocument->createTextNode($maniaScript));
 		end(self::$parentNodes)->appendChild($script);
 	}
 

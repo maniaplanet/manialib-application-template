@@ -54,6 +54,11 @@ class Manialink implements RendererInterface
 		header('Content-Type: application/xml');
 		header('X-Powered-By: ManiaLib 2');
 	}
+	
+	static function registerException(\Exception $e)
+	{
+		
+	}
 
 }
 

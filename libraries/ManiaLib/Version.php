@@ -14,7 +14,7 @@ namespace ManiaLib;
 
 abstract class Version
 {
-	const VERSION = '2.1';
+	const VERSION = '3.0a';
 }
 
 ?>

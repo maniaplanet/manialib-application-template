@@ -62,7 +62,7 @@ abstract class Tools
 				break;
 
 			default:
-				throw new \Exception('GUITools: Unsupported positions');
+				throw new \Exception('GUITools: Unsupported positions: '.$alignmentString);
 		}
 		return $posX + $factor * $sizeX;
 	}
