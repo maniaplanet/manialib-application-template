@@ -1,5 +1,5 @@
 <frame>
-	<timeout>100</timeout>
+	<timeout>864000</timeout>
 	<script><!--
 /**
  * ManiaLib for ManiaScript
