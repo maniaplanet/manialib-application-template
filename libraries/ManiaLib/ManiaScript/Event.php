@@ -19,9 +19,9 @@ use ManiaLib\Gui\Manialink;
  */
 abstract class Event
 {
-	const mouseClick = 'CGameManialinkScriptEvent::Type::MouseClick';
-	const mouseOver = 'CGameManialinkScriptEvent::Type::MouseOver';
-	const mouseOut = 'CGameManialinkScriptEvent::Type::MouseOut';
+	const mouseClick = 'CMlEvent::Type::MouseClick';
+	const mouseOver = 'CMlEvent::Type::MouseOver';
+	const mouseOut = 'CMlEvent::Type::MouseOut';
 
 	static function addListener($controlId, $eventType, array $action)
 	{
