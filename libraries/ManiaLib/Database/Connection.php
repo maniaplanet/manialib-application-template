@@ -107,7 +107,7 @@ class Connection
 		$this->params = $params;
 
 		$this->connection = mysql_connect(
-			$this->params->host, $this->params->user, $this->params->password, null,
+			$this->params->host, $this->params->user, $this->params->password, true,
 			$this->params->ssl ? MYSQL_CLIENT_SSL : null);
 
 		if(!$this->connection)
