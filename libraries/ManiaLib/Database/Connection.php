@@ -78,6 +78,7 @@ class Connection
 		$params->password = $config->password;
 		$params->database = $config->database;
 		$params->charset = $config->charset;
+		$params->persistent = $config->persistent;
 
 		return self::factory($params);
 	}
@@ -106,9 +107,17 @@ class Connection
 		$this->config = Config::getInstance();
 		$this->params = $params;
 
-		$this->connection = mysql_connect(
-			$this->params->host, $this->params->user, $this->params->password, true,
-			$this->params->ssl ? MYSQL_CLIENT_SSL : null);
+		if($this->params->persistent)
+		{
+			$this->connection = mysql_pconnect(
+				$this->params->host, $this->params->user, $this->params->password, $this->params->ssl ? MYSQL_CLIENT_SSL : null);
+		}
+		else
+		{
+			$this->connection = mysql_connect(
+				$this->params->host, $this->params->user, $this->params->password, true,
+				$this->params->ssl ? MYSQL_CLIENT_SSL : null);
+		}
 
 		if(!$this->connection)
 		{
@@ -203,8 +212,7 @@ class Connection
 		$function = \ManiaLib\Utils\Arrays::get($frame, 'function');
 		$line = \ManiaLib\Utils\Arrays::get($frame, 'line');
 
-		$queryHeader = sprintf("/* Function: %s%s%s(), Line: %d*/ ", $class, $type,
-			$function, $line);
+		$queryHeader = sprintf("/* Function: %s%s%s(), Line: %d*/ ", $class, $type, $function, $line);
 		$query = $queryHeader.trim($query);
 		return $query;
 	}

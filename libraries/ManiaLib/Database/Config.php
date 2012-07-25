@@ -26,6 +26,7 @@ class Config extends \ManiaLib\Utils\Singleton
 	public $queryLog = false;
 	public $slowQueryLog = false;
 	public $slowQueryThreshold = 1500; // in ms
+	public $persistent = false;
 
 }
 

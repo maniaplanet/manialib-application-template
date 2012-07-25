@@ -58,6 +58,12 @@ class ConnectionParams
 	 * @var bool
 	 */
 	public $ssl = false;
+	
+	/**
+	 * Whether to use a persistant MySQL connection
+	 * @var bool
+	 */
+	public $persistent = false;
 
 }
 
