@@ -30,7 +30,7 @@ abstract class Manipulation
 
 	static function show($controlId)
 	{
-		$script = 'manialib_hide("%s"); ';
+		$script = 'manialib_show("%s"); ';
 		$controlId = Tools::escapeString($controlId);
 		$script = sprintf($script, $controlId);
 		Manialink::appendScript($script);
@@ -38,7 +38,7 @@ abstract class Manipulation
 
 	static function toggle($controlId)
 	{
-		$script = 'manialib_hide("%s"); ';
+		$script = 'manialib_toggle("%s"); ';
 		$controlId = Tools::escapeString($controlId);
 		$script = sprintf($script, $controlId);
 		Manialink::appendScript($script);
