@@ -2,8 +2,6 @@
 
 // Use statements helps keep code clean and simple
 // See: http://www.php.net/manual/en/language.namespaces.php
-
-
 use ManiaLib\Gui\Cards\Panel;
 use ManiaLib\Gui\Elements\Bgs1;
 use ManiaLib\Gui\Elements\Button;
