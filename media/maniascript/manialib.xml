@@ -658,8 +658,9 @@ Void manialib_action_execute(Text[] action)
 					manialib_set_image(action[1], action[2]);
 
                 case "move_to_mouse":
-                        // FIXME Because of a bug in TextLib::ToReal(), we cannot use the params
-                        manialib_move_to_mouse(action[1], 0.0, -2.0, 75.0, 11.0);
+                        manialib_move_to_mouse(action[1], 
+							TextLib::ToReal(action[2]), TextLib::ToReal(action[3]), 
+							TextLib::ToReal(action[4]), TextLib::ToReal(action[5]));
 
                 case "disable_links":
                         manialib_disable_links();
@@ -790,7 +791,7 @@ Void manialib_ui_datepicker_init(Text date_picker_result_id, Text date_picker_bu
 	manialib_event_add_listener("datepicker-header-next", CMlEvent::Type::MouseClick, ["date_picker", "update", "+1"]);
 	manialib_event_add_listener("datepicker-header-previous", CMlEvent::Type::MouseClick, ["date_picker", "update", "-1"]);
 
-	manialib_event_add_listener(date_picker_button_id, CMlEvent::Type::MouseClick, ["move_to_mouse", "datepicker"]);
+	manialib_event_add_listener(date_picker_button_id, CMlEvent::Type::MouseClick, ["move_to_mouse", "datepicker", "2.0", "-5.0", "70.0", "52.0"]);
 
 	manialib_ui_datepicker_event("update", "0");
 
@@ -828,7 +829,7 @@ Void manialib_ui_tooltip(Text controlId, Text message)
 
 	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOver, ["set_text", "manialib-tooltip-text", message]);
 	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOver, ["show", "manialib-tooltip"]);
-	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOver, ["move_to_mouse", "manialib-tooltip", "0.0", "-2.0", "75.0", "11.0"]);
+	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOver, ["move_to_mouse", "manialib-tooltip", "2.0", "-5.0", "75.0", "11.0"]);
 	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOut, ["hide", "manialib-tooltip"]);
 }
 -->
