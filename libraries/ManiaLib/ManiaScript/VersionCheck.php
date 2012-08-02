@@ -37,6 +37,7 @@ class VersionCheck implements \ManiaLib\Application\Filterable
 		{
 			$userAgent = \ManiaLib\Utils\Arrays::get($_SERVER, 'HTTP_USER_AGENT');
 			// FIXME use the rv: xxxxxxxx pattern instead, and introduce "version" and "revision"
+			// User Agent format: ManiaPlanet/3.2.0 (Windows; rv: 2012-07-25_18_15; context: browser)
 			
 			$regexp = '/ \(([0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}_[0-9]{2})\)/u';
 			if(preg_match($regexp, $userAgent, $matches) == 1)
