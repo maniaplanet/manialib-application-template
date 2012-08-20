@@ -30,6 +30,7 @@ abstract class Element extends Component implements Drawable
 	 */
 	protected $maniazone;
 	protected $bgcolor;
+	protected $bgcolorfocus;
 
 	/**
 	 * @deprecated
@@ -193,6 +194,13 @@ abstract class Element extends Component implements Drawable
 	function setBgcolor($bgcolor)
 	{
 		$this->bgcolor = $bgcolor;
+		$this->setStyle(null);
+		$this->setSubStyle(null);
+	}
+	
+	function setBgcolorFocus($bgcolor)
+	{
+		$this->bgcolorfocus = $bgcolor;
 		$this->setStyle(null);
 		$this->setSubStyle(null);
 	}
@@ -386,6 +394,11 @@ abstract class Element extends Component implements Drawable
 	{
 		return $this->bgcolor;
 	}
+	
+	function getBgcolorFocus()
+	{
+		return $this->bgcolorfocus;
+	}
 
 	/**
 	 * Returns the image placed in the element
@@ -512,6 +525,7 @@ abstract class Element extends Component implements Drawable
 		if($this->style !== null) $this->xml->setAttribute('style', $this->style);
 		if($this->subStyle !== null) $this->xml->setAttribute('substyle', $this->subStyle);
 		if($this->bgcolor !== null) $this->xml->setAttribute('bgcolor', $this->bgcolor);
+		if($this->bgcolorfocus !== null) $this->xml->setAttribute('bgcolorfocus', $this->bgcolorfocus);
 
 		// Add links
 		if(Manialink::$linksEnabled)
