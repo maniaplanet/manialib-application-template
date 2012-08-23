@@ -1,7 +1,7 @@
 <?php
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
- * 
+ *
  * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
@@ -21,7 +21,7 @@ class Connection
 	static protected $connections = array();
 
 	/**
-	 * @var \ManiaLib\Database\Config	
+	 * @var \ManiaLib\Database\Config
 	 */
 	protected $config;
 
@@ -64,9 +64,9 @@ class Connection
 	 */
 	static function getInstance()
 	{
-		if(\array_key_exists('default', self::$connections))
+		if(\array_key_exists('default', static::$connections))
 		{
-			return self::$connections['default'];
+			return static::$connections['default'];
 		}
 
 		$config = Config::getInstance();
@@ -80,13 +80,13 @@ class Connection
 		$params->charset = $config->charset;
 		$params->persistent = $config->persistent;
 
-		return self::factory($params);
+		return static::factory($params);
 	}
 
 	/**
 	 * Advanced connection retrieval. You can have multiple instances of the
 	 * Connection object so you can work with several MySQL servers. If you don't
-	 * give any parameters, it will work as self::getInstance()
+	 * give any parameters, it will work as static::getInstance()
 	 * @return \ManiaLib\Database\Connection
 	 */
 	static function factory(ConnectionParams $params)
@@ -95,11 +95,11 @@ class Connection
 		{
 			throw new Exception('ConnectionParams object has no ID');
 		}
-		if(!array_key_exists($params->id, self::$connections))
+		if(!array_key_exists($params->id, static::$connections))
 		{
-			self::$connections[$params->id] = new self($params);
+			static::$connections[$params->id] = new static($params);
 		}
-		return self::$connections[$params->id];
+		return static::$connections[$params->id];
 	}
 
 	protected function __construct(ConnectionParams $params)
@@ -252,9 +252,9 @@ class Connection
 	/**
 	 * ACID Transactions
 	 * ONLY WORKS WITH INNODB TABLES !
-	 * 
+	 *
 	 * ----
-	 * 
+	 *
 	 * It handles EXPERIMENTAL (== never tested!!!) nested transactions
 	 * one "BEGIN" on the first call of beginTransaction
 	 * one "COMMIT" on the last call of commitTransaction (when the ref count is 1)
@@ -278,7 +278,7 @@ class Connection
 	}
 
 	/**
-	 * @see self::beginTransaction()
+	 * @see static::beginTransaction()
 	 */
 	function commitTransaction()
 	{
@@ -308,7 +308,7 @@ class Connection
 	}
 
 	/**
-	 * @see self::beginTransaction()
+	 * @see static::beginTransaction()
 	 */
 	function rollbackTransaction()
 	{
