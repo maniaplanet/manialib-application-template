@@ -32,6 +32,7 @@ class Config extends \ManiaLib\Utils\Singleton
 	public $webapp = false;
 	public $debug = false;
 	public $pathInfoPrefix;
+	public $sessionUseURL = true;
 
 	function getMediaURL()
 	{

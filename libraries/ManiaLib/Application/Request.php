@@ -12,12 +12,15 @@
 
 namespace ManiaLib\Application;
 
+use InvalidArgumentException;
+use ManiaLib\Utils\Singleton;
+
 /**
  * Handles HTTP requests: retrieves params, creates links and redirections
  * 
- * @method \ManiaLib\Application\Request getInstance()
+ * @method Request getInstance()
  */
-class Request extends \ManiaLib\Utils\Singleton
+class Request extends Singleton
 {
 
 	protected $requestParams = array();
@@ -53,7 +56,7 @@ class Request extends \ManiaLib\Utils\Singleton
 		$this->appURL = $config->getLinkCreationURL();
 		$this->defaultController = $config->defaultController;
 
-		$session = \ManiaLib\Application\Session::getInstance();
+		$session = Session::getInstance();
 		$this->referer = $session->get('referer');
 		if($this->referer)
 		{
@@ -67,7 +70,7 @@ class Request extends \ManiaLib\Utils\Singleton
 		{
 			if(!Response::getInstance()->dialog)
 			{
-				$session = \ManiaLib\Application\Session::getInstance();
+				$session = Session::getInstance();
 				$session->set('referer', rawurlencode($this->registerRefererAtDestruct));
 			}
 		}
@@ -84,7 +87,7 @@ class Request extends \ManiaLib\Utils\Singleton
 	 * @param mixed
 	 * @return mixed
 	 */
-	function get($name, $default=null)
+	function get($name, $default = null)
 	{
 		if(array_key_exists($name, $this->params))
 		{
@@ -107,7 +110,7 @@ class Request extends \ManiaLib\Utils\Singleton
 	 * @param string Optional human readable name for error dialog
 	 * @return mixed
 	 */
-	function getStrict($name, $message=null)
+	function getStrict($name, $message = null)
 	{
 		if(array_key_exists($name, $this->params) && $this->params[$name])
 		{
@@ -115,11 +118,11 @@ class Request extends \ManiaLib\Utils\Singleton
 		}
 		elseif($message)
 		{
-			throw new \ManiaLib\Application\UserException($message);
+			throw new UserException($message);
 		}
 		else
 		{
-			throw new \InvalidArgumentException($name);
+			throw new InvalidArgumentException($name);
 		}
 	}
 
@@ -189,9 +192,9 @@ class Request extends \ManiaLib\Utils\Singleton
 	 * Returns the referer, or the specified default page, or index.php
 	 * @param string
 	 */
-	function getReferer($default=null)
+	function getReferer($default = null)
 	{
-		return $this->referer ?: ($default ?: $this->appURL);
+		return $this->referer ? : ($default ? : $this->appURL);
 	}
 
 	/**
@@ -312,17 +315,17 @@ class Request extends \ManiaLib\Utils\Singleton
 				throw new Exception('Request link: syntax error');
 			}
 		}
-		
+
 		$config = Config::getInstance();
-		
+
 		if($controller == $config->defaultController && !$action)
 		{
 			$controller = null;
 		}
-		
+
 		$url = $config->getLinkCreationURL();
 		$url .= Route::computeRoute($controller, $action);
-		$addSid = defined('SID') && SID && !array_key_exists(Session::NAME, $_COOKIE);
+		$addSid = $config->sessionUseURL && defined('SID') && SID && !array_key_exists(Session::NAME, $_COOKIE);
 		$sid = $addSid ? htmlspecialchars(SID) : '';
 		$queryString = http_build_query($params, '', '&');
 		return $url.($sid || $queryString ? '?' : '').$sid.($sid ? '&' : '').$queryString;
