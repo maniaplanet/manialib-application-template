@@ -67,7 +67,7 @@ class Controller
 			$controllerName;
 		if(!class_exists($controllerClass))
 		{
-			throw new ControllerNotFoundException('Controller not found: /'.$controllerName.'/'.(!empty($_SERVER['HTTP_REFERER']) ? ' ; referer:'.$_SERVER['HTTP_REFERER'] : ''));
+			throw new ControllerNotFoundException('Controller not found: /'.$controllerName.'/ ; '.\ManiaLib\Utils\Arrays::get($_SERVER, 'HTTP_REFERER'));
 		}
 
 		$viewsNS = & Config::getInstance()->viewsNS;
@@ -141,18 +141,18 @@ class Controller
 			catch(\Exception $e)
 			{
 				throw new ActionNotFoundException(
-					'Action not found: /'.$this->controllerName.'/'.$actionName.'/'.(!empty($_SERVER['HTTP_REFERER']) ? ';referer:'.$_SERVER['HTTP_REFERER'] : ''));
+					'Action not found: /'.$this->controllerName.'/'.$actionName.'/ ; '.\ManiaLib\Utils\Arrays::get($_SERVER, 'HTTP_REFERER'));
 			}
 		}
 		if(!$this->reflectionMethods[$actionName]->isPublic())
 		{
 			throw new ActionNotFoundException(
-				'Action not found: /'.$this->controllerName.'/'.$actionName.'/'.(!empty($_SERVER['HTTP_REFERER']) ? ' ; referer:'.$_SERVER['HTTP_REFERER'] : ''));
+				'Action not found: /'.$this->controllerName.'/'.$actionName.'/ ; '.\ManiaLib\Utils\Arrays::get($_SERVER, 'HTTP_REFERER'));
 		}
 		if($this->reflectionMethods[$actionName]->isFinal())
 		{
 			throw new ActionNotFoundException(
-				'Action not found: /'.$this->controllerName.'/'.$actionName.'/'.(!empty($_SERVER['HTTP_REFERER']) ? ' ; referer:'.$_SERVER['HTTP_REFERER'] : ''));
+				'Action not found: /'.$this->controllerName.'/'.$actionName.'/ ; '.\ManiaLib\Utils\Arrays::get($_SERVER, 'HTTP_REFERER'));
 		}
 	}
 
