@@ -813,6 +813,9 @@ Void manialib_ui_dialog(Text controlId, Text message, Text[] action)
 	manialib_event_add_listener("manialib-dialog-no", CMlEvent::Type::MouseClick, ["hide", "manialib-dialog"]);
 	manialib_event_add_listener("manialib-dialog-no", CMlEvent::Type::MouseClick, ["enable_links"]);
 
+	manialib_event_add_listener("manialib-dialog-blur", CMlEvent::Type::MouseClick, ["hide", "manialib-dialog"]);
+	manialib_event_add_listener("manialib-dialog-blur", CMlEvent::Type::MouseClick, ["enable_links"]);
+
 	manialib_event_add_listener("manialib-dialog-yes", CMlEvent::Type::MouseClick, ["hide", "manialib-dialog"]);
 	manialib_event_add_listener("manialib-dialog-yes", CMlEvent::Type::MouseClick, ["enable_links"]);
 	manialib_event_add_listener("manialib-dialog-yes", CMlEvent::Type::MouseClick, ["action_execute_id_from_values", "manialib-dialog-yes"]);
@@ -835,7 +838,7 @@ Void manialib_ui_tooltip(Text controlId, Text message)
 -->
 	</script>
 	<frame posn="320 0 4" id="manialib-dialog">
-		<quad sizen="320 200" halign="center" valign="center" style="Bgs1" substyle="BgDialogBlur" scriptevents="1"/>
+		<quad sizen="320 200" halign="center" valign="center" style="Bgs1" substyle="BgDialogBlur" scriptevents="1" id="manialib-dialog-blur"/>
 		<frame posn="-60 35 0.1">
 			<quad sizen="123 63" style="Bgs1InRace" substyle="Shadow"/>
 			<quad posn="1.5 -1.5 0.1" sizen="120 60" bgcolor="fffe"/>
