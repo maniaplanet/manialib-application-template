@@ -73,6 +73,15 @@ class Frame extends Component implements Drawable
 	{
 		$this->children[] = $component;
 	}
+	
+	function remove(Component $component)
+	{
+		$key = array_search($component, $this->children);
+		if($key !== false)
+		{
+			unset($this->children[$key]);
+		}
+	}
 
 	function preFilter()
 	{
