@@ -27,8 +27,7 @@ class VersionCheck implements \ManiaLib\Application\Filterable
 	static function version2timestamp($version)
 	{
 		$v = $version;
-		return mktime(substr($v, 14, 2), substr($v, 11, 2), 0, substr($v, 5, 2),
-				substr($v, 8, 2), substr($v, 0, 4));
+		return mktime(substr($v, 14, 2), substr($v, 11, 2), 0, substr($v, 5, 2), substr($v, 8, 2), substr($v, 0, 4));
 	}
 
 	static function getVersion()
@@ -38,13 +37,19 @@ class VersionCheck implements \ManiaLib\Application\Filterable
 			$userAgent = \ManiaLib\Utils\Arrays::get($_SERVER, 'HTTP_USER_AGENT');
 			// FIXME use the rv: xxxxxxxx pattern instead, and introduce "version" and "revision"
 			// User Agent format: ManiaPlanet/3.2.0 (Windows; rv: 2012-07-25_18_15; context: browser)
-			
+
 			$regexp = '/ \(([0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{2}_[0-9]{2})\)/u';
 			if(preg_match($regexp, $userAgent, $matches) == 1)
 			{
 				return $matches[1];
 			}
 		}
+	}
+
+	static function displayedInStation()
+	{
+		$userAgent = \ManiaLib\Utils\Arrays::get($_SERVER, 'HTTP_USER_AGENT');
+		return (strstr($userAgent, 'context: tablet') !== false);
 	}
 
 	static function displayErrorPage()
