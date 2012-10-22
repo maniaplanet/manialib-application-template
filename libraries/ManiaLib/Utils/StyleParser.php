@@ -350,8 +350,11 @@ class StyleParser
 					case 'a': case 'b': case 'c': case 'd': case 'e':
 					case 'f':
 						$hexCode = preg_replace('/[^0-9a-f]/iu', '0', $rawToken);
-						$style &= ~0xfff;
-						$style |= self::COLORED | Color::StringToRgb12($hexCode);
+						if(strlen($hexCode) == 3)
+						{
+							$style &= ~0xfff;
+							$style |= self::COLORED | Color::StringToRgb12($hexCode);
+						}
 				}
 
 				if($style != $newToken->style)
