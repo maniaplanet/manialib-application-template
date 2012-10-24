@@ -15,7 +15,7 @@ namespace ManiaLib\Utils;
 class StyleParser
 {
 	/**
-	 * Constant to represent a style using a bit mask, color is on the 12 right bits
+	 * Constants to represent a style using a bit mask, color is on the 12 right bits
 	 */
 	const COLORED     = 0x1000;
 	const ITALIC      = 0x2000;
@@ -196,27 +196,57 @@ class StyleParser
 		imagesetbrush($image, $brush);
 		imageline($image, $brushX, $brushY, $brushX, $brushY, IMG_COLOR_BRUSHED);
 	}
-
+	
 	static private function parseString($string)
 	{
-		$rawTokens = preg_split('/(\$(?:[0-9a-f][^\$]{0,2}|[lhp](?:\[.*?\])?|.))/iu', $string, null, PREG_SPLIT_DELIM_CAPTURE);
-
+		$tokens = array();
+		$textToken = new TextToken();
+		$linkToken = null;
+		
 		$stylesStack = array();
 		$style = 0;
-		$linkToken = null;
-		$linkStartLevel = 0;
-		$isManialink = false;
-		$link = null;
-
-		$tokens = array();
-		$newToken = new TextToken();
-		foreach($rawTokens as $rawToken)
-		{
-			if($rawToken === '')
-				continue;
-			if($rawToken[0] == '$')
+		
+		$isCode = false;
+		$isQuickLink = false;
+		$isPrettyLink = false;
+		$linkLevel = 0;
+		$color = '';
+		
+		$lambdaEndLink = function() use(&$tokens, &$textToken, &$linkToken, &$isQuickLink, &$isPrettyLink, &$style) {
+			if($textToken->text !== '')
 			{
-				switch(strtolower($rawToken[1]))
+				$tokens[] = $textToken;
+				$textToken = new TextToken($style);
+			}
+			else if(end($tokens) === $linkToken)
+				array_pop($tokens);
+			else
+				$tokens[] = new KnilToken();
+
+			$linkToken = null;
+			$isQuickLink = false;
+			$isPrettyLink = false;
+		};
+		$lambdaEndText = function($force=false) use(&$tokens, &$textToken, &$style) {
+			if($force || $style != $textToken->style)
+			{
+				if($textToken->text !== '')
+				{
+					$tokens[] = $textToken;
+					$textToken = new TextToken($style);
+				}
+				else
+					$textToken->style = $style;
+			}
+		};
+		
+		foreach(preg_split('//u', $string, -1, PREG_SPLIT_NO_EMPTY) as $char)
+		{
+			if($isCode)
+			{
+				$isManialink = false;
+				
+				switch($char)
 				{
 					case 'i':
 						$style ^= self::ITALIC;
@@ -246,74 +276,26 @@ class StyleParser
 						break;
 					case 'z':
 						$style = empty($stylesStack) ? 0 : end($stylesStack);
-
 						if($linkToken)
-						{
-							if($newToken->text !== '')
-							{
-								$tokens[] = $newToken;
-								if(!$linkToken->locked)
-									$linkToken->link .= $newToken->text;
-								$newToken = new TextToken($style);
-							}
-							else if(end($tokens) === $linkToken)
-							{
-								array_pop($tokens);
-								$linkToken = null;
-								break;
-							}
-
-							$tokens[] = new KnilToken();
-							$linkToken = null;
-						}
+							$lambdaEndLink();
 						break;
-
 					case 'h':
 					case 'p':
 						$isManialink = true;
 					case 'l':
-						$matches = array();
-						if(preg_match('/\[(.*?)\]/iu', $rawToken, $matches))
-							$link = $matches[1];
-
 						if($linkToken)
-						{
-							if($newToken->text !== '')
-							{
-								$tokens[] = $newToken;
-								if(!$linkToken->locked)
-									$linkToken->link .= $newToken->text;
-								$newToken = new TextToken($style);
-							}
-							else if(end($tokens) === $linkToken)
-							{
-								array_pop($tokens);
-								$linkToken = null;
-								break;
-							}
-
-							$tokens[] = new KnilToken();
-							if($link)
-								$newToken->text = $link;
-							$linkToken = null;
-						}
+							$lambdaEndLink();
 						else
 						{
-							if($newToken->text)
-							{
-								$tokens[] = $newToken;
-								$newToken = new TextToken($style);
-							}
-							$tokens[] = $linkToken = new LinkToken($link, $isManialink);
-							$linkStartLevel = count($stylesStack);
+							$lambdaEndText(true);
+							$tokens[] = $linkToken = new LinkToken($isManialink);
+							$isQuickLink = true;
+							$isPrettyLink = true;
+							$linkLevel = count($stylesStack);
 						}
-
-						$isManialink = false;
-						$link = null;
 						break;
-
 					case '$':
-						$newToken->text .= '$';
+						$textToken->text .= '$';
 						break;
 					case '<':
 						array_push($stylesStack, $style);
@@ -322,67 +304,73 @@ class StyleParser
 						if(!empty($stylesStack))
 						{
 							$style = array_pop($stylesStack);
-							
-							if($linkToken && $linkStartLevel > count($stylesStack))
-							{
-								if($newToken->text !== '')
-								{
-									$tokens[] = $newToken;
-									if(!$linkToken->locked)
-										$linkToken->link .= $newToken->text;
-									$newToken = new TextToken($style);
-								}
-								else if(end($tokens) === $linkToken)
-								{
-									array_pop($tokens);
-									$linkToken = null;
-									break;
-								}
-
-								$tokens[] = new KnilToken();
-								$linkToken = null;
-							}
+							if($linkToken && $linkLevel > count($stylesStack))
+								$lambdaEndLink();
 						}
 						break;
-
-					case '0': case '1': case '2': case '3': case '4':
-					case '5': case '6': case '7': case '8': case '9':
-					case 'a': case 'b': case 'c': case 'd': case 'e':
-					case 'f':
-						$hexCode = preg_replace('/[^0-9a-f]/iu', '0', $rawToken);
-						if(strlen($hexCode) == 4)
-						{
-							$style &= ~0xfff;
-							$style |= self::COLORED | Color::StringToRgb12($hexCode);
-						}
+					default:
+						if(stripos('0123456789abcdef', $char) !== false)
+							$color = $char;
 				}
-
-				if($style != $newToken->style)
+				
+				$lambdaEndText();
+				$isCode = false;
+			}
+			else if($char === '$')
+			{
+				$isCode = true;
+				$color = '';
+				if($isQuickLink && $isPrettyLink)
+					$isPrettyLink = false;
+			}
+			else if($color !== '')
+			{
+				$color .= preg_replace('/[^0-9a-f]/iu', '0', $char);
+				if(strlen($color) == 3)
 				{
-					if($newToken->text !== '')
-					{
-						$tokens[] = $newToken;
-						if($linkToken && !$linkToken->locked)
-							$linkToken->link .= $newToken->text;
-						$newToken = new TextToken($style);
-					}
-					else
-						$newToken->style = $style;
+					$style &= ~0xfff;
+					$style |= self::COLORED | Color::StringToRgb12($color);
+					
+					$lambdaEndText();
+					$color = '';
 				}
 			}
+			else if($isQuickLink && $isPrettyLink)
+			{
+				if($char === '[')
+					$isQuickLink = false;
+				else
+				{
+					$isPrettyLink = false;
+					$textToken->text .= $char;
+					$linkToken->link .= $char;
+				}
+			}
+			else if($isPrettyLink)
+			{
+				if($char === ']')
+					$isPrettyLink = false;
+				else
+					$linkToken->link .= $char;
+			}
 			else
-				$newToken->text .= $rawToken;
+			{
+				$textToken->text .= $char;
+				if($isQuickLink)
+					$linkToken->link .= $char;
+			}
 		}
 
-		if($newToken->text !== '')
-		{
-			$tokens[] = $newToken;
-			if($linkToken && !$linkToken->locked)
-				$linkToken->link .= $newToken->text;
-		}
+		if($textToken->text !== '')
+			$tokens[] = $textToken;
 
 		if($linkToken)
-			$tokens[] = new KnilToken();
+		{
+			if(end($tokens) === $linkToken)
+				array_pop($tokens);
+			else
+				$tokens[] = new KnilToken();
+		}
 
 		return $tokens;
 	}
@@ -421,7 +409,7 @@ class TextToken
 			if($this->style & StyleParser::BOLD)
 				$styles .= 'font-weight:bold;';
 			if($this->style & StyleParser::SHADOWED)
-				$styles .= 'text-shadow:1px 1px 1px rgba(0, 0, 0, 0.5);';
+				$styles .= 'text-shadow:1px 1px 1px rgba(0,0,0,.5);';
 			if($this->style & StyleParser::CAPITALIZED)
 				$this->text = strtoupper($this->text);
 			if($this->style & StyleParser::WIDE)
@@ -497,13 +485,11 @@ class LinkToken
 {
 	public $link;
 	public $isManialink;
-	public $locked;
 
-	function __construct($link, $isManialink)
+	function __construct($isManialink)
 	{
-		$this->link = $link;
+		$this->link = '';
 		$this->isManialink = $isManialink;
-		$this->locked = $link != null;
 	}
 
 	function __toString()
@@ -513,9 +499,7 @@ class LinkToken
 		{
 			$protocol = StyleParser::getGameProtocol().'://';
 			if(substr($link, 0, strlen($protocol)) != $protocol)
-			{
 				$link = StyleParser::getGameProtocol().':///:'.$link;
-			}
 		}
 		else if(!preg_match('/^[a-z][a-z0-9+.-]*:\/\//ui', $link))
 		{
