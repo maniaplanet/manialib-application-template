@@ -154,7 +154,7 @@ class Request extends Singleton
 	{
 		if(array_key_exists($name, $_POST) && $_POST[$name])
 		{
-			return $$_POST[$name];
+			return $_POST[$name];
 		}
 		elseif($message)
 		{
