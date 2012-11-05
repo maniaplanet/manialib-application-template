@@ -98,6 +98,24 @@ class Request extends Singleton
 			return $default;
 		}
 	}
+	
+	/**
+	 * Retrieves a POST parameter, or the default value if not found
+	 * @param string
+	 * @param mixed
+	 * @return mixed
+	 */
+	function getPost($name, $default = null)
+	{
+		if(array_key_exists($name, $_POST))
+		{
+			return $_POST[$name];
+		}
+		else
+		{
+			return $default;
+		}
+	}
 
 	function getAll()
 	{
@@ -115,6 +133,28 @@ class Request extends Singleton
 		if(array_key_exists($name, $this->params) && $this->params[$name])
 		{
 			return $this->params[$name];
+		}
+		elseif($message)
+		{
+			throw new UserException($message);
+		}
+		else
+		{
+			throw new InvalidArgumentException($name);
+		}
+	}
+	
+	/**
+	 * Retrieves a POST parameter, or throws an exception if not found or null
+	 * @param string
+	 * @param string Optional human readable name for error dialog
+	 * @return mixed
+	 */
+	function getPostStrict($name, $message = null)
+	{
+		if(array_key_exists($name, $_POST) && $_POST[$name])
+		{
+			return $$_POST[$name];
 		}
 		elseif($message)
 		{
