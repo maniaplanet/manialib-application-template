@@ -218,7 +218,7 @@ class StyleParser
 				$tokens[] = $textToken;
 				$textToken = new TextToken($style);
 			}
-			else if(end($tokens) === $linkToken)
+			if(end($tokens) === $linkToken)
 				array_pop($tokens);
 			else
 				$tokens[] = new KnilToken();
@@ -372,6 +372,7 @@ class StyleParser
 				$tokens[] = new KnilToken();
 		}
 
+		var_dump($tokens);
 		return $tokens;
 	}
 }
