@@ -372,7 +372,6 @@ class StyleParser
 				$tokens[] = new KnilToken();
 		}
 
-		var_dump($tokens);
 		return $tokens;
 	}
 }
