@@ -50,7 +50,14 @@ abstract class Tools
 		{
 			if(is_array($v))
 			{
-				$array[$k] = self::array2maniascript($v, $preserveKeys);
+				if($preserveKeys)
+				{
+					$array[$k] = sprintf('"%s"=>"%s"', self::escapeString($k), self::array2maniascript($v, $preserveKeys));
+				}
+				else
+				{
+					$array[$k] = self::array2maniascript($v, $preserveKeys);
+				}
 			}
 			elseif($preserveKeys)
 			{
