@@ -52,7 +52,7 @@ abstract class Tools
 			{
 				if($preserveKeys)
 				{
-					$array[$k] = sprintf('"%s"=>"%s"', self::escapeString($k), self::array2maniascript($v, $preserveKeys));
+					$array[$k] = sprintf('"%s"=>%s', self::escapeString($k), self::array2maniascript($v, $preserveKeys));
 				}
 				else
 				{
