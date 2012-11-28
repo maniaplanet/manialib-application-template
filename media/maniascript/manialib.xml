@@ -388,6 +388,17 @@ Void manialib_set_text(Text controlId, Text newtext)
         }
 }
 
+Text manialib_get_entry_value(Text controlId)
+{
+        declare CMlEntry control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlEntry);
+        if(control != Null)
+        {
+                return control.Value;
+        }
+		log("[WARNING] Trying to access an unkown element: " ^ controlId);
+		return "";
+}
+
 Void manialib_set_entry_value(Text controlId, Text value)
 {
         declare CMlEntry control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlEntry);
