@@ -546,7 +546,7 @@ Void manialib_action_load_all_ids()
 		while(_frame_stack.count > 0)
 		{
 			declare _currindex = _frame_stack.count - 1;
-			declare _frame = _frame_stack[_currindex];
+			declare CMlFrame _frame <=> _frame_stack[_currindex];
 			_frame_stack.removekey(_currindex);
 			if(_frame.ControlId != "")
 			{
@@ -694,10 +694,10 @@ Void manialib_action_execute(Text[] action)
 
                 // You can also just pass an empty array
                 case "":
-                        True;
+                        {}
 
                 case "none":
-                        True;
+                        {}
 
                 default:
                         log("[WARNING] Unkown action name: " ^ action[1]);
