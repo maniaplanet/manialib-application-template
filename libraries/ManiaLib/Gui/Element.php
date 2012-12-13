@@ -282,24 +282,6 @@ abstract class Element extends Component implements Drawable
 	}
 
 	/**
-	 * Returns the horizontal alignment of the element
-	 * @return string
-	 */
-	function getHalign()
-	{
-		return $this->halign;
-	}
-
-	/**
-	 * Returns the vertical alignment of the element
-	 * @return string
-	 */
-	function getValign()
-	{
-		return $this->valign;
-	}
-
-	/**
 	 * Returns the Manialink hyperlink of the element
 	 * @return string
 	 */

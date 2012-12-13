@@ -15,7 +15,7 @@ namespace ManiaLib\Gui\Elements;
 class Audio extends Music
 {
 
-	protected $xmlTagName = 'music';
+	protected $xmlTagName = 'audio';
 	protected $posX = 0;
 	protected $posY = 0;
 	protected $posZ = 0;
