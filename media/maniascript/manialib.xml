@@ -455,18 +455,20 @@ Void manialib_ui_datepicker_update()
 
 		if (i < startDay)
 		{
-			label.SetText("");
+			label.Hide();
 		}
 		else
 		{
 			if (numDay <= manialib_date_month_to_days)
 			{
 				label.SetText("$000"^(numDay));
+				label.Show();
 				numDay = numDay + 1;
 			}
 			else
 			{
-				label.SetText("");
+				//label.SetText("");
+				label.Hide();
 			}
 		}
 		i = i + 1;
