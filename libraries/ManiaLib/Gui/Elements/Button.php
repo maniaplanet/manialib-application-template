@@ -20,8 +20,8 @@ class Button extends \ManiaLib\Gui\Elements\Label
 	const CardButtonSmall = 'CardButtonSmall';
 	
 	const CardMain_Tool = 'CardMain_Tool';
-	const CardMain_Qui = 'CardButtonSmall';
-	const CardMain_Tool = 'CardButtonSmall';
+	const CardMain_Quit = 'CardMain_Quit';
+	const CardMain_Header = 'CardMain_Header';
 	
 	const CardButtonMediumL = 'CardButtonMediumL';
 	const CardButtonMediumS = 'CardButtonMediumS';
