@@ -27,6 +27,7 @@ class Request extends Singleton
 	protected $params = array();
 	protected $protectedParams = array();
 	protected $globalParams = array();
+	protected $fragment;
 	protected $registerRefererAtDestruct;
 	protected $appURL;
 	protected $action;
@@ -79,6 +80,15 @@ class Request extends Singleton
 	function exists($name)
 	{
 		return array_key_exists($name, $this->params);
+	}
+	
+	/**
+	 * Retriece the fragment
+	 * @return mixed
+	 */
+	function getFragment()
+	{
+		return $this->fragment;
 	}
 
 	/**
@@ -176,6 +186,11 @@ class Request extends Singleton
 	{
 		$this->params[$name] = $value;
 	}
+	
+	function setFragment($value)
+	{
+		$this->fragment = $value;
+	}
 
 	/**
 	 * Deletes a GET parameter
@@ -185,6 +200,12 @@ class Request extends Singleton
 	function delete($name)
 	{
 		unset($this->params[$name]);
+	}
+	
+	
+	function deleteFragment()
+	{
+		$this->fragment = null;
 	}
 
 	/**
@@ -368,7 +389,7 @@ class Request extends Singleton
 		$addSid = $config->sessionUseURL && defined('SID') && SID && !array_key_exists(Session::NAME, $_COOKIE);
 		$sid = $addSid ? htmlspecialchars(SID) : '';
 		$queryString = http_build_query($params, '', '&');
-		return $url.($sid || $queryString ? '?' : '').$sid.($sid ? '&' : '').$queryString;
+		return $url.($sid || $queryString ? '?' : '').$sid.($sid ? '&' : '').$queryString.($this->fragment ? '#'.$this->fragment : '');
 	}
 
 	/**

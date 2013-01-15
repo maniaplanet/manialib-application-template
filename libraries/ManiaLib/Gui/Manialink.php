@@ -15,6 +15,12 @@ namespace ManiaLib\Gui;
 abstract class Manialink
 {
 
+	const DEFAULT_BACKGROUND = 1;
+	const HIDE_BACKGROUND = 0;
+	const STARS_BACKGROUND = 'stars';
+	const STATIONS_BACKGROUND = 'stations';
+	const TITLE_BACKGROUND = 'title';
+	
 	/**
 	 * @var \DOMDocument 
 	 */
@@ -44,7 +50,7 @@ abstract class Manialink
 	 * anything with the toolkit.
 	 * @param bool Whether you want to create the root "<manialink>" element in the XML
 	 */
-	final public static function load($root = true, $timeout = 0, $version = 1, $background = 1)
+	final public static function load($root = true, $timeout = 0, $version = 1, $background = self::DEFAULT_BACKGROUND, $navigable3d = false)
 	{
 		if(class_exists('\ManiaLib\Application\Config'))
 		{
@@ -64,10 +70,8 @@ abstract class Manialink
 		{
 			$nodeManialink = self::$domDocument->createElement('manialink');
 			$nodeManialink->setAttribute('version', $version);
-			if(!$background)
-			{
-				$nodeManialink->setAttribute('background', 0);
-			}
+			$nodeManialink->setAttribute('background', $background);
+			$nodeManialink->setAttribute('navigable3d', (int)$navigable3d);
 			self::$domDocument->appendChild($nodeManialink);
 			self::$parentNodes[] = $nodeManialink;
 
