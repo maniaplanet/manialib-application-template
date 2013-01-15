@@ -18,6 +18,23 @@ class Button extends \ManiaLib\Gui\Elements\Label
 	const CardButtonMediumWide = 'CardButtonMediumWide';
 	const CardButtonSmallWide = 'CardButtonSmallWide';
 	const CardButtonSmall = 'CardButtonSmall';
+	
+	const CardMain_Tool = 'CardMain_Tool';
+	const CardMain_Qui = 'CardButtonSmall';
+	const CardMain_Tool = 'CardButtonSmall';
+	
+	const CardButtonMediumL = 'CardButtonMediumL';
+	const CardButtonMediumS = 'CardButtonMediumS';
+	const CardButtonMediumXL = 'CardButtonMediumXL';
+	const CardButtonMediumXS = 'CardButtonMediumXS';
+	const CardButtonMediumXXL = 'CardButtonMediumXXL';
+	const CardButtonMediumXXXL = 'CardButtonMediumXXXL';
+	const CardButtonSmallL = 'CardButtonSmallL';
+	const CardButtonSmallS = 'CardButtonSmallS';
+	const CardButtonSmallXL = 'CardButtonSmallXL';
+	const CardButtonSmallXS = 'CardButtonSmallXS';
+	const CardButtonSmallXXL = 'CardButtonSmallXXL';
+	const CardButtonSmallXXXL = 'CardButtonSmallXXXL';
 
 	protected $subStyle = null;
 	protected $style = self::CardButtonMedium;
