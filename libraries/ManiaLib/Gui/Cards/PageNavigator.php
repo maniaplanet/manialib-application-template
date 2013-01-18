@@ -57,7 +57,7 @@ class PageNavigator extends \ManiaLib\Gui\Component
 	 * @var \ManiaLib\Gui\Elements\Bgs1
 	 */
 	public $textBg;
-	public $arrowNoneStyle = \ManiaLib\Gui\Elements\Icons64x64_1::ClipPause;
+	public $arrowNoneStyle = \ManiaLib\Gui\Elements\Icons64x64_1::ArrowDisabled;
 	public $arrowNextStyle = \ManiaLib\Gui\Elements\Icons64x64_1::ArrowNext;
 	public $arrowPrevStyle = \ManiaLib\Gui\Elements\Icons64x64_1::ArrowPrev;
 	public $arrowFastNextStyle = \ManiaLib\Gui\Elements\Icons64x64_1::ArrowFastNext;
