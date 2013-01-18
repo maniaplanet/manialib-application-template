@@ -22,6 +22,7 @@ class Icons64x64_1 extends Icon
 	const Add = 'Add';
 	const Arrow = 'Arrow';
 	const ArrowBlue = 'ArrowBlue';
+	const ArrowDisabled = 'ArrowDisabled';
 	const ArrowDown = 'ArrowDown';
 	const ArrowFastNext = 'ArrowFastNext';
 	const ArrowFastPrev = 'ArrowFastPrev';
