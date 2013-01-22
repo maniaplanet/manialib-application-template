@@ -1,7 +1,7 @@
 <?php
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
- * 
+ *
  * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
@@ -22,7 +22,7 @@ abstract class UI
 
 	/**
 	 * Teh infamous dialog box
-	 * 
+	 *
 	 * @param string $openControlId Id of the element that will open the dialog when clicked
 	 * @param string $message Message to show in the dialog
 	 * @param array $action A ManiaScript Framework Action
@@ -39,7 +39,7 @@ abstract class UI
 
 	/**
 	 * Nice little tooltip when mousing over
-	 * 
+	 *
 	 * @param string $controlId Id of the element that will be tooltiped
 	 * @param string $message
 	 */
@@ -58,6 +58,14 @@ abstract class UI
 		$entryId = Tools::escapeString($entryId);
 		$openControlId = Tools::escapeString($openControlId);
 		$script = sprintf($script, $entryId, $openControlId);
+		Manialink::appendScript($script);
+	}
+
+	static function magnifier($imageId, $scale)
+	{
+		$script = 'manialib_ui_magnifier("%s", "%f"); ';
+		$controlId = Tools::escapeString($imageId);
+		$script = sprintf($script, $imageId, $scale);
 		Manialink::appendScript($script);
 	}
 

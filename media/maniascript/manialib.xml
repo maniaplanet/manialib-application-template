@@ -289,6 +289,19 @@ Void manialib_toggle(Text controlId)
 	}
 }
 
+Void manialib_scale(Text controlId, Real scale)
+{
+        declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
+        if(control != Null)
+        {
+                control.Scale = scale;
+        }
+        else
+        {
+                log("[WARNING] Trying to access an unkown element: " ^ controlId);
+        }
+}
+
 Void manialib_posx(Text controlId, Real posx)
 {
         declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
@@ -644,13 +657,16 @@ Void manialib_action_execute(Text[] action)
                         manialib_toggle(action[1]);
 
                 case "posx":
-					manialib_posx(action[1], TextLib::ToReal(action[2]));
+						manialib_posx(action[1], TextLib::ToReal(action[2]));
 
                 case "posy":
                         manialib_posy(action[1], TextLib::ToReal(action[2]));
 
                 case "posz":
                         manialib_posz(action[1], TextLib::ToReal(action[2]));
+						
+				case "scale":
+						manialib_scale(action[1], TextLib::ToReal(action[2]));
 
 				case "absolute_posx":
 					manialib_absolute_posx(action[1], TextLib::ToReal(action[2]));
@@ -837,6 +853,17 @@ Void manialib_ui_dialog(Text controlId, Text message, Text[] action)
 	manialib_event_add_listener(controlId, CMlEvent::Type::MouseClick, ["show", "manialib-dialog"]);
 	manialib_event_add_listener(controlId, CMlEvent::Type::MouseClick, ["disable_links"]);
 	manialib_event_add_listener(controlId, CMlEvent::Type::MouseClick, ["set_value", "manialib-dialog-yes", controlId]);
+}
+
+Void manialib_ui_magnifier(Text controlId, Text scale)
+{
+	declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
+	declare Text oldScale = TextLib::ToText(control.Scale);
+	declare Text oldPosnZ = TextLib::ToText(control.PosnZ);
+	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOver, ["scale", controlId, scale]);
+	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOver, ["posz", controlId, "20"]);
+	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOut, ["scale", controlId, oldScale]);
+	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOut, ["posz", controlId, oldPosnZ]);
 }
 
 Void manialib_ui_tooltip(Text controlId, Text message)

@@ -1,7 +1,7 @@
 <?php
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
- * 
+ *
  * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
@@ -14,7 +14,7 @@ namespace ManiaLib\ManiaScript;
 
 /**
  * ManiaScript Framework Action helper.
- * 
+ *
  * @see http://code.google.com/p/manialib/source/browse/trunk/media/maniascript/manialib.xml
  */
 abstract class Action
@@ -31,6 +31,7 @@ abstract class Action
 	const posx = 'posx';
 	const posy = 'posy';
 	const posz = 'posz';
+	const scale = 'scale';
 	const absolute_posx = 'posx';
 	const absolute_posy = 'posy';
 	const absolute_posz = 'posz';
