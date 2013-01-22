@@ -857,13 +857,12 @@ Void manialib_ui_dialog(Text controlId, Text message, Text[] action)
 
 Void manialib_ui_magnifier(Text controlId, Text scale)
 {
-	declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
-	declare Text oldScale = TextLib::ToText(control.Scale);
-	declare Text oldPosnZ = TextLib::ToText(control.PosnZ);
-	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOver, ["scale", controlId, scale]);
-	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOver, ["posz", controlId, "20"]);
-	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOut, ["scale", controlId, oldScale]);
-	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOut, ["posz", controlId, oldPosnZ]);
+	declare CMlQuad control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlQuad);
+
+	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOver, ["show", "manialib-magnifier"]);
+	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOver, ["set_image", "manialib-magnifier-image", control.ImageUrl]);
+	
+	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOut, ["hide", "manialib-magnifier"]);
 }
 
 Void manialib_ui_tooltip(Text controlId, Text message)
@@ -877,6 +876,9 @@ Void manialib_ui_tooltip(Text controlId, Text message)
 }
 -->
 	</script>
+	<frame id="manialib-magnifier">
+		<quad halign="center" valign="center" sizen="96 54 20" id="manialib-magnifier-image"/>
+	</frame>
 	<frame posn="320 0 4" id="manialib-dialog">
 		<quad sizen="320 200" halign="center" valign="center" style="Bgs1" substyle="BgDialogBlur" scriptevents="1" id="manialib-dialog-blur"/>
 		<frame posn="-60 35 0.1">
