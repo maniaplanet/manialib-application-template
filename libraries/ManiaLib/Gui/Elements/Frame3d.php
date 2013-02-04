@@ -25,6 +25,8 @@ class Frame3d extends Frame
 	const NavButton = 'NavButton';
 	const Window2 = 'Window2';
 	const Window3 = 'Window3';
+	const WindowH = 'WindowH';
+	const Generic = 'Generic';
 	const TitlePage = 'TitlePage';
 	const Title2 = 'Title2';
 	const Title3 = 'Title3';
@@ -51,6 +53,7 @@ class Frame3d extends Frame
 	function __construct($sizeX, $sizeY)
 	{
 		parent::__construct($sizeX, $sizeY);
+		$this->setLayout(new \ManiaLib\Gui\Layouts\Spacer($sizeX, $sizeY));
 
 		$this->halign = 'left';
 		$this->valign = 'top';
