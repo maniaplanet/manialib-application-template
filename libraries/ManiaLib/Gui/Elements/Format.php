@@ -82,6 +82,8 @@ class Format extends \ManiaLib\Gui\Element
 	protected $subStyle = null;
 	protected $textSize;
 	protected $textColor;
+	protected $textEmboss;
+	protected $textPrefix;
 
 	function __construct()
 	{
@@ -95,8 +97,6 @@ class Format extends \ManiaLib\Gui\Element
 	function setTextSize($textsize)
 	{
 		$this->textSize = $textsize;
-		$this->setStyle(null);
-		$this->setSubStyle(null);
 	}
 
 	/**
@@ -106,8 +106,24 @@ class Format extends \ManiaLib\Gui\Element
 	function setTextColor($textcolor)
 	{
 		$this->textColor = $textcolor;
-		$this->setStyle(null);
-		$this->setSubStyle(null);
+	}
+	
+	/**
+	 * Sets a shadow on the entire text
+	 * @param bool
+	 */
+	function setTextEmboss($emboss = true)
+	{
+		$this->textEmboss = $emboss;
+	}
+	
+	/**
+	 * Set a prefix to the text
+	 * @param string $prefix
+	 */
+	function setTextPrefix($prefix)
+	{
+		$this->textPrefix = $prefix;
 	}
 
 	/**
@@ -127,6 +143,24 @@ class Format extends \ManiaLib\Gui\Element
 	{
 		return $this->textColor;
 	}
+	
+	/**
+	 * Returns if the emboss
+	 * @return bool
+	 */
+	function getTextEmboss()
+	{
+		return $this->textEmboss;
+	}
+	
+	/**
+	 * Returns the text prefix
+	 * @return string
+	 */
+	function getTextPrefix()
+	{
+		return $this->textPrefix;
+	}
 
 	protected function postFilter()
 	{
@@ -134,6 +168,10 @@ class Format extends \ManiaLib\Gui\Element
 			$this->xml->setAttribute('textsize', $this->textSize);
 		if($this->textColor !== null)
 			$this->xml->setAttribute('textcolor', $this->textColor);
+		if($this->textEmboss !== null)
+			$this->xml->setAttribute('textemboss', $this->textEmboss);
+		if($this->textPrefix !== null)
+			$this->xml->setAttribute('textprefix', $this->textPrefix);
 	}
 
 }
