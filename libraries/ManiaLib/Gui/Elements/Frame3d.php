@@ -24,6 +24,7 @@ class Frame3d extends Frame
 	const BaseStation = 'BaseStation';
 	const BaseBoxCase = 'BaseBoxCase';
 	const Titlelogo = 'Titlelogo';
+	const ButtonBack = 'ButtonBack';
 	const ButtonNav = 'ButtonNav';
 	const ButtonH = 'ButtonH';
 	const Window = 'Window';
