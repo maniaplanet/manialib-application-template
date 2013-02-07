@@ -21,22 +21,15 @@ class Frame3d extends Frame
 {
 	protected $xmlTagName = 'frame3d';
 
-	const Back = 'Back';
-	const NavButton = 'NavButton';
-	const Window2 = 'Window2';
-	const Window3 = 'Window3';
-	const WindowH = 'WindowH';
-	const Generic = 'Generic';
-	const TitlePage = 'TitlePage';
-	const Title2 = 'Title2';
-	const Title3 = 'Title3';
-	const Title3_1 = 'Title3_1';
-	const Title3_2 = 'Title3_2';
-	const Title3_3 = 'Title3_3';
-	const Title3_4 = 'Title3_4';
-	const Title3_5 = 'Title3_5';
+	const BaseStation = 'BaseStation';
+	const BaseBoxCase = 'BaseBoxCase';
 	const Titlelogo = 'Titlelogo';
-
+	const ButtonNav = 'ButtonNav';
+	const ButtonH = 'ButtonH';
+	const Window = 'Window';
+	const Title = 'Title';
+	const TitleEditor = 'TitleEditor';
+	
 	protected $style = \ManiaLib\Gui\Elements\Bgs1::Bgs1;
 	protected $subStyle = \ManiaLib\Gui\Elements\Bgs1::BgTitle3_2;
 	protected $style3d = self::Title3_3;
