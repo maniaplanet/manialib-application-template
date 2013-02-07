@@ -33,7 +33,7 @@ class Frame3d extends Frame
 	
 	protected $style = \ManiaLib\Gui\Elements\Bgs1::Bgs1;
 	protected $subStyle = \ManiaLib\Gui\Elements\Bgs1::BgTitle3_2;
-	protected $style3d = self::Title3_3;
+	protected $style3d = self::Window;
 
 	protected $manialink;
 	protected $maniazone;
