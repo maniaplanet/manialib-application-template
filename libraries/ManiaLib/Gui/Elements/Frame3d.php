@@ -144,6 +144,8 @@ class Frame3d extends Frame
 	function buildXML()
 	{
 		parent::buildXML();
+		
+		if($this->scriptevents) $this->xml->setAttribute('scriptevents', $this->scriptevents);
 
 		if($this->style !== null) $this->xml->setAttribute('style', $this->style);
 		if($this->subStyle !== null) $this->xml->setAttribute('substyle', $this->subStyle);
