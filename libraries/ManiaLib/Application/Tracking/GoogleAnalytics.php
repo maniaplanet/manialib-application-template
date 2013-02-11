@@ -1,7 +1,7 @@
 <?php
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
- * 
+ *
  * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
@@ -140,7 +140,7 @@ class GoogleAnalytics
 	protected $visitorId;
 	protected $cookieNameSuffix;
 
-	function __construct($account, $cookieNameSuffix = null)
+	function __construct($account, $cookieNameSuffix = null, $domainName = null)
 	{
 		$this->utmac = $account;
 		$this->cookieNameSuffix = $cookieNameSuffix;
@@ -148,7 +148,7 @@ class GoogleAnalytics
 		$this->utmn = rand(1000000000, 9999999999);
 		$this->utmul = Arrays::get($_SERVER, 'HTTP_ACCEPT_LANGUAGE');
 		$this->utmr = Arrays::get($_SERVER, 'HTTP_REFERER');
-		$this->utmhn = Arrays::get($_SERVER, 'HTTP_HOST');
+		$this->utmhn = $domainName ? : Arrays::get($_SERVER, 'HTTP_HOST');
 		$this->utmp = Arrays::get($_SERVER, 'REQUEST_URI');
 	}
 
@@ -261,8 +261,8 @@ class GoogleAnalytics
 	 * Because I don't know the exact algorithm to encode data in utme, you should
 	 * only use alphanumeric chars in the parameters for now.
 	 * To quote official doc: "Value is encoded. Used for events and custom variables."
-	 * 
-	 * @see https://developers.google.com/analytics/resources/articles/gaTrackingTroubleshooting#gifParameters 
+	 *
+	 * @see https://developers.google.com/analytics/resources/articles/gaTrackingTroubleshooting#gifParameters
 	 * @beta
 	 */
 	function getEventTrackingURL($category, $action, $label, $value = null)

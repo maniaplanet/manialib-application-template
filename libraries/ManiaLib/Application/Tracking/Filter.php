@@ -1,7 +1,7 @@
 <?php
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
- * 
+ *
  * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
@@ -20,6 +20,7 @@ class Filter implements \ManiaLib\Application\Filterable
 	 */
 	protected $tracker;
 	protected $account;
+	protected $domainName;
 	protected $cookieNameSuffix;
 
 	function __construct($trackingAccount = null, $cookieNameSuffix=null)
@@ -37,11 +38,12 @@ class Filter implements \ManiaLib\Application\Filterable
 		{
 			$config = Config::getInstance();
 			$this->account = $config->account;
+			$this->domainName = $config->domainName;
 		}
 
 		if($this->account)
 		{
-			$this->tracker = new GoogleAnalytics($this->account, $this->cookieNameSuffix);
+			$this->tracker = new GoogleAnalytics($this->account, $this->cookieNameSuffix, $this->domainName);
 			$this->tracker->loadCookie();
 		}
 	}
