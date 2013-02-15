@@ -32,9 +32,9 @@ abstract class Action
 	const posy = 'posy';
 	const posz = 'posz';
 	const scale = 'scale';
-	const absolute_posx = 'posx';
-	const absolute_posy = 'posy';
-	const absolute_posz = 'posz';
+	const absolute_posx = 'absolute_posx';
+	const absolute_posy = 'absolute_posy';
+	const absolute_posz = 'absolute_posz';
 	const set_text = 'set_text';
 	const set_entry_value = 'set_entry_value';
 	const set_image = 'set_image';
