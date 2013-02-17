@@ -36,7 +36,7 @@ abstract class Formatting
 	 */
 	static function stripWideFonts($string)
 	{
-		return self::stripTag($string, 'wos');
+		return self::stripCodes($string, 'wos');
 	}
 
 	/**
