@@ -12,27 +12,26 @@
 
 namespace ManiaLib\Application\Filters;
 
+use ManiaLib\Application\Config;
+use ManiaLib\Application\Filterable;
+use ManiaLib\Utils\UserAgent;
+
 /**
  * User agent checker
  * Forces GameBox user agent, redirects to maniaplanet.com otherwise
  */
-class UserAgentCheck implements \ManiaLib\Application\Filterable
+class UserAgentCheck implements Filterable
 {
 
 	protected static $callback = array('\ManiaLib\Application\Filters\UserAgentCheck', 'defaultHTMLView');
 
+	/**
+	 * @deprecated user UserAgent::isManiaPlanet() instead
+	 */
 	static function isManiaplanet()
 	{
-		$userAgent = \ManiaLib\Utils\Arrays::get($_SERVER, 'HTTP_USER_AGENT');
-		$expectedAgent = 'ManiaPlanet';
-		$length = strlen($expectedAgent);
-		if(strlen($userAgent) < $length || substr($userAgent, 0, $length) != $expectedAgent)
-		{
-			return false;
-		}
-		return true;
+		return UserAgent::isManiaPlanet();
 	}
-
 
 	/**
 	 * Sets the callback when someone tries to access the Manialink from outside the game.
@@ -49,7 +48,7 @@ class UserAgentCheck implements \ManiaLib\Application\Filterable
 	 */
 	static function defaultHTMLView()
 	{
-		$MANIALINK = \ManiaLib\Application\Config::getInstance()->manialink;
+		$MANIALINK = Config::getInstance()->manialink;
 		$URL = $_SERVER["HTTP_HOST"].'/'.$_SERVER["REQUEST_URI"];
 		echo <<<HTML
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -123,9 +122,9 @@ HTML;
 
 	function preFilter()
 	{
-		if(!\ManiaLib\Application\Config::getInstance()->debug)
+		if(!Config::getInstance()->debug)
 		{
-			if(!self::isManiaplanet())
+			if(!UserAgent::isManiaPlanet())
 			{
 				call_user_func(self::$callback);
 			}
@@ -134,7 +133,7 @@ HTML;
 
 	function postFilter()
 	{
-
+		
 	}
 
 }
