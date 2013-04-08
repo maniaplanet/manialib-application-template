@@ -1,7 +1,7 @@
 <?php
 /**
  * ManiaLib - Lightweight PHP framework for Manialinks
- * 
+ *
  * @see         http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
  * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
@@ -43,6 +43,12 @@ abstract class UserAgent
 	{
 		preg_match('/context: ([[:alpha:]]+)/', self::get(), $matches);
 		return Arrays::get($matches, 1, $default);
+	}
+
+	static function getDistro()
+	{
+		preg_match('/distro: ([[:alpha:]]+)/', self::get(), $matches);
+		return Arrays::get($matches, 1, null);
 	}
 
 }
