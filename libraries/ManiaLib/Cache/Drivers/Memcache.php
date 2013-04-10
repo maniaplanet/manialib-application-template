@@ -59,7 +59,7 @@ class Memcache extends \ManiaLib\Utils\Singleton implements \ManiaLib\Cache\Cach
 		if(!$this->memcache->add($key, $value, false, $ttl))
 		{
 			$message = sprintf('Memcache::set() with key "%s" failed', $key);
-			//\ManiaLib\Utils\Logger::error($message);
+			\ManiaLib\Utils\Logger::error($message);
 		}
 	}
 
@@ -69,7 +69,7 @@ class Memcache extends \ManiaLib\Utils\Singleton implements \ManiaLib\Cache\Cach
 		if(!$this->memcache->replace($key, $value, false, $ttl))
 		{
 			$message = sprintf('Memcache::replace() with key "%s" failed', $key);
-			//\ManiaLib\Utils\Logger::error($message);
+			\ManiaLib\Utils\Logger::error($message);
 		}
 	}
 
@@ -79,7 +79,7 @@ class Memcache extends \ManiaLib\Utils\Singleton implements \ManiaLib\Cache\Cach
 		if(!$this->memcache->delete($key))
 		{
 			$message = sprintf('Memcache::delete() with key "%s" failed', $key);
-			//\ManiaLib\Utils\Logger::error($message);
+			\ManiaLib\Utils\Logger::error($message);
 		}
 	}
 
@@ -89,7 +89,7 @@ class Memcache extends \ManiaLib\Utils\Singleton implements \ManiaLib\Cache\Cach
 		if(!$this->memcache->increment($key))
 		{
 			$message = sprintf('Memcache::increment() with key "%s" failed', $key);
-			//\ManiaLib\Utils\Logger::error($message);
+			\ManiaLib\Utils\Logger::error($message);
 		}
 	}
 
