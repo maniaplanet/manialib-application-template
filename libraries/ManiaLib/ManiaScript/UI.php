@@ -38,6 +38,22 @@ abstract class UI
 	}
 
 	/**
+	 * Teh infamous dialog box
+	 *
+	 * @param string $openControlId Id of the element that will open the dialog when clicked
+	 * @param string $message Message to show in the dialog
+	 * @param array $action A ManiaScript Framework Action
+	 */
+	static function message($openControlId, $message)
+	{
+		$script = 'manialib_ui_message("%s", "%s"); ';
+		$openControlId = Tools::escapeString($openControlId);
+		$message = Tools::escapeString($message);
+		$script = sprintf($script, $openControlId, $message);
+		Manialink::appendScript($script);
+	}
+
+	/**
 	 * Nice little tooltip when mousing over
 	 *
 	 * @param string $controlId Id of the element that will be tooltiped

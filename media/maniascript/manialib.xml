@@ -709,6 +709,10 @@ Void manialib_action_execute(Text[] action)
 
 				case "date_picker":
 					manialib_ui_datepicker_event(action[1], action[2]);
+					
+				case "set_clublink":
+					SetLocalUserClubLink(action[1]);
+					
 
                 // You can also just pass an empty array
                 case "":
@@ -832,6 +836,22 @@ Void manialib_ui_datepicker_init(Text date_picker_result_id, Text date_picker_bu
 	}
 }
 
+Void manialib_ui_message(Text controlId, Text message)
+{
+	manialib_hide("manialib-message");
+	manialib_posx("manialib-message", 0.0);
+	
+	manialib_event_add_listener("manialib-message-blur", CMlEvent::Type::MouseClick, ["hide", "manialib-message"]);
+	manialib_event_add_listener("manialib-message-blur", CMlEvent::Type::MouseClick, ["enable_links"]);
+	
+	manialib_event_add_listener("manialib-message-ok", CMlEvent::Type::MouseClick, ["hide", "manialib-message"]);
+	manialib_event_add_listener("manialib-message-ok", CMlEvent::Type::MouseClick, ["enable_links"]);
+	
+	manialib_event_add_listener(controlId, CMlEvent::Type::MouseClick, ["set_text", "manialib-message-text", message]);
+	manialib_event_add_listener(controlId, CMlEvent::Type::MouseClick, ["show", "manialib-message"]);
+	manialib_event_add_listener(controlId, CMlEvent::Type::MouseClick, ["disable_links"]);
+}
+
 Void manialib_ui_dialog(Text controlId, Text message, Text[] action)
 {
 	manialib_action_register(controlId, action);
@@ -891,6 +911,15 @@ Void manialib_ui_tooltip(Text controlId, Text message)
 			<label id="manialib-dialog-text" posn="60 -25 0.8" sizen="110 7" halign="center" valign="center" style="TextTips" text="-" autonewline="1"/>
 			<label id="manialib-dialog-yes" posn="55 -47 0.8" sizen="35 7" halign="right" style="CardButtonMedium" scriptevents="1" text="Yes"/>
 			<label id="manialib-dialog-no" posn="65 -47 0.8" sizen="35 7" style="CardButtonMedium" scriptevents="1" text="No"/>
+		</frame>
+	</frame>
+	<frame posn="320 0 4" id="manialib-message">
+		<quad sizen="320 200" halign="center" valign="center" style="Bgs1" substyle="BgDialogBlur" scriptevents="1" id="manialib-message-blur"/>
+		<frame posn="-60 35 0.1">
+			<quad sizen="123 63" style="Bgs1InRace" substyle="Shadow"/>
+			<quad posn="1.5 -1.5 0.1" sizen="120 60" bgcolor="fffe"/>
+			<label id="manialib-message-text" posn="60 -25 0.8" sizen="110 7" halign="center" valign="center" style="TextTips" text="-" autonewline="1"/>
+			<label id="manialib-message-ok" posn="80 -47 0.8" sizen="35 7" halign="right" style="CardButtonMedium" scriptevents="1" text="Ok"/>
 		</frame>
 	</frame>
 	<frame posn="300 0 4.9" id="manialib-tooltip">

@@ -40,6 +40,7 @@ abstract class Action
 	const set_image = 'set_image';
 	const disable_links = 'disable_links';
 	const enable_links = 'enable_links';
+	const set_clublink = 'set_clublink';
 	const none = 'none';
 }
 
