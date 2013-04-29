@@ -23,6 +23,8 @@ class Music extends \ManiaLib\Gui\Element
 	protected $posZ = null;
 	protected $data;
 	protected $dataId;
+	protected $music;
+	protected $volume;
 
 	function __construct()
 	{
@@ -54,6 +56,25 @@ class Music extends \ManiaLib\Gui\Element
 	{
 		$this->dataId = $dataId;
 	}
+	
+	/**
+	 * Fi set to true will send the sound in the music mix 
+	 * (so that the volume gets controlled by the music slider instead of the sound volume slider)
+	 * @param bool $music
+	 */
+	function setMusic($music)
+	{
+		$this->music = $music;
+	}
+	
+	/**
+	 * Will change the sound attenuation. default value is 0.707 (-3dB)
+	 * @param float $volume
+	 */
+	function setVolume($volume)
+	{
+		$this->volume = $volume;
+	}
 
 	/**
 	 * Returns the data URL
@@ -72,6 +93,16 @@ class Music extends \ManiaLib\Gui\Element
 	{
 		return $this->dataId;
 	}
+	
+	function getMusic()
+	{
+		return $this->music;
+	}
+	
+	function getVolume()
+	{
+		return $this->volume;
+	}
 
 	protected function postFilter()
 	{
@@ -79,6 +110,10 @@ class Music extends \ManiaLib\Gui\Element
 			$this->xml->setAttribute('data', $this->data);
 		if($this->dataId !== null)
 			$this->xml->setAttribute('dataId', $this->dataId);
+		if($this->music !== null)
+			$this->xml->setAttribute('music', $this->music);
+		if($this->volume !== null)
+			$this->xml->setAttribute('volume', $this->volume);
 	}
 
 }

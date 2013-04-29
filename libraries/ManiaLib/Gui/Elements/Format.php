@@ -109,7 +109,8 @@ class Format extends \ManiaLib\Gui\Element
 	}
 	
 	/**
-	 * Sets a shadow on the entire text
+	 * Sets a shadow on the entire text.
+	 * Like "$s" modifier, except it is forced and further $s in the label won't cancel it.
 	 * @param bool
 	 */
 	function setTextEmboss($emboss = true)

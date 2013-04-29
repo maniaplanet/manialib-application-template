@@ -32,6 +32,47 @@ class Quad extends \ManiaLib\Gui\Element
 	protected $xmlTagName = 'quad';
 	protected $style = self::Bgs1;
 	protected $subStyle = \ManiaLib\Gui\Elements\Bgs1::BgWindow2;
+	
+	protected $colorize;
+	protected $modulateColor;
+	
+	/**
+	 * Takes as input an image with only pure green hue (black -> green -> white), and will change the hue. 
+	 * (and only the hue of the inpur color is used)
+	 * @param string $color
+	 */
+	function setColorize($color)
+	{
+		$this->colorize = $color;
+	}
+	
+	/**
+	 * will modulate the image with a color filter
+	 * (the color can be RGB RRGGBB RGBA RRGGBBAA)
+	 * @param string $color
+	 */
+	function setModulateColor($color)
+	{
+		$this->modulateColor = $color;
+	}
+	
+	function getColorize()
+	{
+		return $this->colorize;
+	}
+	
+	function getModulateColor()
+	{
+		return $this->modulateColor;
+	}
+	
+	protected function postFilter()
+	{
+		if($this->colorize !== null)
+			$this->xml->setAttribute('colorize', $this->colorize);
+		if($this->modulateColor !== null)
+			$this->xml->setAttribute('modulatecolor', $this->modulateColor);
+	}
 
 }
 

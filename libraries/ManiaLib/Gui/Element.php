@@ -31,6 +31,7 @@ abstract class Element extends Component implements Drawable
 	protected $maniazone;
 	protected $bgcolor;
 	protected $bgcolorfocus;
+	protected $opacity;
 
 	/**
 	 * @deprecated
@@ -203,6 +204,15 @@ abstract class Element extends Component implements Drawable
 		$this->bgcolorfocus = $bgcolor;
 		$this->setStyle(null);
 		$this->setSubStyle(null);
+	}
+	
+	/**
+	 * Set the opacity of a quad or a label
+	 * @param float $opacity
+	 */
+	function setOpacity($opacity)
+	{
+		$this->opacity = $opacity;
 	}
 
 	/**
@@ -381,6 +391,11 @@ abstract class Element extends Component implements Drawable
 	{
 		return $this->bgcolorfocus;
 	}
+	
+	function getOpacity()
+	{
+		return $this->opacity;
+	}
 
 	/**
 	 * Returns the image placed in the element
@@ -508,6 +523,7 @@ abstract class Element extends Component implements Drawable
 		if($this->subStyle !== null) $this->xml->setAttribute('substyle', $this->subStyle);
 		if($this->bgcolor !== null) $this->xml->setAttribute('bgcolor', $this->bgcolor);
 		if($this->bgcolorfocus !== null) $this->xml->setAttribute('bgcolorfocus', $this->bgcolorfocus);
+		if($this->opacity !== null) $this->xml->setAttribute('opacity', $this->opacity);
 
 		// Add links
 		if(Manialink::$linksEnabled)
@@ -534,6 +550,7 @@ abstract class Element extends Component implements Drawable
 		// Add Script Attributes
 		if($this->id) $this->xml->setAttribute('id', $this->id);
 		if($this->scriptevents !== null) $this->xml->setAttribute('scriptevents', $this->scriptevents);
+		if($this->hidden !== null) $this->xml->setAttribute('hidden', $this->hidden);
 	}
 
 	final protected function handleCardElements()

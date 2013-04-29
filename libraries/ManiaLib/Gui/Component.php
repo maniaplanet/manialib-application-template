@@ -17,6 +17,7 @@ abstract class Component
 
 	protected $id;
 	protected $visible = true;
+	protected $hidden;
 	protected $posX = 0;
 	protected $posY = 0;
 	protected $posZ = 0;
@@ -196,6 +197,16 @@ abstract class Component
 	{
 		$this->visible = $visible;
 	}
+	
+	/**
+	 * Sets the visibility of the Component.
+	 * Usefull when a script is going to init the values and show it later on
+	 * @param bool $hidden If set to false the Component (and subcomponents) is hidden.
+	 */
+	function setHidden($hidden)
+	{
+		$this->hidden = $hidden;
+	}
 
 	function getId()
 	{
@@ -246,6 +257,11 @@ abstract class Component
 	function isVisible()
 	{
 		return $this->visible;
+	}
+	
+	function isHidden()
+	{
+		return $this->hidden;
 	}
 
 	/**
