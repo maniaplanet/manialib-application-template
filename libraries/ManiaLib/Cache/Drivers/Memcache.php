@@ -16,15 +16,48 @@ namespace ManiaLib\Cache\Drivers;
  * Memcache driver based on the PECL\Memcache extension
  * @see http://www.php.net/manual/en/book.memcache.php
  */
-class Memcache extends \ManiaLib\Utils\Singleton implements \ManiaLib\Cache\CacheInterface
+class Memcache implements \ManiaLib\Cache\CacheInterface
 {
+	/**
+	 * @var array[\ManiaLib\Database\ConnectionParams]
+	 */
+	static protected $connections = array();
 
 	/**
 	 * @var \Memcache
 	 */
 	protected $memcache;
+	
+	static function getInstance()
+	{
+		if(\array_key_exists('default', static::$connections))
+		{
+			return static::$connections['default'];
+		}
 
-	protected function __construct()
+		$config = MemcacheConfig::getInstance();
+
+		$params = new MemcacheConnectionParams();
+		$params->id = 'default';
+		$params->hosts = $config->hosts;
+
+		return static::factory($params);
+	}
+	
+	static function factory(MemcacheConnectionParams $params)
+	{
+		if(!$params->id)
+		{
+			throw new \Exception('MemcacheConnectionParams object has no ID');
+		}
+		if(!array_key_exists($params->id, static::$connections))
+		{
+			static::$connections[$params->id] = new static($params);
+		}
+		return static::$connections[$params->id];
+	}
+
+	protected function __construct(MemcacheConnectionParams $params)
 	{
 		if(!class_exists('Memcache'))
 		{
@@ -32,8 +65,7 @@ class Memcache extends \ManiaLib\Utils\Singleton implements \ManiaLib\Cache\Cach
 		}
 		$this->memcache = new \Memcache();
 
-		$config = MemcacheConfig::getInstance();
-		foreach($config->hosts as $host)
+		foreach($params->hosts as $host)
 		{
 			$this->memcache->addServer($host);
 		}
