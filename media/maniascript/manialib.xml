@@ -713,10 +713,6 @@ Void manialib_action_execute(Text[] action)
 				case "set_clublink":
 					SetLocalUserClubLink(action[1]);
 
-				case "set_image":
-					
-
-
 				// You can also just pass an empty array
 				case "":
 						{}
