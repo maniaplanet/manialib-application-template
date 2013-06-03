@@ -19,12 +19,12 @@
  * happy to help:
  * http://forum.maniaplanet.com/viewforum.php?f=40
  *
- * @see         http://code.google.com/p/manialib/
+ * @see		 http://code.google.com/p/manialib/
  * @copyright   Copyright (c) 2009-2011 NADEO (http://www.nadeo.com)
- * @license     http://www.gnu.org/licenses/lgpl.html LGPL License 3
- * @version     $Revision$:
- * @author      $Author$:
- * @date        $Date$:
+ * @license	 http://www.gnu.org/licenses/lgpl.html LGPL License 3
+ * @version	 $Revision$:
+ * @author	  $Author$:
+ * @date		$Date$:
  */
 
 #Include "MathLib" as MathLib
@@ -61,50 +61,50 @@ declare Text _manialib_datepicker_button;
 
 Real manialib_max(Real real1, Real real2)
 {
-        if(real1 > real2)
-        {
-                return real1;
-        }
-        return real2;
+		if(real1 > real2)
+		{
+				return real1;
+		}
+		return real2;
 }
 
 Real manialib_min(Real real1, Real real2)
 {
-        if(real1 < real2)
-        {
-                return real1;
-        }
-        return real2;
+		if(real1 < real2)
+		{
+				return real1;
+		}
+		return real2;
 }
 
 Text manialib_event2text(CMlEvent::Type eventType)
 {
-        declare _bindings = [
-                "mouseclick" => CMlEvent::Type::MouseClick,
-                "mouseover" => CMlEvent::Type::MouseOver,
-                "mouseout" => CMlEvent::Type::MouseOut,
-                "keypress" => CMlEvent::Type::KeyPress
-        ];
-        if(_bindings.exists(eventType))
-        {
-                return _bindings.keyof(eventType);
-        }
-        log("[WARNING] Unkown event type: "^eventType);
-        return "";
+		declare _bindings = [
+				"mouseclick" => CMlEvent::Type::MouseClick,
+				"mouseover" => CMlEvent::Type::MouseOver,
+				"mouseout" => CMlEvent::Type::MouseOut,
+				"keypress" => CMlEvent::Type::KeyPress
+		];
+		if(_bindings.exists(eventType))
+		{
+				return _bindings.keyof(eventType);
+		}
+		log("[WARNING] Unkown event type: "^eventType);
+		return "";
 }
 
 Void manialib_set_value(Text name, Text value)
 {
-        _manialib_values[name] = value;
+		_manialib_values[name] = value;
 }
 
 Text manialib_get_value(Text name)
 {
-        if(_manialib_values.existskey(name))
-        {
-                return _manialib_values[name];
-        }
-        return "";
+		if(_manialib_values.existskey(name))
+		{
+				return _manialib_values[name];
+		}
+		return "";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -242,39 +242,39 @@ Text weekDayFromDate(Integer year, Integer month, Integer day)
 
 Void manialib_hide(Text controlId)
 {
-        declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
-        if(control != Null)
-        {
-                control.Hide();
-                _manialib_visibility[controlId] = False;
-        }
-        else
-        {
-                log("[WARNING] Trying to access an unkown element: " ^ controlId);
-        }
+		declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
+		if(control != Null)
+		{
+				control.Hide();
+				_manialib_visibility[controlId] = False;
+		}
+		else
+		{
+				log("[WARNING] Trying to access an unkown element: " ^ controlId);
+		}
 }
 
 Void manialib_show(Text controlId)
 {
-        declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
-        if(control != Null)
-        {
-                control.Show();
-                _manialib_visibility[controlId] = True;
-        }
-        else
-        {
-                log("[WARNING] Trying to access an unkown element: " ^ controlId);
-        }
+		declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
+		if(control != Null)
+		{
+				control.Show();
+				_manialib_visibility[controlId] = True;
+		}
+		else
+		{
+				log("[WARNING] Trying to access an unkown element: " ^ controlId);
+		}
 }
 
 Boolean manialib_visible(Text controlId)
 {
-        if(_manialib_visibility.existskey(controlId))
-        {
-                return _manialib_visibility[controlId];
-        }
-        return True;
+		if(_manialib_visibility.existskey(controlId))
+		{
+				return _manialib_visibility[controlId];
+		}
+		return True;
 }
 
 Void manialib_toggle(Text controlId)
@@ -291,54 +291,54 @@ Void manialib_toggle(Text controlId)
 
 Void manialib_scale(Text controlId, Real scale)
 {
-        declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
-        if(control != Null)
-        {
-                control.Scale = scale;
-        }
-        else
-        {
-                log("[WARNING] Trying to access an unkown element: " ^ controlId);
-        }
+		declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
+		if(control != Null)
+		{
+				control.Scale = scale;
+		}
+		else
+		{
+				log("[WARNING] Trying to access an unkown element: " ^ controlId);
+		}
 }
 
 Void manialib_posx(Text controlId, Real posx)
 {
-        declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
-        if(control != Null)
-        {
-                control.PosnX = posx;
-        }
-        else
-        {
-                log("[WARNING] Trying to access an unkown element: " ^ controlId);
-        }
+		declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
+		if(control != Null)
+		{
+				control.PosnX = posx;
+		}
+		else
+		{
+				log("[WARNING] Trying to access an unkown element: " ^ controlId);
+		}
 }
 
 Void manialib_posy(Text controlId, Real posy)
 {
-        declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
-        if(control != Null)
-        {
-                control.PosnY = posy;
-        }
-        else
-        {
-                log("[WARNING] Trying to access an unkown element: " ^ controlId);
-        }
+		declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
+		if(control != Null)
+		{
+				control.PosnY = posy;
+		}
+		else
+		{
+				log("[WARNING] Trying to access an unkown element: " ^ controlId);
+		}
 }
 
 Void manialib_posz(Text controlId, Real posz)
 {
-        declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
-        if(control != Null)
-        {
-                control.PosnZ = posz;
-        }
-        else
-        {
-                log("[WARNING] Trying to access an unkown element: " ^ controlId);
-        }
+		declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
+		if(control != Null)
+		{
+				control.PosnZ = posz;
+		}
+		else
+		{
+				log("[WARNING] Trying to access an unkown element: " ^ controlId);
+		}
 }
 
 Void manialib_absolute_posx(Text controlId, Real posx)
@@ -383,46 +383,46 @@ Void manialib_absolute_posz(Text controlId, Real posz)
 // Weird function/hack for the tooltip feature
 Void manialib_move_to_mouse(Text controlId, Real offsetX, Real offsetY, Real boundingBoxX, Real boundingBoxY)
 {
-        declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
-        control.PosnX = manialib_min(MouseX + offsetX, 160.0 - boundingBoxX);
-        control.PosnY = manialib_max(MouseY + offsetY, -90.0 + boundingBoxY);
+		declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
+		control.PosnX = manialib_min(MouseX + offsetX, 160.0 - boundingBoxX);
+		control.PosnY = manialib_max(MouseY + offsetY, -90.0 + boundingBoxY);
 }
 
 Void manialib_set_text(Text controlId, Text newtext)
 {
-        declare CMlLabel control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlLabel);
-        if(control != Null)
-        {
-                control.SetText(newtext);
-        }
-        else
-        {
-                log("[WARNING] Trying to access an unkown element: " ^ controlId);
-        }
+		declare CMlLabel control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlLabel);
+		if(control != Null)
+		{
+				control.SetText(newtext);
+		}
+		else
+		{
+				log("[WARNING] Trying to access an unkown element: " ^ controlId);
+		}
 }
 
 Text manialib_get_entry_value(Text controlId)
 {
-        declare CMlEntry control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlEntry);
-        if(control != Null)
-        {
-                return control.Value;
-        }
+		declare CMlEntry control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlEntry);
+		if(control != Null)
+		{
+				return control.Value;
+		}
 		log("[WARNING] Trying to access an unkown element: " ^ controlId);
 		return "";
 }
 
 Void manialib_set_entry_value(Text controlId, Text value)
 {
-        declare CMlEntry control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlEntry);
-        if(control != Null)
-        {
-                control.Value = value;
-        }
-        else
-        {
-                log("[WARNING] Trying to access an unkown element: " ^ controlId);
-        }
+		declare CMlEntry control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlEntry);
+		if(control != Null)
+		{
+				control.Value = value;
+		}
+		else
+		{
+				log("[WARNING] Trying to access an unkown element: " ^ controlId);
+		}
 }
 
 Void manialib_set_image(Text controlId, Text URL)
@@ -549,7 +549,7 @@ Void manialib_ui_datepicker_event(Text action, Text content)
 
 Void manialib_action_register(Text id, Text[] action)
 {
-        _manialib_actions[id] = action;
+		_manialib_actions[id] = action;
 }
 
 Void manialib_action_load_all_ids()
@@ -594,7 +594,7 @@ Text[] manialib_action_get_matching_ids(Text selector)
 	declare Text[] _ids;
 	declare _selector = TextLib::SubString(selector, 0, TextLib::Length(selector)-1);
 	manialib_action_load_all_ids();
-	foreach(controlId in _manialib_action_all_ids) 
+	foreach(controlId in _manialib_action_all_ids)
 	{
 		if(TextLib::SubText(controlId, 0, TextLib::Length(_selector)) == _selector)
 		{
@@ -607,15 +607,15 @@ Text[] manialib_action_get_matching_ids(Text selector)
 Void manialib_action_execute(Text[] action)
 {
 		if(action.count == 0)
-        {
+		{
 			return;
-        }
+		}
 		if(action.existskey(1))
 		{
 			if(TextLib::SubString(action[1], TextLib::Length(action[1])-1, 1)=="*")
 			{
 				declare _ids = manialib_action_get_matching_ids(action[1]);
-				foreach(controlId in _ids) 
+				foreach(controlId in _ids)
 				{
 					declare _action = action;
 					_action[1] = controlId;
@@ -624,47 +624,47 @@ Void manialib_action_execute(Text[] action)
 				return;
 			}
 		}
-        switch(action[0])
-        {
-                case "set_value":
-                        manialib_set_value(action[1], action[2]);
+		switch(action[0])
+		{
+				case "set_value":
+						manialib_set_value(action[1], action[2]);
 
-                case "manialink":
-                        OpenLink(action[1], ::LinkType::ManialinkBrowser);
+				case "manialink":
+						OpenLink(action[1], ::LinkType::ManialinkBrowser);
 
-                case "manialinkid":
-                        OpenLink(action[1], ::LinkType::ManialinkFromId);
+				case "manialinkid":
+						OpenLink(action[1], ::LinkType::ManialinkFromId);
 
-                case "external":
-                        OpenLink(action[1], ::LinkType::ExternalBrowser);
+				case "external":
+						OpenLink(action[1], ::LinkType::ExternalBrowser);
 
-                case "externalid":
-                        OpenLink(action[1], ::LinkType::ExternalFromId);
+				case "externalid":
+						OpenLink(action[1], ::LinkType::ExternalFromId);
 
-                case "goto":
-                        OpenLink(action[1], ::LinkType::Goto);
+				case "goto":
+						OpenLink(action[1], ::LinkType::Goto);
 
-                case "goto":
-                        OpenLink(action[1], ::LinkType::GotoFromId);
+				case "goto":
+						OpenLink(action[1], ::LinkType::GotoFromId);
 
-                case "hide":
-                        manialib_hide(action[1]);
+				case "hide":
+						manialib_hide(action[1]);
 
-                case "show":
-                        manialib_show(action[1]);
+				case "show":
+						manialib_show(action[1]);
 
-                case "toggle":
-                        manialib_toggle(action[1]);
+				case "toggle":
+						manialib_toggle(action[1]);
 
-                case "posx":
+				case "posx":
 						manialib_posx(action[1], TextLib::ToReal(action[2]));
 
-                case "posy":
-                        manialib_posy(action[1], TextLib::ToReal(action[2]));
+				case "posy":
+						manialib_posy(action[1], TextLib::ToReal(action[2]));
 
-                case "posz":
-                        manialib_posz(action[1], TextLib::ToReal(action[2]));
-						
+				case "posz":
+						manialib_posz(action[1], TextLib::ToReal(action[2]));
+
 				case "scale":
 						manialib_scale(action[1], TextLib::ToReal(action[2]));
 
@@ -677,53 +677,56 @@ Void manialib_action_execute(Text[] action)
 				case "absolute_posz":
 					manialib_absolute_posz(action[1], TextLib::ToReal(action[2]));
 
-                case "set_text":
-                        manialib_set_text(action[1], action[2]);
+				case "set_text":
+						manialib_set_text(action[1], action[2]);
 
-                case "set_entry_value":
-                        manialib_set_entry_value(action[1], action[2]);
+				case "set_entry_value":
+						manialib_set_entry_value(action[1], action[2]);
 
 				case "set_image":
 					manialib_set_image(action[1], action[2]);
 
-                case "move_to_mouse":
-                        manialib_move_to_mouse(action[1], 
-							TextLib::ToReal(action[2]), TextLib::ToReal(action[3]), 
+				case "move_to_mouse":
+						manialib_move_to_mouse(action[1],
+							TextLib::ToReal(action[2]), TextLib::ToReal(action[3]),
 							TextLib::ToReal(action[4]), TextLib::ToReal(action[5]));
 
-                case "disable_links":
-                        manialib_disable_links();
+				case "disable_links":
+						manialib_disable_links();
 
-                case "enable_links":
-                        manialib_enable_links();
+				case "enable_links":
+						manialib_enable_links();
 
-                // special case...
-                case "action_execute_id_from_values":
-                {
-                        declare id = manialib_get_value(action[1]);
-                        if(_manialib_actions.existskey(id))
-                        {
-                                manialib_action_execute(_manialib_actions[id]);
-                        }
-                }
+				// special case...
+				case "action_execute_id_from_values":
+				{
+						declare id = manialib_get_value(action[1]);
+						if(_manialib_actions.existskey(id))
+						{
+								manialib_action_execute(_manialib_actions[id]);
+						}
+				}
 
 				case "date_picker":
 					manialib_ui_datepicker_event(action[1], action[2]);
-					
+
 				case "set_clublink":
 					SetLocalUserClubLink(action[1]);
+
+				case "set_image":
 					
 
-                // You can also just pass an empty array
-                case "":
-                        {}
 
-                case "none":
-                        {}
+				// You can also just pass an empty array
+				case "":
+						{}
 
-                default:
-                        log("[WARNING] Unkown action name: " ^ action[1]);
-        }
+				case "none":
+						{}
+
+				default:
+						log("[WARNING] Unkown action name: " ^ action[1]);
+		}
 		return;
 }
 
@@ -739,26 +742,26 @@ Void manialib_event_add_listener(Text controlId, CMlEvent::Type eventType, Text[
 	{
 		declare controlIdDynamic = TextLib::SubString(controlId, 0, TextLib::Length(controlId)-1);
 		if(!_manialib_event_listeners_dynamic.existskey(controlIdDynamic))
-        {
-                _manialib_event_listeners_dynamic[controlIdDynamic] = Text[][][Text];
-        }
-        if(!_manialib_event_listeners_dynamic[controlIdDynamic].existskey(manialib_event2text(eventType)))
-        {
-                _manialib_event_listeners_dynamic[controlIdDynamic][manialib_event2text(eventType)] = Text[][];
-        }
-        _manialib_event_listeners_dynamic[controlIdDynamic][manialib_event2text(eventType)].add(action);
+		{
+				_manialib_event_listeners_dynamic[controlIdDynamic] = Text[][][Text];
+		}
+		if(!_manialib_event_listeners_dynamic[controlIdDynamic].existskey(manialib_event2text(eventType)))
+		{
+				_manialib_event_listeners_dynamic[controlIdDynamic][manialib_event2text(eventType)] = Text[][];
+		}
+		_manialib_event_listeners_dynamic[controlIdDynamic][manialib_event2text(eventType)].add(action);
 	}
 	else
 	{
 		if(!_manialib_event_listeners.existskey(controlId))
-        {
-                _manialib_event_listeners[controlId] = Text[][][Text];
-        }
-        if(!_manialib_event_listeners[controlId].existskey(manialib_event2text(eventType)))
-        {
-                _manialib_event_listeners[controlId][manialib_event2text(eventType)] = Text[][];
-        }
-        _manialib_event_listeners[controlId][manialib_event2text(eventType)].add(action);
+		{
+				_manialib_event_listeners[controlId] = Text[][][Text];
+		}
+		if(!_manialib_event_listeners[controlId].existskey(manialib_event2text(eventType)))
+		{
+				_manialib_event_listeners[controlId][manialib_event2text(eventType)] = Text[][];
+		}
+		_manialib_event_listeners[controlId][manialib_event2text(eventType)].add(action);
 	}
 }
 
@@ -793,14 +796,14 @@ Void manialib_event_listener(CMlEvent event)
 
 Void manialib_main_loop()
 {
-        while(True)
-        {
-                foreach(Event in PendingEvents)
-                {
-                        manialib_event_listener(Event);
-                }
-                yield;
-        }
+		while(True)
+		{
+				foreach(Event in PendingEvents)
+				{
+						manialib_event_listener(Event);
+				}
+				yield;
+		}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -840,13 +843,13 @@ Void manialib_ui_message(Text controlId, Text message)
 {
 	manialib_hide("manialib-message");
 	manialib_posx("manialib-message", 0.0);
-	
+
 	manialib_event_add_listener("manialib-message-blur", CMlEvent::Type::MouseClick, ["hide", "manialib-message"]);
 	manialib_event_add_listener("manialib-message-blur", CMlEvent::Type::MouseClick, ["enable_links"]);
-	
+
 	manialib_event_add_listener("manialib-message-ok", CMlEvent::Type::MouseClick, ["hide", "manialib-message"]);
 	manialib_event_add_listener("manialib-message-ok", CMlEvent::Type::MouseClick, ["enable_links"]);
-	
+
 	manialib_event_add_listener(controlId, CMlEvent::Type::MouseClick, ["set_text", "manialib-message-text", message]);
 	manialib_event_add_listener(controlId, CMlEvent::Type::MouseClick, ["show", "manialib-message"]);
 	manialib_event_add_listener(controlId, CMlEvent::Type::MouseClick, ["disable_links"]);
@@ -878,13 +881,13 @@ Void manialib_ui_dialog(Text controlId, Text message, Text[] action)
 Void manialib_ui_magnifier(Text controlId, Text scale)
 {
 	declare CMlQuad control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlQuad);
-	
+
 	manialib_posx("manialib-magnifier", 0.0);
 	manialib_hide("manialib-magnifier");
 
 	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOver, ["show", "manialib-magnifier"]);
 	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOver, ["set_image", "manialib-magnifier-image", control.ImageUrl]);
-	
+
 	manialib_event_add_listener(controlId, CMlEvent::Type::MouseOut, ["hide", "manialib-magnifier"]);
 }
 
