@@ -108,7 +108,7 @@ class Memcache implements \ManiaLib\Cache\CacheInterface
 	function delete($key)
 	{
 		$key = str_replace('\\', '/', $key);
-		if(!$this->memcache->delete($key))
+		if(!$this->memcache->delete($key, 0))
 		{
 			$message = sprintf('Memcache::delete() with key "%s" failed', $key);
 			\ManiaLib\Utils\Logger::error($message);
