@@ -902,7 +902,7 @@ Void manialib_ui_tooltip(Text controlId, Text message)
 		<quad halign="center" valign="center" sizen="100 58 20" posn="0 0" style="Bgs1" substyle="BgDialogBlur"/>
 		<quad halign="center" valign="center" sizen="96 54 21" id="manialib-magnifier-image"/>
 	</frame>
-	<frame posn="320 0 4" id="manialib-dialog">
+	<frame posn="320 0 25" id="manialib-dialog">
 		<quad sizen="320 200" halign="center" valign="center" style="Bgs1" substyle="BgDialogBlur" scriptevents="1" id="manialib-dialog-blur"/>
 		<frame posn="-60 35 0.1">
 			<quad sizen="123 63" style="Bgs1InRace" substyle="Shadow"/>
