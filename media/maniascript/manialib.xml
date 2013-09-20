@@ -712,6 +712,15 @@ Void manialib_action_execute(Text[] action)
 
 				case "set_clublink":
 					SetLocalUserClubLink(action[1]);
+					
+				case "browser_back":
+					BrowserBack();
+					
+				case "browser_quit":
+					BrowserQuit();
+					
+				case "browser_home":
+					BrowserHome();
 
 				// You can also just pass an empty array
 				case "":

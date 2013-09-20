@@ -41,6 +41,9 @@ abstract class Action
 	const disable_links = 'disable_links';
 	const enable_links = 'enable_links';
 	const set_clublink = 'set_clublink';
+	const browser_back = 'browser_back';
+	const browser_quit = 'browser_quit';
+	const browser_home = 'browser_home';
 	const none = 'none';
 }
 
