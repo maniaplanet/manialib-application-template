@@ -15,6 +15,8 @@ namespace ManiaLib\Application;
 abstract class ErrorHandling
 {
 
+	protected static $exception;
+	
 	protected static $messageConfigs = array(
 		'default' => array(
 			'title' => '%s',
@@ -28,6 +30,14 @@ abstract class ErrorHandling
 		),
 	);
 
+	/**
+	 * @return \Exception
+	 */
+	static function getException()
+	{
+		return static::$exception;
+	}
+	
 	/**
 	 * Error handler: converts PHP errors into ErrorException
 	 * 
@@ -45,6 +55,8 @@ abstract class ErrorHandling
 
 	static function exceptionHandler(\Exception $exception)
 	{
+		self::$exception = $exception;
+		
 		$request = Request::getInstance();
 		$refererURL = $request->getReferer();
 		$requestURI = \ManiaLib\Utils\URI::getCurrent();
