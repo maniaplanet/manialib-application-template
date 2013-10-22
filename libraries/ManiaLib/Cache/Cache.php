@@ -14,6 +14,7 @@ namespace ManiaLib\Cache;
 
 const APC = 'apc';
 const MEMCACHE = 'memcache';
+const MEMCACHED = 'memcached';
 const MYSQL = 'mysql';
 const NONE = 'nocache';
 
@@ -37,6 +38,7 @@ abstract class Cache
 			switch($driver)
 			{
 				case APC: return static::getDriver('APC');
+				case MEMCACHED: return static::getDriver('Memcached');
 				case MEMCACHE: return static::getDriver('Memcache');
 				case MYSQL: return static::getDriver('MySQL');
 				default: throw new Exception();
