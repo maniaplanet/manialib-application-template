@@ -38,7 +38,15 @@ abstract class Cache
 			switch($driver)
 			{
 				case APC: return static::getDriver('APC');
-				case MEMCACHED: return static::getDriver('Memcached');
+				case MEMCACHED: 
+					try
+					{
+						return static::getDriver('Memcached');
+					}
+					catch (Exception $e)
+					{
+						return static::getDriver('Memcache');
+					}
 				case MEMCACHE: return static::getDriver('Memcache');
 				case MYSQL: return static::getDriver('MySQL');
 				default: throw new Exception();
@@ -64,6 +72,7 @@ abstract class Cache
 
 	protected static function getDriver($driver)
 	{
+		\ManiaLib\Utils\Logger::info($driver);
 		$className = __NAMESPACE__.'\\Drivers\\'.$driver;
 		if(!class_exists($className))
 		{

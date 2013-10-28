@@ -56,7 +56,7 @@ class Memcached extends \ManiaLib\Utils\Singleton implements \ManiaLib\Cache\Cac
 	function add($key, $value, $ttl=0)
 	{
 		$key = str_replace('\\', '/', $key);
-		if(!$this->memcached->add($key, $value, false, $ttl))
+		if(!$this->memcached->add($key, $value, $ttl))
 		{
 			$message = sprintf('Memcache::set() with key "%s" failed', $key);
 			\ManiaLib\Utils\Logger::error($message);
@@ -66,7 +66,7 @@ class Memcached extends \ManiaLib\Utils\Singleton implements \ManiaLib\Cache\Cac
 	function replace($key, $value, $ttl=0)
 	{
 		$key = str_replace('\\', '/', $key);
-		if(!$this->memcached->replace($key, $value, false, $ttl))
+		if(!$this->memcached->replace($key, $value, $ttl))
 		{
 			$message = sprintf('Memcache::replace() with key "%s" failed', $key);
 			\ManiaLib\Utils\Logger::error($message);
