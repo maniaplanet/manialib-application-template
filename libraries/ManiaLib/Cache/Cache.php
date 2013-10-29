@@ -72,7 +72,6 @@ abstract class Cache
 
 	protected static function getDriver($driver)
 	{
-		\ManiaLib\Utils\Logger::info($driver);
 		$className = __NAMESPACE__.'\\Drivers\\'.$driver;
 		if(!class_exists($className))
 		{
