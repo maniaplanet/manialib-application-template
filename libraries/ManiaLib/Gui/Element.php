@@ -551,6 +551,12 @@ abstract class Element extends Component implements Drawable
 		if($this->id) $this->xml->setAttribute('id', $this->id);
 		if($this->scriptevents !== null) $this->xml->setAttribute('scriptevents', $this->scriptevents);
 		if($this->hidden !== null) $this->xml->setAttribute('hidden', $this->hidden);
+                
+                // Add all other attributes
+                foreach($this->attributes as $name => $value)
+                {
+                    $this->xml->setAttribute($name, $value);
+                }
 	}
 
 	final protected function handleCardElements()

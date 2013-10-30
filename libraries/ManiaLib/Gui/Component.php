@@ -29,6 +29,11 @@ abstract class Component
 	protected $relativeHalign;
 	protected $relativeValign;
 	protected $scriptEvents;
+	
+        /**
+         * @var array 
+         */
+	protected $attributes = array();
 
 	/**
 	 * @var \DOMNode
@@ -44,6 +49,24 @@ abstract class Component
 	 * @var Elements\Frame
 	 */
 	protected $parentFrame = false;
+	
+	/**
+	 * @param string $name 
+	 * @param mixed $value 
+	 */
+	function setAttribute($name, $value)
+	{
+		$this->attributes[$name] = $value;
+	}
+	
+        /**
+         * @param string $name
+         * @return mixed
+         */
+	function getAttribute($name)
+	{
+		return array_key_exists($name, $this->attributes) ? $this->attributes[$name] : null;
+	}
 
 	/**
 	 * Set the id of the element
