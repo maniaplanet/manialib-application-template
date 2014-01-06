@@ -18,6 +18,7 @@ abstract class ConfigLoader
 {
 
 	protected static $INIConfigFilename;
+	protected static $INIConfigDirectory;
 	protected static $PHPConfigFilename;
 	protected static $hostname;
 	protected static $enableCache = true;
@@ -41,6 +42,15 @@ abstract class ConfigLoader
 			self::$INIConfigFilename = MANIALIB_APP_PATH.'config/app.ini';
 		}
 		return self::$INIConfigFilename;
+	}
+	
+	static function getINIConfigDirectory()
+	{
+		if(!self::$INIConfigDirectory)
+		{
+			self::$INIConfigDirectory = MANIALIB_APP_PATH.'config/app.d/';
+		}
+		return self::$INIConfigDirectory;
 	}
 
 	static function getPHPConfigFilename()
@@ -85,15 +95,28 @@ abstract class ConfigLoader
 			$values = $cache->fetch($key);
 			if($values === false)
 			{
-				$values = parse_ini_file(self::getINIConfigFilename(), true);
-				list($values, $overrides) = self::scanOverrides($values);
-				$values = self::processOverrides($values, $overrides);
-				$values = self::loadAliases($values);
-				$values = self::replaceAliases($values);
+				$values = self::loadFile(self::getINIConfigFilename());
+				if (is_dir(self::getINIConfigDirectory()))
+				{
+					foreach(glob(self::getINIConfigDirectory().'*.ini') as $filename)
+					{
+						$values = array_merge($values, self::loadFile($filename));
+					}
+				}
 				$cache->add($key, $values);
 			}
 			self::arrayToSingletons($values);
 		}
+	}
+	
+	protected static function loadFile($filename)
+	{
+		$values = parse_ini_file($filename, true);
+		list($values, $overrides) = self::scanOverrides($values);
+		$values = self::processOverrides($values, $overrides);
+		$values = self::loadAliases($values);
+		$values = self::replaceAliases($values);
+		return $values;
 	}
 
 	protected static function loadAliases(array $values)
