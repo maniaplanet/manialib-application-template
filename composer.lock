@@ -1,0 +1,68 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "33bc884dbc64febdac4b4c0eb55a553e",
+    "packages": [
+        {
+            "name": "maniaplanet/manialib",
+            "version": "3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maniaplanet/manialib.git",
+                "reference": "8b49f5580e7e83f687dd6fa5c6b9c1a68ee5b3b1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maniaplanet/manialib/zipball/8b49f5580e7e83f687dd6fa5c6b9c1a68ee5b3b1",
+                "reference": "8b49f5580e7e83f687dd6fa5c6b9c1a68ee5b3b1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ManiaLib\\": "libraries/ManiaLib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Nadeo",
+                    "email": "contact@nadeo.com",
+                    "homepage": "http://www.nadeo.com/"
+                }
+            ],
+            "description": "Library to query ManiaPlanet webservices (shootmania and trackmania 2)",
+            "homepage": "https://github.com/maniaplanet/manialib",
+            "keywords": [
+                "ManiaPlanet",
+                "ShootMania",
+                "TrackMania"
+            ],
+            "time": "2014-01-13 14:11:25"
+        }
+    ],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": [
+
+    ],
+    "platform": {
+        "php": ">=5.3"
+    },
+    "platform-dev": [
+
+    ]
+}
