@@ -7,16 +7,16 @@
     "packages": [
         {
             "name": "maniaplanet/manialib",
-            "version": "3.1.0",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maniaplanet/manialib.git",
-                "reference": "8b49f5580e7e83f687dd6fa5c6b9c1a68ee5b3b1"
+                "reference": "f6793944f9ad4b348bae491efc4d69ff815f0bd2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maniaplanet/manialib/zipball/8b49f5580e7e83f687dd6fa5c6b9c1a68ee5b3b1",
-                "reference": "8b49f5580e7e83f687dd6fa5c6b9c1a68ee5b3b1",
+                "url": "https://api.github.com/repos/maniaplanet/manialib/zipball/f6793944f9ad4b348bae491efc4d69ff815f0bd2",
+                "reference": "f6793944f9ad4b348bae491efc4d69ff815f0bd2",
                 "shasum": ""
             },
             "require": {
@@ -24,9 +24,9 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "ManiaLib\\": "libraries/ManiaLib/"
-                }
+                "classmap": [
+                    "libraries/ManiaLib"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -46,7 +46,7 @@
                 "ShootMania",
                 "TrackMania"
             ],
-            "time": "2014-01-13 14:11:25"
+            "time": "2014-01-14 15:28:42"
         }
     ],
     "packages-dev": [
