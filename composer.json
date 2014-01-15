@@ -14,6 +14,7 @@
     ],
     "require": {
         "php": ">=5.3",
-        "maniaplanet/manialib": ">=3.1.0"
+        "maniaplanet/manialib": "~3.1",
+		"maniaplanet/maniaplanet-ws-sdk": "~5.0"
     }
 }
