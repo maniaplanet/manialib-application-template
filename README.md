@@ -12,7 +12,7 @@ GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 Installation
 -----------------------------
 
-We use [Composer](https://getcomposer.org/), because we're cool:
+We use [Composer](https://getcomposer.org/), because, ya know, why not:
 
 ```
 composer create-project maniaplanet/manialib-application-template
