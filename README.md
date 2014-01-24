@@ -9,8 +9,16 @@ This package contains the PHP SDK as well as a some examples so that you can
 build applications that interact with the API. Everyting is released under the 
 GNU LESSER GENERAL PUBLIC LICENSE Version 3.
 
+Installation
+-----------------------------
+
+We use [Composer](https://getcomposer.org/), because we're cool:
+
+```
+composer create-project maniaplanet/manialib-application-template
+```
+
 Useful links
 ------------
 
-Google Code project: http://code.google.com/p/manialib/
 Support forum: http://forum.maniaplanet.com/viewforum.php?f=40
