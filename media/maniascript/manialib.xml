@@ -438,6 +438,32 @@ Void manialib_set_image(Text controlId, Text URL)
 	}
 }
 
+Void manialib_set_style(Text controlId, Text style)
+{
+	declare CMlQuad control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlQuad);
+	if(control != Null)
+	{
+		control.Style = style;
+	}
+	else
+	{
+		log("[WARNING] Trying to access an unkown element: " ^ controlId);
+	}
+}
+
+Void manialib_set_substyle(Text controlId, Text substyle)
+{
+	declare CMlQuad control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlQuad);
+	if(control != Null)
+	{
+		control.Substyle = substyle;
+	}
+	else
+	{
+		log("[WARNING] Trying to access an unkown element: " ^ controlId);
+	}
+}
+
 Void manialib_disable_links()
 {
 	Page.LinksInhibited = True;
