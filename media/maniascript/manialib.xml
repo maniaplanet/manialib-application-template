@@ -438,6 +438,19 @@ Void manialib_set_image(Text controlId, Text URL)
 	}
 }
 
+Void manialib_set_focus(Text controlId)
+{
+	declare CMlControl control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlControl);
+	if(control != Null)
+	{
+		control.Focus();
+	}
+	else
+	{
+		log("[WARNING] Trying to access an unkown element: " ^ controlId);
+	}
+}
+
 Void manialib_set_style(Text controlId, Text style)
 {
 	declare CMlQuad control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlQuad);
@@ -738,13 +751,13 @@ Void manialib_action_execute(Text[] action)
 
 				case "set_clublink":
 					SetLocalUserClubLink(action[1]);
-					
+
 				case "browser_back":
 					BrowserBack();
-					
+
 				case "browser_quit":
 					BrowserQuit();
-					
+
 				case "browser_home":
 					BrowserHome();
 
