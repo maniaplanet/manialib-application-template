@@ -393,7 +393,21 @@ Void manialib_set_opacity(Text controlId, Real opacity)
 		declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
 		if(control != Null)
 		{
-				control.Opacity = opacity;
+			switchtype(control)
+			{
+				case CMlLabel:
+				{
+					(control as CMlLabel).Opacity = opacity;
+				}
+				case CMlQuad:
+				{
+					(control as CMlQuad).Opacity = opacity;
+				}
+				default:
+				{
+					log("[WARNING] Control opacity cannot be changed");
+				}
+			}
 		}
 		else
 		{
