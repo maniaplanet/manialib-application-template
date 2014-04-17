@@ -388,12 +388,38 @@ Void manialib_move_to_mouse(Text controlId, Real offsetX, Real offsetY, Real bou
 		control.PosnY = manialib_max(MouseY + offsetY, -90.0 + boundingBoxY);
 }
 
+Void manialib_set_opacity(Text controlId, Real opacity)
+{
+		declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
+		if(control != Null)
+		{
+				control.Opacity = opacity;
+		}
+		else
+		{
+				log("[WARNING] Trying to access an unkown element: " ^ controlId);
+		}
+}
+
 Void manialib_set_text(Text controlId, Text newtext)
 {
 		declare CMlLabel control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlLabel);
 		if(control != Null)
 		{
 				control.SetText(newtext);
+		}
+		else
+		{
+				log("[WARNING] Trying to access an unkown element: " ^ controlId);
+		}
+}
+
+Void manialib_set_textcolor(Text controlId, Vec3 textColor)
+{
+		declare CMlLabel control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlLabel);
+		if(control != Null)
+		{
+				control.TextColor = textColor;
 		}
 		else
 		{
@@ -431,6 +457,19 @@ Void manialib_set_image(Text controlId, Text URL)
 	if(control != Null)
 	{
 		control.ImageUrl = URL;
+	}
+	else
+	{
+		log("[WARNING] Trying to access an unkown element: " ^ controlId);
+	}
+}
+
+Void manialib_set_imagefocus(Text controlId, Text URL)
+{
+	declare CMlQuad control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlQuad);
+	if(control != Null)
+	{
+		control.ImageUrlFocus = URL;
 	}
 	else
 	{
