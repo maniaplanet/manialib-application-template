@@ -428,12 +428,12 @@ Void manialib_set_text(Text controlId, Text newtext)
 		}
 }
 
-Void manialib_set_textcolor(Text controlId, Vec3 textColor)
+Void manialib_set_textcolor(Text controlId, Text textColor)
 {
 		declare CMlLabel control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlLabel);
 		if(control != Null)
 		{
-				control.TextColor = textColor;
+				control.TextColor = TextLib::ToColor(textColor);
 		}
 		else
 		{
@@ -530,22 +530,12 @@ Void manialib_set_substyle(Text controlId, Text substyle)
 	}
 }
 
-Void manialib_set_modulateColor(Text controlId, Vec3 modulateColor)
+Void manialib_set_modulateColor(Text controlId, Text modulateColor)
 {
-	declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
+	declare CMlQuad control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlQuad);
 	if(control != Null)
 	{
-		switchtype(control)
-		{
-			case CMlQuad:
-			{
-				(control as CMlQuad).ModulateColor = modulateColor;
-			}
-			default:
-			{
-				log("[WARNING] Control opacity cannot be changed");
-			}
-		}
+		(control as CMlQuad).ModulateColor = TextLib::ToColor(modulateColor)
 	}
 	else
 	{
@@ -553,22 +543,12 @@ Void manialib_set_modulateColor(Text controlId, Vec3 modulateColor)
 	}
 }
 
-Void manialib_set_colorize(Text controlId, Vec3 colorize)
+Void manialib_set_colorize(Text controlId, Text colorize)
 {
-	declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
+	declare CMlQuad control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlQuad);
 	if(control != Null)
 	{
-		switchtype(control)
-		{
-			case CMlQuad:
-			{
-				(control as CMlQuad).Colorize = colorize;
-			}
-			default:
-			{
-				log("[WARNING] Control opacity cannot be changed");
-			}
-		}
+		(control as CMlQuad).Colorize = TextLib::ToColor(colorize);
 	}
 	else
 	{
