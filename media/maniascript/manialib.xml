@@ -530,6 +530,52 @@ Void manialib_set_substyle(Text controlId, Text substyle)
 	}
 }
 
+Void manialib_set_modulateColor(Text controlId, Vec3 modulateColor)
+{
+	declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
+	if(control != Null)
+	{
+		switchtype(control)
+		{
+			case CMlQuad:
+			{
+				(control as CMlQuad).ModulateColor = modulateColor;
+			}
+			default:
+			{
+				log("[WARNING] Control opacity cannot be changed");
+			}
+		}
+	}
+	else
+	{
+		log("[WARNING] Trying to access an unkown element: " ^ controlId);
+	}
+}
+
+Void manialib_set_colorize(Text controlId, Vec3 colorize)
+{
+	declare CMlControl control <=> Page.MainFrame.GetFirstChild(controlId);
+	if(control != Null)
+	{
+		switchtype(control)
+		{
+			case CMlQuad:
+			{
+				(control as CMlQuad).Colorize = colorize;
+			}
+			default:
+			{
+				log("[WARNING] Control opacity cannot be changed");
+			}
+		}
+	}
+	else
+	{
+		log("[WARNING] Trying to access an unkown element: " ^ controlId);
+	}
+}
+
 Void manialib_disable_links()
 {
 	Page.LinksInhibited = True;
