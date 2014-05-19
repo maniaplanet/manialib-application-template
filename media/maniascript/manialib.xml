@@ -535,7 +535,7 @@ Void manialib_set_modulateColor(Text controlId, Text modulateColor)
 	declare CMlQuad control <=> (Page.MainFrame.GetFirstChild(controlId) as CMlQuad);
 	if(control != Null)
 	{
-		(control as CMlQuad).ModulateColor = TextLib::ToColor(modulateColor)
+		control.ModulateColor = TextLib::ToColor(modulateColor);
 	}
 	else
 	{
